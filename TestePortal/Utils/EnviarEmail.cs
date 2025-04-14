@@ -215,10 +215,34 @@ namespace TestePortal.Utils
                 Html += "<table>";
                 Html += "<tr><th>Aprovações realizadas</th><th>Todos os status trocados</th><th>Total de erros </th><th>Lista de erros</th></tr>";
                 Html += "<tr>";
-                Html += "<td> " + item.AprovacoesRealizadas + "</td>\n";
-                Html += "<td> " + item.StatusTrocados + "</td>\n";
-                Html += "<td> " + item.totalErros + "</td>\n";
-                Html += "<td> " + string.Join(", ", item.ListaErros) + "</td>\n";
+                Html += "<td> " + item.AprovacoesRealizadas1 + "</td>\n";
+                Html += "<td> " + item.StatusTrocados1 + "</td>\n";
+                Html += "<td> " + item.totalErros1 + "</td>\n";
+                Html += "<td> " + string.Join(", ", item.ListaErros1) + "</td>\n";
+                Html += "</tr>";
+            }
+            foreach (var item in operacoes)
+            {
+                Html += "<h2>Fluxo de cadastro de Operações</h2>";
+                Html += "<table>";
+                Html += "<tr><th>Aprovações realizadas</th><th>Todos os status trocados</th><th>Total de erros </th><th>Lista de erros</th></tr>";
+                Html += "<tr>";
+                Html += "<td> " + item.AprovacoesRealizadas3 + "</td>\n";
+                Html += "<td> " + item.StatusTrocados3 + "</td>\n";
+                Html += "<td> " + item.totalErros3 + "</td>\n";
+                Html += "<td> " + string.Join(", ", item.ListaErros3) + "</td>\n";
+                Html += "</tr>";
+            }
+            foreach (var item in operacoes)
+            {
+                Html += "<h2>Fluxo de cadastro de Operações</h2>";
+                Html += "<table>";
+                Html += "<tr><th>Aprovações realizadas</th><th>Todos os status trocados</th><th>Total de erros </th><th>Lista de erros</th></tr>";
+                Html += "<tr>";
+                Html += "<td> " + item.AprovacoesRealizadas2 + "</td>\n";
+                Html += "<td> " + item.StatusTrocados2 + "</td>\n";
+                Html += "<td> " + item.totalErros2 + "</td>\n";
+                Html += "<td> " + string.Join(", ", item.ListaErros2) + "</td>\n";
                 Html += "</tr>";
             }
 
