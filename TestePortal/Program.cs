@@ -22,15 +22,6 @@ namespace TestePortalIDSF
         public static Operacoes operacoes = new Operacoes();
 
         public static async Task Main(string[] args)
-
-
-
-
-
-
-
-
-
         {
             Pagina pagina = new Pagina();
 
