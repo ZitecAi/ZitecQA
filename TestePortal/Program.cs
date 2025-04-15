@@ -146,9 +146,7 @@ namespace TestePortalIDSF
                         await Task.Delay(600);
                         (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaEscrow(Page, context, usuario.Nivel);
                         listaFluxos.Add(fluxoDeCadastros);
-                        //(pagina, operacoes) = await OperacoesOperacoes.Operacoes(Page, usuario.Nivel, operacoes);
-                        //listaPagina.Add(pagina);
-                        //listaOperacoes.Add(operacoes);
+                        listaOperacoes.Add(operacoes);
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaOperacoes.Add(operacoes);
@@ -197,8 +195,6 @@ namespace TestePortalIDSF
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
-                        //(pagina, operacoes) = await OperacoesOperacoes.Operacoes(Page, usuario.Nivel, operacoes);
-                        //listaPagina.Add(pagina);
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaPagina.Add(await OperacoesRecebiveis.Recebiveis(Page));
@@ -242,8 +238,6 @@ namespace TestePortalIDSF
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
-                        //(pagina, operacoes) = await OperacoesOperacoes.Operacoes(Page, usuario.Nivel, operacoes);
-                        //listaPagina.Add(pagina);
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaPagina.Add(await OperacoesRecebiveis.Recebiveis(Page));
