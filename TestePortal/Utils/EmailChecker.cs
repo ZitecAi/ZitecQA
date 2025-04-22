@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace TestePortal.Utils
 {
     public class EmailChecker
@@ -26,6 +27,8 @@ namespace TestePortal.Utils
 
             try
             {
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true; // Ignora validação SSL
+
                 await client.ConnectAsync(_imapServer, _imapPort, true);
                 await client.AuthenticateAsync(_email, _password);
 
@@ -33,29 +36,29 @@ namespace TestePortal.Utils
                 await inbox.OpenAsync(MailKit.FolderAccess.ReadOnly);
 
                 var uids = await inbox.SearchAsync(SearchQuery.SubjectContains(subjectKeyword));
-                var recentUids = uids.TakeLast(4); 
+                var recentUids = uids.TakeLast(4);
 
                 foreach (var uid in recentUids)
                 {
                     var message = await inbox.GetMessageAsync(uid);
                     Console.WriteLine($"Email encontrado: {message.Subject} de {message.From}");
 
-                   
                     if (message.Subject.Contains(subjectKeyword, StringComparison.OrdinalIgnoreCase))
                     {
-                        return true; 
+                        return true;
                     }
                 }
 
                 await client.DisconnectAsync(true);
-                return false; 
+                return false;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Erro ao verificar e-mail: " + ex.Message);
-                return false; 
+                return false;
             }
         }
+
 
 
     }

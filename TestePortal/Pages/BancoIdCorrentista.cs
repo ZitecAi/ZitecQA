@@ -13,6 +13,7 @@ using TestePortal.Repository.Correntistas;
 using TestePortal.Repository.Investidores;
 using static TestePortal.Model.Usuario;
 using TestePortal.Utils;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 
 namespace TestePortal.Pages
@@ -66,7 +67,7 @@ namespace TestePortal.Pages
                         {
                             var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
                             fluxoDeCadastros.Fluxo = "Correntista - Movimentação";
-                            await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                             await Page.Locator("#cpfcnpj").ClickAsync();
                             await Task.Delay(300);
                             await Page.Locator("#cpfcnpj").FillAsync("45543915000181");
@@ -439,6 +440,7 @@ namespace TestePortal.Pages
                                 if (statusAgdConta == true)
                                 {
                                     await Page.ReloadAsync();
+                                    var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Movimentacao", idCorrentista);
                                     await Page.GetByLabel("Pesquisar").ClickAsync();
                                     await Task.Delay(800);
                                     await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
@@ -623,7 +625,7 @@ namespace TestePortal.Pages
                     var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
                     var PaginaBancoIdCorrentista = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Correntistas.aspx");
                     fluxoDeCadastros.Fluxo = "Correntista - Escrow";
-                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                     await Page.Locator("#cpfcnpj").ClickAsync();
                     await Task.Delay(300);
                     await Page.Locator("#cpfcnpj").FillAsync("45543915000181");
@@ -860,6 +862,7 @@ namespace TestePortal.Pages
                         if (statusAgdConta == true)
                         {
                             await Page.ReloadAsync();
+                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow", idCorrentista);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
                             await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
@@ -946,7 +949,7 @@ namespace TestePortal.Pages
                             Console.WriteLine("Correntista apagado com sucesso");
                             pagina.Excluir = "✅";
 
-                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow", idCorrentista);
+                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow",idCorrentista);
 
                             if (apagarContaBan)
                             {
@@ -1023,7 +1026,7 @@ namespace TestePortal.Pages
             {
                 var PaginaBancoIdCorrentista = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Correntistas.aspx");
                 fluxoDeCadastros.Fluxo = "Correntista - Cobrança";
-                await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                 await Page.Locator("#cpfcnpj").ClickAsync();
                 await Task.Delay(300);
                 await Page.Locator("#cpfcnpj").FillAsync("45543915000181");
@@ -1395,7 +1398,9 @@ namespace TestePortal.Pages
                         statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("45543915000181", "jehvittav@gmail.com");
 
                         if (statusAgdConta == true)
+                        
                         {
+                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca", idCorrentista);
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
@@ -1499,7 +1504,7 @@ namespace TestePortal.Pages
                         Console.WriteLine("Correntista apagado com sucesso");
                         pagina.Excluir = "✅";
 
-                        var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca", idCorrentista);
+                        var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca",idCorrentista);
 
                         if (apagarContaBancaria)
                         {
@@ -1572,7 +1577,7 @@ namespace TestePortal.Pages
                 try
                 {
                     fluxoDeCadastros.Fluxo = "Correntista - Selic";
-                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                     await Page.Locator("#cpfcnpj").ClickAsync();
                     await Task.Delay(300);
                     await Page.Locator("#cpfcnpj").FillAsync("45543915000181");
@@ -1806,6 +1811,7 @@ namespace TestePortal.Pages
 
                         if (statusAgdConta == true)
                         {
+                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Selic", idCorrentista);
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
@@ -1972,7 +1978,7 @@ namespace TestePortal.Pages
                 {
 
                     fluxoDeCadastros.Fluxo = "Correntista - Cetip";
-                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                     await Page.Locator("#cpfcnpj").ClickAsync();
                     await Task.Delay(300);
                     await Page.Locator("#cpfcnpj").FillAsync("45543915000181");
@@ -2339,6 +2345,7 @@ namespace TestePortal.Pages
 
                             if (statusAgdConta == true)
                             {
+                                var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("988998", "5", "cetip", idCorrentista);
                                 await Page.ReloadAsync();
                                 await Page.GetByLabel("Pesquisar").ClickAsync();
                                 await Task.Delay(800);
@@ -2372,10 +2379,6 @@ namespace TestePortal.Pages
                                     fluxoDeCadastros.EmailRecebido = "❌";
                                     break;
                                 }
-
-
-
-
                             }
                             else
                             {
@@ -2426,8 +2429,6 @@ namespace TestePortal.Pages
                         Console.WriteLine("Status não foi trocado para aguardando assinatura");
                         fluxoDeCadastros.ListaErros.Add("Status não foi trocado para aguardando assinatura");
                     }
-
-
 
                     var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("jehvittav@gmail.com", "45543915000181");
 

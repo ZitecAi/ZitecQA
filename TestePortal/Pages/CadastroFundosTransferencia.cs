@@ -50,7 +50,7 @@ namespace TestePortal.Pages
                     {
                         var apagarFundoTransferencia2 = Repository.FundoTransferencia.FundoTransferenciaRepository.ApagarFundoTransferencia("45543915000181", "QA teste");
                         await Task.Delay(600);
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Fundo de Transferência" }).ClickAsync();
                         await Page.Locator("#NomeFundo").ClickAsync();
                         await Page.Locator("#NomeFundo").FillAsync("QA teste");
                         await Page.GetByPlaceholder("/0000-00").ClickAsync();

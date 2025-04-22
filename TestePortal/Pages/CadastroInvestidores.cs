@@ -62,7 +62,7 @@ namespace TestePortal.Pages
 
                         var apagarInvestidor2 = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("49624866830", "jehvittav@gmail.com");
                         // adicionar um novo cotista
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Investidor" }).ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("#cpfCnpjCotistaInterno").FillAsync("49624866830");
@@ -829,7 +829,7 @@ namespace TestePortal.Pages
                     {
                         
                         var apagarInvestidor2 = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("53300608000106", "jehvittav@gmail.com");
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Investidor" }).ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").FillAsync("533.006.080-00106");
                         await Page.Locator("#btnAvancarCadastroCotista").ClickAsync();
@@ -1693,7 +1693,7 @@ namespace TestePortal.Pages
                     {
 
                         var apagarInvestidor2 = Repository.Investidores.InvestidoresFundInvest.ApagarInvestidores("24426716000113", "esmeralda@gmail.com");
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Investidor" }).ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").FillAsync("244.267.160-00113");
                         await Page.Locator("#btnAvancarCadastroCotista").ClickAsync();

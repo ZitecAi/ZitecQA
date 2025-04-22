@@ -26,7 +26,7 @@ namespace TestePortal
             int errosTotais = 0;
             int errosTotais2 = 0;
             int statusTrocados = 0;
-            string caminhoArquivo = @"C:\Temp\Arquivos\CNABz - Copia.txt";
+            string caminhoArquivo = @"C:\TempQA\Arquivos\CNABz - Copia.txt";
             operacoes.ListaErros2 = new List<string>();
 
             #region Portal
@@ -54,7 +54,7 @@ namespace TestePortal
 
                         if (processamentoFundo)
                         {
-                            operacoes.TipoOperacao2 = "Operacoes Zitec - cnab";
+                            operacoes.TipoOperacao2 = "Nova Operação - CNAB";
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CNAB" }).ClickAsync();
                             await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "54638076000176" });
                             operacoes.NovoNomeArquivo2 = await Utils.AtualizarTxt.AtualizarDataEEnviarArquivo(Page, caminhoArquivo);

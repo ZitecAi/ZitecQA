@@ -137,6 +137,7 @@ namespace TestePortalIDSF
                         listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
                         (pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
                         listaFluxos.Add(fluxoDeCadastros);
+                        listaPagina.Add(await BoletagemControleCapital.ControleCapital(Page));
                         listaPagina.Add(await OperacoesBaixaEmLote.BaixaLote(Page));
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         await Task.Delay(500);
@@ -325,8 +326,8 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "todos@zitec.ai",
-                    "Relatório das páginas do portal em produção.",
+                    "jt@zitec.ai",
+                    "Relatório das páginas do portal em produção TESTEEEE.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao),
                     //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
                     "C:\\Temp\\Paginas.txt"
