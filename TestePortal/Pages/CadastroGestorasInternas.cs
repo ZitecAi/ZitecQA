@@ -62,25 +62,25 @@ namespace TestePortal.Pages
                         fluxoDeCadastros.statusAprovado = "❓";
                         fluxoDeCadastros.DocumentoAssinado = "❓";
                         fluxoDeCadastros.EmailRecebido = "❓";
-                        var apagarGestoraInterna2 = Repository.GestoraInterna.GestoraInternaRepository.ApagarGestoraInterna("45246402000532", "jessica.tavares@gmail.com");
+                        var apagarGestoraInterna2 = Repository.GestoraInterna.GestoraInternaRepository.ApagarGestoraInterna("16695922000109", "robo@zitec.ai");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("#CnpjGestoraInterno").ClickAsync();
                         await Task.Delay(300);
-                        await Page.Locator("#CnpjGestoraInterno").FillAsync("45246402000532");
+                        await Page.Locator("#CnpjGestoraInterno").FillAsync("16695922000109");
                         await Task.Delay(300);
                         await Page.Locator("#btnAvancarCadastroGestora").ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("#emailGestora").ClickAsync();
                         await Task.Delay(300);
-                        await Page.Locator("#emailGestora").FillAsync("jessica.tavares@gmail.com");
+                        await Page.Locator("#emailGestora").FillAsync("robo@zitec.ai");
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                         await Task.Delay(500);
 
                         await Page.ReloadAsync();
                         await Page.GetByLabel("Pesquisar").ClickAsync();
-                        await Page.GetByLabel("Pesquisar").FillAsync("jessica.tavares@gmail.com");
+                        await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.aim");
                         var primeiroTr = Page.Locator("#listaGestoras tr").First;
                         var primeiroTd = primeiroTr.Locator("td").First;
                         await primeiroTd.ClickAsync();
@@ -88,12 +88,12 @@ namespace TestePortal.Pages
 
                         try
                         {
-                            int? idGestora = GestoraInternaRepository.ObterIdGestora("45246402000532", "jessica.tavares@gmail.com");
+                            int? idGestora = GestoraInternaRepository.ObterIdGestora("16695922000109", "robo@zitec.ai");
                             var buttonSelector = $"tr.child button#\\3{idGestora.ToString().Substring(0, 1)} {idGestora.ToString().Substring(1)}_url.btn.btn-default[title='Copiar Link']";
                             await Page.Locator(buttonSelector).ClickAsync();
                             await Task.Delay(400);
 
-                            string token = GestoraInternaRepository.ObterTokenGestora("45246402000532", "jessica.tavares@gmail.com");
+                            string token = GestoraInternaRepository.ObterTokenGestora("16695922000109", "robo@zitec.ai");
                             string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.GESTORA"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
@@ -223,7 +223,7 @@ namespace TestePortal.Pages
                             await Task.Delay(6000);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("jessica.tavares@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr2 = Page.Locator("#listaGestoras tr").First;
                             var primeiroTd2 = primeiroTr.Locator("td").First;
                             await primeiroTd.ClickAsync();
@@ -279,7 +279,7 @@ namespace TestePortal.Pages
 
                             if (razaoSocialResumo == "CENTER NORTE S/A CONSTRUCAO EMPREEND ADM E PARTICIPACAO" && cnpjResumo == "45.246.402/0005-32" && dtConstituicaoResumo == dataAtual &&
                                 ativPrincipalResumo == "info" && controlAcionarioResumo == "Nacional" && paisConstituicaoResumo == "BRASIL" && paisDomFiscalResumo == "BRASIL"
-                                && emailResumo == "jessica.tavares@gmail.com" && usPerson == true && irrfResumo == "Isento" && iofResumo == "Isento" && fatcaResumo == true
+                                && emailResumo == "robo@zitec.ai" && usPerson == true && irrfResumo == "Isento" && iofResumo == "Isento" && fatcaResumo == true
                                 && ppeResumo == true
                                 )
                             {
@@ -477,14 +477,14 @@ namespace TestePortal.Pages
 
 
 
-                        var gestoraInternaExiste = Repository.GestoraInterna.GestoraInternaRepository.VerificaExistenciaGestoraInterna("45246402000532", "jessica.tavares@gmail.com");
+                        var gestoraInternaExiste = Repository.GestoraInterna.GestoraInternaRepository.VerificaExistenciaGestoraInterna("16695922000109", "robo@zitec.ai");
 
                         if (gestoraInternaExiste)
                         {
                             Console.WriteLine("Gestora Interna adicionada com sucesso na tabela.");
                             pagina.InserirDados = "✅";
 
-                            var verificarStatus = Repository.GestoraInterna.GestoraInternaRepository.VerificarStatus("45246402000532", "jessica.tavares@gmail.com");
+                            var verificarStatus = Repository.GestoraInterna.GestoraInternaRepository.VerificarStatus("16695922000109", "robo@zitec.ai");
 
                             if (verificarStatus)
                             {
@@ -500,7 +500,7 @@ namespace TestePortal.Pages
                             }
 
 
-                            var apagarGestoraInterna = Repository.GestoraInterna.GestoraInternaRepository.ApagarGestoraInterna("45246402000532", "jessica.tavares@gmail.com");
+                            var apagarGestoraInterna = Repository.GestoraInterna.GestoraInternaRepository.ApagarGestoraInterna("16695922000109", "robo@zitec.ai");
 
                             if (apagarGestoraInterna)
                             {

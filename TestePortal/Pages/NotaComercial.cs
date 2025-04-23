@@ -52,7 +52,7 @@ namespace TestePortal.Pages
                             {
                                 errosTotais++;
                             }
-                            var apagarNotaComercial2 = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("36614123000160", "teste jessica");
+                            var apagarNotaComercial2 = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("36614123000160", "teste robo");
                             await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
                             await Task.Delay(200);
                             await Page.Locator("#Fundos").SelectOptionAsync(new[] { "36614123000160" });
@@ -67,7 +67,7 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste jessica");
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste robo");
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Tab, new() { Name = "Envolvidos" }).ClickAsync();
                             await Task.Delay(200);
@@ -119,14 +119,14 @@ namespace TestePortal.Pages
                             await Task.Delay(400);
 
 
-                            var notaComercialExiste = Repository.NotaComercial.NotaComercialRepository.VerificaExistenciaNotaComercial("36614123000160", "teste jessica");
+                            var notaComercialExiste = Repository.NotaComercial.NotaComercialRepository.VerificaExistenciaNotaComercial("36614123000160", "teste robo");
 
 
                             if (notaComercialExiste)
                             {
                                 Console.WriteLine("Nota comercial adicionada com sucesso na tabela.");
                                 pagina.InserirDados = "✅";
-                                var apagarNotaComercial = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("36614123000160", "teste jessica");
+                                var apagarNotaComercial = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("36614123000160", "teste robo");
 
                                 if (apagarNotaComercial)
                                 {

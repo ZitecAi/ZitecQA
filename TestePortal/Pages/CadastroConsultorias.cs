@@ -63,25 +63,25 @@ namespace TestePortal.Pages
                         fluxoDeCadastros.DocumentoAssinado = "❓";
                         fluxoDeCadastros.statusAprovado = "❓";
                         fluxoDeCadastros.EmailRecebido = "❓";
-                        var ApagarConsultorias2 = Repository.Consultorias.ConsultoriasRepository.ApagarConsultorias("45246402000532", "jessica.tavares@gmail.com");
+                        var ApagarConsultorias2 = Repository.Consultorias.ConsultoriasRepository.ApagarConsultorias("16695922000109", "robo@zitec.ai");
                         await Task.Delay(500);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
                         await Page.Locator("#CnpjConsultoria").ClickAsync();
                         await Task.Delay(300);
-                        await Page.Locator("#CnpjConsultoria").FillAsync("45246402000532");
+                        await Page.Locator("#CnpjConsultoria").FillAsync("16695922000109");
                         await Task.Delay(300);
                         await Page.Locator("#btnAvancarCadastroConsultora").ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("#emailConsultora").ClickAsync();
                         await Task.Delay(300);
-                        await Page.Locator("#emailConsultora").FillAsync("jessica.tavares@gmail.com");
+                        await Page.Locator("#emailConsultora").FillAsync("robo@zitec.ai");
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
 
                         // procurar o registro cadastrado e colar o link em uma nova para dar continuidade
                         await Page.ReloadAsync();
                         await Page.GetByLabel("Pesquisar").ClickAsync();
-                        await Page.GetByLabel("Pesquisar").FillAsync("jessica.tavares@gmail.com");
+                        await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                         var primeiroTr = Page.Locator("#listaConsultoria tr").First;
                         var primeiroTd = primeiroTr.Locator("td").First;
                         await primeiroTd.ClickAsync();
@@ -90,12 +90,12 @@ namespace TestePortal.Pages
                         try
                         {
 
-                            int? idConsultoria = ConsultoriasRepository.ObterIdConsultoria("45246402000532", "jessica.tavares@gmail.com");
+                            int? idConsultoria = ConsultoriasRepository.ObterIdConsultoria("16695922000109", "robo@zitec.ai");
                             var buttonSelector = $"tr.child button#\\3{idConsultoria.ToString().Substring(0, 1)} {idConsultoria.ToString().Substring(1)}_url.btn.btn-default[title='Copiar Link']";
                             await Page.Locator(buttonSelector).ClickAsync();
                             await Task.Delay(400);
 
-                            string token = ConsultoriasRepository.ObterToken("45246402000532", "jessica.tavares@gmail.com");
+                            string token = ConsultoriasRepository.ObterToken("16695922000109", "robo@zitec.ai");
                             string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CONSULTORIA"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
@@ -169,7 +169,7 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await newPage.GetByLabel("E-mail:*").ClickAsync();
                             await Task.Delay(200);
-                            await newPage.GetByLabel("E-mail:*").FillAsync("teste2@gmail.com");
+                            await newPage.GetByLabel("E-mail:*").FillAsync("robo@zitec.ai");
                             await Task.Delay(200);
                             await newPage.Locator("div:nth-child(11) > .inputRadio > div:nth-child(2)").ClickAsync();
                             await Task.Delay(200);
@@ -211,7 +211,7 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await newPage.GetByLabel("*Email", new() { Exact = true }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.GetByLabel("*Email", new() { Exact = true }).FillAsync("teste@gmail.com");
+                            await newPage.GetByLabel("*Email", new() { Exact = true }).FillAsync("robo@zitec.ai");
                             await Task.Delay(200);
                             await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).ClickAsync();
                             await Task.Delay(200);
@@ -241,13 +241,13 @@ namespace TestePortal.Pages
                             await newPage.Locator("#fileQddAmbima").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
                             await newPage.Locator("#btnFinalizar").ClickAsync();
-                            await Task.Delay(6000);
+                            await Task.Delay(8000);
                             await newPage.CloseAsync();
                             await Page.ReloadAsync();
                             await Task.Delay(1000);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("jessica.tavares@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.airobo@zitec.ai");
                             var primeiroTr2 = Page.Locator("#listaConsultoria tr").First;
                             var primeiroTd2 = primeiroTr.Locator("td").First;
                             await primeiroTd.ClickAsync();//ModalResumoFormConsultoria('214')
@@ -292,7 +292,7 @@ namespace TestePortal.Pages
                             var isPpeNaoChecked = await Page.EvaluateAsync<bool>("() => document.getElementById('ppeResumoNao').checked");
 
                             if (razaoSocial == "CENTER NORTE S/A CONSTRUCAO EMPREEND ADM E PARTICIPACAO" && cnpj == "45.246.402/0005-32" && dtConstituicao == "20/12/2023" && ativPrincipal == "info"
-                                && controlAcionario == "Nacional" && paisConstituicao == "BRASIL" && paisDomFiscal == "BRASIL" && email == "jessica.tavares@gmail.com"
+                                && controlAcionario == "Nacional" && paisConstituicao == "BRASIL" && paisDomFiscal == "BRASIL" && email == "robo@zitec.ai"
                                 && isPpeNaoChecked == true
                                 )
                             {
@@ -415,8 +415,8 @@ namespace TestePortal.Pages
                             var celularRepresentante2 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(2) td:nth-child(5)').innerText");
                             await Task.Delay(200);
 
-                            if (nomeRepresentante1 == "Guilherme Costa" && cpfRepresentante1 == "496.248.668-30" && dataNascimentoRepresentante1 == "14/08/2003" && emailRepresentante1 == "teste3@gmail.com" &&
-                                nomeRepresentante2 == "Caio Oliveira" && cpfRepresentante2 == "426.792.428-74" && dataNascimentoRepresentante2 == "14/08/2023" && emailRepresentante2 == "teste@gmail.com"
+                            if (nomeRepresentante1 == "Guilherme Costa" && cpfRepresentante1 == "496.248.668-30" && dataNascimentoRepresentante1 == "14/08/2003" && emailRepresentante1 == "robo@zitec.ai" &&
+                                nomeRepresentante2 == "Caio Oliveira" && cpfRepresentante2 == "426.792.428-74" && dataNascimentoRepresentante2 == "14/08/2023" && emailRepresentante2 == "robo@zitec.ai"
                                 && celularRepresentante2 == "11564984546"
                                 )
                             {
@@ -514,14 +514,14 @@ namespace TestePortal.Pages
 
                         }
 
-                        var ConsultoriasExiste = Repository.Consultorias.ConsultoriasRepository.VerificaExistenciaConsultorias("45246402000532", "jessica.tavares@gmail.com");
+                        var ConsultoriasExiste = Repository.Consultorias.ConsultoriasRepository.VerificaExistenciaConsultorias("16695922000109", "robo@zitec.ai");
 
                         if (ConsultoriasExiste)
                         {
                             Console.WriteLine("Consultoria adicionada com sucesso na tabela.");
                             pagina.InserirDados = "✅";
 
-                            var verificarStatus = Repository.Consultorias.ConsultoriasRepository.VerificarStatus("45246402000532", "jessica.tavares@gmail.com");
+                            var verificarStatus = Repository.Consultorias.ConsultoriasRepository.VerificarStatus("16695922000109", "robo@zitec.ai");
                             if (verificarStatus)
                             {
                                 Console.WriteLine("Status trocado para em análise");
@@ -536,7 +536,7 @@ namespace TestePortal.Pages
                             }
 
 
-                            var ApagarConsultorias = Repository.Consultorias.ConsultoriasRepository.ApagarConsultorias("45246402000532", "jessica.tavares@gmail.com");
+                            var ApagarConsultorias = Repository.Consultorias.ConsultoriasRepository.ApagarConsultorias("16695922000109", "robo@zitec.ai");
 
                             if (ApagarConsultorias)
                             {

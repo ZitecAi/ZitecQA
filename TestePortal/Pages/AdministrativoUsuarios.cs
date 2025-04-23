@@ -47,26 +47,26 @@ namespace TestePortal.Pages
                         errosTotais++;
                     }
 
-                    var apagarUsuario = Repository.Usuarios.UsuarioRepository.ApagarUsuario("Jessica Vitoria Tavares", "jessica.tav@gmail.com");
+                    var apagarUsuario = Repository.Usuarios.UsuarioRepository.ApagarUsuario("Jessica Vitoria Tavares", "robo@zitec.ai");
                     //pagina.ListaErros = listErros;
                     // Localizando o botão dentro da div e clicando nele
                     await Page.Locator("div.content-wrapper >> button[data-acao='NOVO']").ClickAsync();
                     await Page.Locator("#Nome").ClickAsync();
                     await Page.Locator("#Nome").FillAsync("Jessica Vitoria Tavares");
                     await Page.GetByPlaceholder("Email do SLACK").ClickAsync();
-                    await Page.GetByPlaceholder("Email do SLACK").FillAsync("jessica.tav@gmail.com");
+                    await Page.GetByPlaceholder("Email do SLACK").FillAsync("robo@zitec.ai");
                     await Page.Locator("#Nivel").SelectOptionAsync(new[] { "GESTORA" });
                     await Page.Locator("#Grupo").SelectOptionAsync(new[] { "10" });
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" }).ClickAsync();
 
 
-                    var usuarioExiste = Repository.Usuarios.UsuarioRepository.VerificaExistenciaUsuario("Jessica Vitoria Tavares", "jessica.tav@gmail.com");
+                    var usuarioExiste = Repository.Usuarios.UsuarioRepository.VerificaExistenciaUsuario("Jessica Vitoria Tavares", "robo@zitec.ai");
                    
                     if (usuarioExiste)
                     {
                         Console.WriteLine("Usuário adicionado com sucesso na tabela.");
                         pagina.InserirDados = "✅";
-                        var apagarUsuario2 = Repository.Usuarios.UsuarioRepository.ApagarUsuario("Jessica Vitoria Tavares", "jessica.tav@gmail.com");
+                        var apagarUsuario2 = Repository.Usuarios.UsuarioRepository.ApagarUsuario("Jessica Vitoria Tavares", "robo@zitec.ai");
 
                         if (apagarUsuario2)
                         {
