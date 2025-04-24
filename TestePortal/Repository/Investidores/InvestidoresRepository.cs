@@ -293,6 +293,37 @@ namespace TestePortal.Repository.Investidores
             return idDocumentoAutentique;
         }
 
+        public static bool UpdateStatusAprovado(string cpfcnpj, string email)
+        {
+            bool atualizacaoRealizada = false;
+
+            try
+            {
+                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+
+                using (SqlConnection myConnection = new SqlConnection(con))
+                {
+                    myConnection.Open();
+
+                    string query = "UPDATE Cotista_Interno SET status = 'APROVADO' WHERE CpfCnpj = @cpfcnpj AND Email = @email";
+
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
+                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
+
+                        int rowsAffected = oCmd.ExecuteNonQuery();
+                        atualizacaoRealizada = rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.UpdateStatusAprovado()", "Automações Jessica", e.StackTrace);
+            }
+
+            return atualizacaoRealizada;
+        }
 
     }
 
