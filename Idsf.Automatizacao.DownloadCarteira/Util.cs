@@ -140,8 +140,6 @@ namespace Idsf.Automatizacao.DownloadCarteira
         }
 
 
-
-
         public static DateTime GetUltimoDiaAnterior(DateTime date)
         {
             DateTime diaAnterior = date.AddDays(-1);

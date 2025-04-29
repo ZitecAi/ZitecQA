@@ -8,7 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading;
 using System.Linq;
 using static Idsf.Automatizacao.DownloadCarteira.Program;
 using System.Xml.Linq;
@@ -17,41 +16,50 @@ namespace Idsf.Automatizacao.DownloadCarteira
 {
     class Program
     {
-
         public double validGlobal;
         public double difValidGlobal;
+
         public static async Task Main()
         {
+            //implementação de Task.WhenAll para executar várias tarefas ao mesmo tempo e automatizar o código
+
             while (true)
             {
-
                 Thread.Sleep(6000);
-
 
                 var carteiraUN = CarteirasDownload.GetCarteira();
 
                 if (!string.IsNullOrEmpty(carteiraUN.IdCarteira))
                 {
+
+                    // [LOG]: Sucesso em obter Carteira
+                    RegistroDeLogs.InserirLogBritechCarteira("GetCarteira", int.Parse(carteiraUN.IdCarteira), carteiraUN.Data, 1);
+
                     var playwright = await Playwright.CreateAsync();
                     var browser = await playwright.Chromium.LaunchAsync(
-                        new BrowserTypeLaunchOptions { Channel = "chrome", Headless = false, SlowMo = 50, Timeout = 0, Args = new List<string>() { "--start-maximized" } });
+                        new BrowserTypeLaunchOptions
+                        {
+                            Channel = "chrome",
+                            Headless = false,
+                            SlowMo = 50,
+                            Timeout = 0,
+                            Args = new List<string>() { "--start-maximized" }
+                        });
                     var page = await browser.NewPageAsync();
 
                     await LoginBritech(page);
 
-                    if (carteiraUN.IdCarteira == "376511022")
-                    {
-                        var debug = true;
-                    }
+                    RegistroDeLogs.InserirLogBritechCarteira("LoginBritech", int.Parse(carteiraUN.IdCarteira), carteiraUN.Data, 2);
+
                     if (carteiraUN.CnpjFundo != null)
                     {
-                        if (page.Url == "https://id.britech.com.br/PAS/Login/LoginInit.aspx?ReturnUrl=%2fPAS%2fDefault.aspx" && page.Url == "https://id.britech.com.br/PAS/Login/LoginInit.aspx")
+                        if (page.Url == "https://id.britech.com.br/PAS/Login/LoginInit.aspx?ReturnUrl=%2fPAS%2fDefault.aspx" ||
+                            page.Url == "https://id.britech.com.br/PAS/Login/LoginInit.aspx")
                         {
                             await LoginBritech(page);
                         }
 
                         carteiraUN.CnpjFundo = carteiraUN.CnpjFundo.Replace(".", "").Replace("-", "").Replace("/", "");
-
 
                         if (carteiraUN.ID_RELATORIO != 0)
                         {
@@ -61,222 +69,165 @@ namespace Idsf.Automatizacao.DownloadCarteira
                         var carteiraFundo = CarteiraFundo.GetCarteiraByIdCarteira(carteiraUN.IdCarteira);
 
                         string DropBox = ConfigurationManager.AppSettings["PATH.DROPBOX"];
-                        //pathDropBox == null ? "C:\\Users\\IDMurilloPereira\\ID CTVM Dropbox\\" : pathDropBox;
-
                         if (string.IsNullOrWhiteSpace(DropBox))
-                        {
                             DropBox = "C:\\Users\\caioo\\ID CTVM Dropbox\\";
-                        }
 
                         await GoToComposicaoCarteira(page);
                         await PreencherCampos(page, carteiraUN.IdCarteira, carteiraUN.Data);
+
                         await page.WaitForTimeoutAsync(5000);
 
-                        if (await page.FrameLocator("iframe[name=\"iframePrincipal\"]").Locator("#btnEditCodigo_I").InputValueAsync() == "26631505")
-                        {
-                            await page.WaitForTimeoutAsync(5000);
-                            await PreencherCampos(page, carteiraUN.IdCarteira, carteiraUN.Data);
-                        }
-
-                        if (await page.FrameLocator("iframe[name=\"iframePrincipal\"]").Locator("#btnEditCodigo_I").InputValueAsync() == "26631505")
-                        {
-                            await page.WaitForTimeoutAsync(5000);
-                            await PreencherCampos(page, carteiraUN.IdCarteira, carteiraUN.Data);
-                        }
-
-                        if (carteiraUN.IdCarteira == "20998989")
+                        if (await page.FrameLocator("iframe[name=\"iframePrincipal\"]").Locator("#btnEditCodigo_I").InputValueAsync() == "26631505"
+                            || carteiraUN.IdCarteira == "20998989")
                         {
                             await PreencherCampos(page, carteiraUN.IdCarteira, carteiraUN.Data);
                         }
 
-                        var downloadExcel = await DownloadRelatorio(page, "EXCEL");
+                        // [LOG]: Preencheu os campos da Carteira
+                        RegistroDeLogs.InserirLogBritechCarteira("PreencherCamposCarteira", int.Parse(carteiraUN.IdCarteira), carteiraUN.Data, 3);
+
+                        // Baixar Excel e PDF em paralelo
+                        var downloadExcelTask = DownloadRelatorio(page, "EXCEL");
+                        var downloadPdfTask = DownloadRelatorio(page, "PDF");
+
+                        await Task.WhenAll(downloadExcelTask, downloadPdfTask);
+
+                        var downloadExcel = downloadExcelTask.Result;
+                        var downloadPdf = downloadPdfTask.Result;
+
+                        var tasksToRun = new List<Task>();
 
                         if (downloadExcel != null)
                         {
-                            var carteira = GetCarteiraByIdCarteiraBritech(carteiraUN.IdCarteira);
-                            string fileName = carteiraUN.IdCarteira + "_" + carteiraUN.Data.ToString("yyyy-MM-dd") + ".xlsx";
-                            string pathDropbox = @"\CONTROLADORIA\PORTAL IDSF\RELATORIOS\CARTEIRA\\";
-                            string PathToFile = pathDropbox + fileName;// + download.SuggestedFilename;
-                            string FullPath = DropBox + PathToFile;
-
-                            if (!Directory.Exists(Path.Combine(DropBox, pathDropbox)))
-                                Directory.CreateDirectory(Path.Combine(DropBox, pathDropbox));
-
-                            if (File.Exists(FullPath))
+                            tasksToRun.Add(Task.Run(async () =>
                             {
-                                File.Delete(FullPath);
-                            }
-
-                            await downloadExcel.SaveAsAsync(FullPath);
-                        }
-
-                        await GoToComposicaoCarteira(page);
-                        await page.WaitForTimeoutAsync(2000);
-                        await PreencherCampos(page, carteiraUN.IdCarteira, carteiraUN.Data);
-
-                        if (await page.FrameLocator("iframe[name=\"iframePrincipal\"]").Locator("#btnEditCodigo_I").InputValueAsync() == "26631505")
-                        {
-                            await GoToComposicaoCarteira(page);
-                            await page.WaitForTimeoutAsync(2000);
-                            await PreencherCampos(page, carteiraUN.IdCarteira, carteiraUN.Data);
-                        }
-
-                        var download = await DownloadRelatorio(page, "PDF");
-
-                        if (download != null)
-                        {
-                            var carteira = GetCarteiraByIdCarteiraBritech(carteiraUN.IdCarteira);
-                            string fileName = carteiraUN.IdCarteira + "_" + carteiraUN.Data.ToString("yyyy-MM-dd") + ".pdf";
-                            string pathDropbox = @"\CONTROLADORIA\PORTAL IDSF\RELATORIOS\CARTEIRA\\";
-                            string PathToFile = pathDropbox + fileName;// + download.SuggestedFilename;
-                            string FullPath = DropBox + PathToFile;
-
-                            if (!Directory.Exists(Path.Combine(DropBox, pathDropbox)))
-                                Directory.CreateDirectory(Path.Combine(DropBox, pathDropbox));
-
-                            if (File.Exists(FullPath))
-                            {
-                                File.Delete(FullPath);
-                            }
-
-                            await download.SaveAsAsync(FullPath);
-
-                            if (File.Exists(FullPath))
-                            {
-                                //await browser.CloseAsync();
-
-                                var fundo = Repository.GetFundo(carteiraUN.CnpjFundo);
-
-                                string NomeCarteira = fundo.NomeFundo;
-
-
-                                if (carteira.Count > 0)
+                                try
                                 {
-                                    NomeCarteira = carteira[0].Apelido;
-                                }
+                                   
+                                    var carteira = GetCarteiraByIdCarteiraBritech(carteiraUN.IdCarteira);
+                                    string fileName = $"{carteiraUN.IdCarteira}_{carteiraUN.Data:yyyy-MM-dd}.xlsx";
+                                    //string pathDropbox = @"\\CONTROLADORIA\\PORTAL IDSF\\RELATORIOS\\CARTEIRA\\";
+                                    string pathDropbox = ConfigurationManager.AppSettings["PATH.DROPBOX"];
+                                    string fullPath = Path.Combine(pathDropbox, fileName);
 
-                                if (string.IsNullOrEmpty(fundo.SlackChannelIDOperacionais))
-                                {
-
-                                }
-                                string ValidAtualString = "0";
-
-                                var carteiraatual = BritechRelatorioPosicaoFechamento(Int32.Parse(carteiraUN.IdCarteira), carteiraUN.Data);
-
-                                if (carteiraatual != null)
-                                {
-                                    var VAlidCarteira = carteiraatual.Posicoes
-                                         .Where(posicao => posicao.Ativo.Contains("VALID"))
-                                         .ToList();
-
-                                    for (int x = 0; x < VAlidCarteira.Count; x++)
+                                    if (!Directory.Exists(pathDropbox))
                                     {
-                                        ValidAtualString = VAlidCarteira[x].QtdeTotal.ToString();
+                                        Console.WriteLine($"[ERRO]: O caminho de rede não foi encontrado: {pathDropbox}");
+                                        return; 
                                     }
+
+                                    Directory.CreateDirectory(pathDropbox); 
+
+                                    if (File.Exists(fullPath)) File.Delete(fullPath);
+
+                                    await downloadExcel.SaveAsAsync(fullPath);
+
+                                    Console.WriteLine($"Arquivo salvo em: {fullPath}");
+
+                                   // [LOG]: Salvou Excel
+                                   RegistroDeLogs.InserirLogBritechCarteira("SalvarExcel", int.Parse(carteiraUN.IdCarteira), carteiraUN.Data, 4);
                                 }
-
-                                List<double> valids = GetDiferencaValidCarteira(Int32.Parse(carteiraUN.IdCarteira), carteiraUN.Data);
-
-                                if (carteiraUN.ID_RELATORIO == 0 && File.Exists(FullPath))
+                             
+                                catch (Exception ex)
                                 {
-                                    PostMakeSendMsg(fundo.SlackChannelIDOperacionais, carteiraUN.Data.ToString("yyyy-MM-dd"), fundo.NomeFundo, carteiraUN.IdCarteira, NomeCarteira, valids);
+                                    // Captura qualquer outro erro inesperado
+                                    Console.WriteLine($"[ERRO]: {ex.Message}");
                                 }
+                            }));
+                        }
 
-                                Repository.UpdateHoraEnvioRelatorioSlack(carteiraUN.ID);
-                                Repository.UpdateDataCarteira(carteiraUN.IdCarteira);
-                                var response = new
-                                {
-                                    Path = PathToFile,
-                                    IdCanal = fundo.SlackChannelIDOperacionais
-                                };
-                                //return response.ToString();
-                                CarteirasDownload.UpdateStatus(carteiraUN.IdCarteira, carteiraUN.Data, CarteirasDownload.status.SUCESSO);
 
-                                if (carteiraFundo.EnviarCarteira)
+                        if (downloadPdf != null)
+                        {
+                            tasksToRun.Add(Task.Run(async () =>
+                            {
+                                var carteira = GetCarteiraByIdCarteiraBritech(carteiraUN.IdCarteira);
+                                string fileName = $"{carteiraUN.IdCarteira}_{carteiraUN.Data:yyyy-MM-dd}.pdf";
+                                //string pathDropbox = @"\\CONTROLADORIA\\PORTAL IDSF\\RELATORIOS\\CARTEIRA\\";
+                                string pathDropbox = ConfigurationManager.AppSettings["PATH.DROPBOX"];
+                                string fullPath = Path.Combine(DropBox, pathDropbox, fileName);
+
+                                try
                                 {
-                                    List<string> listasCarteiras = string.IsNullOrWhiteSpace(carteiraFundo.EmailsCarteira) ? new List<string>() : ((carteiraFundo.EmailsCarteira).Split(';').ToList());
-                                    if (listasCarteiras.Count > 0)
+                                    // Verifica se o caminho de rede existe
+                                    if (!Directory.Exists(pathDropbox))
                                     {
-                                        foreach (var email in listasCarteiras)
+                                        Console.WriteLine($"[ERRO]: O caminho de rede não foi encontrado: {pathDropbox}");
+                                        return; // Impede o código de continuar se o caminho não estiver acessível
+                                    }
+
+                                    // Tenta criar o diretório
+                                    Directory.CreateDirectory(Path.Combine(DropBox, pathDropbox));
+
+                                    if (File.Exists(fullPath)) File.Delete(fullPath);
+
+                                    await downloadPdf.SaveAsAsync(fullPath);
+
+                                    if (File.Exists(fullPath))
+                                    {
+                                        var fundo = Repository.GetFundo(carteiraUN.CnpjFundo);
+                                        string nomeCarteira = carteira.Count > 0 ? carteira[0].Apelido : fundo.NomeFundo;
+
+                                        var carteiraAtual = BritechRelatorioPosicaoFechamento(Int32.Parse(carteiraUN.IdCarteira), carteiraUN.Data);
+                                        var valids = GetDiferencaValidCarteira(Int32.Parse(carteiraUN.IdCarteira), carteiraUN.Data);
+
+                                        RegistroDeLogs.InserirLogBritechCarteira("GoToComposicaoCarteira", int.Parse(carteiraUN.IdCarteira), carteiraUN.Data, 5);
+
+
+                                        if (carteiraUN.ID_RELATORIO == 0)
                                         {
-                                            if (string.IsNullOrWhiteSpace(email))
-                                            {
-                                                continue;
-                                            }
-                                            else
-                                            {
-                                                Util.SendMailWithAttachment(email + ",controladoria@idsf.com.br", "Composição Carteira",
-                                                ConfigurationSettings.AppSettings["EMAIL.BODY"] + " a composição da carteira do Fundo.<br> " + ConfigurationSettings.AppSettings["EMAIL.BODY.ATT"],
-                                                FullPath);
-                                                //Util.MsgAutomacaoRobo(listaCotas[i].Carteira, data);
-                                            }
+                                            PostMakeSendMsg(fundo.SlackChannelIDOperacionais, carteiraUN.Data.ToString("yyyy-MM-dd"), fundo.NomeFundo, carteiraUN.IdCarteira, nomeCarteira, valids);
+                                            RegistroDeLogs.InserirLogBritechCarteira("PostMakeSendMsg", int.Parse(carteiraUN.IdCarteira), carteiraUN.Data, 6);
 
                                         }
+
+
+                                        Repository.UpdateHoraEnvioRelatorioSlack(carteiraUN.ID);
+                                        Repository.UpdateDataCarteira(carteiraUN.IdCarteira);
+                                        CarteirasDownload carteiraDownload = new CarteirasDownload();
+                                        CarteirasDownload.UpdateStatus(carteiraUN.IdCarteira, carteiraUN.Data, Status.Sucesso);
+
+                                        if (carteiraFundo.EnviarCarteira)
+                                        {
+                                            List<string> emails = string.IsNullOrWhiteSpace(carteiraFundo.EmailsCarteira) ? new List<string>() : carteiraFundo.EmailsCarteira.Split(';').ToList();
+                                            foreach (var email in emails.Where(email => !string.IsNullOrWhiteSpace(email)))
+                                            {
+                                                Util.SendMailWithAttachment(email + ",controladoria@idsf.com.br", "Composição Carteira",
+                                                    ConfigurationSettings.AppSettings["EMAIL.BODY"] + " a composição da carteira do Fundo.<br> " + ConfigurationSettings.AppSettings["EMAIL.BODY.ATT"],
+                                                    fullPath);
+                                            }
+                                        }
+
+                                        if (carteiraUN.ID_RELATORIO != 0)
+                                        {
+                                            ReportBatch.UpdateDsStatus("SUCESSO", carteiraUN.ID_RELATORIO);
+                                            ReportBatch.UpdatePath(Path.Combine(DropBox, pathDropbox), fileName, carteiraUN.ID_RELATORIO);
+                                        }
                                     }
+                                    else
+                                    {
+                                        CarteirasDownload.UpdateStatus(carteiraUN.IdCarteira, carteiraUN.Data, Status.NaoIniciado);
+                                    }
+                                    // [LOG]: Salvou PDF
+                                    RegistroDeLogs.InserirLogBritechCarteira("SalvarPDF", int.Parse(carteiraUN.IdCarteira), carteiraUN.Data, 7);
                                 }
-
-                                if (carteiraUN.ID_RELATORIO != 0)
+                               
+                                catch (Exception ex)
                                 {
-                                    ReportBatch.UpdateDsStatus("SUCESSO", carteiraUN.ID_RELATORIO);
-                                    ReportBatch.UpdatePath(DropBox + pathDropbox, fileName, carteiraUN.ID_RELATORIO);
+                                    Console.WriteLine($"[ERRO]: {ex.Message}");
                                 }
-                            }
-                            else
-                            {
-                                CarteirasDownload.UpdateStatus(carteiraUN.IdCarteira, carteiraUN.Data, CarteirasDownload.status.NAO_INICIADO);
-                            }
-                        }
-                        else
-                        {
-                            CarteirasDownload.UpdateStatus(carteiraUN.IdCarteira, carteiraUN.Data, CarteirasDownload.status.NAO_INICIADO);
+                            }));
                         }
 
-                        if (carteiraUN.IdCarteira == "53645")
-                        {
-                            var enviar = true;
-                        }
 
-                        if (carteiraUN.IdCarteira == "430961")
+                        try
                         {
-                            /* e-mails oficiais:*/
-                            string emails = "railda.santos@terrainvestimentos.com.br," +
-                                "cotas@terrainvestimentos.com.br," +
-                                "middle.fundos@terrainvestimentos.com.br," +
-                                "custodiadefundos@terrainvestimentos.com.br," +
-                                "carlos.silva@terrainvestimentos.com.br";
+                            await Task.WhenAll(tasksToRun);
+                        }
+                        catch (Exception ex)
+                        {
                             
-                            /* e-mails oficiais:*/
-                            string cc = "fundo-luna-fip1-aaaaewjb4gswicv5evtyggwvfq@idgr.slack.com," 
-                                //"nileide.abreu @idfip.com.br," +
-                                //"guilherme.guimaraes @idfip.com.br," +
-                                //"douglas.bomfim @idfip.com.br"
-                                +"regulatorio@idfip.com.br";
-
-                            await GoToHistoricoCota(page);
-                            string primeiro_dia_mes = "01" + "/" + carteiraUN.Data.ToString("MM") + "/" + carteiraUN.Data.ToString("yyyy");
-
-                            await PreencherCamposHistoricoCota(page, carteiraUN.IdCarteira, DateTime.Parse(primeiro_dia_mes), carteiraUN.Data);
-
-                            var download1 = await page.RunAndWaitForDownloadAsync(async () =>
-                            {
-                                await page.FrameLocator("iframe[name=\"iframePrincipal\"]").Locator("text=Gerar PDF").ClickAsync();
-                            });
-
-                            if (string.IsNullOrWhiteSpace(DropBox))
-                            {
-                                DropBox = ConfigurationManager.AppSettings["PATH.DROPBOX"];
-                            }
-
-                            string filename = download1.SuggestedFilename.Replace(".pdf", "");
-                            string arquivo = DropBox + "\\CONTROLADORIA\\PORTAL IDSF\\RELATORIOS\\HISTORICO\\" + filename + carteiraFundo.Nome + carteiraUN.Data.ToString("yyyy-MM-dd") + ".pdf";
-                            await download1.SaveAsAsync(arquivo);
-
-                            Util.SendMailWithAttachmentAndCC(emails,
-                                cc,
-                                "Histórico de Cotas",
-                                 ConfigurationSettings.AppSettings["EMAIL.BODY"] + " o Histórico de Cotas da carteira do Fundo.<br> " + ConfigurationSettings.AppSettings["EMAIL.BODY.ATT"],
-                                arquivo);
-                            //Util.MsgAutomacaoRobo(listaCotas[i].Carteira, data);
+                            Console.WriteLine($"[ERRO NA EXECUÇÃO DE TAREFAS]: {ex.Message}");
                         }
 
                         if (carteiraFundo.EnviarHistoricoCota && carteiraUN.ID_RELATORIO == 0)
@@ -284,171 +235,125 @@ namespace Idsf.Automatizacao.DownloadCarteira
                             await GoToHistoricoCota(page);
                             await PreencherCamposHistoricoCota(page, carteiraUN.IdCarteira, carteiraUN.Data, carteiraUN.Data);
 
-                            if (await page.FrameLocator("iframe[name=\"iframePrincipal\"]").Locator("#btnEditCodigo_I").InputValueAsync() == "26631505")
-                            {
-                                await page.WaitForTimeoutAsync(2000);
-                                await PreencherCamposHistoricoCota(page, carteiraUN.IdCarteira, carteiraUN.Data, carteiraUN.Data);
-                            }
-
-                            if (await page.FrameLocator("iframe[name=\"iframePrincipal\"]").Locator("#btnEditCodigo_I").InputValueAsync() != carteiraUN.IdCarteira)
-                            {
-                                await page.WaitForTimeoutAsync(2000);
-                                await PreencherCamposHistoricoCota(page, carteiraUN.IdCarteira, carteiraUN.Data, carteiraUN.Data);
-                            }
-
                             try
                             {
-                                var download1 = await page.RunAndWaitForDownloadAsync(async () =>
+                                var downloadHistorico = await page.RunAndWaitForDownloadAsync(async () =>
                                 {
                                     await page.FrameLocator("iframe[name=\"iframePrincipal\"]").Locator("text=Gerar PDF").ClickAsync();
                                 });
 
                                 if (string.IsNullOrWhiteSpace(DropBox))
-                                {
                                     DropBox = ConfigurationManager.AppSettings["PATH.DROPBOX.D"];
-                                }
 
-                                string filename = download1.SuggestedFilename.Replace(".pdf", "");
-                                string arquivo = DropBox + "\\CONTROLADORIA\\PORTAL IDSF\\RELATORIOS\\HISTORICO\\" + filename + carteiraFundo.Nome + carteiraUN.Data.ToString("yyyy-MM-dd") + ".pdf";
-                                await download1.SaveAsAsync(arquivo);
+                                string filename = downloadHistorico.SuggestedFilename.Replace(".pdf", "");
+                                string arquivo = Path.Combine(DropBox, "CONTROLADORIA", "PORTAL IDSF", "RELATORIOS", "HISTORICO", filename + carteiraFundo.Nome + carteiraUN.Data.ToString("yyyy-MM-dd") + ".pdf");
+                                await downloadHistorico.SaveAsAsync(arquivo);
 
                                 Util.SendMailWithAttachment(carteiraFundo.EmailsHistoricoCota + ",controladoria@idsf.com.br", "Histórico de Cotas",
-                                                                            ConfigurationSettings.AppSettings["EMAIL.BODY"] + " o Histórico de Cotas da carteira do Fundo.<br>" + ConfigurationSettings.AppSettings["EMAIL.BODY.ATT"],
-                                                                            arquivo);
+                                    ConfigurationSettings.AppSettings["EMAIL.BODY"] + " o Histórico de Cotas da carteira do Fundo.<br>" + ConfigurationSettings.AppSettings["EMAIL.BODY.ATT"],
+                                    arquivo);
 
-                                //string[] emails = carteiraFundo.EmailsHistoricoCota.Split(',').ToArray();
-
-                                //for (int email = 0; email < emails.Length; email++)
-                                //{
-                                //}
+                                // [LOG]: Histórico de cotas baixado
+                                RegistroDeLogs.InserirLogBritechCarteira("DownloadHistoricoCota", int.Parse(carteiraUN.IdCarteira), carteiraUN.Data, 8);
 
                             }
-                            catch (Exception e)
+                            catch (Exception)
                             {
-
+                                // handle exception
                             }
                         }
                     }
                     await page.CloseAsync();
                 }
             }
-        }
+
+        } 
+
+
 
         public static List<double> GetDiferencaValidCarteira(int idCarteira, DateTime dateTime)
         {
-            var carteiraatual = BritechRelatorioPosicaoFechamento(idCarteira, dateTime);
-            if (carteiraatual != null)
-            {
-                DateTime diaAnterior = Util.GetUltimoDiaAnterior(dateTime);
-                var ultimaCarteira = BritechRelatorioPosicaoFechamento(idCarteira, diaAnterior);
-
-                var VAlidCarteira = carteiraatual.Posicoes
-                    .Where(posicao => posicao.Ativo.Contains("VALID"))
-                    .ToList();
-
-                double ValidAnterior = 0;
-
-                if (ultimaCarteira != null)
-                {
-                    var validAnterior = ultimaCarteira.Posicoes
-                        .Where(posicao => posicao.Ativo.Contains("VALID"))
-                        .ToList();
-
-                    for (int i = 0; i < validAnterior.Count; i++)
-                    {
-                        ValidAnterior = validAnterior[i].QtdeTotal;
-                    }
-                }
-
-                double ValidAtual = 0;
-                for (int i = 0; i < VAlidCarteira.Count; i++)
-                {
-                    ValidAtual = VAlidCarteira[i].QtdeTotal;
-                }
-
-                double atualValid = ValidAtual - ValidAnterior;
-
-                return new List<double> { ValidAtual, atualValid };
-            }
-            else
-            {
+            var carteiraAtual = BritechRelatorioPosicaoFechamento(idCarteira, dateTime);
+            if (carteiraAtual == null)
                 return new List<double>();
+
+            var diaAnterior = Util.GetUltimoDiaAnterior(dateTime);
+            var ultimaCarteira = BritechRelatorioPosicaoFechamento(idCarteira, diaAnterior);
+
+            double validAtual = carteiraAtual.Posicoes
+                .Where(p => p.Ativo.Contains("VALID"))
+                .Sum(p => p.QtdeTotal);
+
+            double validAnterior = 0;
+            if (ultimaCarteira != null)
+            {
+                validAnterior = ultimaCarteira.Posicoes
+                    .Where(p => p.Ativo.Contains("VALID"))
+                    .Sum(p => p.QtdeTotal);
             }
+
+            double diferenca = validAtual - validAnterior;
+
+            return new List<double> { validAtual, diferenca };
         }
+
 
         static string FormatarValorBrasileiro(double valor)
         {
-            // Formata o valor como moeda brasileira
-            string valorFormatado = valor.ToString("C2");
-
-            // Substitui o separador de milhar e o separador decimal para o padrão brasileiro
-            valorFormatado = valorFormatado.Replace(".", "###").Replace(",", ".").Replace("###", ",");
-
-            // Adiciona o símbolo da moeda
-            valorFormatado = "" + valorFormatado;
-
-            return valorFormatado;
+            return valor.ToString("C2", new System.Globalization.CultureInfo("pt-BR"));
         }
+
 
         public static RelatorioPosicaoFechamento BritechRelatorioPosicaoFechamento(int idCarteira, DateTime dataCarteira)
         {
+            string url = $"https://id.britech.com.br/ws/api/Common/RelatorioPosicaoFechamento?IdsCarteira={idCarteira}&dataInicial={dataCarteira:yyyy-MM-dd}&dataFinal={dataCarteira:yyyy-MM-dd}&desconsideraGrossup=true";
 
-            string resultStr;
-            string url = "https://id.britech.com.br/ws/api/Common/RelatorioPosicaoFechamento?IdsCarteira=" + idCarteira + "&dataInicial=" + dataCarteira.ToString("yyyy-MM-dd") + "&dataFinal=" + dataCarteira.ToString("yyyy-MM-dd") + "&desconsideraGrossup=true";
-            //https://localhost:44330
-            using (HttpClient client = new HttpClient())
+            try
             {
-                try
+                var request = (HttpWebRequest)WebRequest.Create(url);
+                request.ContentType = "application/json";
+                request.Method = "GET";
+
+                var authString = $"{ConfigurationManager.AppSettings["BRITECH.USERNAME"]}:{ConfigurationManager.AppSettings["BRITECH.PASSWORD"]}";
+                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(authString)));
+
+                var response = request.GetResponseAsync().Result;
+
+                using (var reader = new StreamReader(response.GetResponseStream()))
                 {
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = "GET";
-                    var authenticationString = $"" + ConfigurationManager.AppSettings["BRITECH.USERNAME"] + ":" + ConfigurationManager.AppSettings["BRITECH.PASSWORD"];
-                    var base64EncodedAuthenticationString = Convert.ToBase64String(System.Text.ASCIIEncoding.UTF8.GetBytes(authenticationString));
-                    httpWebRequest.Headers.Add("Authorization", "Basic " + base64EncodedAuthenticationString);
-
-                    var response = httpWebRequest.GetResponseAsync().Result;
-
-                    using (var streamReader = new StreamReader(response.GetResponseStream()))
-                    {
-                        var result = streamReader.ReadToEndAsync();
-                        resultStr = result.Result;
-                    }
-                    //RelatorioPosicaoFechamento carteiraResponse = JsonConvert.DeserializeObject<RelatorioPosicaoFechamento>(resultStr);
-                    var carteiraResponse = JsonConvert.DeserializeObject<List<RelatorioPosicaoFechamento>>(resultStr);
-
-                    return carteiraResponse[0];
-
-                }
-                catch (Exception e)
-                {
-                    //Utils.Slack.MandarMsgErroGrupoDev(e.Message, "Integracao.Britech.ProcessarCarteira", "Idsf.CadastroCedentes, " + url, e.StackTrace);
-                    return null;
+                    var result = reader.ReadToEndAsync().Result;
+                    var carteiras = JsonConvert.DeserializeObject<List<RelatorioPosicaoFechamento>>(result);
+                    return carteiras?.FirstOrDefault();
                 }
             }
-
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
-        public static void PostMakeSendMsg(string CanalId, string data, string nomeFundo, string idCarteira, string nomeCarteira, List<double> valid)
+
+        public static void PostMakeSendMsg(string canalId, string data, string nomeFundo, string idCarteira, string nomeCarteira, List<double> valid)
         {
-            string url = "https://hook.us1.make.com/monaya9nwroe9lmywdiplr70t6rh973d?ChannelId=" + CanalId + "&NomeFundo=" + nomeFundo + 
-                "&Data=" + data + "&IdCarteira=" + idCarteira + "&NomeCarteira=" + nomeCarteira + "&ValorValid=" + valid[0] + "&diferencaValid=" + valid[1];
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
-                    HttpResponseMessage response = client.SendAsync(request).Result;
-                    string responseContent = response.Content.ReadAsStringAsync().Result;
+            string url = $"https://hook.us1.make.com/monaya9nwroe9lmywdiplr70t6rh973d?ChannelId={canalId}&NomeFundo={nomeFundo}&Data={data}&IdCarteira={idCarteira}&NomeCarteira={nomeCarteira}&ValorValid={valid[0]}&diferencaValid={valid[1]}";
 
-                }
-                catch (Exception e)
+            try
+            {
+
+                using (var client = new HttpClient())
                 {
-                    //Utils.Slack.MandarMsgErroGrupoDev(e.Message, "Integracao.Carteira.ComposicaoCarteira", "Idsf.CadastroCedentes", e.StackTrace);
+                    var request = new HttpRequestMessage(HttpMethod.Post, url);
+                    var response = client.SendAsync(request).Result;
+                    var _ = response.Content.ReadAsStringAsync().Result;
                 }
             }
+            catch (Exception)
+            {
+                // Log ou tratamento de erro
+            }
         }
+
 
         public static async Task LoginBritech(IPage page)
         {
@@ -500,12 +405,16 @@ namespace Idsf.Automatizacao.DownloadCarteira
                 //var composicaoCarteiraLink = await page.QuerySelectorAsync("a:has-text('Composição Carteira')"); 
                 //await composicaoCarteiraLink.ClickAsync(); 
 
+
+
             }
             catch (Exception)
             {
                 await GoToComposicaoCarteira(page);
             }
         }
+
+
 
 
         public static async Task GoToHistoricoCota(IPage page)
@@ -749,7 +658,7 @@ namespace Idsf.Automatizacao.DownloadCarteira
             {
                 return null;
             }
-        }       
+        }
 
         public static List<Carteira> GetCarteiraByIdCarteiraBritech(string idCarteira)
         {

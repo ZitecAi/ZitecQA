@@ -130,6 +130,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RegistroDeLogs.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="RelatorioPosicaoFechamento.cs" />
     <Compile Include="Fundo.cs" />

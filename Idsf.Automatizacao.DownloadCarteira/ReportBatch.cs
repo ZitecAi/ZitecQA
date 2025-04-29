@@ -11,33 +11,47 @@ using System.Threading.Tasks;
 namespace Idsf.Automatizacao.DownloadCarteira
 {
     internal class ReportBatch
-    {   
-        public static string ConnectionSQLPortalIDSF = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-        public static void ExecuteQuery(SqlCommand query, string connectionSql)
+    {
+        private static readonly string _connectionString = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+
+        public static void ExecuteNonQuerySafe(SqlCommand command)
         {
             try
             {
-                string ComandoSql = GetCompleteSqlWithParameters(query);
-
-                using (SqlConnection myConnection = new SqlConnection(connectionSql))
+                using (var connection = new SqlConnection(_connectionString))
                 {
-                    myConnection.Open();
-                    SqlCommand oCmd = new SqlCommand(ComandoSql, myConnection);
-
-
-
-                    oCmd.CommandType = CommandType.Text;
-                    oCmd.ExecuteNonQuery();
-
-
-                    myConnection.Close();
+                    command.Connection = connection;
+                    connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                //Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ReportBatchRepository", "Portal IDSF", e.StackTrace);
+                Console.WriteLine($"[ERRO ExecuteNonQuerySafe]: {ex}");
+                // Aqui você poderia enviar para um log, Slack, etc.
             }
         }
+
+        public static void UpdateDsStatus(string status, int idReportBatch)
+        {
+            var command = new SqlCommand("UPDATE MeusRelatorios SET DS_STATUS = @Status WHERE ID_REPORT_BATCH = @IdReportBatch");
+            command.Parameters.Add("@Status", SqlDbType.VarChar).Value = status;
+            command.Parameters.Add("@IdReportBatch", SqlDbType.Int).Value = idReportBatch;
+
+            ExecuteNonQuerySafe(command);
+        }
+
+        public static void UpdatePath(string path, string fileName, int idReportBatch)
+        {
+            var command = new SqlCommand("UPDATE MeusRelatorios SET NM_ARQUIVO = @FileName, LOCALIZACAO_RELATORIO = @Path WHERE ID_REPORT_BATCH = @IdReportBatch");
+            command.Parameters.Add("@FileName", SqlDbType.VarChar).Value = fileName;
+            command.Parameters.Add("@Path", SqlDbType.VarChar).Value = path;
+            command.Parameters.Add("@IdReportBatch", SqlDbType.Int).Value = idReportBatch;
+
+            ExecuteNonQuerySafe(command);
+        }
+
+        // Essa função é útil apenas se quiser LOGAR o SQL final para DEBUG
         public static string GetCompleteSqlWithParameters(SqlCommand sqlCommand)
         {
             string completeSql = sqlCommand.CommandText;
@@ -55,9 +69,9 @@ namespace Idsf.Automatizacao.DownloadCarteira
                 {
                     parameterValue = $"'{parameter.Value}'";
                 }
-                else if (parameter.Value is DateTime)
+                else if (parameter.Value is DateTime date)
                 {
-                    parameterValue = $"'{((DateTime)parameter.Value).ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)}'";
+                    parameterValue = $"'{date.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)}'";
                 }
                 else
                 {
@@ -68,20 +82,6 @@ namespace Idsf.Automatizacao.DownloadCarteira
             }
 
             return completeSql;
-        }
-
-        public static void UpdateDsStatus(string status, int IdReportBatch)
-        {
-            SqlCommand oCmd = new SqlCommand("UPDATE MeusRelatorios SET DS_STATUS = @STATUS WHERE ID_REPORT_BATCH = @ID_REPORT_BATCH");
-            oCmd.Parameters.AddWithValue("@STATUS", status);
-            oCmd.Parameters.AddWithValue("@ID_REPORT_BATCH", IdReportBatch);
-            ExecuteQuery(oCmd, ConnectionSQLPortalIDSF);
-        }   
-
-        public static void UpdatePath(string path, string FileName, int IdReportBatch)
-        {
-            SqlCommand oCmd = new SqlCommand("UPDATE MeusRelatorios SET NM_ARQUIVO = '" + FileName + "', LOCALIZACAO_RELATORIO = '" + path + "' where ID_REPORT_BATCH = " + IdReportBatch);
-            ExecuteQuery(oCmd, ConnectionSQLPortalIDSF);
         }
     }
 }

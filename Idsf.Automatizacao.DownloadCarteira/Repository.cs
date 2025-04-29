@@ -6,102 +6,94 @@ namespace Idsf.Automatizacao.DownloadCarteira
 {
     public class Repository
     {
-        public static Fundo GetFundo(string CnpjFundo)
+        private static readonly string _connectionString = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+
+        public static Fundo GetFundo(string cnpjFundo)
         {
-            Fundo fundo = new Fundo();
-            var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+            var fundo = new Fundo();
 
-            using (SqlConnection myConnection = new SqlConnection(con))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                myConnection.Open();
-                SqlCommand oCmd = new SqlCommand("SELECT * FROM Fundo Where CnpjFundo = @CnpjFundo", myConnection);
-                oCmd.Parameters.AddWithValue("@CnpjFundo", CnpjFundo);
-
-                using (SqlDataReader oReader = oCmd.ExecuteReader())
+                connection.Open();
+                using (var command = new SqlCommand("SELECT * FROM Fundo WHERE CnpjFundo = @CnpjFundo", connection))
                 {
-                    while (oReader.Read())
+                    command.Parameters.AddWithValue("@CnpjFundo", cnpjFundo);
+
+                    using (var reader = command.ExecuteReader())
                     {
-                        fundo.Id = (int)oReader["Id"];
-                        fundo.NomeFundo = oReader["NomeFundo"].ToString();
-                        fundo.CNPJFundo += oReader["CnpjFundo"].ToString();
-                        fundo.Servidor = oReader["Server"].ToString();
-                        fundo.SlackWebhook = oReader["SlackWebhook"].ToString();
-                        fundo.SlackBotToken = oReader["SlackBotToken"].ToString();
-                        fundo.SlackAppToken = oReader["SlackAppToken"].ToString();
-                        fundo.SlackSigningSecret = oReader["SlackSigningSecret"].ToString();
-                        fundo.SlackChannelId = oReader["SlackChannelId"].ToString();
-                        fundo.SlackChannelName = oReader["SlackChannelName"].ToString();
-                        fundo.ShortNameFundo = oReader["ShortNameFundo"].ToString();
-                        fundo.GestoraCnpj = oReader["GestoraCnpj"].ToString();
-                        fundo.ConsultoraCnpj = oReader["ConsultoraCnpj"].ToString();
-                        fundo.Status = oReader["Status"].ToString();
-                        fundo.EmailsNotificacao = oReader["EmailsNotificacao"].ToString();
-                        fundo.EmailsCarteira = oReader["emailCarteira"].ToString();
-                        fundo.WebHookOperacionais = oReader["WebhookOperacionais"].ToString();
-                        fundo.SlackChannelIDOperacionais = oReader["SlackChannelIDOperacionais"].ToString();
-                        fundo.ChannelNameOperacionais = oReader["ChannelNameOperacionais"].ToString();
-                        fundo.CoGestoraCnpj = oReader["CoGestoraCNPJ"].ToString();
-                        fundo.CoConsultoraCnpj = oReader["CoConsultoraCNPJ"].ToString();
+                        if (reader.Read())
+                        {
+                            fundo.Id = (int)reader["Id"];
+                            fundo.NomeFundo = reader["NomeFundo"].ToString();
+                            fundo.CNPJFundo = reader["CnpjFundo"].ToString(); // Corrigido para "="
+                            fundo.Servidor = reader["Server"].ToString();
+                            fundo.SlackWebhook = reader["SlackWebhook"].ToString();
+                            fundo.SlackBotToken = reader["SlackBotToken"].ToString();
+                            fundo.SlackAppToken = reader["SlackAppToken"].ToString();
+                            fundo.SlackSigningSecret = reader["SlackSigningSecret"].ToString();
+                            fundo.SlackChannelId = reader["SlackChannelId"].ToString();
+                            fundo.SlackChannelName = reader["SlackChannelName"].ToString();
+                            fundo.ShortNameFundo = reader["ShortNameFundo"].ToString();
+                            fundo.GestoraCnpj = reader["GestoraCnpj"].ToString();
+                            fundo.ConsultoraCnpj = reader["ConsultoraCnpj"].ToString();
+                            fundo.Status = reader["Status"].ToString();
+                            fundo.EmailsNotificacao = reader["EmailsNotificacao"].ToString();
+                            fundo.EmailsCarteira = reader["emailCarteira"].ToString();
+                            fundo.WebHookOperacionais = reader["WebhookOperacionais"].ToString();
+                            fundo.SlackChannelIDOperacionais = reader["SlackChannelIDOperacionais"].ToString();
+                            fundo.ChannelNameOperacionais = reader["ChannelNameOperacionais"].ToString();
+                            fundo.CoGestoraCnpj = reader["CoGestoraCNPJ"].ToString();
+                            fundo.CoConsultoraCnpj = reader["CoConsultoraCNPJ"].ToString();
 
-                        var ValorGestora = oReader["ValorGestora"].ToString();
-                        if (!String.IsNullOrEmpty(ValorGestora))
-                            fundo.ValorGestora = Decimal.Parse(ValorGestora);
+                            fundo.ValorGestora = SafeParseDecimal(reader["ValorGestora"]).GetValueOrDefault();
+                            fundo.ValorCoGestora = SafeParseDecimal(reader["ValorCoGestora"]).GetValueOrDefault();
+                            fundo.ValorConsultora = SafeParseDecimal(reader["ValorConsultora"]).GetValueOrDefault();
+                            fundo.ValorCoConsultora = SafeParseDecimal(reader["ValorCoConsultora"]).GetValueOrDefault();
 
-                        var ValorCoGestora = oReader["ValorCoGestora"].ToString();
-                        if (!String.IsNullOrEmpty(ValorCoGestora))
-                            fundo.ValorCoGestora = Decimal.Parse(ValorCoGestora);
+                            // Campos que estavam comentados no original:
+                            // fundo.tipoFundo = reader["tipoFundo"].ToString();
+                            // fundo.caractFundo = reader["caractFundo"].ToString();
+                            // fundo.tipoInvestidor = reader["tipoInvestidor"].ToString();
 
-                        var ValorConsultora = oReader["ValorConsultora"].ToString();
-                        if (!String.IsNullOrEmpty(ValorConsultora))
-                            fundo.ValorConsultora = Decimal.Parse(ValorConsultora.ToString());
+                            // var taxaAdministracao = reader["taxaAdministracao"].ToString();
+                            // if (!String.IsNullOrEmpty(taxaAdministracao))
+                            //     fundo.taxaAdministracao = decimal.Parse(reader["taxaAdministracao"].ToString());
 
-                        var ValorCoConsultora = oReader["ValorCoConsultora"].ToString();
-                        if (!String.IsNullOrEmpty(ValorCoConsultora))
-                            fundo.ValorCoConsultora = Decimal.Parse(ValorCoConsultora.ToString());
-                        //fundo.tipoFundo = oReader["tipoFundo"].ToString();
-                        //fundo.caractFundo = oReader["caractFundo"].ToString();
-                        //fundo.tipoInvestidor = oReader["tipoInvestidor"].ToString();
+                            // var taxaCustodia = reader["taxaCustodia"].ToString();
+                            // if (!String.IsNullOrEmpty(taxaCustodia))
+                            //     fundo.taxaCustodia = decimal.Parse(reader["taxaCustodia"].ToString());
 
-                        //var taxaAdministracao = oReader["taxaAdministracao"].ToString();
-                        //if (!String.IsNullOrEmpty(taxaAdministracao))
-                        //    fundo.taxaAdministracao = decimal.Parse(oReader["taxaAdministracao"].ToString());
-
-                        //var taxaCustodia = oReader["taxaCustodia"].ToString();
-                        //if (!String.IsNullOrEmpty(taxaCustodia))
-                        //    fundo.taxaCustodia = decimal.Parse(oReader["taxaCustodia"].ToString());
-
-                        //var taxaControladoria = oReader["taxaControladoria"].ToString();
-                        //if (!String.IsNullOrEmpty(taxaControladoria))
-                        //    fundo.taxaControladoria = decimal.Parse(oReader["taxaControladoria"].ToString());
-
+                            // var taxaControladoria = reader["taxaControladoria"].ToString();
+                            // if (!String.IsNullOrEmpty(taxaControladoria))
+                            //     fundo.taxaControladoria = decimal.Parse(reader["taxaControladoria"].ToString());
+                        }
                     }
-                    myConnection.Close();
                 }
             }
+
             return fundo;
         }
 
-        public static void UpdateHoraEnvioRelatorioSlack(int iD)
+        public static void UpdateHoraEnvioRelatorioSlack(int id)
         {
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (var connection = new SqlConnection(_connectionString))
                 {
-                    myConnection.Open();
+                    connection.Open();
 
-                    using (SqlCommand oCmd = new SqlCommand("UPDATE CarteirasDownload SET EnvioRelatorio = @horarioEnvio WHERE ID = @id", myConnection))
+                    using (var command = new SqlCommand("UPDATE CarteirasDownload SET EnvioRelatorio = @horarioEnvio WHERE ID = @id", connection))
                     {
-                        oCmd.Parameters.AddWithValue("@horarioEnvio", DateTime.Now);
-                        oCmd.Parameters.AddWithValue("@id", iD);
+                        command.Parameters.AddWithValue("@horarioEnvio", DateTime.Now);
+                        command.Parameters.AddWithValue("@id", id);
 
-                        oCmd.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Console.WriteLine($"[ERRO UpdateHoraEnvioRelatorioSlack]: {ex}");
             }
         }
 
@@ -109,24 +101,34 @@ namespace Idsf.Automatizacao.DownloadCarteira
         {
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (var connection = new SqlConnection(_connectionString))
                 {
-                    myConnection.Open();
+                    connection.Open();
 
-                    using (SqlCommand oCmd = new SqlCommand("UPDATE carteiraFundo SET DataCarteira = @dataCarteira WHERE Id = @id", myConnection))
+                    using (var command = new SqlCommand("UPDATE carteiraFundo SET DataCarteira = @dataCarteira WHERE Id = @id", connection))
                     {
-                        oCmd.Parameters.AddWithValue("@dataCarteira", DateTime.Today);
-                        oCmd.Parameters.AddWithValue("@id", idCarteira);
+                        command.Parameters.AddWithValue("@dataCarteira", DateTime.Today);
+                        command.Parameters.AddWithValue("@id", idCarteira);
 
-                        oCmd.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Console.WriteLine($"[ERRO UpdateDataCarteira]: {ex}");
             }
+        }
+
+        private static decimal? SafeParseDecimal(object value)
+        {
+            if (value == DBNull.Value || value == null)
+                return null;
+
+            if (decimal.TryParse(value.ToString(), out decimal result))
+                return result;
+
+            return null;
         }
     }
 }
