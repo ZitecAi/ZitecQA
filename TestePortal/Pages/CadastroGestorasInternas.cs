@@ -80,7 +80,7 @@ namespace TestePortal.Pages
 
                         await Page.ReloadAsync();
                         await Page.GetByLabel("Pesquisar").ClickAsync();
-                        await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.aim");
+                        await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                         var primeiroTr = Page.Locator("#listaGestoras tr").First;
                         var primeiroTd = primeiroTr.Locator("td").First;
                         await primeiroTd.ClickAsync();
@@ -277,7 +277,7 @@ namespace TestePortal.Pages
                             var ppeResumo = await Page.EvaluateAsync<bool>("() => document.getElementById('ppeResumoNao').checked");
 
 
-                            if (razaoSocialResumo == "CENTER NORTE S/A CONSTRUCAO EMPREEND ADM E PARTICIPACAO" && cnpjResumo == "45.246.402/0005-32" && dtConstituicaoResumo == dataAtual &&
+                            if (razaoSocialResumo == "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA" && cnpjResumo == "16.695.922/0001-09" && dtConstituicaoResumo == dataAtual &&
                                 ativPrincipalResumo == "info" && controlAcionarioResumo == "Nacional" && paisConstituicaoResumo == "BRASIL" && paisDomFiscalResumo == "BRASIL"
                                 && emailResumo == "robo@zitec.ai" && usPerson == true && irrfResumo == "Isento" && iofResumo == "Isento" && fatcaResumo == true
                                 && ppeResumo == true

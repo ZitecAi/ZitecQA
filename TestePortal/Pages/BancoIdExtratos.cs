@@ -39,15 +39,10 @@ namespace TestePortal.Pages
                     {
                         errosTotais++;
                     }
-                  
 
-                    await Page.GetByRole(AriaRole.Button, new() { Name = " Extrato" }).ClickAsync();
-                    await Page.Locator("#dataAquisicaoConsolidadosFiltro1").ClickAsync();
-                    await Page.GetByRole(AriaRole.Cell, new() { Name = "1", Exact = true }).First.ClickAsync();
-                    await Page.GetByRole(AriaRole.Cell, new() { Name = "31" }).Nth(1).ClickAsync();
-                    await Page.GetByRole(AriaRole.Button, new() { Name = "Aplicar" }).ClickAsync();
-                    //await Page.Locator("#FundoFiltroExtrato").SelectOptionAsync(new[] { "36614123000160" });
-                    await Page.Locator("#FundoFiltroExtrato").SelectOptionAsync(new[] { "26452257000178" });
+                    await Page.GetByRole(AriaRole.Button, new() { Name = " Gerar Extrato" }).ClickAsync();
+                    await Page.Locator("#FundoFiltroExtrato").SelectOptionAsync(new[] { "54638076000176" });
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Gerar", Exact = true }).ClickAsync();
 
                     //bool sucesso = await BaixarExtrato.BaixarRelatorio(Page);
                     bool sucesso = false;

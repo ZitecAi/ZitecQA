@@ -247,7 +247,7 @@ namespace TestePortal.Pages
                             await Task.Delay(1000);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.airobo@zitec.ai");
+                           await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr2 = Page.Locator("#listaConsultoria tr").First;
                             var primeiroTd2 = primeiroTr.Locator("td").First;
                             await primeiroTd.ClickAsync();//ModalResumoFormConsultoria('214')
@@ -291,7 +291,7 @@ namespace TestePortal.Pages
                             await Page.WaitForSelectorAsync("#ppeResumoNao");
                             var isPpeNaoChecked = await Page.EvaluateAsync<bool>("() => document.getElementById('ppeResumoNao').checked");
 
-                            if (razaoSocial == "CENTER NORTE S/A CONSTRUCAO EMPREEND ADM E PARTICIPACAO" && cnpj == "45.246.402/0005-32" && dtConstituicao == "20/12/2023" && ativPrincipal == "info"
+                            if (razaoSocial == "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA" && cnpj == "16.695.922/0001-09" && dtConstituicao == "20/12/2023" && ativPrincipal == "info"
                                 && controlAcionario == "Nacional" && paisConstituicao == "BRASIL" && paisDomFiscal == "BRASIL" && email == "robo@zitec.ai"
                                 && isPpeNaoChecked == true
                                 )
@@ -415,7 +415,7 @@ namespace TestePortal.Pages
                             var celularRepresentante2 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(2) td:nth-child(5)').innerText");
                             await Task.Delay(200);
 
-                            if (nomeRepresentante1 == "Guilherme Costa" && cpfRepresentante1 == "496.248.668-30" && dataNascimentoRepresentante1 == "14/08/2003" && emailRepresentante1 == "robo@zitec.ai" &&
+                            if (nomeRepresentante1 == "Guilherme Costa" && cpfRepresentante1 == "496.248.668-30" && dataNascimentoRepresentante1 == "14/08/2003" && emailRepresentante1 == "teste3@gmail.com" &&
                                 nomeRepresentante2 == "Caio Oliveira" && cpfRepresentante2 == "426.792.428-74" && dataNascimentoRepresentante2 == "14/08/2023" && emailRepresentante2 == "robo@zitec.ai"
                                 && celularRepresentante2 == "11564984546"
                                 )

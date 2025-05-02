@@ -63,7 +63,7 @@ namespace TestePortal.Pages
                         await Page.Locator("#ambienteSelect").SelectOptionAsync(new[] { "custodia" });
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" }).ClickAsync();
 
-                        await Task.Delay(500);
+                        await Task.Delay(1500);
                         
 
                         var fundoExiste = Repository.Fundos.FundosRepository.VerificaExistenciaFundo("45543915000181", "teste QA");

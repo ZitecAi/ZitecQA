@@ -48,8 +48,9 @@ namespace TestePortal.Pages
 
                    
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Amortização" }).ClickAsync();
+                    await Page.Locator("#fundoAmortizacao").SelectOptionAsync(new[] { "54638076000176" });
                     await Page.Locator("#tipoAmortizacao").SelectOptionAsync(new[] { "Parcial" });
-                    await Page.Locator("#jurosAmortizacao").SelectOptionAsync(new[] { "PrincipalWithJuros" });
+                    await Page.Locator("#jurosAmortizacao").SelectOptionAsync(new[] { "PrincipalOnly" });
                     await Page.GetByLabel("Data de Assembleia:*").ClickAsync();
                     await Page.GetByLabel("Data de Assembleia:*").FillAsync("17/04/2025");
                     await Page.GetByLabel("Data Limite:*").ClickAsync();

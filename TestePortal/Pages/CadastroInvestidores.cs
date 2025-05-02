@@ -248,7 +248,7 @@ namespace TestePortal.Pages
                                 await button.ClickAsync();
                                 fluxoDeCadastros.Formulario = "✅";
                                 Console.WriteLine("Botão de resumo de formulário encontrado.");
-                                
+
                             }
                             else
                             {
@@ -599,6 +599,7 @@ namespace TestePortal.Pages
                             await Page.WaitForSelectorAsync(locatorCompliance);
                             await Page.Locator(locatorCompliance).ClickAsync();
                             await Page.Locator("#statusCompliance label").Filter(new() { HasText = "Aprovado" }).ClickAsync();
+                            await Page.Locator("#riscoCompliance label").Filter(new() { HasText = "Baixo" }).Locator("div").ClickAsync();
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira sua mensagem..." }).ClickAsync();
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira sua mensagem..." }).FillAsync("teste aprovação");
                             await Page.Locator("#statusComplianceButton").ClickAsync();
@@ -623,7 +624,7 @@ namespace TestePortal.Pages
                                 }
                             }
 
-                        
+
                             if (statusAtual == true)
                             {
                                 string idDocumentoAutentique = Repository.Investidores.InvestidoresRepository.ObterIdDocumentoAutentique(idCotista);
@@ -724,7 +725,7 @@ namespace TestePortal.Pages
                         {
                             Console.WriteLine("investidor adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                           
+
 
 
 
@@ -842,7 +843,7 @@ namespace TestePortal.Pages
 
                     if (nivelLogado == NivelEnum.Master)
                     {
-                        
+
                         var apagarInvestidor2 = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("16695922000109", "robo@zitec.ai");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Investidor" }).ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").ClickAsync();
@@ -1483,6 +1484,7 @@ namespace TestePortal.Pages
                         await Page.WaitForSelectorAsync(locatorCompliance);
                         await Page.Locator(locatorCompliance).ClickAsync();
                         await Page.Locator("#statusCompliance label").Filter(new() { HasText = "Aprovado" }).ClickAsync();
+                        await Page.Locator("#riscoCompliance label").Filter(new() { HasText = "Baixo" }).Locator("div").ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira sua mensagem..." }).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira sua mensagem..." }).FillAsync("teste aprovação");
                         await Page.Locator("#statusComplianceButton").ClickAsync();
@@ -1527,7 +1529,8 @@ namespace TestePortal.Pages
                                     fluxoDeCadastros.DocumentoAssinado = "✅";
 
                                 }
-                                else {
+                                else
+                                {
                                     fluxoDeCadastros.DocumentoAssinado = "❌";
                                 }
 
@@ -1581,7 +1584,7 @@ namespace TestePortal.Pages
 
 
 
-                        
+
 
                         //verificar no banco de dados
 
@@ -2034,6 +2037,8 @@ namespace TestePortal.Pages
                         }
 
                         //verificar dados de representates
+                        await Page.Locator("#RepresentantesFI-tabResumo").ClickAsync();
+
                         await Page.WaitForSelectorAsync("#tabelaRepresentanteResumoFI");
 
                         var nomeRepresentante = await Page.EvaluateAsync<string>(
@@ -2066,10 +2071,11 @@ namespace TestePortal.Pages
 
                         await Page.Locator("#ContaBancariaFI-tabResumo").ClickAsync();
 
-                        var banco = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContaBancaria_CB .list-group-item').querySelector('b:nth-of-type(1)').nextSibling.textContent.trim()");
-                        var agencia = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContaBancaria_CB .list-group-item').querySelector('b:nth-of-type(2)').nextSibling.textContent.trim()");
-                        var conta = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContaBancaria_CB .list-group-item').querySelector('b:nth-of-type(3)').nextSibling.textContent.trim()");
-                        var tipoConta = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContaBancaria_CB .list-group-item').querySelector('b:nth-of-type(4)').nextSibling.textContent.trim()");
+                        var banco = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContasBancoResumoFI tr td:nth-of-type(1)').textContent.trim()");
+                        var agencia = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContasBancoResumoFI tr td:nth-of-type(2)').textContent.trim()");
+                        var conta = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContasBancoResumoFI tr td:nth-of-type(3)').textContent.trim()");
+                        var tipoConta = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContasBancoResumoFI tr td:nth-of-type(4)').textContent.trim()");
+
 
                         if (banco == "439" && agencia == "6541" && conta == "54811-5" && tipoConta == "CORRENTE")
                         {
@@ -2087,10 +2093,35 @@ namespace TestePortal.Pages
                         //verificar documentos
 
                         await Page.Locator("#DocumentosFI-tabResumo").ClickAsync();
-                        bool downloadComprovanteConcluido = await Repository.Investidores.InvestidoresFundInvest.BaixarArquivo(Page, "btnDownloadComprovante", "Comprovante.pdf");
-                        bool downloadRegulamentoConcluido = await Repository.Investidores.InvestidoresFundInvest.BaixarArquivo(Page, "btnDownloadRegulamento", "Regulamento.pdf");
+                        var existeDocumento = await Page.EvaluateAsync<bool>(@"
+                            () => {
+                                const tabela = document.querySelector('#tabelaDocumentosIdentifResumoFI');
+                                if (!tabela) return false;
 
-                        if (downloadComprovanteConcluido == true && downloadRegulamentoConcluido == true)
+                                return Array.from(tabela.querySelectorAll('tr')).some(tr => 
+                                    Array.from(tr.querySelectorAll('td')).some(td => 
+                                        td.textContent.trim().toLowerCase().includes('arquivo teste 2.pdf')
+                                    )
+                                );
+                            }
+                        ");
+
+                                                var existeComprovante = await Page.EvaluateAsync<bool>(@"
+                            () => {
+                                const tabela = document.querySelector('#tabelaComprovResResumoFI');
+                                if (!tabela) return false;
+
+                                return Array.from(tabela.querySelectorAll('tr')).some(tr => 
+                                    Array.from(tr.querySelectorAll('td')).some(td => 
+                                        td.textContent.trim().toLowerCase().includes('arquivo teste 2.pdf')
+                                    )
+                                );
+                            }
+                        ");
+
+
+
+                        if (existeDocumento == true && existeComprovante == true)
                         {
                             Console.WriteLine("arquivos baixados corretamente");
                             formularioOk++;
