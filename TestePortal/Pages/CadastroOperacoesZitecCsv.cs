@@ -59,9 +59,9 @@ namespace TestePortal.Pages
                         string caminhoModificado = Path.Combine(pastaArquivos, nomeArquivoModificado);
 
                         operacoes.TipoOperacao3 = "Operacoes Zitec - csv";
-                        // Envia o arquivo atualizado para o input
-                        for (int i = 0; i < 2; i++)  // Tenta no máximo 2 vezes (inicial + 1 tentativa)
-                        {
+                        //// Envia o arquivo atualizado para o input
+                        //for (int i = 0; i < 2; i++)  // Tenta no máximo 2 vezes (inicial + 1 tentativa)
+                        //{
 
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CSV" }).ClickAsync();
                             await Task.Delay(200);
@@ -75,18 +75,23 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste de envio csv");
                             await Task.Delay(200);
+                            while (await Page.Locator("#enviarButton").IsVisibleAsync())
+                            {
                             await Page.Locator("#enviarButton").ClickAsync();
+                            await Task.Delay(1000); // Pequeno intervalo para evitar spam excessivo e dar tempo para a página reagir
+                            }
                             await Task.Delay(30000);
 
                             var idOperacaoRecebivel = Repository.OperacoesCsv.OperacoesCsvRepository.ObterIdOperacaoRec(nomeArquivoModificado);
 
+                       
                             if (idOperacaoRecebivel != 0)
                             {
 
                                 var idOperacao = Repository.OperacoesCsv.OperacoesCsvRepository.VerificarOperacao(idOperacaoRecebivel);
                                 var (recebivelExiste, idRecebivel) = Repository.OperacoesCsv.OperacoesCsvRepository.VerificarRecebivel(idOperacaoRecebivel);
                                 var complementoRelExiste = Repository.OperacoesCsv.OperacoesCsvRepository.VerificarRecebivelComplemento(idRecebivel);
-
+                            
                                 if (recebivelExiste && complementoRelExiste)
                                 {
                                     pagina.InserirDados = "✅";
@@ -99,7 +104,6 @@ namespace TestePortal.Pages
                                     await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
                                     await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar", Exact = true }).ClickAsync();
                                     await Task.Delay(3000);
-
                                     var status = Repository.OperacoesCsv.OperacoesCsvRepository.VerificarStatus(nomeArquivoModificado);
 
                                     if (status == "PI")
@@ -140,20 +144,20 @@ namespace TestePortal.Pages
                                     operacoes.ListaErros3.Add("Operação não foi corretamente para o banco de dados");
                                 }
 
-                                break;
+                          
                             }
                             else
-                            {
-                                if (i == 2)
-                                {
+                            { 
+                                   
+                                    await Page.Locator("#enviarButton").ClickAsync();
                                     Console.WriteLine("Não foi possível lançar operação");
                                     pagina.InserirDados = "❌";
                                     pagina.Excluir = "❌";
                                     errosTotais += 2;
                                     operacoes.ListaErros2.Add("Erro ao lançar operação");
-                                }
+                                
                             }
-                        }
+                        
                     }
                     else if (nivelLogado == NivelEnum.Consultoria)
                     {

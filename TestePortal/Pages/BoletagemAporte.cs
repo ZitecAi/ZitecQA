@@ -76,7 +76,7 @@ namespace TestePortal.Pages
                         await Task.Delay(200);
                         await Page.GetByText("Escolha o fundo:* Escolha o").ClickAsync();
                         await Task.Delay(200);
-                        await Page.Locator("#Fundos").SelectOptionAsync(new[] { "36614123000160" });
+                        await Page.Locator("#Fundos").SelectOptionAsync(new[] { "54638076000176" });
                         await Task.Delay(200);
                         await Page.Locator("#fileBoleta").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "documentosteste.zip" });
                         await Task.Delay(200);

@@ -29,23 +29,22 @@ namespace TestePortal
             string caminhoArquivo = @"C:\TempQA\Arquivos\CNABz - Copia.txt";
             operacoes.ListaErros2 = new List<string>();
 
-            #region Portal
             try
             {
                 var OperacoesZitec = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Operacoes/OperacoesZitec.aspx");
 
-                if (OperacoesZitec.Status == 200)
+                if (OperacoesZitec?.Status == 200)
                 {
                     string seletorTabela = "#divTabelaCedentes";
-
 
                     Console.Write("Operações Zitec : ");
                     pagina.Nome = "Operações Zitec";
                     pagina.StatusCode = OperacoesZitec.Status;
                     pagina.BaixarExcel = "❓";
-                    pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+                    pagina.Acentos = await Utils.Acentos.ValidarAcentos(Page) ?? "❌";
                     if (pagina.Acentos == "❌") errosTotais++;
-                    pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
+
+                    pagina.Listagem = await Utils.Listagem.VerificarListagem(Page, seletorTabela) ?? "❌";
                     if (pagina.Listagem == "❌") errosTotais++;
 
                     if (nivelLogado == NivelEnum.Master)
@@ -57,7 +56,13 @@ namespace TestePortal
                             operacoes.TipoOperacao2 = "Nova Operação - CNAB";
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CNAB" }).ClickAsync();
                             await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "54638076000176" });
+
+                            // Valida se AtualizarDataEEnviarArquivo NÃO retornou null
                             operacoes.NovoNomeArquivo2 = await Utils.AtualizarTxt.AtualizarDataEEnviarArquivo(Page, caminhoArquivo);
+                            if (string.IsNullOrEmpty(operacoes.NovoNomeArquivo2))
+                            {
+                                throw new NullReferenceException("AtualizarDataEEnviarArquivo retornou null ou vazio.");
+                            }
 
                             await Task.Delay(500);
 
@@ -75,23 +80,6 @@ namespace TestePortal
                                 {
                                     Console.WriteLine("Operação lançada.");
                                     pagina.InserirDados = "✅";
-
-                                    //var excluirRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
-                                    //var excluirTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
-                                    //var exluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
-
-                                    //if (exluirOperacao)
-                                    //{
-                                    //    pagina.Excluir = "✅";
-                                    //    Console.WriteLine("Operação excluida");
-                                    //}
-                                    //else 
-                                    //{
-                                    //    pagina.Excluir = "❌";
-                                    //    errosTotais2++;
-                                    //    operacoes.ListaErros.Add("Erro ao exluir opreação");
-
-                                    //}
                                 }
                                 else
                                 {
@@ -107,26 +95,35 @@ namespace TestePortal
                         {
                             Console.WriteLine("O fundo não está na data atual");
                             errosTotais2++;
-                            operacoes.ListaErros2.Add("Não foi possivel processar o fundo para a data de hoje");
+                            operacoes.ListaErros2.Add("Não foi possível processar o fundo para a data de hoje");
                         }
                     }
                     else if (nivelLogado == NivelEnum.Consultoria)
                     {
                         await Page.ReloadAsync();
+
+                        if (string.IsNullOrEmpty(operacoes.NovoNomeArquivo2))
+                            throw new NullReferenceException("NovoNomeArquivo2 está null ou vazio no fluxo de Consultoria.");
+
                         await Page.GetByLabel("Pesquisar").ClickAsync();
                         await Task.Delay(2000);
                         await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo2);
+
                         var primeiroTr = Page.Locator("#listaCedentes tr").First;
                         var primeiroTd = primeiroTr.Locator("td").First;
+
                         await primeiroTd.ClickAsync();
                         await Page.Locator("span.dtr-title:has-text('Ações') >> xpath=.. >> button[title='Aprovação Consultoria']").ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar" }).ClickAsync();
+
                         pagina.InserirDados = "❓";
                         pagina.Excluir = "❓";
                     }
                     else if (nivelLogado == NivelEnum.Gestora)
-
                     {
+                        if (string.IsNullOrEmpty(operacoes.NovoNomeArquivo2))
+                            throw new NullReferenceException("NovoNomeArquivo2 está null ou vazio no fluxo da Gestora.");
+
                         string status = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
 
                         if (status == "PG")
@@ -134,17 +131,21 @@ namespace TestePortal
                             pagina.InserirDados = "❓";
                             Console.WriteLine("O status foi trocado para aguardar a aprovação da gestora");
                             statusTrocados++;
+
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(2000);
                             await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo2);
+
                             var primeiroTr = Page.Locator("#listaCedentes tr").First;
                             var primeiroTd = primeiroTr.Locator("td").First;
+
                             await primeiroTd.ClickAsync();
                             await Page.Locator("span.dtr-title:has-text('Ações') >> xpath=.. >> button[title='Aprovação Gestora']").ClickAsync();
 
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar", Exact = true }).ClickAsync();
                             await Task.Delay(4000);
+
                             string status2 = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
 
                             if (status2 == "AC")
@@ -178,77 +179,65 @@ namespace TestePortal
                             var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
 
                             if (exclusaoRemessa && exclusaoTed && excluirAvalista)
-
                             {
                                 bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
 
                                 if (excluirOperacao)
-
                                 {
-                                    Console.WriteLine("Operação excluida com sucesso. ");
+                                    Console.WriteLine("Operação excluída com sucesso.");
                                     pagina.Excluir = "✅";
                                     pagina.InserirDados = "❓";
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Operação não excluida. ");
+                                    Console.WriteLine("Operação não excluída.");
                                     pagina.Excluir = "❌";
                                     errosTotais2++;
                                     operacoes.ListaErros2.Add("Operação não excluída");
                                 }
-
                             }
                             else
                             {
-
-                                Console.WriteLine("Operação não excluida. ");
+                                Console.WriteLine("Operação não excluída.");
                                 pagina.Excluir = "❌";
                                 errosTotais2++;
-                                operacoes.ListaErros2.Add("Não foi possível exluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED ");
+                                operacoes.ListaErros2.Add("Não foi possível excluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED");
                             }
-
-
                         }
                         else
                         {
                             Console.WriteLine("O status não foi trocado para aguardar a aprovação da gestora");
                             errosTotais2++;
                             operacoes.ListaErros2.Add("Status não foi trocado para aprovação da gestora");
+
                             bool exclusaoRemessa = OperacoesRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
                             bool exclusaoTed = OperacoesRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
 
                             if (exclusaoRemessa && exclusaoTed)
-
                             {
-
                                 bool excluirOperacao = OperacoesRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
 
                                 if (excluirOperacao)
-
                                 {
-                                    Console.WriteLine("Operação excluida com sucesso. ");
+                                    Console.WriteLine("Operação excluída com sucesso.");
                                     pagina.Excluir = "✅";
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Operação não excluida. ");
+                                    Console.WriteLine("Operação não excluída.");
                                     pagina.Excluir = "❌";
                                     errosTotais2++;
                                     operacoes.ListaErros2.Add("Operação não excluída");
                                 }
-
                             }
-
                         }
-
                     }
-
                 }
                 else
                 {
                     Console.Write("Erro ao carregar a página de Operações no tópico Operações: ");
                     pagina.Nome = "Operações - Operações";
-                    pagina.StatusCode = OperacoesZitec.Status;
+                    pagina.StatusCode = OperacoesZitec?.Status ?? 0;
                     errosTotais += 2;
                     operacoes.ListaErros2.Add("Erro ao carregar a página de operações");
                     await Page.GotoAsync("https://portal.idsf.com.br/Home.aspx");
@@ -256,44 +245,33 @@ namespace TestePortal
             }
             catch (TimeoutException ex)
             {
-
-                if (operacoes.ListaErros2.Count == 0)
-                {
-                    operacoes.ListaErros2.Add("0");
-                }
-                Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
+                Console.WriteLine("Timeout excedido, continuando a execução...");
                 Console.WriteLine($"Exceção: {ex.Message}");
+
                 pagina.InserirDados = "❌";
                 pagina.Excluir = "❌";
                 errosTotais += 2;
-                operacoes.ListaErros2.Add("Erro de timeout");
                 errosTotais2++;
+                operacoes.ListaErros2.Add("Erro de timeout");
                 operacoes.totalErros2 = errosTotais2;
                 pagina.TotalErros = errosTotais;
                 return (pagina, operacoes);
             }
             catch (Exception ex)
-
             {
-
-                if (operacoes.ListaErros2.Count == 0)
-                {
-                    operacoes.ListaErros2.Add("0");
-                }
-                Console.WriteLine($"exceção: {ex}");
-                operacoes.ListaErros2.Add($"Execeção lançada: {ex}");
+                Console.WriteLine($"Exceção: {ex}");
+                operacoes.ListaErros2.Add($"Exceção lançada: {ex}");
                 errosTotais2++;
                 operacoes.totalErros2 = errosTotais2;
-
             }
+
+            pagina.TotalErros = errosTotais;
             if (operacoes.ListaErros2.Count == 0)
             {
                 operacoes.ListaErros2.Add("0");
             }
-            pagina.TotalErros = errosTotais;
-            return (pagina, operacoes);
-            #endregion
-        }
 
+            return (pagina, operacoes);
+        }
     }
 }

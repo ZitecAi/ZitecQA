@@ -57,7 +57,7 @@ namespace TestePortal.Pages
                     }
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
-                        var apagarAtivo2 = Repository.Ativos.AtivosRepository.ApagarAtivos("24426716000113", "teste jessica");
+                        var apagarAtivo2 = Repository.Ativos.AtivosRepository.ApagarAtivos("24426716000113", "teste robo");
                         fluxoDeCadastros.Fluxo = "Operações - ativos";
                         fluxoDeCadastros.Formulario = "❓";
                         fluxoDeCadastros.FormularioCompletoNoPortal = "❓";
@@ -66,7 +66,7 @@ namespace TestePortal.Pages
                         await Task.Delay(300);
                         await Page.Locator("#Fundos").SelectOptionAsync(new[] { "24426716000113" });
                         await Task.Delay(300);
-                        await Page.FillAsync("#nomeCedente", "teste jessica");
+                        await Page.FillAsync("#nomeCedente", "teste robo");
                         await Task.Delay(300);
                         await Page.FillAsync("#cpfCnpjCedente", "533.006.080-00106");
                         await Task.Delay(300);
@@ -76,7 +76,7 @@ namespace TestePortal.Pages
                         await Task.Delay(300);
                         await Page.Locator("#ContaAtivos").FillAsync("460915");
                         await Task.Delay(300);
-                        await Page.Locator("#RazSocDestino").FillAsync("teste jessica");
+                        await Page.Locator("#RazSocDestino").FillAsync("teste robo");
                         await Task.Delay(300); 
                         await Page.Locator("#CpfCnpjAtivos").FillAsync("49624866830");
                         await Page.GetByLabel("Valor").ClickAsync();
@@ -85,7 +85,7 @@ namespace TestePortal.Pages
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                         await Task.Delay(300);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste jessica");
+                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste robo");
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Anexos" }).ClickAsync();
                         await Task.Delay(300);
@@ -105,7 +105,7 @@ namespace TestePortal.Pages
 
                         await Page.GetByLabel("Pesquisar").ClickAsync();
                         await Task.Delay(800);
-                        await Page.GetByLabel("Pesquisar").FillAsync("teste jessica");
+                        await Page.GetByLabel("Pesquisar").FillAsync("teste robo");
                         var primeiroTr = Page.Locator("#listaContratos tr").First;
                         var primeiroTd = primeiroTr.Locator("td").First;
                         await primeiroTd.ClickAsync();
@@ -117,13 +117,13 @@ namespace TestePortal.Pages
 
                         await Task.Delay(40000);
 
-                        var idAtivo = Repository.Ativos.AtivosRepository.RetornaIdAtivo("24426716000113", "teste jessica");
+                        var idAtivo = Repository.Ativos.AtivosRepository.RetornaIdAtivo("24426716000113", "teste robo");
 
                         bool statusAtual = false;
 
                         for (int i = 0; i < 5; i++)
                         {
-                            statusAtual = Repository.Ativos.AtivosRepository.statusAgrAss("24426716000113", "teste jessica");
+                            statusAtual = Repository.Ativos.AtivosRepository.statusAgrAss("24426716000113", "teste robo");
 
                             if (statusAtual)
                             {
@@ -168,7 +168,7 @@ namespace TestePortal.Pages
 
                         for (int i = 0; i < 5; i++)
                         {
-                            statusAgdLiqui = Repository.Ativos.AtivosRepository.statusAprovado("24426716000113", "teste jessica");
+                            statusAgdLiqui = Repository.Ativos.AtivosRepository.statusAprovado("24426716000113", "teste robo");
 
                             if (statusAgdLiqui)
                             {
@@ -188,13 +188,13 @@ namespace TestePortal.Pages
                             }
                         }
 
-                        var ativoExiste = Repository.Ativos.AtivosRepository.VerificaExistenciaAtivos("24426716000113", "teste jessica");
+                        var ativoExiste = Repository.Ativos.AtivosRepository.VerificaExistenciaAtivos("24426716000113", "teste robo");
 
                         if (ativoExiste)
                         {
                             Console.WriteLine("Ativo adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarAtivo = Repository.Ativos.AtivosRepository.ApagarAtivos("24426716000113", "teste jessica");
+                            var apagarAtivo = Repository.Ativos.AtivosRepository.ApagarAtivos("24426716000113", "teste robo");
                             if (apagarAtivo)
                             {
                                 Console.WriteLine("Ativo apagado com sucesso");

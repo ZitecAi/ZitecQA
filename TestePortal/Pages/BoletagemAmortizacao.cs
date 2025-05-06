@@ -46,31 +46,57 @@ namespace TestePortal.Pages
 
                     var apagarBoletagemAmortizacao2 = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.ApagarBoletagemAmortizacao("teste robo", "49624866830");
 
-                   
+                    var dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
+                    await Task.Delay(300);
+                    var dataLimite = DateTime.Now.AddDays(30).ToString("dd/MM/yyyy");
+                    await Task.Delay(300);
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Amortização" }).ClickAsync();
+                    await Task.Delay(300);
                     await Page.Locator("#fundoAmortizacao").SelectOptionAsync(new[] { "54638076000176" });
+                    await Task.Delay(300);
                     await Page.Locator("#tipoAmortizacao").SelectOptionAsync(new[] { "Parcial" });
+                    await Task.Delay(300);
                     await Page.Locator("#jurosAmortizacao").SelectOptionAsync(new[] { "PrincipalOnly" });
+                    await Task.Delay(300);
                     await Page.GetByLabel("Data de Assembleia:*").ClickAsync();
-                    await Page.GetByLabel("Data de Assembleia:*").FillAsync("17/04/2025");
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Data de Assembleia:*").FillAsync(dataAtual);
+                    await Task.Delay(300);
                     await Page.GetByLabel("Data Limite:*").ClickAsync();
-                    await Page.GetByLabel("Data Limite:*").FillAsync("17/05/2025");
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Data Limite:*").FillAsync(dataLimite);
+                    await Task.Delay(300);
                     await Page.GetByLabel("Nome do Cotista:*").ClickAsync();
+                    await Task.Delay(300);
                     await Page.GetByLabel("Nome do Cotista:*").FillAsync("teste robo");
+                    await Task.Delay(300);
                     await Page.GetByLabel("CPF/CNPJ do Cotista:*").ClickAsync();
+                    await Task.Delay(300);
                     await Page.GetByLabel("CPF/CNPJ do Cotista:*").FillAsync("49624866830");
+                    await Task.Delay(300);
                     await Page.GetByPlaceholder("0.000,00").ClickAsync();
+                    await Task.Delay(300);
                     await Page.GetByPlaceholder("0.000,00").FillAsync("10,000");
+                    await Task.Delay(300);
                     await Page.GetByLabel("Dígito do Banco:*").ClickAsync();
+                    await Task.Delay(300);
                     await Page.GetByLabel("Dígito do Banco:*").FillAsync("439");
+                    await Task.Delay(300);
                     await Page.GetByLabel("Agência:*").ClickAsync();
+                    await Task.Delay(300);
                     await Page.GetByLabel("Agência:*").FillAsync("0001");
+                    await Task.Delay(300);
                     await Page.GetByLabel("Conta Corrente:*").ClickAsync();
+                    await Task.Delay(300);
                     await Page.GetByLabel("Conta Corrente:*").FillAsync("58787");
+                    await Task.Delay(300);
                     await Page.GetByText("Dígito do Banco:* Agência:*").ClickAsync();
+                    await Task.Delay(300);
                     await Page.GetByLabel("Dígito da CC.:*").ClickAsync();
+                    await Task.Delay(300);
                     await Page.GetByLabel("Dígito da CC.:*").FillAsync("1");
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
+                    await Task.Delay(700);
 
                     var BoletagemAmortizacaoExiste = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.VerificaExistenciaBoletagemAmortizacao("teste robo", "49624866830");
                     
