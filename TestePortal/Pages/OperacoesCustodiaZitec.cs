@@ -106,7 +106,7 @@ namespace TestePortal
                             throw new NullReferenceException("NovoNomeArquivo2 está null ou vazio no fluxo de Consultoria.");
 
                         await Page.GetByLabel("Pesquisar").ClickAsync();
-                        await Task.Delay(2000);
+                        await Task.Delay(200);
                         await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo2);
 
                         var primeiroTr = Page.Locator("#listaCedentes tr").First;
@@ -144,11 +144,11 @@ namespace TestePortal
                             await Page.Locator("span.dtr-title:has-text('Ações') >> xpath=.. >> button[title='Aprovação Gestora']").ClickAsync();
 
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar", Exact = true }).ClickAsync();
-                            await Task.Delay(4000);
+                            await Task.Delay(5000);
 
                             string status2 = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
 
-                            if (status2 == "AC")
+                            if (status2 == "PI")
                             {
                                 statusTrocados++;
                                 Console.WriteLine("Todos os status foram trocados corretamente, aprovações realizadas! ");
@@ -177,6 +177,7 @@ namespace TestePortal
                             bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
                             var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
                             var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
+                            var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
 
                             if (exclusaoRemessa && exclusaoTed && excluirAvalista)
                             {

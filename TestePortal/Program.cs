@@ -149,7 +149,6 @@ namespace TestePortalIDSF
                         listaFluxos.Add(fluxoDeCadastros);
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
-                        listaOperacoes.Add(operacoes);
                         (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaOperacoes.Add(operacoes);
@@ -197,8 +196,6 @@ namespace TestePortalIDSF
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
-                        (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
-                        listaPagina.Add(pagina);
                         listaPagina.Add(await OperacoesRecebiveis.Recebiveis(Page));
                         listaPagina.Add(await OperacoesConciliacao.Conciliacao(Page));
                         listaPagina.Add(await RelatorioCadastro.Cadastro(Page));
@@ -237,7 +234,7 @@ namespace TestePortalIDSF
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
-                        //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);

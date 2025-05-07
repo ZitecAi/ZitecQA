@@ -59,6 +59,7 @@ namespace TestePortal.Pages
                         string caminhoModificado = Path.Combine(pastaArquivos, nomeArquivoModificado);
 
                         operacoes.TipoOperacao3 = "Operacoes Zitec - csv";
+                        operacoes.NovoNomeArquivo3 = nomeArquivoModificado;
                         //// Envia o arquivo atualizado para o input
                         //for (int i = 0; i < 2; i++)  // Tenta no máximo 2 vezes (inicial + 1 tentativa)
                         //{
@@ -78,7 +79,7 @@ namespace TestePortal.Pages
                             while (await Page.Locator("#enviarButton").IsVisibleAsync())
                             {
                             await Page.Locator("#enviarButton").ClickAsync();
-                            await Task.Delay(1000); // Pequeno intervalo para evitar spam excessivo e dar tempo para a página reagir
+                            await Task.Delay(1000); 
                             }
                             await Task.Delay(30000);
 
@@ -97,43 +98,29 @@ namespace TestePortal.Pages
                                     pagina.InserirDados = "✅";
                                     //operacoes.StatusTrocados3 = "❓";
                                     //operacoes.AprovacoesRealizadas3 = "❓";
-                                    await Page.GetByLabel("Pesquisar").FillAsync(nomeArquivoModificado);
-                                    var primeiroTr = Page.Locator("#listaCedentes tr").First;
-                                    var primeiroTd = primeiroTr.Locator("td").First;
-                                    await primeiroTd.ClickAsync();
-                                    await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
-                                    await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar", Exact = true }).ClickAsync();
-                                    await Task.Delay(3000);
-                                    var status = Repository.OperacoesCsv.OperacoesCsvRepository.VerificarStatus(nomeArquivoModificado);
+                                //    await Page.GetByLabel("Pesquisar").FillAsync(nomeArquivoModificado);
+                                //    var primeiroTr = Page.Locator("#listaCedentes tr").First;
+                                //    var primeiroTd = primeiroTr.Locator("td").First;
+                                //    await primeiroTd.ClickAsync();
+                                //    await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                                //await Page.Locator("button[title='Aprovação Gestora']").ClickAsync();
 
-                                    if (status == "PI")
-                                    {
-                                        operacoes.AprovacoesRealizadas3 = "✅";
-                                        operacoes.StatusTrocados3 = "✅";
-                                    }
-                                    else
-                                    {
-                                        operacoes.StatusTrocados3 = "❌";
-                                        operacoes.AprovacoesRealizadas3 = "❌";
-                                    }
+                                //await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar", Exact = true }).ClickAsync();
+                                //    await Task.Delay(3000);
+                                //    var status = Repository.OperacoesCsv.OperacoesCsvRepository.VerificarStatus(nomeArquivoModificado);
 
-                                    var deletarRebComp = Repository.OperacoesCsv.OperacoesCsvRepository.DeletarRecebivelComplemento(idRecebivel);
-                                    var deletarArvLastro = Repository.OperacoesCsv.OperacoesCsvRepository.DeletarRecebivelLastro(idRecebivel);
-                                    var deletarRecebivel = Repository.OperacoesCsv.OperacoesCsvRepository.DeletarRecebivel(idOperacaoRecebivel);
-                                    var deletarOperacao = Repository.OperacoesCsv.OperacoesCsvRepository.DeletarOperacao(idOperacaoRecebivel);
-                                    var deletarOpRec = Repository.OperacoesCsv.OperacoesCsvRepository.DeletarOperacaoRecebivel(idOperacaoRecebivel);
+                                //    if (status == "PI")
+                                //    {
+                                //        operacoes.AprovacoesRealizadas3 = "✅";
+                                //        operacoes.StatusTrocados3 = "✅";
+                                //    }
+                                //    else
+                                //    {
+                                //        operacoes.StatusTrocados3 = "❌";
+                                //        operacoes.AprovacoesRealizadas3 = "❌";
+                                //    }
 
-                                    if (deletarRebComp && deletarArvLastro && deletarRecebivel && deletarOperacao && deletarOpRec)
-                                    {
-                                        pagina.Excluir = "✅";
-
-                                    }
-                                    else
-                                    {
-                                        pagina.Excluir = "❌";
-                                        errosTotais2++;
-
-                                    }
+                                    
                                 }
                                 else
                                 {
@@ -154,25 +141,26 @@ namespace TestePortal.Pages
                                     pagina.InserirDados = "❌";
                                     pagina.Excluir = "❌";
                                     errosTotais += 2;
-                                    operacoes.ListaErros2.Add("Erro ao lançar operação");
+                                    operacoes.ListaErros3.Add("Erro ao lançar operação");
                                 
                             }
                         
                     }
-                    else if (nivelLogado == NivelEnum.Consultoria)
-                    {
-                        await Page.ReloadAsync();
-                        await Page.GetByLabel("Pesquisar").ClickAsync();
-                        await Task.Delay(2000);
-                        await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo3);
-                        var primeiroTr = Page.Locator("#listaCedentes tr").First;
-                        var primeiroTd = primeiroTr.Locator("td").First;
-                        await primeiroTd.ClickAsync();
-                        await Page.Locator("span.dtr-title:has-text('Ações') >> xpath=.. >> button[title='Aprovação Consultoria']").ClickAsync();
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar" }).ClickAsync();
-                        pagina.InserirDados = "❓";
-                        pagina.Excluir = "❓";
-                    }
+
+                    //else if (nivelLogado == NivelEnum.Consultoria)
+                    //{
+                    //    await Page.ReloadAsync();
+                    //    await Page.GetByLabel("Pesquisar").ClickAsync();
+                    //    await Task.Delay(200);
+                    //    await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo3);
+                    //    var primeiroTr = Page.Locator("#listaCedentes tr").First;
+                    //    var primeiroTd = primeiroTr.Locator("td").First;
+                    //    await primeiroTd.ClickAsync();
+                    //    await Page.Locator("span.dtr-title:has-text('Ações') >> xpath=.. >> button[title='Aprovação Consultoria']").ClickAsync();
+                    //    await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar" }).ClickAsync();
+                    //    pagina.InserirDados = "❓";
+                    //    pagina.Excluir = "❓";
+                    //}
                     else if (nivelLogado == NivelEnum.Gestora)
 
                     {
@@ -205,20 +193,20 @@ namespace TestePortal.Pages
                             {
                                 Console.WriteLine("Os status não foram trocados corretamente, aprovações realizadas! ");
                                 errosTotais2++;
-                                operacoes.ListaErros2.Add("Aprovações realizadas, mas status não foi trocado no banco de dados");
+                                operacoes.ListaErros3.Add("Aprovações realizadas, mas status não foi trocado no banco de dados");
                             }
 
-                            if (statusTrocados == 2)
+                            if (statusTrocados == 1)
                             {
-                                operacoes.StatusTrocados2 = "✅";
-                                operacoes.AprovacoesRealizadas2 = "✅";
+                                operacoes.StatusTrocados3 = "✅";
+                                operacoes.AprovacoesRealizadas3 = "✅";
                             }
                             else
                             {
-                                operacoes.StatusTrocados2 = "❌";
-                                operacoes.AprovacoesRealizadas2 = "❌";
+                                operacoes.StatusTrocados3 = "❌";
+                                operacoes.AprovacoesRealizadas3 = "❌";
                                 errosTotais2++;
-                                operacoes.ListaErros2.Add("Status PI não encontrado");
+                                operacoes.ListaErros3.Add("Status PI não encontrado");
                             }
 
                             bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo3);
@@ -243,7 +231,7 @@ namespace TestePortal.Pages
                                     Console.WriteLine("Operação não excluida. ");
                                     pagina.Excluir = "❌";
                                     errosTotais2++;
-                                    operacoes.ListaErros2.Add("Operação não excluída");
+                                    operacoes.ListaErros3.Add("Operação não excluída");
                                 }
 
                             }
@@ -253,7 +241,7 @@ namespace TestePortal.Pages
                                 Console.WriteLine("Operação não excluida. ");
                                 pagina.Excluir = "❌";
                                 errosTotais2++;
-                                operacoes.ListaErros2.Add("Não foi possível exluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED ");
+                                operacoes.ListaErros3.Add("Não foi possível exluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED ");
                             }
 
 
@@ -262,7 +250,7 @@ namespace TestePortal.Pages
                         {
                             Console.WriteLine("O status não foi trocado para aguardar a aprovação da gestora");
                             errosTotais2++;
-                            operacoes.ListaErros2.Add("Status não foi trocado para aprovação da gestora");
+                            operacoes.ListaErros3.Add("Status não foi trocado para aprovação da gestora");
                             bool exclusaoRemessa = OperacoesRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
                             bool exclusaoTed = OperacoesRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
 
@@ -283,7 +271,7 @@ namespace TestePortal.Pages
                                     Console.WriteLine("Operação não excluida. ");
                                     pagina.Excluir = "❌";
                                     errosTotais2++;
-                                    operacoes.ListaErros2.Add("Operação não excluída");
+                                    operacoes.ListaErros3.Add("Operação não excluída");
                                 }
 
                             }
@@ -299,7 +287,7 @@ namespace TestePortal.Pages
                     pagina.Nome = "Operações - Operações";
                     pagina.StatusCode = OperacoesZitec.Status;
                     errosTotais += 2;
-                    operacoes.ListaErros2.Add("Erro ao carregar a página de operações");
+                    operacoes.ListaErros3.Add("Erro ao carregar a página de operações");
                     await Page.GotoAsync("https://portal.idsf.com.br/Home.aspx");
                 }
             }
