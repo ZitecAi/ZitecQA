@@ -326,7 +326,7 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "jt@zitec.ai",
+                    "todos@zitec.ai",
                     "Relatório das páginas do portal em produção teste.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
                     //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
