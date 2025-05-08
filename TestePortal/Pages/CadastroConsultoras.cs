@@ -34,26 +34,26 @@ namespace TestePortal
                 {
                     errosTotais++;
                 }
-                var ApagarConsultoras2 = Repository.Consultoras.ConsultorasRepository.ApagarConsultoras("53300608000106", "Jessica Vitoria Tavares");
+                var ApagarConsultoras2 = Repository.Consultoras.ConsultorasRepository.ApagarConsultoras("16695922000109", "Jessica Vitoria Tavares");
 
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Adicionar Consultora +" }).ClickAsync();
                 await Page.Locator("#Nome").ClickAsync();
                 await Page.Locator("#Nome").FillAsync("Jessica Vitoria Tavares");
                 await Page.GetByPlaceholder("/0000-00").ClickAsync();
-                await Page.GetByPlaceholder("/0000-00").FillAsync("53300608000106");
+                await Page.GetByPlaceholder("/0000-00").FillAsync("16695922000109");
                 await Page.Locator("#Endereco").ClickAsync();
                 await Page.Locator("#Endereco").FillAsync("Av Alexandre Grandisoli ");
                 await Page.GetByPlaceholder("(00) 0000-").ClickAsync();
                 await Page.GetByPlaceholder("(00) 0000-").FillAsync("11960183248");
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" }).ClickAsync();
                 await Task.Delay(800);
-                var ConsultorasExiste = Repository.Consultoras.ConsultorasRepository.VerificaExistenciaConsultoras("53300608000106", "Jessica Vitoria Tavares");
+                var ConsultorasExiste = Repository.Consultoras.ConsultorasRepository.VerificaExistenciaConsultoras("16695922000109", "Jessica Vitoria Tavares");
 
                 if (ConsultorasExiste)
                 {
                     Console.WriteLine("Consultora adicionada com sucesso na tabela.");
                     pagina.InserirDados = "✅";
-                    var ApagarConsultoras = Repository.Consultoras.ConsultorasRepository.ApagarConsultoras("53300608000106", "Jessica Vitoria Tavares");
+                    var ApagarConsultoras = Repository.Consultoras.ConsultorasRepository.ApagarConsultoras("16695922000109", "Jessica Vitoria Tavares");
 
                     if (ApagarConsultoras)
                     {

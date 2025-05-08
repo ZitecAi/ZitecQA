@@ -52,52 +52,62 @@ namespace TestePortal.Pages
                             {
                                 errosTotais++;
                             }
-                            var apagarNotaComercial2 = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("36614123000160", "teste jessica");
+                            var apagarNotaComercial2 = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("54638076000176", "teste nota comercial");
+                            var dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
                             await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.Locator("#Fundos").SelectOptionAsync(new[] { "36614123000160" });
+                            await Page.Locator("#Fundos").SelectOptionAsync(new[] { "54638076000176" });
+                            await Page.Locator("#Produtos").SelectOptionAsync(new[] { "125" });
                             await Task.Delay(200);
-                            await Page.Locator("#Produtos").SelectOptionAsync(new[] { "35" });
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Digite para buscar..." }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.Locator("#tomador").SelectOptionAsync(new[] { "501" });
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Digite para buscar..." }).FillAsync("teste");
+                            await Task.Delay(200);
+                            await Page.Keyboard.PressAsync("Enter");
+                            await Task.Delay(200);
+                            await Page.GetByText("CEDENTE TESTE").ClickAsync();
                             await Task.Delay(200);
                             await Page.Locator("#tipo").SelectOptionAsync(new[] { "pix" });
                             await Task.Delay(200);
-                            await Page.Locator("#contaLiquidacao").SelectOptionAsync(new[] { "702" });
+                            await Page.Locator("#contaLiquidacao").SelectOptionAsync(new[] { "49525875" });
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste jessica");
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste nota comercial");
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Tab, new() { Name = "Envolvidos" }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.GetByRole(AriaRole.Button, new() { Name = "  Adicionar envolvido" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "   Adicionar envolvido" }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.Locator("#relacionado").SelectOptionAsync(new[] { "501" });
+                            await Page.Locator("#relacionado").SelectOptionAsync(new[] { "1" });
                             await Task.Delay(200);
-                            await Page.Locator("#envolvido").SelectOptionAsync(new[] { "42679242874" });
+                            await Page.Locator("#envolvido").SelectOptionAsync(new[] { "51324287896" });
                             await Task.Delay(200);
                             await Page.Locator("#tipoRelacao").SelectOptionAsync(new[] { "empregador" });
                             await Task.Delay(200);
-                            await Page.ClickAsync("button[onclick='adicionarEnvolvido()']");
-                            await Task.Delay(500);
-                            await Page.ClickAsync("button[onclick=\"abrirModalAddEnvolvido('novo')\"]");
+                            await Page.Locator("#formaEnvio").SelectOptionAsync(new[] { "email" });
+                            await Task.Delay(200);
+                            await Page.Locator("#formaValidacao").SelectOptionAsync(new[] { "assinaturaSelfie" });
+                            await Task.Delay(200);
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Adicionar envolvido", Exact = true }).ClickAsync();
+                            await Task.Delay(200);
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "   Adicionar envolvido" }).ClickAsync();
                             await Task.Delay(200);
                             await Page.Locator("#relacionado").SelectOptionAsync(new[] { "idsf" });
                             await Task.Delay(200);
-                            await Page.Locator("#envolvido").SelectOptionAsync(new SelectOptionValue { Label = "Jonatas Cardoso" });
+                            await Page.Locator("#envolvido").SelectOptionAsync(new[] { "46837686828" });
                             await Task.Delay(200);
                             await Page.Locator("#tipoRelacao").SelectOptionAsync(new[] { "cedente" });
                             await Task.Delay(200);
-                            await Page.ClickAsync("button[onclick='adicionarEnvolvido()']");
+                            await Page.Locator("#formaEnvio").SelectOptionAsync(new[] { "email" });
                             await Task.Delay(200);
-                            await Page.GetByRole(AriaRole.Tab, new() { Name = "Operação" }).ClickAsync();
+                            await Page.Locator("#formaValidacao").SelectOptionAsync(new[] { "biometriaFacial" });
                             await Task.Delay(200);
-                            await Page.Locator("#valorSocilicitado").ClearAsync();
-                            await Page.Locator("#valorSocilicitado").FillAsync("10000"); 
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Adicionar envolvido", Exact = true }).ClickAsync();
+                            await Page.Locator("#Operacao-tab").ClickAsync();
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Valor Solicitado:*" }).FillAsync("10000");
                             await Task.Delay(200);
-                            await Page.Locator("#taxaJuros").ClearAsync();
-                            await Page.Locator("#taxaJuros").FillAsync("12"); 
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Taxa de Juros:*" }).FillAsync("1");
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Spinbutton, new() { Name = "Duração:*" }).ClickAsync();
                             await Task.Delay(200);
@@ -105,28 +115,39 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Spinbutton, new() { Name = "Carência Amortização:*" }).ClickAsync();
                             await Task.Delay(200);
+                            await Page.GetByRole(AriaRole.Spinbutton, new() { Name = "Carência Amortização:*" }).FillAsync("5");
+                            await Task.Delay(200);
                             await Page.Locator("#tipoCalculo").SelectOptionAsync(new[] { "bruto" });
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Spinbutton, new() { Name = "Dia de Vencimento:*" }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.GetByRole(AriaRole.Spinbutton, new() { Name = "Dia de Vencimento:*" }).FillAsync("1");
+                            await Page.GetByRole(AriaRole.Spinbutton, new() { Name = "Dia de Vencimento:*" }).FillAsync("05");
                             await Task.Delay(200);
-                            string dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
-                            await Page.FillAsync("#dataInicio", dataAtual);
-                            await Page.FillAsync("#corban", "1");
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.ClickAsync("#btnSalvarMudancas");
-                            await Task.Delay(400);
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).FillAsync(dataAtual);
+                            await Task.Delay(200);
+                            await Page.GetByLabel("CORBAN:").ClickAsync();
+                            await Task.Delay(200);
+                            await Page.Locator("#indexPosFix").SelectOptionAsync(new[] { "CDI" });
+                            await Page.GetByRole(AriaRole.Tab, new() { Name = "Documentos" }).ClickAsync();
+                            await Task.Delay(200);
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "   Adicionar documento" }).ClickAsync();
+                            await Task.Delay(200);
+                            await Page.Locator("#fileNotaComercial").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await Page.Locator("#tipoDocumento").SelectOptionAsync(new[] { "cpf" });
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Atualizar documento" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar mudanças" }).ClickAsync();
 
 
-                            var notaComercialExiste = Repository.NotaComercial.NotaComercialRepository.VerificaExistenciaNotaComercial("36614123000160", "teste jessica");
+                            var notaComercialExiste = Repository.NotaComercial.NotaComercialRepository.VerificaExistenciaNotaComercial("54638076000176", "teste nota comercial");
 
 
                             if (notaComercialExiste)
                             {
                                 Console.WriteLine("Nota comercial adicionada com sucesso na tabela.");
                                 pagina.InserirDados = "✅";
-                                var apagarNotaComercial = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("36614123000160", "teste jessica");
+                                var apagarNotaComercial = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("54638076000176", "teste nota comercial");
 
                                 if (apagarNotaComercial)
                                 {

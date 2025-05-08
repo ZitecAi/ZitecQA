@@ -51,44 +51,41 @@ namespace TestePortal.Pages
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora)
                     {
-                        var apagarContasEscrow2 = Repository.ContasEscrows.ContasEscrows.ApagarContasEscrow("contrato teste", "Jessica Vitoria Tavares");
+                        var apagarContasEscrow2 = Repository.ContasEscrows.ContasEscrows.ApagarContasEscrow("teste robo", "titular teste");
                         await Page.GetByRole(AriaRole.Button, new() { Name = " Nova" }).ClickAsync();
-                        await Task.Delay(50);
-                        await Page.Locator("#fundoBanco").SelectOptionAsync(new[] { "36614123000160" });
-                        await Task.Delay(50);
+                        await Page.Locator("#fundoBanco").SelectOptionAsync(new[] { "54638076000176" });
+                        await Task.Delay(300);
                         await Page.Locator("#contratoBanco").ClickAsync();
-                        await Task.Delay(50);
-                        await Page.Locator("#contratoBanco").FillAsync("contrato teste");
-                        await Task.Delay(50);
+                        await Task.Delay(300);
+                        await Page.Locator("#contratoBanco").FillAsync("teste robo");
+                        await Task.Delay(300);
                         await Page.Locator("#titularBanco").ClickAsync();
-                        await Task.Delay(50);
-                        await Page.Locator("#titularBanco").FillAsync("Jessica Vitoria Tavares  ");
-                        await Task.Delay(50);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "/0000-00" }).ClickAsync();
-                        await Task.Delay(50);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "/0000-00" }).FillAsync("53300608000106");
-                        await Task.Delay(50);
+                        await Task.Delay(300);
+                        await Page.Locator("#titularBanco").FillAsync("titular teste");
+                        await Task.Delay(300);
+                        await Page.Locator("#cnpjBanco").ClickAsync();
+                        await Task.Delay(300);
+                        await Page.Locator("#cnpjBanco").FillAsync("49624866830");
+                        await Task.Delay(300);
+                        await Page.GetByLabel("Modo de Pagamento: *").SelectOptionAsync(new[] { "PIX" });
+                        await Task.Delay(300);
                         await Page.Locator("#titularDestino").ClickAsync();
-                        await Task.Delay(50);
-                        await Page.Locator("#titularDestino").FillAsync("Jessica Vitoria Tavares ");
-                        await Task.Delay(50);
+                        await Task.Delay(300);
+                        await Page.Locator("#titularDestino").FillAsync("titular teste");
+                        await Task.Delay(300);
                         await Page.Locator("#cnpjDestino").ClickAsync();
-                        await Task.Delay(50);
+                        await Task.Delay(300);
                         await Page.Locator("#cnpjDestino").FillAsync("49624866830");
-                        await Task.Delay(50);
-                        await Page.GetByLabel("TED").CheckAsync();
+                        await Task.Delay(300);
                         await Page.Locator("#valorDestino").ClickAsync();
+                        await Task.Delay(300);
                         await Page.Locator("#valorDestino").FillAsync("R$100");
-                        await Page.Locator("#bancoDestino").ClickAsync();             
-                        await Page.Locator("#bancoDestino").FillAsync("439");
-                        await Page.Locator("#agenciaDestino").ClickAsync();                     
-                        await Page.Locator("#agenciaDestino").FillAsync("0001");
-                        await Page.Locator("#contaDestino").ClickAsync();
-                        await Page.Locator("#contaDestino").FillAsync("46091");
-                        await Page.Locator("#digcontaDestino").ClickAsync();
-                        await Page.Locator("#digcontaDestino").FillAsync("5");
+                        await Task.Delay(300);
+                        await Page.Locator("#inputPix").ClickAsync();
+                        await Task.Delay(300);
+                        await Page.Locator("#inputPix").FillAsync("robo@zitec.ai");
+                        await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
-                        await Task.Delay(700);
 
                         //var contaCadastrado = await Page.WaitForSelectorAsync("text=Cedente Cadastrado com Sucesso", new PageWaitForSelectorOptions
 
@@ -98,15 +95,15 @@ namespace TestePortal.Pages
 
                         //}); //verificar a mensagem ants de continuar
 
-                        var contasEcrowExiste = Repository.ContasEscrows.ContasEscrows.VerificaExistenciaContasEscrow("contrato teste", "Jessica Vitoria Tavares");
-                       
+                        var contasEcrowExiste = Repository.ContasEscrows.ContasEscrows.VerificaExistenciaContasEscrow("teste robo", "titular teste");
+                        await Task.Delay(700);
 
                         if (contasEcrowExiste)
                         {
                             Console.WriteLine("Conta Escrow adicionada com sucesso na tabela.");
                             pagina.InserirDados = "✅";
 
-                            var apagarContasEscrow = Repository.ContasEscrows.ContasEscrows.ApagarContasEscrow("contrato teste", "Jessica Vitoria Tavares");
+                            var apagarContasEscrow = Repository.ContasEscrows.ContasEscrows.ApagarContasEscrow("teste robo", "titular teste");
                             if (apagarContasEscrow)
                             {
                                 Console.WriteLine("Conta Escrow apagada com sucesso");

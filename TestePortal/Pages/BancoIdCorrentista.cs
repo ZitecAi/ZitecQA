@@ -13,6 +13,8 @@ using TestePortal.Repository.Correntistas;
 using TestePortal.Repository.Investidores;
 using static TestePortal.Model.Usuario;
 using TestePortal.Utils;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Drawing;
 
 
 namespace TestePortal.Pages
@@ -64,12 +66,12 @@ namespace TestePortal.Pages
                         try
 
                         {
-                            var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
+                            var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                             fluxoDeCadastros.Fluxo = "Correntista - Movimentação";
-                            await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                             await Page.Locator("#cpfcnpj").ClickAsync();
                             await Task.Delay(300);
-                            await Page.Locator("#cpfcnpj").FillAsync("45543915000181");
+                            await Page.Locator("#cpfcnpj").FillAsync("16695922000109");
                             await Task.Delay(300);
                             await Page.Locator("#tipoContaCorrentista").SelectOptionAsync(new[] { "MOVIMENTACAO" });
                             await Task.Delay(300);
@@ -77,13 +79,13 @@ namespace TestePortal.Pages
                             await Task.Delay(300);
                             await Page.Locator("#paginaModalPJ #emailEmpresa").ClickAsync();
                             await Task.Delay(300);
-                            await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("jehvittav@gmail.com");
+                            await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("robo@zitec.ai");
                             await Task.Delay(300);
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                             await Task.Delay(400);
 
-                            var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("jehvittav@gmail.com", "45543915000181");
-                            var token = Repository.Correntistas.CorrentistaRepository.ObterToken("jehvittav@gmail.com", "45543915000181");
+                            var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                            var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
                             string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTA"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
@@ -92,7 +94,7 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await newPage.Locator("#NomeContato").ClickAsync();
                             await Task.Delay(200);
-                            await newPage.Locator("#NomeContato").FillAsync("Carrefur");
+                            await newPage.Locator("#NomeContato").FillAsync("teste");
                             await Task.Delay(200);
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).ClickAsync();
@@ -106,7 +108,7 @@ namespace TestePortal.Pages
                             await newPage.Locator("#CPFCNPJRepresentante").FillAsync("49624866830");
                             await Task.Delay(200);
                             await newPage.Locator("#EmailRepresentante").ClickAsync();
-                            await newPage.Locator("#EmailRepresentante").FillAsync("jehvittav@gmail.com");
+                            await newPage.Locator("#EmailRepresentante").FillAsync("robo@zitec.ai");
                             await Task.Delay(200);
                             await newPage.GetByPlaceholder("0").ClickAsync();
                             await newPage.GetByPlaceholder("0").FillAsync("10");
@@ -145,7 +147,7 @@ namespace TestePortal.Pages
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr = Page.Locator("#listaCorrentistas tr").First;
                             var primeiroTd = primeiroTr.Locator("td").First;
                             await primeiroTd.ClickAsync();
@@ -173,11 +175,10 @@ namespace TestePortal.Pages
                             var cnpj = await Page.EvaluateAsync<string>("() => document.getElementById('CNPJEmpresa').value");
                             var dataConst = await Page.EvaluateAsync<string>("() => document.getElementById('DataConstituicao').value");
 
-                            if (razaoSocial == "CARREFOUR COMERCIO E INDUSTRIA LTDA" && cnpj == "45.543.915/0001-81" && dataConst == "21/06/1974")
+                            if (razaoSocial == "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA" && cnpj == "16.695.922/0001-09" && dataConst == "08/08/2012")
                             {
                                 Console.WriteLine("Resumo do correntista salvo corretamente!");
                                 formularioOk++;
-
                             }
                             else
                             {
@@ -210,8 +211,8 @@ namespace TestePortal.Pages
                             var cep = await Page.EvaluateAsync<string>("() => document.getElementById('CEPMatriz').value");
                             var telefone = await Page.EvaluateAsync<string>("() => document.getElementById('TelefoneContato').value");
 
-                            if (endereco == "Avenida Tucunaré" && cidade == "Barueri" && nomeContato == "Carrefur" && estado == "SP" && email == "jehvittav@gmail.com"
-                                && numero == "125" && bairro == "Tamboré" && complemento == "BLOCO C SALA 1 C101" && cep == "06460-020" && telefone == "(11) 95478-7456"
+                            if (endereco == "Avenida Presidente Juscelino Kubitschek" && cidade == "São Paulo" && nomeContato == "teste" && estado == "SP" && email == "robo@zitec.ai"
+                                && numero == "1726" && bairro == "Vila Nova Conceição" && complemento == "até 99998 - lado par" && cep == "04543-000" && telefone == "(11) 95478-7456"
                                 )
                             {
                                 Console.WriteLine("Campos de endereço salvos corretamente!");
@@ -239,7 +240,7 @@ namespace TestePortal.Pages
                             var participacaoRep1 = await Page.EvaluateAsync<string>("() => document.querySelector('#listaRep li:nth-child(1) span').innerText.split(' - ')[4].replace('Participação: ', '').trim()");
                             await Task.Delay(200);
 
-                            if (nomeRep1 == "Jessica Vitoria Tavares" && email == "jehvittav@gmail.com" && cpfCnpjRep1 == "496.248.668-30" && participacaoRep1 == "10%")
+                            if (nomeRep1 == "Jessica Vitoria Tavares" && email == "robo@zitec.ai" && cpfCnpjRep1 == "496.248.668-30" && participacaoRep1 == "10%")
                             {
                                 Console.WriteLine("Campos de representantes salvos corretamente!");
                                 formularioOk++;
@@ -272,7 +273,7 @@ namespace TestePortal.Pages
                             var emailUsuarioMaster = await Page.EvaluateAsync<string>("() => document.getElementById('EmailUsuarioMaster').value");
 
                             if (UsuarioMaster == "Jessica Vitoria Tavares" && telefoneUsuMaster == "(11) 75487-5944" && cpfUsuarioMaster == "496.248.668-30" &&
-                                emailUsuarioMaster == "jehvittav@gmail.com"
+                                emailUsuarioMaster == "robo@zitec.ai"
                                 )
                             {
                                 Console.WriteLine("Campos de usuário master salvos corretamente!");
@@ -337,7 +338,7 @@ namespace TestePortal.Pages
                                 errosTotais2++;
                             }
 
-                            var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("jehvittav@gmail.com", "45543915000181");
+                            var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("robo@zitec.ai", "16695922000109");
 
                             if (status == true)
                             {
@@ -359,7 +360,7 @@ namespace TestePortal.Pages
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr6 = Page.Locator("#listaCorrentistas tr").First;
                             var primeiroTd6 = primeiroTr6.Locator("td").First;
                             await primeiroTd6.ClickAsync();
@@ -370,7 +371,7 @@ namespace TestePortal.Pages
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr2 = Page.Locator("#listaCorrentistas tr").First;
                             var primeiroTd2 = primeiroTr.Locator("td").First;
                             await primeiroTd2.ClickAsync();
@@ -386,7 +387,7 @@ namespace TestePortal.Pages
 
                             for (int i = 0; i < 5; i++)
                             {
-                                statusAtual = CorrentistaRepository.statusAgrAss("45543915000181", "jehvittav@gmail.com");
+                                statusAtual = CorrentistaRepository.statusAgrAss("16695922000109", "robo@zitec.ai");
 
                                 if (statusAtual)
                                 {
@@ -408,8 +409,19 @@ namespace TestePortal.Pages
 
                                 if (response != null && response.Success)
                                 {
-                                    fluxoDeCadastros.DocumentoAssinado = "✅";
+                                    
                                     Console.WriteLine("Documento assinado");
+                                    var updateStatus = Repository.Correntistas.CorrentistaRepository.UpdateStatusAguardandoConta("robo@zitec.ai", "16695922000109");
+
+                                    if (updateStatus == true)
+                                    {
+                                        fluxoDeCadastros.DocumentoAssinado = "✅";
+                                    }
+                                    else 
+                                    {
+                                        fluxoDeCadastros.DocumentoAssinado = "❌";
+                                    }
+
                                 }
                                 else
                                 {
@@ -434,14 +446,15 @@ namespace TestePortal.Pages
                             for (int i = 0; i < 5; i++)
                             {
 
-                                statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("45543915000181", "jehvittav@gmail.com");
+                                statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
 
                                 if (statusAgdConta == true)
                                 {
                                     await Page.ReloadAsync();
+                                    var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Movimentacao", idCorrentista);
                                     await Page.GetByLabel("Pesquisar").ClickAsync();
                                     await Task.Delay(800);
-                                    await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                                    await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                                     var primeiroTr3 = Page.Locator("#listaCorrentistas tr").First;
                                     var primeiroTd3 = primeiroTr3.Locator("td").First;
                                     await primeiroTd3.ClickAsync();
@@ -472,7 +485,7 @@ namespace TestePortal.Pages
 
 
                                     await Task.Delay(8000);
-                                    var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("45543915000181", "jehvittav@gmail.com");
+                                    var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
 
                                     if (statusAprovado)
                                     {
@@ -516,7 +529,7 @@ namespace TestePortal.Pages
                             Console.WriteLine($"erro {ex.Message}");
                         }
 
-                        var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("jehvittav@gmail.com", "45543915000181");
+                        var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
 
                         if (correntistaExiste)
                         {
@@ -524,9 +537,9 @@ namespace TestePortal.Pages
                             pagina.InserirDados = "✅";
 
 
-                            var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("jehvittav@gmail.com", "45543915000181");
+                            var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
 
-                            var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
+                            var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                             if (apagarCorrentista)
                             {
                                 Console.WriteLine("Correntista apagado com sucesso");
@@ -620,13 +633,13 @@ namespace TestePortal.Pages
             {
                 if (nivelLogado == NivelEnum.Master)
                 {
-                    var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
+                    var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                     var PaginaBancoIdCorrentista = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Correntistas.aspx");
                     fluxoDeCadastros.Fluxo = "Correntista - Escrow";
-                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                     await Page.Locator("#cpfcnpj").ClickAsync();
                     await Task.Delay(300);
-                    await Page.Locator("#cpfcnpj").FillAsync("45543915000181");
+                    await Page.Locator("#cpfcnpj").FillAsync("16695922000109");
                     await Task.Delay(300);
                     await Page.Locator("#tipoContaCorrentista").SelectOptionAsync(new[] { "ESCROW" });
                     await Task.Delay(300);
@@ -634,13 +647,13 @@ namespace TestePortal.Pages
                     await Task.Delay(300);
                     await Page.Locator("#paginaModalPJ #emailEmpresa").ClickAsync();
                     await Task.Delay(300);
-                    await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("jehvittav@gmail.com");
+                    await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("robo@zitec.ai");
                     await Task.Delay(300);
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                     await Task.Delay(400);
 
-                    var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("jehvittav@gmail.com", "45543915000181");
-                    var token = Repository.Correntistas.CorrentistaRepository.ObterToken("jehvittav@gmail.com", "45543915000181");
+                    var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                    var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
                     string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTAESCROW"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
@@ -679,7 +692,7 @@ namespace TestePortal.Pages
                     await Page.ReloadAsync();
                     await Page.GetByLabel("Pesquisar").ClickAsync();
                     await Task.Delay(800);
-                    await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                    await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                     var primeiroTr = Page.Locator("#listaCorrentistas tr").First;
                     var primeiroTd = primeiroTr.Locator("td").First;
                     await primeiroTd.ClickAsync();
@@ -707,7 +720,7 @@ namespace TestePortal.Pages
                     var cnpj = await Page.EvaluateAsync<string>("() => document.getElementById('CNPJEmpresa').value");
                     var dataConst = await Page.EvaluateAsync<string>("() => document.getElementById('DataConstituicao').value");
 
-                    if (razaoSocial == "CARREFOUR COMERCIO E INDUSTRIA LTDA" && cnpj == "45.543.915/0001-81" && dataConst == "21/06/1974")
+                    if (razaoSocial == "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA" && cnpj == "16.695.922/0001-09" && dataConst == "08/08/2012")
                     {
                         Console.WriteLine("Resumo do correntista salvo corretamente!");
                         formularioOk++;
@@ -743,9 +756,9 @@ namespace TestePortal.Pages
                     var cep = await Page.EvaluateAsync<string>("() => document.getElementById('CEPMatriz').value");
                     var telefone = await Page.EvaluateAsync<string>("() => document.getElementById('TelefoneContato').value");
 
-                    if (endereco == "Avenida Tucunaré" && cidade == "Barueri" && nomeContato == "carrefour" && estado == "SP" && email == "jehvittav@gmail.com"
-                        && numero == "125" && bairro == "Tamboré" && cep == "06460-020" && telefone == "(11) 96018-3248"
-                        )
+                    if (endereco == "Avenida Presidente Juscelino Kubitschek" && cidade == "São Paulo" && nomeContato == "carrefour" && estado == "SP" && email == "robo@zitec.ai"
+                               && numero == "1726" && bairro == "Vila Nova Conceição" &&  cep == "04543-000" && telefone == "(11) 96018-3248"
+                               )
                     {
                         Console.WriteLine("Campos de endereço salvos corretamente!");
                         formularioOk++;
@@ -778,7 +791,7 @@ namespace TestePortal.Pages
                     var emailUsuarioMaster = await Page.EvaluateAsync<string>("() => document.getElementById('EmailUsuarioMaster').value");
 
                     if (UsuarioMaster == "Jessica Vitoria Tavares" && telefoneUsuMaster == "(11) 96018-3248" && cpfUsuarioMaster == "496.248.668-30" &&
-                        emailUsuarioMaster == "jehvittav@gmail.com"
+                        emailUsuarioMaster == "robo@zitec.ai"
                         )
                     {
                         Console.WriteLine("Campos de usuário master salvos corretamente!");
@@ -793,7 +806,7 @@ namespace TestePortal.Pages
                         fluxoDeCadastros.FormularioCompletoNoPortal = "❌";
                     }
 
-                    var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("jehvittav@gmail.com", "45543915000181");
+                    var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("robo@zitec.ai", "16695922000109");
 
                     if (status == true)
                     {
@@ -826,7 +839,7 @@ namespace TestePortal.Pages
                     await Page.ReloadAsync();
                     await Page.GetByLabel("Pesquisar").ClickAsync();
                     await Task.Delay(800);
-                    await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                    await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                     var primeiroTr6 = Page.Locator("#listaCorrentistas tr").First;
                     var primeiroTd6 = primeiroTr6.Locator("td").First;
                     await primeiroTd6.ClickAsync();
@@ -837,7 +850,7 @@ namespace TestePortal.Pages
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                     await Page.GetByLabel("Pesquisar").ClickAsync();
                     await Task.Delay(800);
-                    await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                    await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                     var primeiroTr2 = Page.Locator("#listaCorrentistas tr").First;
                     var primeiroTd2 = primeiroTr.Locator("td").First;
                     await primeiroTd2.ClickAsync();
@@ -855,14 +868,15 @@ namespace TestePortal.Pages
                     for (int i = 0; i < 5; i++)
                     {
 
-                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("45543915000181", "jehvittav@gmail.com");
+                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
 
                         if (statusAgdConta == true)
                         {
                             await Page.ReloadAsync();
+                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow", idCorrentista);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr3 = Page.Locator("#listaCorrentistas tr").First;
                             var primeiroTd3 = primeiroTr3.Locator("td").First;
                             await primeiroTd3.ClickAsync();
@@ -894,7 +908,7 @@ namespace TestePortal.Pages
 
 
                             await Task.Delay(8000);
-                            var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("45543915000181", "jehvittav@gmail.com");
+                            var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
 
                             if (statusAprovado)
                             {
@@ -932,7 +946,7 @@ namespace TestePortal.Pages
                     }
 
 
-                    var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("jehvittav@gmail.com", "45543915000181");
+                    var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
 
                     if (correntistaExiste)
                     {
@@ -940,13 +954,13 @@ namespace TestePortal.Pages
                         pagina.InserirDados = "✅";
 
 
-                        var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
+                        var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                         if (apagarCorrentista)
                         {
                             Console.WriteLine("Correntista apagado com sucesso");
                             pagina.Excluir = "✅";
 
-                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow", idCorrentista);
+                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow",idCorrentista);
 
                             if (apagarContaBan)
                             {
@@ -1017,16 +1031,16 @@ namespace TestePortal.Pages
             int errosTotais2 = 0;
             int formularioOk = 0;
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
-            var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
+            var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
 
             try
             {
                 var PaginaBancoIdCorrentista = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Correntistas.aspx");
                 fluxoDeCadastros.Fluxo = "Correntista - Cobrança";
-                await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                 await Page.Locator("#cpfcnpj").ClickAsync();
                 await Task.Delay(300);
-                await Page.Locator("#cpfcnpj").FillAsync("45543915000181");
+                await Page.Locator("#cpfcnpj").FillAsync("16695922000109");
                 await Task.Delay(300);
                 await Page.Locator("#tipoContaCorrentista").SelectOptionAsync(new[] { "COBRANCA" });
                 await Task.Delay(300);
@@ -1034,13 +1048,13 @@ namespace TestePortal.Pages
                 await Task.Delay(300);
                 await Page.Locator("#paginaModalPJ #emailEmpresa").ClickAsync();
                 await Task.Delay(300);
-                await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("jehvittav@gmail.com");
+                await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("robo@zitec.ai");
                 await Task.Delay(300);
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                 await Task.Delay(400);
 
-                var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("jehvittav@gmail.com", "45543915000181");
-                var token = Repository.Correntistas.CorrentistaRepository.ObterToken("jehvittav@gmail.com", "45543915000181");
+                var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
                 string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTA"];
                 string copiedUrl = $"{baseUrl}{token}";
                 var newPage = await context.NewPageAsync();
@@ -1061,7 +1075,7 @@ namespace TestePortal.Pages
                 await newPage.Locator("#CPFCNPJRepresentante").ClickAsync();
                 await newPage.Locator("#CPFCNPJRepresentante").FillAsync("49624866830");
                 await Task.Delay(200);
-                await newPage.Locator("#EmailRepresentante").FillAsync("jehvittav@gmail.com");
+                await newPage.Locator("#EmailRepresentante").FillAsync("robo@zitec.ai");
                 await Task.Delay(200);
                 await newPage.GetByPlaceholder("0").ClickAsync();
                 await Task.Delay(200);
@@ -1099,11 +1113,11 @@ namespace TestePortal.Pages
                 await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                 await Task.Delay(300);
                 await newPage.CloseAsync();
-                await Task.Delay(6700);
+                await Task.Delay(8700);
                 await Page.ReloadAsync();
                 await Page.GetByLabel("Pesquisar").ClickAsync();
                 await Task.Delay(800);
-                await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                 var primeiroTr = Page.Locator("#listaCorrentistas tr").First;
                 var primeiroTd = primeiroTr.Locator("td").First;
                 await primeiroTd.ClickAsync();
@@ -1131,7 +1145,7 @@ namespace TestePortal.Pages
                 var cnpj = await Page.EvaluateAsync<string>("() => document.getElementById('CNPJEmpresa').value");
                 var dataConst = await Page.EvaluateAsync<string>("() => document.getElementById('DataConstituicao').value");
 
-                if (razaoSocial == "CARREFOUR COMERCIO E INDUSTRIA LTDA" && cnpj == "45.543.915/0001-81" && dataConst == "21/06/1974")
+                if (razaoSocial == "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA" && cnpj == "16.695.922/0001-09" && dataConst == "08/08/2012")
                 {
                     Console.WriteLine("Resumo do correntista salvo corretamente!");
                     formularioOk++;
@@ -1168,9 +1182,9 @@ namespace TestePortal.Pages
                 var cep = await Page.EvaluateAsync<string>("() => document.getElementById('CEPMatriz').value");
                 var telefone = await Page.EvaluateAsync<string>("() => document.getElementById('TelefoneContato').value");
 
-                if (endereco == "Avenida Tucunaré" && cidade == "Barueri" && nomeContato == "Carrefur" && estado == "SP" && email == "jehvittav@gmail.com"
-                    && numero == "125" && bairro == "Tamboré" && complemento == "BLOCO C SALA 1 C101" && cep == "06460-020" && telefone == "(11) 95478-7456"
-                    )
+                if (endereco == "Avenida Presidente Juscelino Kubitschek" && cidade == "São Paulo" && nomeContato == "Carrefur" && estado == "SP" && email == "robo@zitec.ai"
+                               && numero == "1726" && bairro == "Vila Nova Conceição" && complemento == "até 99998 - lado par" && cep == "04543-000" && telefone == "(11) 95478-7456"
+                               )
                 {
                     Console.WriteLine("Campos de endereço salvos corretamente!");
                     formularioOk++;
@@ -1197,7 +1211,7 @@ namespace TestePortal.Pages
                 var participacaoRep1 = await Page.EvaluateAsync<string>("() => document.querySelector('#listaRep li:nth-child(1) span').innerText.split(' - ')[4].replace('Participação: ', '').trim()");
                 await Task.Delay(200);
 
-                if (nomeRep1 == "Jessica Vitoria Tavares" && emailRep1 == "jehvittav@gmail.com" && cpfCnpjRep1 == "496.248.668-30" && participacaoRep1 == "50%")
+                if (nomeRep1 == "Jessica Vitoria Tavares" && emailRep1 == "robo@zitec.ai" && cpfCnpjRep1 == "496.248.668-30" && participacaoRep1 == "50%")
                 {
                     Console.WriteLine("Campos de representantes salvos corretamente!");
                     formularioOk++;
@@ -1230,7 +1244,7 @@ namespace TestePortal.Pages
                 var emailUsuarioMaster = await Page.EvaluateAsync<string>("() => document.getElementById('EmailUsuarioMaster').value");
 
                 if (UsuarioMaster == "Jessica Vitoria Tavares" && telefoneUsuMaster == "(11) 95478-6244" && cpfUsuarioMaster == "496.248.668-30" &&
-                    emailUsuarioMaster == "jehvittav@gmail.com"
+                    emailUsuarioMaster == "robo@zitec.ai"
                     )
                 {
                     Console.WriteLine("Campos de usuário master salvos corretamente!");
@@ -1300,7 +1314,7 @@ namespace TestePortal.Pages
 
                 }
 
-                var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("jehvittav@gmail.com", "45543915000181");
+                var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("robo@zitec.ai", "16695922000109");
 
                 if (status == true)
                 {
@@ -1322,7 +1336,7 @@ namespace TestePortal.Pages
                 await Page.ReloadAsync();
                 await Page.GetByLabel("Pesquisar").ClickAsync();
                 await Task.Delay(800);
-                await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                 var primeiroTr6 = Page.Locator("#listaCorrentistas tr").First;
                 var primeiroTd6 = primeiroTr6.Locator("td").First;
                 await primeiroTd6.ClickAsync();
@@ -1333,7 +1347,7 @@ namespace TestePortal.Pages
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                 await Page.GetByLabel("Pesquisar").ClickAsync();
                 await Task.Delay(800);
-                await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                 var primeiroTr2 = Page.Locator("#listaCorrentistas tr").First;
                 var primeiroTd2 = primeiroTr.Locator("td").First;
                 await primeiroTd2.ClickAsync();
@@ -1350,7 +1364,7 @@ namespace TestePortal.Pages
 
                 for (int i = 0; i < 5; i++)
                 {
-                    statusAtual = CorrentistaRepository.statusAgrAss("45543915000181", "jehvittav@gmail.com");
+                    statusAtual = CorrentistaRepository.statusAgrAss("16695922000109", "robo@zitec.ai");
 
                     if (statusAtual)
                     {
@@ -1375,6 +1389,17 @@ namespace TestePortal.Pages
                     {
                         fluxoDeCadastros.DocumentoAssinado = "✅";
                         Console.WriteLine("Documento assinado");
+
+                        var updateStatus = Repository.Correntistas.CorrentistaRepository.UpdateStatusAguardandoConta("robo@zitec.ai", "16695922000109");
+
+                        if (updateStatus == true)
+                        {
+                            fluxoDeCadastros.DocumentoAssinado = "✅";
+                        }
+                        else
+                        {
+                            fluxoDeCadastros.DocumentoAssinado = "❌";
+                        }
                     }
                     else
                     {
@@ -1392,14 +1417,16 @@ namespace TestePortal.Pages
                     for (int i = 0; i < 5; i++)
                     {
 
-                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("45543915000181", "jehvittav@gmail.com");
+                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
 
                         if (statusAgdConta == true)
+                        
                         {
+                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca", idCorrentista);
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr3 = Page.Locator("#listaCorrentistas tr").First;
                             var primeiroTd3 = primeiroTr3.Locator("td").First;
                             await primeiroTd3.ClickAsync();
@@ -1452,7 +1479,7 @@ namespace TestePortal.Pages
                     for (int tentativa = 1; tentativa <= 5; tentativa++)
                     {
 
-                        var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("45543915000181", "jehvittav@gmail.com");
+                        var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
 
                         if (statusAprovado)
                         {
@@ -1486,20 +1513,20 @@ namespace TestePortal.Pages
                 }
 
 
-                var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("jehvittav@gmail.com", "45543915000181");
+                var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
 
                 if (correntistaExiste)
                 {
                     Console.WriteLine("Correntista adicionado com sucesso na tabela.");
                     pagina.InserirDados = "✅";
 
-                    var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
+                    var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                     if (apagarCorrentista)
                     {
                         Console.WriteLine("Correntista apagado com sucesso");
                         pagina.Excluir = "✅";
 
-                        var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca", idCorrentista);
+                        var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca",idCorrentista);
 
                         if (apagarContaBancaria)
                         {
@@ -1564,7 +1591,7 @@ namespace TestePortal.Pages
             int errosTotais2 = 0;
             int formularioOk = 0;
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
-            var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
+            var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
 
             if (nivelLogado == NivelEnum.Master)
             {
@@ -1572,10 +1599,10 @@ namespace TestePortal.Pages
                 try
                 {
                     fluxoDeCadastros.Fluxo = "Correntista - Selic";
-                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                     await Page.Locator("#cpfcnpj").ClickAsync();
                     await Task.Delay(300);
-                    await Page.Locator("#cpfcnpj").FillAsync("45543915000181");
+                    await Page.Locator("#cpfcnpj").FillAsync("16695922000109");
                     await Task.Delay(300);
                     await Page.Locator("#tipoContaCorrentista").SelectOptionAsync(new[] { "SELIC" });
                     await Task.Delay(300);
@@ -1583,12 +1610,12 @@ namespace TestePortal.Pages
                     await Task.Delay(300);
                     await Page.Locator("#paginaModalPJ #emailEmpresa").ClickAsync();
                     await Task.Delay(300);
-                    await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("jehvittav@gmail.com");
+                    await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("robo@zitec.ai");
                     await Task.Delay(300);
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
 
-                    var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("jehvittav@gmail.com", "45543915000181");
-                    var token = Repository.Correntistas.CorrentistaRepository.ObterToken("jehvittav@gmail.com", "45543915000181");
+                    var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                    var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
                     string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTAESCROW"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
@@ -1623,11 +1650,11 @@ namespace TestePortal.Pages
                     await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                     await Task.Delay(300);
                     await newPage.CloseAsync();
-                    await Task.Delay(4700);
+                    await Task.Delay(6700);
                     await Page.ReloadAsync();
                     await Page.GetByLabel("Pesquisar").ClickAsync();
                     await Task.Delay(800);
-                    await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                    await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                     var primeiroTr = Page.Locator("#listaCorrentistas tr").First;
                     var primeiroTd = primeiroTr.Locator("td").First;
                     await primeiroTd.ClickAsync();
@@ -1655,7 +1682,7 @@ namespace TestePortal.Pages
                     var cnpj = await Page.EvaluateAsync<string>("() => document.getElementById('CNPJEmpresa').value");
                     var dataConst = await Page.EvaluateAsync<string>("() => document.getElementById('DataConstituicao').value");
 
-                    if (razaoSocial == "CARREFOUR COMERCIO E INDUSTRIA LTDA" && cnpj == "45.543.915/0001-81" && dataConst == "21/06/1974")
+                    if (razaoSocial == "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA" && cnpj == "16.695.922/0001-09" && dataConst == "08/08/2012")
                     {
                         Console.WriteLine("Resumo do correntista salvo corretamente!");
                         formularioOk++;
@@ -1691,9 +1718,9 @@ namespace TestePortal.Pages
                     var cep = await Page.EvaluateAsync<string>("() => document.getElementById('CEPMatriz').value");
                     var telefone = await Page.EvaluateAsync<string>("() => document.getElementById('TelefoneContato').value");
 
-                    if (endereco == "Avenida Tucunaré" && cidade == "Barueri" && nomeContato == "carrefour" && estado == "SP" && email == "jehvittav@gmail.com"
-                        && numero == "125" && bairro == "Tamboré" && cep == "06460-020" && telefone == "(11) 96018-3248"
-                        )
+                    if (endereco == "Avenida Presidente Juscelino Kubitschek" && cidade == "São Paulo" && nomeContato == "carrefour" && estado == "SP" && email == "robo@zitec.ai"
+                               && numero == "1726" && bairro == "Vila Nova Conceição" && cep == "04543-000" && telefone == "(11) 96018-3248"
+                               )
                     {
                         Console.WriteLine("Campos de endereço salvos corretamente!");
                         formularioOk++;
@@ -1726,7 +1753,7 @@ namespace TestePortal.Pages
                     var emailUsuarioMaster = await Page.EvaluateAsync<string>("() => document.getElementById('EmailUsuarioMaster').value");
 
                     if (UsuarioMaster == "Jessica Vitoria Tavares" && telefoneUsuMaster == "(11) 96018-3248" && cpfUsuarioMaster == "496.248.668-30" &&
-                        emailUsuarioMaster == "jehvittav@gmail.com"
+                        emailUsuarioMaster == "robo@zitec.ai"
                         )
                     {
                         Console.WriteLine("Campos de usuário master salvos corretamente!");
@@ -1754,7 +1781,7 @@ namespace TestePortal.Pages
 
                     }
 
-                    var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("jehvittav@gmail.com", "45543915000181");
+                    var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("robo@zitec.ai", "16695922000109");
 
                     if (status == true)
                     {
@@ -1774,7 +1801,7 @@ namespace TestePortal.Pages
                     await Page.ReloadAsync();
                     await Page.GetByLabel("Pesquisar").ClickAsync();
                     await Task.Delay(800);
-                    await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                    await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                     var primeiroTr6 = Page.Locator("#listaCorrentistas tr").First;
                     var primeiroTd6 = primeiroTr6.Locator("td").First;
                     await primeiroTd6.ClickAsync();
@@ -1785,7 +1812,7 @@ namespace TestePortal.Pages
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                     await Page.GetByLabel("Pesquisar").ClickAsync();
                     await Task.Delay(800);
-                    await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                    await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                     var primeiroTr2 = Page.Locator("#listaCorrentistas tr").First;
                     var primeiroTd2 = primeiroTr.Locator("td").First;
                     await primeiroTd2.ClickAsync();
@@ -1802,14 +1829,15 @@ namespace TestePortal.Pages
                     for (int i = 0; i < 5; i++)
                     {
 
-                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("45543915000181", "jehvittav@gmail.com");
+                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
 
                         if (statusAgdConta == true)
                         {
+                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Selic", idCorrentista);
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr3 = Page.Locator("#listaCorrentistas tr").First;
                             var primeiroTd3 = primeiroTr3.Locator("td").First;
                             await primeiroTd3.ClickAsync();
@@ -1840,8 +1868,8 @@ namespace TestePortal.Pages
                             }
 
 
-                            await Task.Delay(8000);
-                            var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("45543915000181", "jehvittav@gmail.com");
+                            await Task.Delay(3000);
+                            var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
 
                             if (statusAprovado)
                             {
@@ -1879,7 +1907,7 @@ namespace TestePortal.Pages
                     }
 
 
-                    var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("jehvittav@gmail.com", "45543915000181");
+                    var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
 
                     if (correntistaExiste)
                     {
@@ -1887,7 +1915,7 @@ namespace TestePortal.Pages
                         pagina.InserirDados = "✅";
                         fluxoDeCadastros.DocumentoAssinado = "❓";
 
-                        var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
+                        var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                         if (apagarCorrentista)
                         {
                             Console.WriteLine("Correntista apagado com sucesso");
@@ -1960,7 +1988,7 @@ namespace TestePortal.Pages
             int errosTotais2 = 0;
             int formularioOk = 0;
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
-            var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
+            var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
 
             if (nivelLogado == NivelEnum.Master)
             {
@@ -1972,10 +2000,10 @@ namespace TestePortal.Pages
                 {
 
                     fluxoDeCadastros.Fluxo = "Correntista - Cetip";
-                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                     await Page.Locator("#cpfcnpj").ClickAsync();
                     await Task.Delay(300);
-                    await Page.Locator("#cpfcnpj").FillAsync("45543915000181");
+                    await Page.Locator("#cpfcnpj").FillAsync("16695922000109");
                     await Task.Delay(300);
                     await Page.Locator("#tipoContaCorrentista").SelectOptionAsync(new[] { "CETIP" });
                     await Task.Delay(300);
@@ -1983,13 +2011,13 @@ namespace TestePortal.Pages
                     await Task.Delay(300);
                     await Page.Locator("#paginaModalPJ #emailEmpresa").ClickAsync();
                     await Task.Delay(300);
-                    await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("jehvittav@gmail.com");
+                    await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("robo@zitec.ai");
                     await Task.Delay(300);
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                     await Task.Delay(400);
 
-                    var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("jehvittav@gmail.com", "45543915000181");
-                    var token = Repository.Correntistas.CorrentistaRepository.ObterToken("jehvittav@gmail.com", "45543915000181");
+                    var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                    var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
                     string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTA"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
@@ -2012,7 +2040,7 @@ namespace TestePortal.Pages
                     await newPage.Locator("#CPFCNPJRepresentante").FillAsync("49624866830");
                     await Task.Delay(200);
                     await newPage.Locator("#EmailRepresentante").ClickAsync();
-                    await newPage.Locator("#EmailRepresentante").FillAsync("jehvittav@gmail.com");
+                    await newPage.Locator("#EmailRepresentante").FillAsync("robo@zitec.ai");
                     await Task.Delay(200);
                     await newPage.GetByPlaceholder("0").ClickAsync();
                     await newPage.GetByPlaceholder("0").FillAsync("10");
@@ -2051,7 +2079,7 @@ namespace TestePortal.Pages
                     await Page.ReloadAsync();
                     await Page.GetByLabel("Pesquisar").ClickAsync();
                     await Task.Delay(800);
-                    await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                    await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                     var primeiroTr = Page.Locator("#listaCorrentistas tr").First;
                     var primeiroTd = primeiroTr.Locator("td").First;
                     await primeiroTd.ClickAsync();
@@ -2079,7 +2107,7 @@ namespace TestePortal.Pages
                     var cnpj = await Page.EvaluateAsync<string>("() => document.getElementById('CNPJEmpresa').value");
                     var dataConst = await Page.EvaluateAsync<string>("() => document.getElementById('DataConstituicao').value");
 
-                    if (razaoSocial == "CARREFOUR COMERCIO E INDUSTRIA LTDA" && cnpj == "45.543.915/0001-81" && dataConst == "21/06/1974")
+                    if (razaoSocial == "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA" && cnpj == "16.695.922/0001-09" && dataConst == "08/08/2012")
                     {
                         Console.WriteLine("Resumo do correntista salvo corretamente!");
                         formularioOk++;
@@ -2116,9 +2144,9 @@ namespace TestePortal.Pages
                     var cep = await Page.EvaluateAsync<string>("() => document.getElementById('CEPMatriz').value");
                     var telefone = await Page.EvaluateAsync<string>("() => document.getElementById('TelefoneContato').value");
 
-                    if (endereco == "Avenida Tucunaré" && cidade == "Barueri" && nomeContato == "Carrefur" && estado == "SP" && email == "jehvittav@gmail.com"
-                        && numero == "125" && bairro == "Tamboré" && complemento == "BLOCO C SALA 1 C101" && cep == "06460-020" && telefone == "(11) 95478-7456"
-                        )
+                    if (endereco == "Avenida Presidente Juscelino Kubitschek" && cidade == "São Paulo" && nomeContato == "Carrefur" && estado == "SP" && email == "robo@zitec.ai"
+                    && numero == "1726" && bairro == "Vila Nova Conceição" && complemento == "até 99998 - lado par" && cep == "04543-000" && telefone == "(11) 95478-7456"
+                    )
                     {
                         Console.WriteLine("Campos de endereço salvos corretamente!");
                         formularioOk++;
@@ -2145,7 +2173,7 @@ namespace TestePortal.Pages
                     var participacaoRep1 = await Page.EvaluateAsync<string>("() => document.querySelector('#listaRep li:nth-child(1) span').innerText.split(' - ')[4].replace('Participação: ', '').trim()");
                     await Task.Delay(200);
 
-                    if (nomeRep1 == "Jessica Vitoria Tavares" && email == "jehvittav@gmail.com" && cpfCnpjRep1 == "496.248.668-30" && participacaoRep1 == "10%")
+                    if (nomeRep1 == "Jessica Vitoria Tavares" && email == "robo@zitec.ai" && cpfCnpjRep1 == "496.248.668-30" && participacaoRep1 == "10%")
                     {
                         Console.WriteLine("Campos de representantes salvos corretamente!");
                         formularioOk++;
@@ -2178,7 +2206,7 @@ namespace TestePortal.Pages
                     var emailUsuarioMaster = await Page.EvaluateAsync<string>("() => document.getElementById('EmailUsuarioMaster').value");
 
                     if (UsuarioMaster == "Jessica Vitoria Tavares" && telefoneUsuMaster == "(11) 75487-5944" && cpfUsuarioMaster == "496.248.668-30" &&
-                        emailUsuarioMaster == "jehvittav@gmail.com"
+                        emailUsuarioMaster == "robo@zitec.ai"
                         )
                     {
                         Console.WriteLine("Campos de usuário master salvos corretamente!");
@@ -2244,7 +2272,7 @@ namespace TestePortal.Pages
 
                     }
 
-                    var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("jehvittav@gmail.com", "45543915000181");
+                    var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("robo@zitec.ai", "16695922000109");
 
                     if (status == true)
                     {
@@ -2265,7 +2293,7 @@ namespace TestePortal.Pages
                     await Page.ReloadAsync();
                     await Page.GetByLabel("Pesquisar").ClickAsync();
                     await Task.Delay(800);
-                    await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                    await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                     var primeiroTr6 = Page.Locator("#listaCorrentistas tr").First;
                     var primeiroTd6 = primeiroTr6.Locator("td").First;
                     await primeiroTd6.ClickAsync();
@@ -2276,7 +2304,7 @@ namespace TestePortal.Pages
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                     await Page.GetByLabel("Pesquisar").ClickAsync();
                     await Task.Delay(800);
-                    await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                    await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                     var primeiroTr2 = Page.Locator("#listaCorrentistas tr").First;
                     var primeiroTd2 = primeiroTr.Locator("td").First;
                     await primeiroTd2.ClickAsync();
@@ -2288,192 +2316,198 @@ namespace TestePortal.Pages
 
                     await Task.Delay(30000);
 
-                    bool statusAtual = false;
+                    //bool statusAtual = false;
+
+                    //for (int i = 0; i < 5; i++)
+                    //{
+                    //    statusAtual = CorrentistaRepository.statusAgrAss("16695922000109", "robo@zitec.ai");
+
+                    //    if (statusAtual)
+                    //    {
+                    //        Console.WriteLine("Status trocado para aguardando assinatura");
+                    //        break;
+                    //    }
+                    //    else
+                    //    {
+                    //        Console.WriteLine($"Tentativa {i + 1} de verificar o status falhou. Tentando novamente...");
+                    //        await Task.Delay(1000);
+                    //    }
+                    //}
+
+
+                    //if (statusAtual == true)
+                    //{
+
+
+                    //    string idDocumentoAutentique = Repository.Correntistas.CorrentistaRepository.ObterDocumentosAutentique(idCorrentista);
+                    //    var response = AssinarDocumentosAutentique.AssinarDocumento("9ad54b27a864625573ad40327a1916db61b687c3fe8641ff7f3efdc3e985d3b3", idDocumentoAutentique);
+
+                    //    if (response != null && response.Success)
+                    //    {
+                    //        fluxoDeCadastros.DocumentoAssinado = "✅";
+                    //        Console.WriteLine("Documento assinado");
+
+                    //        var updateStatus = Repository.Correntistas.CorrentistaRepository.UpdateStatusAguardandoConta("robo@zitec.ai", "16695922000109");
+
+                    //        if (updateStatus == true)
+                    //        {
+                    //            fluxoDeCadastros.DocumentoAssinado = "✅";
+                    //        }
+                    //        else
+                    //        {
+                    //            fluxoDeCadastros.DocumentoAssinado = "❌";
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        errosTotais2++;
+                    //        fluxoDeCadastros.DocumentoAssinado = "❌";
+                    //        fluxoDeCadastros.ListaErros.Add("Erro ao assinar documento");
+                    //    }
+
+
+                    //    await Task.Delay(10000);
+
+
+                    bool statusAgdConta = false;
 
                     for (int i = 0; i < 5; i++)
                     {
-                        statusAtual = CorrentistaRepository.statusAgrAss("45543915000181", "jehvittav@gmail.com");
 
-                        if (statusAtual)
+                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
+
+                        if (statusAgdConta == true)
                         {
-                            Console.WriteLine("Status trocado para aguardando assinatura");
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Tentativa {i + 1} de verificar o status falhou. Tentando novamente...");
-                            await Task.Delay(1000);
-                        }
-                    }
+                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("988998", "5", "cetip", idCorrentista);
+                            await Page.ReloadAsync();
+                            await Page.GetByLabel("Pesquisar").ClickAsync();
+                            await Task.Delay(800);
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
+                            var primeiroTr3 = Page.Locator("#listaCorrentistas tr").First;
+                            var primeiroTd3 = primeiroTr3.Locator("td").First;
+                            await primeiroTd3.ClickAsync();
+                            await Page.Locator($"button[onclick=\"cadastrarContaBancaria('{idCorrentista}')\"]").Nth(1).ClickAsync();
+                            await Page.Locator("#agenciaCorrentista").FillAsync("439");
+                            await Page.Locator("#contaCorrentista").FillAsync("988998");
+                            await Page.Locator("#digContaCorrentista").FillAsync("5");
+                            await Page.SelectOptionAsync("#TipoConta", "Cetip");
+                            await Page.Locator("#observacoesToEmail").FillAsync("teste");
+                            await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
+                            await Task.Delay(10000);
+                            //verificar se enviou e-mail
+                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
-
-                    if (statusAtual == true)
-                    {
-
-
-                        string idDocumentoAutentique = Repository.Correntistas.CorrentistaRepository.ObterDocumentosAutentique(idCorrentista);
-                        var response = AssinarDocumentosAutentique.AssinarDocumento("9ad54b27a864625573ad40327a1916db61b687c3fe8641ff7f3efdc3e985d3b3", idDocumentoAutentique);
-
-                        if (response != null && response.Success)
-                        {
-                            fluxoDeCadastros.DocumentoAssinado = "✅";
-                            Console.WriteLine("Documento assinado");
-                        }
-                        else
-                        {
-                            errosTotais2++;
-                            fluxoDeCadastros.DocumentoAssinado = "❌";
-                            fluxoDeCadastros.ListaErros.Add("Erro ao assinar documento");
-                        }
-
-
-                        await Task.Delay(10000);
-
-
-                        bool statusAgdConta = false;
-
-                        for (int i = 0; i < 5; i++)
-                        {
-
-                            statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("45543915000181", "jehvittav@gmail.com");
-
-                            if (statusAgdConta == true)
+                            if (emailChegou)
                             {
-                                await Page.ReloadAsync();
-                                await Page.GetByLabel("Pesquisar").ClickAsync();
-                                await Task.Delay(800);
-                                await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
-                                var primeiroTr3 = Page.Locator("#listaCorrentistas tr").First;
-                                var primeiroTd3 = primeiroTr3.Locator("td").First;
-                                await primeiroTd3.ClickAsync();
-                                await Page.Locator($"button[onclick=\"cadastrarContaBancaria('{idCorrentista}')\"]").Nth(1).ClickAsync();
-                                await Page.Locator("#agenciaCorrentista").FillAsync("439");
-                                await Page.Locator("#contaCorrentista").FillAsync("988998");
-                                await Page.Locator("#digContaCorrentista").FillAsync("5");
-                                await Page.SelectOptionAsync("#TipoConta", "Cetip");
-                                await Page.Locator("#observacoesToEmail").FillAsync("teste");
-                                await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
-                                await Task.Delay(10000);
-                                //verificar se enviou e-mail
-                                var emailChecker = new TestePortal.Utils.EmailChecker();
-                                bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
-
-                                if (emailChegou)
-                                {
-                                    Console.WriteLine("E-mail com dados de cadastro de correntista chegou!");
-                                    fluxoDeCadastros.EmailRecebido = "✅";
-                                    break;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("E-mail com dados de cadastro de correntista não chegou.");
-                                    fluxoDeCadastros.ListaErros.Add("E-mail com dados de cadastro de correntista não chegou.");
-                                    errosTotais2++;
-                                    fluxoDeCadastros.EmailRecebido = "❌";
-                                    break;
-                                }
-
-
-
-
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Tentativa {i + 1} de trocar status falhou. Tentando novamente...");
-                                await Task.Delay(5000);
-
-                                if (i == 5)
-                                {
-                                    fluxoDeCadastros.ListaErros.Add("Status não foi trocado para aguardando conta");
-                                    errosTotais2++;
-
-                                }
-                            }
-                        }
-
-                        for (int tentativa = 1; tentativa <= 5; tentativa++)
-                        {
-
-                            var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("45543915000181", "jehvittav@gmail.com");
-
-                            if (statusAprovado)
-                            {
-                                Console.WriteLine("Status trocado para aprovado");
-                                fluxoDeCadastros.statusAprovado = "✅";
+                                Console.WriteLine("E-mail com dados de cadastro de correntista chegou!");
+                                fluxoDeCadastros.EmailRecebido = "✅";
                                 break;
                             }
                             else
                             {
-                                tentativa++;
-                            }
-
-                            await Task.Delay(5000);
-
-
-                            if (tentativa == 5 && statusAprovado == false)
-                            {
-                                Console.WriteLine("Status não foi trocado para aprovado");
-                                fluxoDeCadastros.statusAprovado = "❌";
-                                fluxoDeCadastros.ListaErros.Add("Status não foi trocado para aprovado");
+                                Console.WriteLine("E-mail com dados de cadastro de correntista não chegou.");
+                                fluxoDeCadastros.ListaErros.Add("E-mail com dados de cadastro de correntista não chegou.");
                                 errosTotais2++;
-                            }
-                        }
-
-
-                    }
-                    else
-                    {
-                        Console.WriteLine("Status não foi trocado para aguardando assinatura");
-                        fluxoDeCadastros.ListaErros.Add("Status não foi trocado para aguardando assinatura");
-                    }
-
-
-
-                    var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("jehvittav@gmail.com", "45543915000181");
-
-                    if (correntistaExiste)
-                    {
-                        Console.WriteLine("Correntista adicionado com sucesso na tabela.");
-                        pagina.InserirDados = "✅";
-
-
-                        var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("jehvittav@gmail.com", "45543915000181");
-                        if (apagarCorrentista)
-                        {
-                            Console.WriteLine("Correntista apagado com sucesso");
-                            pagina.Excluir = "✅";
-
-
-                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("988998", "5", "cetip", idCorrentista);
-
-                            if (apagarContaBancaria)
-                            {
-
-                                Console.WriteLine("Conta bancária pagada");
-
-                            }
-                            else
-                            {
-                                fluxoDeCadastros.ListaErros.Add("Erro ao apagar conta bancária associada ao correntista");
-                                errosTotais2++;
+                                fluxoDeCadastros.EmailRecebido = "❌";
+                                break;
                             }
                         }
                         else
                         {
-                            Console.WriteLine("Não foi possível apagar Correntista");
-                            pagina.Excluir = "❌";
-                            errosTotais++;
+                            Console.WriteLine($"Tentativa {i + 1} de trocar status falhou. Tentando novamente...");
+                            await Task.Delay(5000);
+
+                            if (i == 5)
+                            {
+                                fluxoDeCadastros.ListaErros.Add("Status não foi trocado para aguardando conta");
+                                errosTotais2++;
+
+                            }
+                        }
+                    }
+
+                    for (int tentativa = 1; tentativa <= 5; tentativa++)
+                    {
+
+                        var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
+
+                        if (statusAprovado)
+                        {
+                            Console.WriteLine("Status trocado para aprovado");
+                            fluxoDeCadastros.statusAprovado = "✅";
+                            break;
+                        }
+                        else
+                        {
+                            tentativa++;
                         }
 
-                    }
-                    else
-                    {
-                        Console.WriteLine("Não foi possível inserir Correntista");
-                        pagina.InserirDados = "❌";
-                        pagina.Excluir = "❌";
-                        errosTotais += 2;
-                    }
+                        await Task.Delay(5000);
 
+
+                        if (tentativa == 5 && statusAprovado == false)
+                        {
+                            Console.WriteLine("Status não foi trocado para aprovado");
+                            fluxoDeCadastros.statusAprovado = "❌";
+                            fluxoDeCadastros.ListaErros.Add("Status não foi trocado para aprovado");
+                            errosTotais2++;
+                        }
+                        //}
+
+
+                        //}
+                        //else
+                        //{
+                        //    Console.WriteLine("Status não foi trocado para aguardando assinatura");
+                        //    fluxoDeCadastros.ListaErros.Add("Status não foi trocado para aguardando assinatura");
+                        }
+
+                        var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
+
+                        if (correntistaExiste)
+                        {
+                            Console.WriteLine("Correntista adicionado com sucesso na tabela.");
+                            pagina.InserirDados = "✅";
+
+
+                            var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+                            if (apagarCorrentista)
+                            {
+                                Console.WriteLine("Correntista apagado com sucesso");
+                                pagina.Excluir = "✅";
+
+
+                                var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("988998", "5", "cetip", idCorrentista);
+
+                                if (apagarContaBancaria)
+                                {
+
+                                    Console.WriteLine("Conta bancária pagada");
+
+                                }
+                                else
+                                {
+                                    fluxoDeCadastros.ListaErros.Add("Erro ao apagar conta bancária associada ao correntista");
+                                    errosTotais2++;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Não foi possível apagar Correntista");
+                                pagina.Excluir = "❌";
+                                errosTotais++;
+                            }
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Não foi possível inserir Correntista");
+                            pagina.InserirDados = "❌";
+                            pagina.Excluir = "❌";
+                            errosTotais += 2;
+                        }
+                    
                 }
                 catch (Exception ex)
                 {

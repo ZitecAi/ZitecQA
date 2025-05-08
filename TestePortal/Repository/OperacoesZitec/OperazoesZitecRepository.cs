@@ -214,6 +214,38 @@ namespace TestePortal.Repository.OperacoesZitec
             return sucesso;
 
         }
+        public static bool ExcluirOperacaoCertificadora(int idOperacaoRecebivel)
+        {
+            bool sucesso = false;
+
+            try
+            {
+                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+
+                using (SqlConnection myConnection = new SqlConnection(con))
+                {
+                    myConnection.Open();
+
+                    string query = @"
+            DELETE FROM TB_OPERACAO_CERTIFICADORA 
+            WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
+
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@idOperacaoRecebivel", idOperacaoRecebivel);
+
+                        int rowsAffected = oCmd.ExecuteNonQuery();
+                        sucesso = rowsAffected > 0; 
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirOperacaoCertificadora()", "Automações Jessica", e.StackTrace);
+            }
+
+            return sucesso;
+        }
 
         public static int ObterIdOperacaoRecebivel(string nomeArquivoEntrada)
         {

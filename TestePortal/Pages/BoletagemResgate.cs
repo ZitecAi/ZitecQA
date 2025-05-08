@@ -50,7 +50,7 @@ namespace TestePortal.Pages
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
                         var BoletagemResgateExiste2 = Repository.BoletagemResgate.BoletagemResgateRepository.VerificaExistenciaBoletagemResgate("49624866830", "36614123000160");
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Resgate", Exact = true }).ClickAsync();
                         await Page.Locator("#dataCorteInput").ClickAsync();
                         await Page.Locator("#dataCorteInput").FillAsync(DateTime.Now.ToString("dd/MM/yyyy"));
                         await Page.Locator("#dataLiquidInput").ClickAsync();

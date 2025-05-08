@@ -11,14 +11,14 @@ namespace TestePortal.Model
         public string Email { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
-        public string Attached { get; set; }
+        //public string Attached { get; set; }
 
-        public EmailPadrao(string email, string subject, string body, string attached)
+        public EmailPadrao(string email, string subject, string body)
         {
             Email = email;
             Subject = subject;
             Body = body;
-            Attached = attached;
+            //Attached = attached;
         }
     }
 }

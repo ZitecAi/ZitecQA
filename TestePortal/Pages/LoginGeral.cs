@@ -55,8 +55,7 @@ namespace TestePortal.Pages
                             EmailPadrao emailPadrao = new EmailPadrao(
                                 "jt@zitec.ai",
                                 "Erro de Login no Portal IDSF",
-                                "O login não teve sucesso. Não é possível fazer as verificações das páginas do portal.",
-                                null
+                                "O login não teve sucesso. Não é possível fazer as verificações das páginas do portal."
                             );
 
                             EnviarEmail.SendMailWithAttachment(emailPadrao);

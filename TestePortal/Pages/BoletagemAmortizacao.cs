@@ -44,41 +44,68 @@ namespace TestePortal.Pages
                         errosTotais++; 
                     }
 
-                    var apagarBoletagemAmortizacao2 = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.ApagarBoletagemAmortizacao("Jessica Vitoria Tavares", "49624866830");
+                    var apagarBoletagemAmortizacao2 = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.ApagarBoletagemAmortizacao("teste robo", "49624866830");
 
-                    await Page.GetByRole(AriaRole.Link, new() { Name = " Boletagem " }).ClickAsync();
-                    await Task.Delay(200);
-                    await Page.GetByRole(AriaRole.Link, new() { Name = " Amortização" }).ClickAsync();
-                    await Task.Delay(200);
-                    await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
-                    await Task.Delay(200);
-                    await Page.Locator("#fundoAmortizacao").SelectOptionAsync(new[] { "36614123000160" });
-                    await Task.Delay(200);
-                    await Page.GetByPlaceholder("/00/0000").ClickAsync();
-                    await Task.Delay(200);
-                    await Page.GetByPlaceholder("/00/0000").FillAsync("05/09/2024");
-                    await Task.Delay(200);
-                    await Page.Locator("#valorTotalAmortizacao").FillAsync("10");
-                    await Task.Delay(200);
+                    var dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
+                    await Task.Delay(300);
+                    var dataLimite = DateTime.Now.AddDays(30).ToString("dd/MM/yyyy");
+                    await Task.Delay(300);
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Amortização" }).ClickAsync();
+                    await Task.Delay(300);
+                    await Page.Locator("#fundoAmortizacao").SelectOptionAsync(new[] { "54638076000176" });
+                    await Task.Delay(300);
+                    await Page.Locator("#tipoAmortizacao").SelectOptionAsync(new[] { "Parcial" });
+                    await Task.Delay(300);
+                    await Page.Locator("#jurosAmortizacao").SelectOptionAsync(new[] { "PrincipalOnly" });
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Data de Assembleia:*").ClickAsync();
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Data de Assembleia:*").FillAsync(dataAtual);
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Data Limite:*").ClickAsync();
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Data Limite:*").FillAsync(dataLimite);
+                    await Task.Delay(300);
                     await Page.GetByLabel("Nome do Cotista:*").ClickAsync();
-                    await Task.Delay(200);
-                    await Page.GetByLabel("Nome do Cotista:*").FillAsync("Jessica Vitoria Tavares");
-                    await Task.Delay(200);
-                    await Page.GetByLabel("Cpf / Cnpj do Cotista:*").ClickAsync();
-                    await Task.Delay(200);
-                    await Page.GetByLabel("Cpf / Cnpj do Cotista:*").FillAsync("49624866830");
-                    await Task.Delay(200);
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Nome do Cotista:*").FillAsync("teste robo");
+                    await Task.Delay(300);
+                    await Page.GetByLabel("CPF/CNPJ do Cotista:*").ClickAsync();
+                    await Task.Delay(300);
+                    await Page.GetByLabel("CPF/CNPJ do Cotista:*").FillAsync("49624866830");
+                    await Task.Delay(300);
+                    await Page.GetByPlaceholder("0.000,00").ClickAsync();
+                    await Task.Delay(300);
+                    await Page.GetByPlaceholder("0.000,00").FillAsync("10,000");
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Dígito do Banco:*").ClickAsync();
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Dígito do Banco:*").FillAsync("439");
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Agência:*").ClickAsync();
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Agência:*").FillAsync("0001");
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Conta Corrente:*").ClickAsync();
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Conta Corrente:*").FillAsync("58787");
+                    await Task.Delay(300);
+                    await Page.GetByText("Dígito do Banco:* Agência:*").ClickAsync();
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Dígito da CC.:*").ClickAsync();
+                    await Task.Delay(300);
+                    await Page.GetByLabel("Dígito da CC.:*").FillAsync("1");
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
-                    await Task.Delay(500);
+                    await Task.Delay(700);
 
-                    var BoletagemAmortizacaoExiste = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.VerificaExistenciaBoletagemAmortizacao("Jessica Vitoria Tavares", "49624866830");
+                    var BoletagemAmortizacaoExiste = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.VerificaExistenciaBoletagemAmortizacao("teste robo", "49624866830");
                     
 
                     if (BoletagemAmortizacaoExiste)
                     {
                         Console.WriteLine("Amortização adicionada com sucesso na tabela.");
                         pagina.InserirDados = "✅";
-                        var apagarBoletagemAmortizacao = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.ApagarBoletagemAmortizacao("Jessica Vitoria Tavares", "49624866830");
+                        var apagarBoletagemAmortizacao = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.ApagarBoletagemAmortizacao("teste robo", "49624866830");
 
                         if (apagarBoletagemAmortizacao)
                         {

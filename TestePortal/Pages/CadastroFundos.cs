@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Playwright;
 using Segment.Model;
 using System;
 using System.Collections.Generic;
@@ -54,20 +55,15 @@ namespace TestePortal.Pages
 
                      
                         var apagarFundo2 = Repository.Fundos.FundosRepository.ApagarFundo("45543915000181", "teste QA");
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Adicionar Fundo +" }).ClickAsync();
-                        await Page.Locator("#Nome").ClickAsync();
-                        await Page.Locator("#Nome").FillAsync("teste qa");
-                        await Page.Locator("#CNPJ").FillAsync("45543915000181");
-                        await Page.Locator("#StatusFundo").SelectOptionAsync(new[] { "ATIVO" });
-                        await Page.Locator("#tipoFundo").SelectOptionAsync(new[] { "FIC FIDC" });
-                        await Page.Locator("#tipoInvestidor").SelectOptionAsync(new[] { "Profissional" });
-                        await Page.Locator("#caracteristicaFundo").SelectOptionAsync(new[] { "Aberto" });
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Fundo" }).ClickAsync();
+                        await Page.Locator("#Nome").FillAsync("teste QA");
+                        await Page.GetByPlaceholder("/0000-00").ClickAsync();
+                        await Page.GetByPlaceholder("/0000-00").FillAsync("45543915000181");
                         await Page.Locator("#tipoProcessamento").SelectOptionAsync(new[] { "zitec" });
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" }).ClickAsync();
-                        await Page.Locator("#ambienteSelect").SelectOptionAsync(new[] { "Homolog" });
+                        await Page.Locator("#ambienteSelect").SelectOptionAsync(new[] { "custodia" });
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" }).ClickAsync();
 
-                        await Task.Delay(500);
+                        await Task.Delay(1500);
                         
 
                         var fundoExiste = Repository.Fundos.FundosRepository.VerificaExistenciaFundo("45543915000181", "teste QA");

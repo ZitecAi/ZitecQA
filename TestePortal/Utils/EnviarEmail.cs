@@ -17,8 +17,6 @@ namespace TestePortal.Utils
 {
     public static class EnviarEmail
     {
-
-
         public static void SendMailWithAttachment(EmailPadrao emails)
         {
             string from = "no-reply@idsf.com.br";
@@ -28,11 +26,11 @@ namespace TestePortal.Utils
             string host = "email-smtp.us-east-1.amazonaws.com";//"email-smtp.us-east-1.amazonaws.com";
 
 
-            InternaAmazonEmailSender(emails.Email, emails.Subject, emails.Body, from, fromName, smtp_username, smtp_password, host, emails.Attached);
+            InternaAmazonEmailSender(emails.Email, emails.Subject, emails.Body, from, fromName, smtp_username, smtp_password, host);
 
         }
 
-        private static void InternaAmazonEmailSender(string to, string subject, string body, string from, string fromName, string smtp_username, string smtp_password, string host, string fileAttached)
+        private static void InternaAmazonEmailSender(string to, string subject, string body, string from, string fromName, string smtp_username, string smtp_password, string host)
         {
             string FROM = from;
             string FROMNAME = fromName;
@@ -53,8 +51,8 @@ namespace TestePortal.Utils
             message.Body = BODY;
 
 
-            if (!string.IsNullOrEmpty(fileAttached))
-                message.Attachments.Add(new Attachment(fileAttached));
+            //if (!string.IsNullOrEmpty(fileAttached))
+            //    message.Attachments.Add(new Attachment(fileAttached));
 
             using (var client = new SmtpClient(HOST, PORT))
             {
@@ -209,46 +207,38 @@ namespace TestePortal.Utils
 
 
             // tabela com validações especificas de operações 
+
+            Html += "<h2>Fluxo de cadastro de Operações</h2>";
+            Html += "<table border='1'>";
+            Html += "<tr><th>Arquivo</th><th>Tipo Operação</th><th>Aprovações realizadas</th><th>Todos os status trocados</th><th>Total de erros</th><th>Lista de erros</th></tr>";
+
             foreach (var item in operacoes)
             {
-                Html += "<h2>Fluxo de cadastro de Operações</h2>";
-                Html += "<table>";
-                Html += "<tr><th>Aprovações realizadas</th><th>Todos os status trocados</th><th>Total de erros </th><th>Lista de erros</th></tr>";
+                // Linha para os dados com sufixo 2
                 Html += "<tr>";
-                Html += "<td> " + item.AprovacoesRealizadas1 + "</td>\n";
-                Html += "<td> " + item.StatusTrocados1 + "</td>\n";
-                Html += "<td> " + item.totalErros1 + "</td>\n";
-                Html += "<td> " + string.Join(", ", item.ListaErros1) + "</td>\n";
+                Html += "<td>" + item.NovoNomeArquivo2 + "</td>\n";
+                Html += "<td>" + item.TipoOperacao2 + "</td>\n";
+                Html += "<td>" + item.AprovacoesRealizadas2 + "</td>\n";
+                Html += "<td>" + item.StatusTrocados2 + "</td>\n";
+                Html += "<td>" + item.totalErros2 + "</td>\n";
+                Html += "<td>" + string.Join(", ", item.ListaErros2) + "</td>\n";
                 Html += "</tr>";
-            }
-            foreach (var item in operacoes)
-            {
-                Html += "<h2>Fluxo de cadastro de Operações</h2>";
-                Html += "<table>";
-                Html += "<tr><th>Aprovações realizadas</th><th>Todos os status trocados</th><th>Total de erros </th><th>Lista de erros</th></tr>";
+
+                // Linha para os dados com sufixo 3
                 Html += "<tr>";
-                Html += "<td> " + item.AprovacoesRealizadas3 + "</td>\n";
-                Html += "<td> " + item.StatusTrocados3 + "</td>\n";
-                Html += "<td> " + item.totalErros3 + "</td>\n";
-                Html += "<td> " + string.Join(", ", item.ListaErros3) + "</td>\n";
-                Html += "</tr>";
-            }
-            foreach (var item in operacoes)
-            {
-                Html += "<h2>Fluxo de cadastro de Operações</h2>";
-                Html += "<table>";
-                Html += "<tr><th>Aprovações realizadas</th><th>Todos os status trocados</th><th>Total de erros </th><th>Lista de erros</th></tr>";
-                Html += "<tr>";
-                Html += "<td> " + item.AprovacoesRealizadas2 + "</td>\n";
-                Html += "<td> " + item.StatusTrocados2 + "</td>\n";
-                Html += "<td> " + item.totalErros2 + "</td>\n";
-                Html += "<td> " + string.Join(", ", item.ListaErros2) + "</td>\n";
+                Html += "<td>" + item.NovoNomeArquivo3 + "</td>\n";
+                Html += "<td>" + item.TipoOperacao3 + "</td>\n";
+                Html += "<td>" + item.AprovacoesRealizadas3 + "</td>\n";
+                Html += "<td>" + item.StatusTrocados3 + "</td>\n";
+                Html += "<td>" + item.totalErros3 + "</td>\n";
+                Html += "<td>" + string.Join(", ", item.ListaErros3) + "</td>\n";
                 Html += "</tr>";
             }
 
             Html += "</table>";
             Html += "<br>";
             Html += "<hr class=\"solid\">";
+
 
             // tabela com validações especificas de conciliacao 
 
@@ -339,8 +329,6 @@ namespace TestePortal.Utils
 
 
         }
-
-
     }
 
 }

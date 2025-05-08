@@ -133,10 +133,11 @@ namespace TestePortalIDSF
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
-                        listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
                         (pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
                         listaFluxos.Add(fluxoDeCadastros);
+                        listaPagina.Add(await BoletagemControleCapital.ControleCapital(Page));
                         listaPagina.Add(await OperacoesBaixaEmLote.BaixaLote(Page));
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         await Task.Delay(500);
@@ -146,10 +147,8 @@ namespace TestePortalIDSF
                         await Task.Delay(600);
                         (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaEscrow(Page, context, usuario.Nivel);
                         listaFluxos.Add(fluxoDeCadastros);
-                        listaOperacoes.Add(operacoes);
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
-                        listaOperacoes.Add(operacoes);
                         (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaOperacoes.Add(operacoes);
@@ -192,7 +191,7 @@ namespace TestePortalIDSF
                         listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
-                        listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
@@ -239,6 +238,8 @@ namespace TestePortalIDSF
                         listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
+                        listaPagina.Add(pagina);
+                        (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaPagina.Add(await OperacoesRecebiveis.Recebiveis(Page));
                         listaPagina.Add(await OperacoesConciliacao.Conciliacao(Page));
@@ -326,10 +327,10 @@ namespace TestePortalIDSF
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
                     "todos@zitec.ai",
-                    "Relatório das páginas do portal em produção.",
-                    EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao),
+                    "Relatório das páginas do portal em produção teste.",
+                    EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
                     //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
-                    "C:\\Temp\\Paginas.txt"
+                    //"C:\\Temp\\Paginas.txt"
                   );
 
                 EnviarEmail.SendMailWithAttachment(emailPadrao);

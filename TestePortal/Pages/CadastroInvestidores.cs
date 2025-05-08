@@ -13,6 +13,7 @@ using TestePortal.Model;
 using Segment.Model;
 using TestePortal.Utils;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Data;
 
 namespace TestePortal.Pages
 {
@@ -60,9 +61,9 @@ namespace TestePortal.Pages
                     {
 
 
-                        var apagarInvestidor2 = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("49624866830", "jehvittav@gmail.com");
+                        var apagarInvestidor2 = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("49624866830", "robo@zitec.ai");
                         // adicionar um novo cotista
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Investidor" }).ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("#cpfCnpjCotistaInterno").FillAsync("49624866830");
@@ -71,7 +72,7 @@ namespace TestePortal.Pages
                         await Task.Delay(300);
                         await Page.Locator("#emailCotistaInterno").ClickAsync();
                         await Task.Delay(300);
-                        await Page.Locator("#emailCotistaInterno").FillAsync("jehvittav@gmail.com");
+                        await Page.Locator("#emailCotistaInterno").FillAsync("robo@zitec.ai");
                         await Task.Delay(300);
                         await Page.Locator("#obsCotistaInterno").ClickAsync();
                         await Task.Delay(300);
@@ -83,7 +84,7 @@ namespace TestePortal.Pages
                         await Page.ReloadAsync();
                         await Task.Delay(3000);
                         await Page.GetByLabel("Pesquisar").ClickAsync();
-                        await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                        await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                         var primeiroTr = Page.Locator("#listaCotistas tr").First;
                         var primeiroTd = primeiroTr.Locator("td").First;
                         await primeiroTd.ClickAsync();
@@ -91,12 +92,12 @@ namespace TestePortal.Pages
 
                         try
                         {
-                            int idCotista = InvestidoresRepository.ObterIdCotista("49624866830", "jehvittav@gmail.com");
+                            int idCotista = InvestidoresRepository.ObterIdCotista("49624866830", "robo@zitec.ai");
                             var buttonSelector = $"tr.child button#\\3{idCotista.ToString().Substring(0, 1)} {idCotista.ToString().Substring(1)}_url.btn.btn-default[title='Copiar Link']";
                             await Page.Locator(buttonSelector).ClickAsync();
                             await Task.Delay(400);
 
-                            string token = InvestidoresRepository.ObterToken("49624866830", "jehvittav@gmail.com");
+                            string token = InvestidoresRepository.ObterToken("49624866830", "robo@zitec.ai");
                             string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.COTISTA"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
@@ -236,7 +237,7 @@ namespace TestePortal.Pages
                             await Task.Delay(1000);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr2 = Page.Locator("#listaCotistas tr").First;
                             var primeiroTd2 = primeiroTr.Locator("td").First;
                             await primeiroTd.ClickAsync();
@@ -247,7 +248,7 @@ namespace TestePortal.Pages
                                 await button.ClickAsync();
                                 fluxoDeCadastros.Formulario = "✅";
                                 Console.WriteLine("Botão de resumo de formulário encontrado.");
-                                
+
                             }
                             else
                             {
@@ -286,7 +287,7 @@ namespace TestePortal.Pages
                             var msgEletronica = await Page.EvaluateAsync<string>("() => document.getElementById('msgEletronicaResumo').value");
                             await Task.Delay(400);
                             if (nomeCompleto == "Jessica Vitoria Tavares" && cpf == "496.248.668-30" && sexo == "Feminino" && dataNascimento == "17/05/2004" && nomePai == "Roberto Tavares" &&
-                            nomeMae == "Bernadete Maria Cassimiro " && estadoCivil == "União Estável" && situacaoLegal == "Maior" && grau == "Ensino Médio Completo" && email == "jehvittav@gmail.com" &&
+                            nomeMae == "Bernadete Maria Cassimiro " && estadoCivil == "União Estável" && situacaoLegal == "Maior" && grau == "Ensino Médio Completo" && email == "robo@zitec.ai" &&
                             telefone == "(11)96018-3248" && msgEletronica == "teste")
                             {
                                 await Task.Delay(00);
@@ -547,7 +548,7 @@ namespace TestePortal.Pages
                                 errosTotais2++;
 
                             }
-                            var verificarStatus = Repository.Investidores.InvestidoresRepository.VerificarStatus("49624866830", "jehvittav@gmail.com");
+                            var verificarStatus = Repository.Investidores.InvestidoresRepository.VerificarStatus("49624866830", "robo@zitec.ai");
 
                             if (verificarStatus)
                             {
@@ -589,7 +590,7 @@ namespace TestePortal.Pages
                             await Page.Locator("#statusCadastroButton").ClickAsync();
                             await Task.Delay(800);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
-                            await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr3 = Page.Locator("#listaCotistas tr").First;
                             var primeiroTd3 = primeiroTr.Locator("td").First;
                             await primeiroTd.ClickAsync();
@@ -598,6 +599,7 @@ namespace TestePortal.Pages
                             await Page.WaitForSelectorAsync(locatorCompliance);
                             await Page.Locator(locatorCompliance).ClickAsync();
                             await Page.Locator("#statusCompliance label").Filter(new() { HasText = "Aprovado" }).ClickAsync();
+                            await Page.Locator("#riscoCompliance label").Filter(new() { HasText = "Baixo" }).Locator("div").ClickAsync();
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira sua mensagem..." }).ClickAsync();
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira sua mensagem..." }).FillAsync("teste aprovação");
                             await Page.Locator("#statusComplianceButton").ClickAsync();
@@ -608,7 +610,7 @@ namespace TestePortal.Pages
 
                             for (int i = 0; i < 5; i++)
                             {
-                                statusAtual = InvestidoresRepository.VerificaStatusAgdAss("49624866830", "jehvittav@gmail.com");
+                                statusAtual = InvestidoresRepository.VerificaStatusAgdAss("49624866830", "robo@zitec.ai");
 
                                 if (statusAtual)
                                 {
@@ -622,7 +624,7 @@ namespace TestePortal.Pages
                                 }
                             }
 
-                        
+
                             if (statusAtual == true)
                             {
                                 string idDocumentoAutentique = Repository.Investidores.InvestidoresRepository.ObterIdDocumentoAutentique(idCotista);
@@ -630,8 +632,22 @@ namespace TestePortal.Pages
 
                                 if (response != null && response.Success)
                                 {
-                                    fluxoDeCadastros.DocumentoAssinado = "✅";
+
                                     Console.WriteLine("Documento assinado");
+
+                                    var atualizarStatus = Repository.Investidores.InvestidoresRepository.UpdateStatusAprovado("49624866830", "robo@zitec.ai");
+
+                                    if (atualizarStatus == true)
+                                    {
+                                        fluxoDeCadastros.DocumentoAssinado = "✅";
+
+                                    }
+                                    else
+                                    {
+                                        fluxoDeCadastros.DocumentoAssinado = "❌";
+                                    }
+
+
                                 }
                                 else
                                 {
@@ -648,7 +664,7 @@ namespace TestePortal.Pages
                                 for (int i = 0; i < 5; i++)
                                 {
 
-                                    statusAprovado = InvestidoresRepository.VerificaStatusAprovado("49624866830", "jehvittav@gmail.com");
+                                    statusAprovado = InvestidoresRepository.VerificaStatusAprovado("49624866830", "robo@zitec.ai");
 
                                     if (statusAprovado == true)
                                     {
@@ -702,18 +718,18 @@ namespace TestePortal.Pages
 
 
 
-                        var investidorExiste = Repository.Investidores.InvestidoresRepository.VerificaExistenciaInvestidores("49624866830", "jehvittav@gmail.com");
+                        var investidorExiste = Repository.Investidores.InvestidoresRepository.VerificaExistenciaInvestidores("49624866830", "robo@zitec.ai");
 
 
                         if (investidorExiste)
                         {
                             Console.WriteLine("investidor adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                           
 
 
 
-                            var apagarInvestidor = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("49624866830", "jehvittav@gmail.com");
+
+                            var apagarInvestidor = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("49624866830", "robo@zitec.ai");
 
                             if (apagarInvestidor)
                             {
@@ -827,14 +843,14 @@ namespace TestePortal.Pages
 
                     if (nivelLogado == NivelEnum.Master)
                     {
-                        
-                        var apagarInvestidor2 = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("53300608000106", "jehvittav@gmail.com");
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+
+                        var apagarInvestidor2 = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("16695922000109", "robo@zitec.ai");
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Investidor" }).ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").ClickAsync();
-                        await Page.Locator("#cpfCnpjCotistaInterno").FillAsync("533.006.080-00106");
+                        await Page.Locator("#cpfCnpjCotistaInterno").FillAsync("166.959.220-00109");
                         await Page.Locator("#btnAvancarCadastroCotista").ClickAsync();
                         await Page.Locator("#emailCotistaInterno").ClickAsync();
-                        await Page.Locator("#emailCotistaInterno").FillAsync("jehvittav@gmail.com");
+                        await Page.Locator("#emailCotistaInterno").FillAsync("robo@zitec.ai");
                         await Page.Locator("#obsCotistaInterno").ClickAsync();
                         await Page.Locator("#obsCotistaInterno").FillAsync("teste");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
@@ -843,13 +859,13 @@ namespace TestePortal.Pages
                         await Page.ReloadAsync();
                         await Task.Delay(2000);
                         await Page.GetByLabel("Pesquisar").ClickAsync();
-                        await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                        await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                         var primeiroTr = Page.Locator("#listaCotistas tr").First;
                         var primeiroTd = primeiroTr.Locator("td").First;
                         await primeiroTd.ClickAsync();
                         await Task.Delay(400);
 
-                        int idCotista = InvestidoresRepository.ObterIdCotista("53300608000106", "jehvittav@gmail.com");
+                        int idCotista = InvestidoresRepository.ObterIdCotista("16695922000109", "robo@zitec.ai");
 
                         try
                         {
@@ -857,7 +873,7 @@ namespace TestePortal.Pages
                             await Page.Locator(buttonSelector).ClickAsync();
                             await Task.Delay(400);
 
-                            string token = InvestidoresRepository.ObterToken("53300608000106", "jehvittav@gmail.com");
+                            string token = InvestidoresRepository.ObterToken("16695922000109", "robo@zitec.ai");
                             string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.COTISTAPJ"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
@@ -968,7 +984,7 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await newPage.GetByLabel("*Email", new() { Exact = true }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.GetByLabel("*Email", new() { Exact = true }).FillAsync("jehvittav@gmail.com");
+                            await newPage.GetByLabel("*Email", new() { Exact = true }).FillAsync("robo@zitec.ai");
                             await Task.Delay(200);
                             await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).ClickAsync();
                             await Task.Delay(200);
@@ -1038,7 +1054,7 @@ namespace TestePortal.Pages
                             await Task.Delay(3000);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr2 = Page.Locator("#listaCotistas tr").First;
                             var primeiroTd2 = primeiroTr.Locator("td").First;
                             await Task.Delay(400);
@@ -1095,10 +1111,10 @@ namespace TestePortal.Pages
                             var ppe = await Page.EvaluateAsync<bool>("() => document.getElementById('ppeNao').checked");
 
                             await Task.Delay(350);
-                            if (razaoSocial == "53.300.608 JESSICA VITORIA TAVARES" && cnpj == "53.300.608/0001-06" && dtConstituicao == dataAtual &&
+                            if (razaoSocial == "ID CORRETORA DE TITULOS E VALORES MOBILIARIOS SA" && cnpj == "16.695.922/0001-09" && dtConstituicao == dataAtual &&
                                 ativPrincipal == "analista qa" && irrf == "Isento" && iof == "Isento" && natJuridica == "Valor não encontrado" &&
                                 formaConstituicao == "Valor não encontrado" && controlAcionario == "Nacional" && paisDomFiscal == "BRASIL" && paisConst == "BRASIL"
-                                && email == "jehvittav@gmail.com" && usPerson == true && fatca == true && ppe == true
+                                && email == "robo@zitec.ai" && usPerson == true && fatca == true && ppe == true
 
                             )
                             {
@@ -1209,7 +1225,7 @@ namespace TestePortal.Pages
                             var emailTabela = await Page.EvaluateAsync<string>("() => document.querySelector('#listaProcuradorAdicionado tr td:nth-child(4)').innerText");
 
                             if (nomeTabe == "Jessica Vitoria Tavares" && cpfTabe == "496.248.668-30" && dataNascimentoTabela == "01/01/0001" &&
-                                 emailTabela == "jehvittav@gmail.com")
+                                 emailTabela == "robo@zitec.ai")
                             {
 
                                 Console.WriteLine("Os campos foram salvos corretamente em representantes! ");
@@ -1402,10 +1418,9 @@ namespace TestePortal.Pages
                                 fluxoDeCadastros.FormularioCompletoNoPortal = "❌";
                                 fluxoDeCadastros.ListaErros.Add("Nem todos os campos da ficha foram levadas para o portal");
                                 errosTotais2++;
-
                             }
 
-                            var verificarStatus = Repository.Investidores.InvestidoresRepository.VerificarStatus("53300608000106", "jehvittav@gmail.com");
+                            var verificarStatus = Repository.Investidores.InvestidoresRepository.VerificarStatus("16695922000109", "robo@zitec.ai");
 
                             if (verificarStatus)
                             {
@@ -1447,7 +1462,7 @@ namespace TestePortal.Pages
                         // aprovação e assinatura
                         await Page.ReloadAsync();
                         await Page.GetByLabel("Pesquisar").ClickAsync();
-                        await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                        await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                         var primeiroTr4 = Page.Locator("#listaCotistas tr").First;
                         var primeiroTd4 = primeiroTr.Locator("td").First;
                         await primeiroTd4.ClickAsync();
@@ -1460,7 +1475,7 @@ namespace TestePortal.Pages
                         await Page.Locator("#statusCadastroButton").ClickAsync();
                         await Task.Delay(800);
                         await Page.GetByLabel("Pesquisar").ClickAsync();
-                        await Page.GetByLabel("Pesquisar").FillAsync("jehvittav@gmail.com");
+                        await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                         var primeiroTr3 = Page.Locator("#listaCotistas tr").First;
                         var primeiroTd3 = primeiroTr.Locator("td").First;
                         await primeiroTd3.ClickAsync();
@@ -1469,6 +1484,7 @@ namespace TestePortal.Pages
                         await Page.WaitForSelectorAsync(locatorCompliance);
                         await Page.Locator(locatorCompliance).ClickAsync();
                         await Page.Locator("#statusCompliance label").Filter(new() { HasText = "Aprovado" }).ClickAsync();
+                        await Page.Locator("#riscoCompliance label").Filter(new() { HasText = "Baixo" }).Locator("div").ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira sua mensagem..." }).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira sua mensagem..." }).FillAsync("teste aprovação");
                         await Page.Locator("#statusComplianceButton").ClickAsync();
@@ -1480,7 +1496,7 @@ namespace TestePortal.Pages
 
                         for (int i = 0; i < 5; i++)
                         {
-                            statusAtual = InvestidoresRepository.VerificaStatusAgdAss("53300608000106", "jehvittav@gmail.com");
+                            statusAtual = InvestidoresRepository.VerificaStatusAgdAss("16695922000109", "robo@zitec.ai");
 
                             if (statusAtual)
                             {
@@ -1504,8 +1520,20 @@ namespace TestePortal.Pages
 
                             if (response != null && response.Success)
                             {
-                                fluxoDeCadastros.DocumentoAssinado = "✅";
                                 Console.WriteLine("Documento assinado");
+
+                                var updateStatus = Repository.Investidores.InvestidoresRepository.UpdateStatusAprovado("16695922000109", "robo@zitec.ai");
+
+                                if (updateStatus == true)
+                                {
+                                    fluxoDeCadastros.DocumentoAssinado = "✅";
+
+                                }
+                                else
+                                {
+                                    fluxoDeCadastros.DocumentoAssinado = "❌";
+                                }
+
                             }
                             else
                             {
@@ -1523,7 +1551,7 @@ namespace TestePortal.Pages
                             for (int i = 0; i < 5; i++)
                             {
 
-                                statusAprovado = InvestidoresRepository.VerificaStatusAprovado("53300608000106", "jehvittav@gmail.com");
+                                statusAprovado = InvestidoresRepository.VerificaStatusAprovado("16695922000109", "robo@zitec.ai");
 
                                 if (statusAprovado == true)
                                 {
@@ -1556,11 +1584,11 @@ namespace TestePortal.Pages
 
 
 
-                        
+
 
                         //verificar no banco de dados
 
-                        var investidorExiste = Repository.Investidores.InvestidoresRepository.VerificaExistenciaInvestidores("53300608000106", "jehvittav@gmail.com");
+                        var investidorExiste = Repository.Investidores.InvestidoresRepository.VerificaExistenciaInvestidores("16695922000109", "robo@zitec.ai");
 
                         if (investidorExiste)
                         {
@@ -1569,7 +1597,7 @@ namespace TestePortal.Pages
 
 
 
-                            var apagarInvestidor = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("53300608000106", "jehvittav@gmail.com");
+                            var apagarInvestidor = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("16695922000109", "robo@zitec.ai");
 
                             if (apagarInvestidor)
                             {
@@ -1692,13 +1720,13 @@ namespace TestePortal.Pages
                     if (nivelLogado == NivelEnum.Master)
                     {
 
-                        var apagarInvestidor2 = Repository.Investidores.InvestidoresFundInvest.ApagarInvestidores("24426716000113", "esmeralda@gmail.com");
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                        var apagarInvestidor2 = Repository.Investidores.InvestidoresFundInvest.ApagarInvestidores("24426716000113", "robo@zitec.ai");
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Investidor" }).ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").FillAsync("244.267.160-00113");
                         await Page.Locator("#btnAvancarCadastroCotista").ClickAsync();
                         await Page.Locator("#emailFundoInvest").ClickAsync();
-                        await Page.Locator("#emailFundoInvest").FillAsync("esmeralda@gmail.com");
+                        await Page.Locator("#emailFundoInvest").FillAsync("robo@zitec.ai");
                         await Page.Locator("#obsFundoInvest").ClickAsync();
                         await Page.Locator("#obsFundoInvest").FillAsync("teste");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
@@ -1707,15 +1735,15 @@ namespace TestePortal.Pages
                         await Page.ReloadAsync();
                         await Task.Delay(2000);
                         await Page.GetByLabel("Pesquisar").ClickAsync();
-                        await Page.GetByLabel("Pesquisar").FillAsync("esmeralda@gmail.com");
+                        await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                         var primeiroTr = Page.Locator("#listaCotistas tr").First;
                         var primeiroTd = primeiroTr.Locator("td").First;
                         await primeiroTd.ClickAsync();
                         await Task.Delay(400);
 
-                        int idCotista = InvestidoresFundInvest.ObterIdCotista("24426716000113", "esmeralda@gmail.com");
+                        int idCotista = InvestidoresFundInvest.ObterIdCotista("24426716000113", "robo@zitec.ai");
                         await Task.Delay(400);
-                        string token = InvestidoresFundInvest.ObterToken("24426716000113", "esmeralda@gmail.com");
+                        string token = InvestidoresFundInvest.ObterToken("24426716000113", "robo@zitec.ai");
                         string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.COTISTAFUNDINVST"];
                         string copiedUrl = $"{baseUrl}{token}";
                         var newPage = await context.NewPageAsync();
@@ -1723,7 +1751,7 @@ namespace TestePortal.Pages
                         //await newPage.PauseAsync();
 
                         await newPage.Locator("#email_PJ").ClickAsync();
-                        await newPage.Locator("#email_PJ").FillAsync("esmeralda@gmail.com");
+                        await newPage.Locator("#email_PJ").FillAsync("robo@zitec.ai");
                         await Task.Delay(200);
                         await newPage.Locator("#GIIN_FI").ClickAsync();
                         await newPage.Locator("#GIIN_FI").FillAsync("teste");
@@ -1760,7 +1788,7 @@ namespace TestePortal.Pages
                         await newPage.Locator("#telefoneCustodiante_OCC").FillAsync("(11) 97547-8874");
                         await Task.Delay(200);
                         await newPage.Locator("#emailCustodiante_OCC").ClickAsync();
-                        await newPage.Locator("#emailCustodiante_OCC").FillAsync("custodiante@gmail.com");
+                        await newPage.Locator("#emailCustodiante_OCC").FillAsync("robo@zitec.ai");
                         await Task.Delay(200);
                         await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
                         await newPage.GetByPlaceholder("_____-___", new() { Exact = true }).ClickAsync();
@@ -1817,7 +1845,7 @@ namespace TestePortal.Pages
                         await newPage.Locator("#dtNascRepresentante_RL").FillAsync("2004-05-17");
                         await Task.Delay(200);
                         await newPage.Locator("#emailRepresentante_RL").ClickAsync();
-                        await newPage.Locator("#emailRepresentante_RL").FillAsync("jessica@gmail.com");
+                        await newPage.Locator("#emailRepresentante_RL").FillAsync("robo@zitec.ai");
                         await Task.Delay(200);
                         await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(__) _____-____" }).ClickAsync();
                         await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(__) _____-____" }).FillAsync("(11) 87451-4511");
@@ -1856,7 +1884,7 @@ namespace TestePortal.Pages
                         await Task.Delay(3000);
                         await Page.GetByLabel("Pesquisar").ClickAsync();
                         await Task.Delay(800);
-                        await Page.GetByLabel("Pesquisar").FillAsync("esmeralda@gmail.com");
+                        await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                         var primeiroTr2 = Page.Locator("#listaCotistas tr").First;
                         var primeiroTd2 = primeiroTr.Locator("td").First;
                         await Task.Delay(400);
@@ -1915,9 +1943,9 @@ namespace TestePortal.Pages
 
 
                         if (razaoSocialPJ == "ESMERALDA - FUNDO DE INVESTIMENTO EM DIREITOS CREDITORIOS" && dtConstituicaoPJ == "2016-02-24" &&
-                            emailPJ == "esmeralda@gmail.com" && giinFI == "teste" && admContatoFI == "teste" &&
+                            emailPJ == "robo@zitec.ai" && giinFI == "teste" && admContatoFI == "teste" &&
                             admTelefoneOCA == "(11) 97485-2148" && admEmailOCA == "administrador@gmail.com" && gestorFundoOCA == "gestor" &&
-                            telefoneCustodianteOCC == "(11) 97547-8874" && emailCustodianteOCC == "custodiante@gmail.com" &&
+                            telefoneCustodianteOCC == "(11) 97547-8874" && emailCustodianteOCC == "robo@zitec.ai" &&
                             gestorContatoOCA == "contato"
                              )
                         {
@@ -1939,7 +1967,7 @@ namespace TestePortal.Pages
 
                         // verificar endereço comercial
 
-                        await Page.Locator("#btnAvancar").ClickAsync();
+                        await Page.Locator("#EnderecoFI-tabResumo").ClickAsync();
 
                         await Page.WaitForSelectorAsync("#enderecoComercial_END");
                         var enderecoCom = await Page.EvaluateAsync<string>("() => document.getElementById('enderecoComercial_END').value");
@@ -1983,7 +2011,7 @@ namespace TestePortal.Pages
 
                         // verificar patrimonios 
 
-                        await Page.Locator("#btnAvancar").ClickAsync();
+                        await Page.Locator("#PatrimonialFI-tabResumo").ClickAsync();
                         string dataAtual2 = DateTime.Now.ToString("yyyy-MM-dd");
                         await Page.WaitForSelectorAsync("#situacaoPatrimonial_SP");
                         var situacaoPatrimonialSP = await Page.EvaluateAsync<string>("() => document.getElementById('situacaoPatrimonial_SP').value");
@@ -2009,14 +2037,24 @@ namespace TestePortal.Pages
                         }
 
                         //verificar dados de representates
-                        await Page.Locator("#btnAvancar").ClickAsync();
-                        await Page.WaitForSelectorAsync("#listaRepresentantes_RL .list-group-item");
-                        var nomeRepresentante = await Page.EvaluateAsync<string>("() => document.querySelector('#listaRepresentantes_RL .list-group-item').querySelector('b:nth-of-type(1)').nextSibling.textContent.trim()");
-                        var cpfRepresentante = await Page.EvaluateAsync<string>("() => document.querySelector('#listaRepresentantes_RL .list-group-item').querySelector('b:nth-of-type(2)').nextSibling.textContent.trim()");
-                        var dataNascimento = await Page.EvaluateAsync<string>("() => document.querySelector('#listaRepresentantes_RL .list-group-item').querySelector('b:nth-of-type(3)').nextSibling.textContent.trim()");
-                        var emailRepresentante = await Page.EvaluateAsync<string>("() => document.querySelector('#listaRepresentantes_RL .list-group-item').querySelector('b:nth-of-type(4)').nextSibling.textContent.trim()");
+                        await Page.Locator("#RepresentantesFI-tabResumo").ClickAsync();
 
-                        if (nomeRepresentante == "Jessica Vitoria Tavares" && cpfRepresentante == "496.248.668-30" && dataNascimento == "17/05/2004" && emailRepresentante == "jessica@gmail.com")
+                        await Page.WaitForSelectorAsync("#tabelaRepresentanteResumoFI");
+
+                        var nomeRepresentante = await Page.EvaluateAsync<string>(
+                            "() => document.querySelector('#tabelaRepresentanteResumoFI tbody tr td:nth-of-type(1)').textContent.trim()");
+
+                        var cpfRepresentante = await Page.EvaluateAsync<string>(
+                            "() => document.querySelector('#tabelaRepresentanteResumoFI tbody tr td:nth-of-type(2)').textContent.trim()");
+
+                        var dataNascimento = await Page.EvaluateAsync<string>(
+                            "() => document.querySelector('#tabelaRepresentanteResumoFI tbody tr td:nth-of-type(3)').textContent.trim()");
+
+                        var emailRepresentante = await Page.EvaluateAsync<string>(
+                            "() => document.querySelector('#tabelaRepresentanteResumoFI tbody tr td:nth-of-type(4)').textContent.trim()");
+
+                        if (nomeRepresentante == "Jessica Vitoria Tavares" && cpfRepresentante == "49624866830" &&
+                            dataNascimento == "17/05/2004" && emailRepresentante == "robo@zitec.ai")
                         {
                             Console.WriteLine("Os campos foram salvos corretamente em representantes");
                             formularioOk++;
@@ -2031,12 +2069,13 @@ namespace TestePortal.Pages
 
                         //verificar conta bancária 
 
-                        await Page.Locator("#btnAvancar").ClickAsync();
+                        await Page.Locator("#ContaBancariaFI-tabResumo").ClickAsync();
 
-                        var banco = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContaBancaria_CB .list-group-item').querySelector('b:nth-of-type(1)').nextSibling.textContent.trim()");
-                        var agencia = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContaBancaria_CB .list-group-item').querySelector('b:nth-of-type(2)').nextSibling.textContent.trim()");
-                        var conta = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContaBancaria_CB .list-group-item').querySelector('b:nth-of-type(3)').nextSibling.textContent.trim()");
-                        var tipoConta = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContaBancaria_CB .list-group-item').querySelector('b:nth-of-type(4)').nextSibling.textContent.trim()");
+                        var banco = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContasBancoResumoFI tr td:nth-of-type(1)').textContent.trim()");
+                        var agencia = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContasBancoResumoFI tr td:nth-of-type(2)').textContent.trim()");
+                        var conta = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContasBancoResumoFI tr td:nth-of-type(3)').textContent.trim()");
+                        var tipoConta = await Page.EvaluateAsync<string>("() => document.querySelector('#listaContasBancoResumoFI tr td:nth-of-type(4)').textContent.trim()");
+
 
                         if (banco == "439" && agencia == "6541" && conta == "54811-5" && tipoConta == "CORRENTE")
                         {
@@ -2053,11 +2092,36 @@ namespace TestePortal.Pages
 
                         //verificar documentos
 
-                        await Page.Locator("#btnAvancar").ClickAsync();
-                        bool downloadComprovanteConcluido = await Repository.Investidores.InvestidoresFundInvest.BaixarArquivo(Page, "btnDownloadComprovante", "Comprovante.pdf");
-                        bool downloadRegulamentoConcluido = await Repository.Investidores.InvestidoresFundInvest.BaixarArquivo(Page, "btnDownloadRegulamento", "Regulamento.pdf");
+                        await Page.Locator("#DocumentosFI-tabResumo").ClickAsync();
+                        var existeDocumento = await Page.EvaluateAsync<bool>(@"
+                            () => {
+                                const tabela = document.querySelector('#tabelaDocumentosIdentifResumoFI');
+                                if (!tabela) return false;
 
-                        if (downloadComprovanteConcluido == true && downloadRegulamentoConcluido == true)
+                                return Array.from(tabela.querySelectorAll('tr')).some(tr => 
+                                    Array.from(tr.querySelectorAll('td')).some(td => 
+                                        td.textContent.trim().toLowerCase().includes('arquivo teste 2.pdf')
+                                    )
+                                );
+                            }
+                        ");
+
+                                                var existeComprovante = await Page.EvaluateAsync<bool>(@"
+                            () => {
+                                const tabela = document.querySelector('#tabelaComprovResResumoFI');
+                                if (!tabela) return false;
+
+                                return Array.from(tabela.querySelectorAll('tr')).some(tr => 
+                                    Array.from(tr.querySelectorAll('td')).some(td => 
+                                        td.textContent.trim().toLowerCase().includes('arquivo teste 2.pdf')
+                                    )
+                                );
+                            }
+                        ");
+
+
+
+                        if (existeDocumento == true && existeComprovante == true)
                         {
                             Console.WriteLine("arquivos baixados corretamente");
                             formularioOk++;
@@ -2084,7 +2148,7 @@ namespace TestePortal.Pages
 
                         //verificar no banco de dados
 
-                        var investidorExiste = Repository.Investidores.InvestidoresFundInvest.VerificaExistenciaInvestidores("24426716000113", "esmeralda@gmail.com");
+                        var investidorExiste = Repository.Investidores.InvestidoresFundInvest.VerificaExistenciaInvestidores("24426716000113", "robo@zitec.ai");
 
                         if (investidorExiste)
                         {
@@ -2092,7 +2156,7 @@ namespace TestePortal.Pages
                             Console.WriteLine("investidor adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
 
-                            var verificarStatus = Repository.Investidores.InvestidoresFundInvest.VerificarStatus("24426716000113", "esmeralda@gmail.com");
+                            var verificarStatus = Repository.Investidores.InvestidoresFundInvest.VerificarStatus("24426716000113", "robo@zitec.ai");
 
                             if (verificarStatus)
                             {
@@ -2107,7 +2171,7 @@ namespace TestePortal.Pages
                                 fluxoDeCadastros.ListaErros.Add("Erro ao trocar status na tabela");
                             }
 
-                            var apagarInvestidor = Repository.Investidores.InvestidoresFundInvest.ApagarInvestidores("24426716000113", "esmeralda@gmail.com");
+                            var apagarInvestidor = Repository.Investidores.InvestidoresFundInvest.ApagarInvestidores("24426716000113", "robo@zitec.ai");
 
                             if (apagarInvestidor)
                             {

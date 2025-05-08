@@ -49,76 +49,61 @@ namespace TestePortal.Pages
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora)
                     {
-                        var apagarReembolso2 = Repository.Reembolso.ReembolsoRepository.ApagarReembolso("599997655", "Jessica Vitoria Tavares");
+                       
+                        var apagarReembolso2 = Repository.Reembolso.ReembolsoRepository.ApagarReembolso("57777852", "FUNDO QA FIDC");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                         await Task.Delay(100);
                         await Page.Locator("#fundoBanco").SelectOptionAsync(new[] { "36614123000160" });
-                        await Task.Delay(200);
-                        await Page.Locator("#titularBanco").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#titularBanco").FillAsync("Jessica Vitoria Tavares");
-                        await Task.Delay(200);
+                        await Task.Delay(100);
                         await Page.Locator("#numeroDocumento").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#numeroDocumento").FillAsync("599997655");
-                        await Task.Delay(200);
-                        await Page.Locator("#cnpjBanco").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#cnpjBanco").FillAsync("53300608000106");
-                        await Task.Delay(200);
-                        await Page.Locator("#codBancoOrigem").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#codBancoOrigem").FillAsync("439");
-                        await Task.Delay(200);
-                        await Page.Locator("#contaBanco").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#contaBanco").FillAsync("46121");
-                        await Task.Delay(200);
-                        await Page.Locator("#digcontaBanco").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#digcontaBanco").FillAsync("0");
-                        await Task.Delay(200);
+                        await Task.Delay(100);
+                        await Page.Locator("#numeroDocumento").FillAsync("57777852");
+                        await Task.Delay(100);
                         await Page.Locator("#titularDestino").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#titularDestino").FillAsync("Jessica Vitoria Tavares");
-                        await Task.Delay(200);
+                        await Task.Delay(100);
+                        await Page.Locator("#titularDestino").FillAsync("teste robo");
+                        await Task.Delay(100);
                         await Page.Locator("#cnpjDestino").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#cnpjDestino").FillAsync("45543915000181");
-                        await Task.Delay(200);
+                        await Task.Delay(100);
+                        await Page.Locator("#cnpjDestino").FillAsync("496.248.668-30");
+                        await Task.Delay(100);
                         await Page.Locator("#bancoDestino").ClickAsync();
-                        await Task.Delay(200);
+                        await Task.Delay(100);
                         await Page.Locator("#bancoDestino").FillAsync("439");
-                        await Task.Delay(200);
+                        await Task.Delay(100);
                         await Page.Locator("#agenciaDestino").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#agenciaDestino").FillAsync("0001");
-                        await Task.Delay(200);
+                        await Task.Delay(100);
+                        await Page.Locator("#agenciaDestino").FillAsync("001");
+                        await Task.Delay(100);
                         await Page.Locator("#contaDestino").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#contaDestino").FillAsync("46091");
-                        await Task.Delay(200);
+                        await Task.Delay(100);
+                        await Page.Locator("#contaDestino").FillAsync("546545");
+                        await Task.Delay(100);
                         await Page.Locator("#digcontaDestino").ClickAsync();
-                        await Task.Delay(200);
+                        await Task.Delay(100);
                         await Page.Locator("#digcontaDestino").FillAsync("5");
-                        await Task.Delay(200);
+                        await Task.Delay(100);
                         await Page.Locator("#valorDestino").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#valorDestino").FillAsync("R$10");
-                        await Task.Delay(200);
+                        await Task.Delay(100);
+                        await Page.Locator("#valorDestino").FillAsync("R$1000");
+                        await Task.Delay(100);
                         await Page.Locator("#tipo").SelectOptionAsync(new[] { "reembolso" });
-                        await Task.Delay(200);
-                        await Page.Locator("#descricaoReembolso").FillAsync("teste");
+                        await Task.Delay(100);
+                        await Page.GetByPlaceholder("Insira a descrição").ClickAsync();
+                        await Task.Delay(100);
+                        await Page.GetByPlaceholder("Insira a descrição").FillAsync("teste robo");
+
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(800);
 
-                        var ReembolsoExiste = Repository.Reembolso.ReembolsoRepository.VerificaExistenciaReembolso("599997655", "Jessica Vitoria Tavares");
-                        var apagarReembolso = Repository.Reembolso.ReembolsoRepository.ApagarReembolso("599997655", "Jessica Vitoria Tavares");
+                        var ReembolsoExiste = Repository.Reembolso.ReembolsoRepository.VerificaExistenciaReembolso("57777852", "FUNDO QA FIDC");
 
                         if (ReembolsoExiste)
                         {
                             Console.WriteLine("Reembolso adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
+
+                        var apagarReembolso = Repository.Reembolso.ReembolsoRepository.ApagarReembolso("57777852", "FUNDO QA FIDC");
 
                             if (apagarReembolso)
                             {
