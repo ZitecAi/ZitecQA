@@ -143,7 +143,7 @@ namespace TestePortal.Pages
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                             await Task.Delay(300);
                             await newPage.CloseAsync();
-                            await Task.Delay(3700);
+                            await Task.Delay(6700);
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
