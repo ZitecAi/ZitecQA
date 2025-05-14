@@ -17,7 +17,7 @@ namespace EnviarMensagemSlack.Utils
         private static readonly HttpClient client = new HttpClient();
         private static readonly string slackToken = "xoxb-949825848999-4657262597863-QB2QXKdLUDzSXPLSIKzoQ5Cc"; // token de API do Slack
         private static readonly string channelId = "C03E3Q9SDME"; // id do canal no Slack
-        private static readonly string teamsWebhookUrl = "https://zitecai.webhook.office.com/webhookb2/6671078e-8d97-48b4-84e5-0f8d702ba728@f969c1d3-c3d5-47bb-b197-d4fd82f29243/IncomingWebhook/c8ed8254b001401d9ac3af63d8e1e1b8/18762817-e213-4034-b702-e79f88d3dc6e"; // URL do webhook do Teams
+        private static readonly string teamsWebhookUrl = "https://zitecai.webhook.office.com/webhookb2/6671078e-8d97-48b4-84e5-0f8d702ba728@f969c1d3-c3d5-47bb-b197-d4fd82f29243/IncomingWebhook/daf91500958d479d8e61b9af94ec186c/d8206d2d-91ab-4ec6-a667-767437954b83/V28AtHaMWTjr4djuL32tGiecZ1uGPitEq9zN-Fy28Fyv01"; // URL do webhook do Teams
 
         public static async Task MandarMsgFundoQaAsync()
         {
