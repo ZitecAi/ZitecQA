@@ -1,11 +1,6 @@
 ﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using TestePortalInterno.Repositorys;
 
 namespace TestePortalInterno.Pages
 {
@@ -47,7 +42,7 @@ namespace TestePortalInterno.Pages
                         }
                         var dataAtual = DateTime.Now.ToString("yyyy-MM-dd");
 
-                        var apagarLastro2 = Repository.Lastros.LastrosRepository.ApagarLastros("36614123000160", "teste jessica");
+                        var apagarLastro2 = Repositorys.Lastros.ApagarLastros("36614123000160", "teste jessica");
 
                         await Page.Locator("i.fas.fa-file-pdf").ClickAsync();
                         await Task.Delay(300);
@@ -64,14 +59,14 @@ namespace TestePortalInterno.Pages
                         await Task.Delay(100);
 
                         await Task.Delay(300);
-                        var lastroExiste = Repository.Lastros.LastrosRepository.VerificaExistenciaLastros("36614123000160", "teste jessica");
+                        var lastroExiste = Repositorys.Lastros.VerificaExistenciaLastros("36614123000160", "teste jessica");
 
                         if (lastroExiste)
                         {
                             Console.WriteLine("Lastro cadastrado na tabela.");
                             await Task.Delay(300);
                             pagina.InserirDados = "✅";
-                            var apagarLastro = Repository.Lastros.LastrosRepository.ApagarLastros("36614123000160", "teste jessica");
+                            var apagarLastro = Repositorys.Lastros.ApagarLastros("36614123000160", "teste jessica");
 
                             if (apagarLastro)
                             {

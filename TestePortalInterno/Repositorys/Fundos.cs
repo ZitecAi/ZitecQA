@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace TestePortalInterno.Repositorys
@@ -40,7 +43,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "FundosRepository.VerificaExistenciaFundo()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return existe;
@@ -75,7 +78,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "FundosRepository.ApagarFundo()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return apagado;

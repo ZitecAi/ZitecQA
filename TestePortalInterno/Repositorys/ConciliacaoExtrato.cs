@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
+using System.Data;
+
 
 namespace TestePortalInterno.Repositorys
 {
@@ -42,7 +46,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConciliacaoRepository.ObterIdConciliacao()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return idConciliacao;
@@ -83,7 +87,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConciliacaoRepository.ObterIdsNaoConciliados()", "Automações Jessica", e.StackTrace);
+                    Console.WriteLine(e);
             }
 
             return idsConciliacao;
@@ -125,7 +129,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConciliacaoRepository.VerificarIdsConciliados()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
                 return false; // Retorna falso caso ocorra uma exceção
             }
         }

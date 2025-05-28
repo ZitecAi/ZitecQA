@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace TestePortalInterno.Repositorys
 {
@@ -46,7 +49,7 @@ WHERE ID_ARQUIVO = (
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return idOperacaoRecebivel;
@@ -79,7 +82,7 @@ WHERE ID_ARQUIVO = (
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificarOperacao()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return operacaoExiste;
@@ -156,7 +159,7 @@ WHERE ID_ARQUIVO = (
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificarRecebivelComplemento()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return complementoExiste;
@@ -188,7 +191,7 @@ WHERE ID_ARQUIVO = (
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.DeletarRecebivelComplemento()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;
@@ -219,7 +222,7 @@ WHERE ID_ARQUIVO = (
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.DeletarRecebivelLastro()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;
@@ -250,7 +253,7 @@ WHERE ID_ARQUIVO = (
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.DeletarRecebivel()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;
@@ -281,7 +284,7 @@ WHERE ID_ARQUIVO = (
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.DeletarOperacao()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;
@@ -312,7 +315,7 @@ WHERE ID_ARQUIVO = (
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.DeletarOperacaoRecebivel()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;
@@ -355,7 +358,7 @@ WHERE ID_ARQUIVO = (
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
+                    Console.WriteLine(e);
             }
 
             return statusOperacao;

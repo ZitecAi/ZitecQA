@@ -1,14 +1,5 @@
 ﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using TestePortalInterno.Model;
-using TestePortalInterno.Repository.Consultorias;
-using TestePortalInterno.Repository.GestoraInterna;
 using static TestePortalInterno.Model.Usuario;
 
 namespace TestePortalInterno.Pages

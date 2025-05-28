@@ -1,14 +1,5 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.Playwright;
-using Segment.Model;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.Playwright;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using TestePortal.Utils;
 using static TestePortalInterno.Model.Usuario;
 
 namespace TestePortalInterno.Pages

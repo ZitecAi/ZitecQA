@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace TestePortalInterno.Repositorys
 {
@@ -40,7 +43,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaExistenciaInvestidores()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return existe;
@@ -75,7 +78,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.ApagarInvestidores()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return apagado;
@@ -106,7 +109,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.ObterIdCotista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return idCotista;
@@ -135,7 +138,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.ObterToken()", "Automações Jessica", e.StackTrace);
+                    Console.WriteLine(e);
             }
 
             return token;
@@ -169,7 +172,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificarStatusEmAnalise()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return emAnalise;

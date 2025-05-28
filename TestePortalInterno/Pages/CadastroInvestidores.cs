@@ -1,19 +1,7 @@
 ﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Markup;
-using TestePortalInterno.Repository.Investidores;
-using static TestePortalInterno.Model.Usuario;
-using TestePortalInterno.Model;
-using Segment.Model;
 using TestePortalInterno.Utils;
-using DocumentFormat.OpenXml.Spreadsheet;
-using System.Data;
+using static TestePortalInterno.Model.Usuario;
 
 
 namespace TestePortalInterno.Pages

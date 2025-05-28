@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace TestePortalInterno.Repositorys
 {
@@ -40,7 +43,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.VerificaExistenciaCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return existe;
@@ -75,7 +78,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "UsuarioRepository.ApagarCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return apagado;
@@ -111,7 +114,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.ObterIdCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return idCorrentista;
@@ -147,7 +150,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.ObterToken()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return token;
@@ -187,7 +190,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return isEmAnalise;
@@ -226,7 +229,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return statusAguardandoAssinatura;
@@ -265,7 +268,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusAprovadoCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return statusAprovado;
@@ -309,7 +312,7 @@ namespace TestePortalInterno.Repositorys
             catch (Exception e)
             {
 
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return statusAprovado;
@@ -342,7 +345,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.ApagarContaBancaria()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return contaApagada;
@@ -376,8 +379,8 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.ObterDocumentosAutentique", "Automações Jessica", e.StackTrace);
-            }
+                Console.WriteLine(e);
+            }   
 
             return idDocumentoAutentique;
         }
@@ -408,7 +411,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.UpdateStatusAguardandoConta()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return atualizacaoRealizada;

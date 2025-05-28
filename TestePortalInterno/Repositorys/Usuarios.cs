@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace TestePortalInterno.Repositorys
 {
-   public class usuarios
+   public class Usuarios
     {
         public static bool VerificaExistenciaUsuario(string nomeUsuario, string emailUsuario)
         {
@@ -40,7 +43,8 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "UsuarioRepository.VerificaExistenciaUsuario()", "Automações Jessica", e.StackTrace);
+                //Utils.Slack.MandarMsgErroGrupoDev(e.Message, "UsuarioRepository.VerificaExistenciaUsuario()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return existe;
@@ -75,7 +79,8 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "UsuarioRepository.ApagarUsuario()", "Automações Jessica", e.StackTrace);
+                //Utils.Slack.MandarMsgErroGrupoDev(e.Message, "UsuarioRepository.ApagarUsuario()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return apagado;

@@ -1,15 +1,6 @@
 ﻿using Microsoft.Playwright;
-using Segment.Model;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using TestePortalInterno.Repository.Correntistas;
 using TestePortalInterno.Utils;
-using static TestePortalInterno.Model.Usuario;
 using static TestePortalInterno.Model.Usuario;
 
 namespace TestePortalInterno.Pages

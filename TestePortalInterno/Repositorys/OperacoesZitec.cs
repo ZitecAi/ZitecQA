@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace TestePortalInterno.Repositorys
 {
@@ -39,7 +42,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificaExistenciaOperacoes()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return (existe, idOperacao);
@@ -85,7 +88,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return statusOperacao;
@@ -125,7 +128,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirRemessa()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;
@@ -167,7 +170,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirTbTed()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;
@@ -204,7 +207,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirOperacao()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;
@@ -280,7 +283,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ObterIdOperacaoRecebivel()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return idOperacaoRecebivel;
@@ -314,7 +317,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirAvalista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;
@@ -387,7 +390,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "VerificaProcessamentoFundo", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
                 sucesso = false;
             }
 
@@ -418,11 +421,11 @@ namespace TestePortalInterno.Repositorys
             }
             catch (SqlException ex) when (ex.Number == 547) // Erro de chave estrangeira
             {
-                Utils.Slack.MandarMsgErroGrupoDev($"Erro ao excluir o arquivo {idArquivo}: Existe uma referência em outra tabela.", "OperacoesRepository.DeletarArquivoGeral()", "Automações Jessica", ex.StackTrace);
+                Console.WriteLine(ex);
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.DeletarArquivoGeral()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;

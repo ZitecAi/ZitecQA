@@ -1,23 +1,12 @@
 ﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static TestePortalInterno.Model.Usuario;
-using TestePortal.Model;
-using Segment.Model;
 using TestePortalInterno.Utils;
-using System.Windows.Controls;
-using DocumentFormat.OpenXml.Spreadsheet;
-using OfficeOpenXml.Drawing.Slicer.Style;
 
 namespace TestePortalInterno.Pages
 {
     public class OperacoesConciliacaoExtrato
     {
-        public static async Task<(Model.Pagina pagina, Model.Conciliacao conciliacao)> ConciliacaoExtrato(IPage Page, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.Conciliacao conciliacao)> ConciliacaoExtrato(IPage Page, Model.Usuario.NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var conciliacao = new Model.Conciliacao();
