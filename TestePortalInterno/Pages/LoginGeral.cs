@@ -1,5 +1,7 @@
 ﻿using Microsoft.Playwright;
 using System.Configuration;
+using TestePortalInterno.Model;
+using TestePortalInterno.Utils;
 
 namespace TestePortalInterno.Pages
 {
