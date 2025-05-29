@@ -5,7 +5,6 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using static TestePortalInterno.Model.Usuario;
 
 namespace TestePortalInterno.Pages
@@ -50,7 +49,7 @@ namespace TestePortalInterno.Pages
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora)
                     {
 
-                        var apagarReembolso2 = Repository.Reembolso.ReembolsoRepository.ApagarReembolso("57777852", "FUNDO QA FIDC");
+                        var apagarReembolso2 = Repositorys.Reembolso.ApagarReembolso("57777852", "FUNDO QA FIDC");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                         await Task.Delay(100);
                         await Page.Locator("#fundoBanco").SelectOptionAsync(new[] { "36614123000160" });
@@ -96,14 +95,14 @@ namespace TestePortalInterno.Pages
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(800);
 
-                        var ReembolsoExiste = Repository.Reembolso.ReembolsoRepository.VerificaExistenciaReembolso("57777852", "FUNDO QA FIDC");
+                        var ReembolsoExiste = Repositorys.Reembolso.VerificaExistenciaReembolso("57777852", "FUNDO QA FIDC");
 
                         if (ReembolsoExiste)
                         {
                             Console.WriteLine("Reembolso adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
 
-                            var apagarReembolso = Repository.Reembolso.ReembolsoRepository.ApagarReembolso("57777852", "FUNDO QA FIDC");
+                            var apagarReembolso = Repositorys.Reembolso.ApagarReembolso("57777852", "FUNDO QA FIDC");
 
                             if (apagarReembolso)
                             {

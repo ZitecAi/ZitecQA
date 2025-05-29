@@ -41,7 +41,7 @@ namespace TestePortalInterno.Pages
                     if (nivelLogado == NivelEnum.Master)
 
                     {
-                        var apagarFundoTransferencia2 = Repository.FundoTransferencia.FundoTransferenciaRepository.ApagarFundoTransferencia("16695922000109", "QA teste");
+                        var apagarFundoTransferencia2 = Repositorys.FundoTransferencia.ApagarFundoTransferencia("16695922000109", "QA teste");
                         await Task.Delay(600);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Fundo de Transferência" }).ClickAsync();
                         await Task.Delay(200);
@@ -86,13 +86,13 @@ namespace TestePortalInterno.Pages
                         await Page.Locator("#FileArchives").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "documentosteste.zip" });
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" }).ClickAsync();
 
-                        var fundoTransferenciaExiste = Repository.FundoTransferencia.FundoTransferenciaRepository.VerificaExistenciaFundoTransferencia("16695922000109", "QA teste");
+                        var fundoTransferenciaExiste = Repositorys.FundoTransferencia.VerificaExistenciaFundoTransferencia("16695922000109", "QA teste");
 
                         if (fundoTransferenciaExiste)
                         {
                             Console.WriteLine("Fundo de Transferencia adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarFundoTransferencia = Repository.FundoTransferencia.FundoTransferenciaRepository.ApagarFundoTransferencia("16695922000109", "QA teste");
+                            var apagarFundoTransferencia = Repositorys.FundoTransferencia.ApagarFundoTransferencia("16695922000109", "QA teste");
 
                             if (apagarFundoTransferencia)
                             {

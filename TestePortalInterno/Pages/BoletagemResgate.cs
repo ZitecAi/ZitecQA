@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using static TestePortalInterno.Model.Usuario;
 
 namespace TestePortalInterno.Pages
@@ -49,7 +48,7 @@ namespace TestePortalInterno.Pages
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
-                        var BoletagemResgateExiste2 = Repository.BoletagemResgate.BoletagemResgateRepository.VerificaExistenciaBoletagemResgate("49624866830", "36614123000160");
+                        var BoletagemResgateExiste2 = Repositorys.BoletagemResgate.VerificaExistenciaBoletagemResgate("49624866830", "36614123000160");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Resgate", Exact = true }).ClickAsync();
                         await Page.Locator("#dataCorteInput").ClickAsync();
                         await Page.Locator("#dataCorteInput").FillAsync(DateTime.Now.ToString("dd/MM/yyyy"));
@@ -79,13 +78,13 @@ namespace TestePortalInterno.Pages
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(800);
 
-                        var BoletagemResgateExiste = Repository.BoletagemResgate.BoletagemResgateRepository.VerificaExistenciaBoletagemResgate("49624866830", "36614123000160");
+                        var BoletagemResgateExiste = Repositorys.BoletagemResgate.VerificaExistenciaBoletagemResgate("49624866830", "36614123000160");
 
                         if (BoletagemResgateExiste)
                         {
                             Console.WriteLine("Resgate adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarBoletagemResgate = Repository.BoletagemResgate.BoletagemResgateRepository.ApagarBoletagemResgate("49624866830", "36614123000160");
+                            var apagarBoletagemResgate = Repositorys.BoletagemResgate.ApagarBoletagemResgate("49624866830", "36614123000160");
 
                             if (apagarBoletagemResgate)
                             {

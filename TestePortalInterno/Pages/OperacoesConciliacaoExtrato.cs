@@ -1,6 +1,7 @@
 ﻿using Microsoft.Playwright;
 using System.Configuration;
 using TestePortalInterno.Utils;
+using static TestePortalInterno.Model.Usuario;
 
 namespace TestePortalInterno.Pages
 {
@@ -61,7 +62,7 @@ namespace TestePortalInterno.Pages
 
                         //conciliar 
 
-                        var idConciliacao = Repository.ConciliacaoExtrato.ConciliacaoRepository.ObterIdConciliacao(11111, 300000, "TAR ENVIO TIT CART COB SIMP-ELETR");
+                        var idConciliacao = Repositorys.ConciliacaoExtrato.ObterIdConciliacao(11111, 300000, "TAR ENVIO TIT CART COB SIMP-ELETR");
 
                         var selector = $"[id=\"{idConciliacao}_ConciliarAction\"]";
                         await Page.Locator(selector).ClickAsync();
@@ -77,7 +78,7 @@ namespace TestePortalInterno.Pages
                         //conciliação em lote
 
                         string caminhoExcel = @"C:\Temp\Arquivos\TemplateItem (1).xlsx";
-                        var ids = Repository.ConciliacaoExtrato.ConciliacaoRepository.ObterIdsNaoConciliados(11111);
+                        var ids = Repositorys.ConciliacaoExtrato.ObterIdsNaoConciliados(11111);
 
 
                         bool sucesso = AtualizarExcel.AtualizarExcelComIds(caminhoExcel, ids);
@@ -137,7 +138,7 @@ namespace TestePortalInterno.Pages
                             }
                         }
 
-                        bool todosConciliados = Repository.ConciliacaoExtrato.ConciliacaoRepository.VerificarIdsConciliados(ids);
+                        bool todosConciliados = Repositorys.ConciliacaoExtrato.VerificarIdsConciliados(ids);
 
                         if (todosConciliados)
                         {

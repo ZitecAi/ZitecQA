@@ -38,7 +38,7 @@ namespace TestePortalInterno.Pages
                         errosTotais++;
                     }
 
-                    var apagarPrestadorServico2 = Repository.PrestadorServico.PrestadorServico.ApagarPrestadorServico("info", "07084370");
+                    var apagarPrestadorServico2 = Repositorys.PrestadorServico.ApagarPrestadorServico("info", "07084370");
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                     await Page.Locator("#nameEmpress").ClickAsync();
                     await Task.Delay(300);
@@ -145,13 +145,13 @@ namespace TestePortalInterno.Pages
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                     await Task.Delay(400);
 
-                    var prestadorServicoExiste = Repository.PrestadorServico.PrestadorServico.VerificaExistenciaPrestadorServico("info", "07084370");
+                    var prestadorServicoExiste = Repositorys.PrestadorServico.VerificaExistenciaPrestadorServico("info", "07084370");
 
                     if (prestadorServicoExiste)
                     {
                         Console.WriteLine("Prestador de Serviço cadastrado com sucesso na tabela.");
                         pagina.InserirDados = "✅";
-                        var apagarPrestadorServico = Repository.PrestadorServico.PrestadorServico.ApagarPrestadorServico("info", "07084370");
+                        var apagarPrestadorServico = Repositorys.PrestadorServico.ApagarPrestadorServico("info", "07084370");
 
                         if (apagarPrestadorServico)
                         {

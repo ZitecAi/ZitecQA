@@ -78,7 +78,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.ApagarInvestidores()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return apagado;
@@ -213,7 +213,7 @@ namespace TestePortalInterno.Repositorys
             catch (Exception e)
             {
 
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusAguardandoAssinatura()", "Automações Jessica", e.StackTrace);
+              Console.WriteLine(e);
             }
 
             return statusAguardandoAssinatura;

@@ -49,7 +49,7 @@ namespace TestePortalInterno.Pages
 
                     if (nivelLogado == NivelEnum.Master)
                     {
-                        var processamentoFundo = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaProcessamentoFundo(9991);
+                        var processamentoFundo = Repositorys.OperacoesZitec.VerificaProcessamentoFundo(9991);
 
                         if (processamentoFundo)
                         {
@@ -72,7 +72,7 @@ namespace TestePortalInterno.Pages
 
                             if (CadastroOperacoes != null)
                             {
-                                var (existe, idOperacao) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+                                var (existe, idOperacao) = Repositorys.OperacoesZitec.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
 
                                 await Task.Delay(600);
 
@@ -124,7 +124,7 @@ namespace TestePortalInterno.Pages
                         if (string.IsNullOrEmpty(operacoes.NovoNomeArquivo2))
                             throw new NullReferenceException("NovoNomeArquivo2 está null ou vazio no fluxo da Gestora.");
 
-                        string status = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
+                        string status = Repositorys.OperacoesZitec.VerificarStatus(operacoes.NovoNomeArquivo2);
 
                         if (status == "PG")
                         {
@@ -146,7 +146,7 @@ namespace TestePortalInterno.Pages
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar", Exact = true }).ClickAsync();
                             await Task.Delay(5000);
 
-                            string status2 = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
+                            string status2 = Repositorys.OperacoesZitec.VerificarStatus(operacoes.NovoNomeArquivo2);
 
                             if (status2 == "PI")
                             {
@@ -173,15 +173,15 @@ namespace TestePortalInterno.Pages
                                 operacoes.ListaErros2.Add("Status PI não encontrado");
                             }
 
-                            bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
-                            bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
-                            var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
-                            var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
-                            var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
+                            bool exclusaoRemessa = Repositorys.OperacoesZitec.ExcluirRemessa(operacoes.NovoNomeArquivo2);
+                            bool exclusaoTed = Repositorys.OperacoesZitec.ExcluirTbTed(operacoes.NovoNomeArquivo2);
+                            var idRecebivel = Repositorys.OperacoesZitec.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
+                            var excluirAvalista = Repositorys.OperacoesZitec.ExcluirAvalista(idRecebivel);
+                            var excluirCertificadora = Repositorys.OperacoesZitec.ExcluirOperacaoCertificadora(idRecebivel);
 
                             if (exclusaoRemessa && exclusaoTed && excluirAvalista)
                             {
-                                bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
+                                bool excluirOperacao = Repositorys.OperacoesZitec.ExcluirOperacao(operacoes.NovoNomeArquivo2);
 
                                 if (excluirOperacao)
                                 {
@@ -211,12 +211,12 @@ namespace TestePortalInterno.Pages
                             errosTotais2++;
                             operacoes.ListaErros2.Add("Status não foi trocado para aprovação da gestora");
 
-                            bool exclusaoRemessa = OperacoesRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
-                            bool exclusaoTed = OperacoesRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
+                            bool exclusaoRemessa = Repositorys.OperacoesZitec.ExcluirRemessa(operacoes.NovoNomeArquivo2);
+                            bool exclusaoTed = Repositorys.OperacoesZitec.ExcluirTbTed(operacoes.NovoNomeArquivo2);
 
                             if (exclusaoRemessa && exclusaoTed)
                             {
-                                bool excluirOperacao = OperacoesRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
+                                bool excluirOperacao = Repositorys.OperacoesZitec.ExcluirOperacao(operacoes.NovoNomeArquivo2);
 
                                 if (excluirOperacao)
                                 {

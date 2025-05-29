@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 using System.Configuration;
-
+using TestePortalInterno.Model;
 
 namespace TestePortalInterno.Utils
 {
@@ -46,10 +46,10 @@ namespace TestePortalInterno.Utils
             {
                 return null;
             }
-            finally
-            {
-                Service.LogRequestService.Add(apiUrl, "", "", Convert.ToString(responseBody), "GET", "200", DateTime.Now, "make");
-            }
+            //finally
+            //{
+            //    Service.LogRequestService.Add(apiUrl, "", "", Convert.ToString(responseBody), "GET", "200", DateTime.Now, "make");
+            //}
         }
     }
 }

@@ -53,7 +53,7 @@ namespace TestePortalInterno.Pages
                         fluxoDeCadastros.statusAprovado = "❓";
                         fluxoDeCadastros.DocumentoAssinado = "❓";
                         fluxoDeCadastros.EmailRecebido = "❓";
-                        var apagarGestoraInterna2 = Repository.GestoraInterna.GestoraInternaRepository.ApagarGestoraInterna("16695922000109", "robo@zitec.ai");
+                        var apagarGestoraInterna2 = Repositorys.GestoraInterna.ApagarGestoraInterna("16695922000109", "robo@zitec.ai");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("#CnpjGestoraInterno").ClickAsync();
@@ -79,12 +79,12 @@ namespace TestePortalInterno.Pages
 
                         try
                         {
-                            int? idGestora = GestoraInternaRepository.ObterIdGestora("16695922000109", "robo@zitec.ai");
+                            int? idGestora = Repositorys.GestoraInterna.ObterIdGestora("16695922000109", "robo@zitec.ai");
                             var buttonSelector = $"tr.child button#\\3{idGestora.ToString().Substring(0, 1)} {idGestora.ToString().Substring(1)}_url.btn.btn-default[title='Copiar Link']";
                             await Page.Locator(buttonSelector).ClickAsync();
                             await Task.Delay(400);
 
-                            string token = GestoraInternaRepository.ObterTokenGestora("16695922000109", "robo@zitec.ai");
+                            string token = Repositorys.GestoraInterna.ObterTokenGestora("16695922000109", "robo@zitec.ai");
                             string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.GESTORA"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
@@ -468,14 +468,14 @@ namespace TestePortalInterno.Pages
 
 
 
-                        var gestoraInternaExiste = Repository.GestoraInterna.GestoraInternaRepository.VerificaExistenciaGestoraInterna("16695922000109", "robo@zitec.ai");
+                        var gestoraInternaExiste = Repositorys.GestoraInterna.VerificaExistenciaGestoraInterna("16695922000109", "robo@zitec.ai");
 
                         if (gestoraInternaExiste)
                         {
                             Console.WriteLine("Gestora Interna adicionada com sucesso na tabela.");
                             pagina.InserirDados = "✅";
 
-                            var verificarStatus = Repository.GestoraInterna.GestoraInternaRepository.VerificarStatus("16695922000109", "robo@zitec.ai");
+                            var verificarStatus = Repositorys.GestoraInterna.VerificarStatus("16695922000109", "robo@zitec.ai");
 
                             if (verificarStatus)
                             {
@@ -491,7 +491,7 @@ namespace TestePortalInterno.Pages
                             }
 
 
-                            var apagarGestoraInterna = Repository.GestoraInterna.GestoraInternaRepository.ApagarGestoraInterna("16695922000109", "robo@zitec.ai");
+                            var apagarGestoraInterna = Repositorys.GestoraInterna.ApagarGestoraInterna("16695922000109", "robo@zitec.ai");
 
                             if (apagarGestoraInterna)
                             {

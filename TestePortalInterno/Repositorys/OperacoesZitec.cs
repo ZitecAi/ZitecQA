@@ -240,7 +240,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirOperacaoCertificadora()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return sucesso;

@@ -123,7 +123,7 @@ WHERE ID_ARQUIVO = (
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificarRecebivel()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return (recebivelExiste, idRecebivel);

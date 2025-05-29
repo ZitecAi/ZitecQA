@@ -5,7 +5,6 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using static TestePortalInterno.Model.Usuario;
 
 namespace TestePortalInterno.Pages
@@ -51,7 +50,7 @@ namespace TestePortalInterno.Pages
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
-                        var apagarBoletagemAporte2 = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("Jessica Tavares", "cota");
+                        var apagarBoletagemAporte2 = Repositorys.BoletagemAporte.ApagarBoletagemAporte("Jessica Tavares", "cota");
                         await Page.Locator("#tableButton").ClickAsync();
                         await Task.Delay(200);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).ClickAsync();
@@ -87,13 +86,13 @@ namespace TestePortalInterno.Pages
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(500);
 
-                        var BoletagemAporteExiste = Repository.BoletagemAporte.BoletagemAporteRepository.VerificaExistenciaBoletagemAporte("Jessica Tavares", "cota");
+                        var BoletagemAporteExiste = Repositorys.BoletagemAporte.VerificaExistenciaBoletagemAporte("Jessica Tavares", "cota");
 
                         if (BoletagemAporteExiste)
                         {
                             Console.WriteLine("Boleta adicionada com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarBoletagemAporte = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("Jessica Tavares", "cota");
+                            var apagarBoletagemAporte = Repositorys.BoletagemAporte.ApagarBoletagemAporte("Jessica Tavares", "cota");
 
                             if (apagarBoletagemAporte)
                             {

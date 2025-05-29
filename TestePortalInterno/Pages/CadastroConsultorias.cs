@@ -5,9 +5,8 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using TestePortalInterno.Model;
-using TestePortalInterno.Repository.Consultorias;
+using TestePortalInterno.Repositorys;
 using static TestePortalInterno.Model.Usuario;
 using System.IO.Packaging;
 
@@ -63,7 +62,7 @@ namespace TestePortalInterno.Pages
                         fluxoDeCadastros.DocumentoAssinado = "❓";
                         fluxoDeCadastros.statusAprovado = "❓";
                         fluxoDeCadastros.EmailRecebido = "❓";
-                        var ApagarConsultorias2 = Repository.Consultorias.ConsultoriasRepository.ApagarConsultorias("16695922000109", "robo@zitec.ai");
+                        var ApagarConsultorias2 = Repositorys.Consultorias.ApagarConsultorias("16695922000109", "robo@zitec.ai");
                         await Task.Delay(500);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
                         await Page.Locator("#CnpjConsultoria").ClickAsync();
@@ -90,12 +89,12 @@ namespace TestePortalInterno.Pages
                         try
                         {
 
-                            int? idConsultoria = ConsultoriasRepository.ObterIdConsultoria("16695922000109", "robo@zitec.ai");
+                            int? idConsultoria = Repositorys.Consultorias.ObterIdConsultoria("16695922000109", "robo@zitec.ai");
                             var buttonSelector = $"tr.child button#\\3{idConsultoria.ToString().Substring(0, 1)} {idConsultoria.ToString().Substring(1)}_url.btn.btn-default[title='Copiar Link']";
                             await Page.Locator(buttonSelector).ClickAsync();
                             await Task.Delay(400);
 
-                            string token = ConsultoriasRepository.ObterToken("16695922000109", "robo@zitec.ai");
+                            string token = Repositorys.Consultorias.ObterToken("16695922000109", "robo@zitec.ai");
                             string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CONSULTORIA"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
@@ -514,14 +513,14 @@ namespace TestePortalInterno.Pages
 
                         }
 
-                        var ConsultoriasExiste = Repository.Consultorias.ConsultoriasRepository.VerificaExistenciaConsultorias("16695922000109", "robo@zitec.ai");
+                        var ConsultoriasExiste = Repositorys.Consultorias.VerificaExistenciaConsultorias("16695922000109", "robo@zitec.ai");
 
                         if (ConsultoriasExiste)
                         {
                             Console.WriteLine("Consultoria adicionada com sucesso na tabela.");
                             pagina.InserirDados = "✅";
 
-                            var verificarStatus = Repository.Consultorias.ConsultoriasRepository.VerificarStatus("16695922000109", "robo@zitec.ai");
+                            var verificarStatus = Repositorys.Consultorias.VerificarStatus("16695922000109", "robo@zitec.ai");
                             if (verificarStatus)
                             {
                                 Console.WriteLine("Status trocado para em análise");
@@ -536,7 +535,7 @@ namespace TestePortalInterno.Pages
                             }
 
 
-                            var ApagarConsultorias = Repository.Consultorias.ConsultoriasRepository.ApagarConsultorias("16695922000109", "robo@zitec.ai");
+                            var ApagarConsultorias = Repositorys.Consultorias.ApagarConsultorias("16695922000109", "robo@zitec.ai");
 
                             if (ApagarConsultorias)
                             {

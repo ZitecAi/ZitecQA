@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using OfficeOpenXml;
+using Spire.Xls;
 
 namespace TestePortalInterno.Utils
 {

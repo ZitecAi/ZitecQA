@@ -46,7 +46,7 @@ namespace TestePortalInterno.Pages
                             {
                                 errosTotais++;
                             }
-                            var apagarNotaComercial2 = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("54638076000176", "teste nota comercial");
+                            var apagarNotaComercial2 = Repositorys.NotaComercial.ApagarNotaComercial("54638076000176", "teste nota comercial");
                             var dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
                             await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
                             await Task.Delay(200);
@@ -134,14 +134,14 @@ namespace TestePortalInterno.Pages
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar mudanças" }).ClickAsync();
 
 
-                            var notaComercialExiste = Repository.NotaComercial.NotaComercialRepository.VerificaExistenciaNotaComercial("54638076000176", "teste nota comercial");
+                            var notaComercialExiste = Repositorys.NotaComercial.VerificaExistenciaNotaComercial("54638076000176", "teste nota comercial");
 
 
                             if (notaComercialExiste)
                             {
                                 Console.WriteLine("Nota comercial adicionada com sucesso na tabela.");
                                 pagina.InserirDados = "✅";
-                                var apagarNotaComercial = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("54638076000176", "teste nota comercial");
+                                var apagarNotaComercial = Repositorys.NotaComercial.ApagarNotaComercial("54638076000176", "teste nota comercial");
 
                                 if (apagarNotaComercial)
                                 {

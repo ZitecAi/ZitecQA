@@ -50,7 +50,7 @@ namespace TestePortalInterno.Pages
                     {
 
 
-                        var apagarInvestidor2 = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("49624866830", "robo@zitec.ai");
+                        var apagarInvestidor2 = Repositorys.Investidores.ApagarInvestidores("49624866830", "robo@zitec.ai");
                         // adicionar um novo cotista
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Investidor" }).ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").ClickAsync();
@@ -81,12 +81,12 @@ namespace TestePortalInterno.Pages
 
                         try
                         {
-                            int idCotista = InvestidoresRepository.ObterIdCotista("49624866830", "robo@zitec.ai");
+                            int idCotista = Repositorys.Investidores.ObterIdCotista("49624866830", "robo@zitec.ai");
                             var buttonSelector = $"tr.child button#\\3{idCotista.ToString().Substring(0, 1)} {idCotista.ToString().Substring(1)}_url.btn.btn-default[title='Copiar Link']";
                             await Page.Locator(buttonSelector).ClickAsync();
                             await Task.Delay(400);
 
-                            string token = InvestidoresRepository.ObterToken("49624866830", "robo@zitec.ai");
+                            string token = Repositorys.Investidores.ObterToken("49624866830", "robo@zitec.ai");
                             string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.COTISTA"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
@@ -537,7 +537,7 @@ namespace TestePortalInterno.Pages
                                 errosTotais2++;
 
                             }
-                            var verificarStatus = Repository.Investidores.InvestidoresRepository.VerificarStatus("49624866830", "robo@zitec.ai");
+                            var verificarStatus = Repositorys.Investidores.VerificarStatus("49624866830", "robo@zitec.ai");
 
                             if (verificarStatus)
                             {
@@ -599,7 +599,7 @@ namespace TestePortalInterno.Pages
 
                             for (int i = 0; i < 5; i++)
                             {
-                                statusAtual = InvestidoresRepository.VerificaStatusAgdAss("49624866830", "robo@zitec.ai");
+                                statusAtual = Repositorys.Investidores.VerificaStatusAgdAss("49624866830", "robo@zitec.ai");
 
                                 if (statusAtual)
                                 {
@@ -616,7 +616,7 @@ namespace TestePortalInterno.Pages
 
                             if (statusAtual == true)
                             {
-                                string idDocumentoAutentique = Repository.Investidores.InvestidoresRepository.ObterIdDocumentoAutentique(idCotista);
+                                string idDocumentoAutentique = Repositorys.Investidores.ObterIdDocumentoAutentique(idCotista);
                                 var response = AssinarDocumentosAutentique.AssinarDocumento("9ad54b27a864625573ad40327a1916db61b687c3fe8641ff7f3efdc3e985d3b3", idDocumentoAutentique);
 
                                 if (response != null && response.Success)
@@ -624,7 +624,7 @@ namespace TestePortalInterno.Pages
 
                                     Console.WriteLine("Documento assinado");
 
-                                    var atualizarStatus = Repository.Investidores.InvestidoresRepository.UpdateStatusAprovado("49624866830", "robo@zitec.ai");
+                                    var atualizarStatus = Repositorys.Investidores.UpdateStatusAprovado("49624866830", "robo@zitec.ai");
 
                                     if (atualizarStatus == true)
                                     {
@@ -653,7 +653,7 @@ namespace TestePortalInterno.Pages
                                 for (int i = 0; i < 5; i++)
                                 {
 
-                                    statusAprovado = InvestidoresRepository.VerificaStatusAprovado("49624866830", "robo@zitec.ai");
+                                    statusAprovado = Repositorys.Investidores.VerificaStatusAprovado("49624866830", "robo@zitec.ai");
 
                                     if (statusAprovado == true)
                                     {
@@ -689,7 +689,7 @@ namespace TestePortalInterno.Pages
 
                         }
 
-                        var emailChecker = new TestePortal.Utils.EmailChecker();
+                        var emailChecker = new TestePortalInterno.Utils.EmailChecker();
                         bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Investidor - IDSF!");
 
                         if (emailChegou)
@@ -707,7 +707,7 @@ namespace TestePortalInterno.Pages
 
 
 
-                        var investidorExiste = Repository.Investidores.InvestidoresRepository.VerificaExistenciaInvestidores("49624866830", "robo@zitec.ai");
+                        var investidorExiste = Repositorys.Investidores.VerificaExistenciaInvestidores("49624866830", "robo@zitec.ai");
 
 
                         if (investidorExiste)
@@ -718,7 +718,7 @@ namespace TestePortalInterno.Pages
 
 
 
-                            var apagarInvestidor = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("49624866830", "robo@zitec.ai");
+                            var apagarInvestidor = Repositorys.Investidores.ApagarInvestidores("49624866830", "robo@zitec.ai");
 
                             if (apagarInvestidor)
                             {
@@ -833,7 +833,7 @@ namespace TestePortalInterno.Pages
                     if (nivelLogado == NivelEnum.Master)
                     {
 
-                        var apagarInvestidor2 = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("16695922000109", "robo@zitec.ai");
+                        var apagarInvestidor2 = Repositorys.Investidores.ApagarInvestidores("16695922000109", "robo@zitec.ai");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Investidor" }).ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").FillAsync("166.959.220-00109");
@@ -854,7 +854,7 @@ namespace TestePortalInterno.Pages
                         await primeiroTd.ClickAsync();
                         await Task.Delay(400);
 
-                        int idCotista = InvestidoresRepository.ObterIdCotista("16695922000109", "robo@zitec.ai");
+                        int idCotista = Repositorys.Investidores.ObterIdCotista("16695922000109", "robo@zitec.ai");
 
                         try
                         {
@@ -862,7 +862,7 @@ namespace TestePortalInterno.Pages
                             await Page.Locator(buttonSelector).ClickAsync();
                             await Task.Delay(400);
 
-                            string token = InvestidoresRepository.ObterToken("16695922000109", "robo@zitec.ai");
+                            string token = Repositorys.Investidores.ObterToken("16695922000109", "robo@zitec.ai");
                             string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.COTISTAPJ"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
@@ -1409,7 +1409,7 @@ namespace TestePortalInterno.Pages
                                 errosTotais2++;
                             }
 
-                            var verificarStatus = Repository.Investidores.InvestidoresRepository.VerificarStatus("16695922000109", "robo@zitec.ai");
+                            var verificarStatus = Repositorys.Investidores.VerificarStatus("16695922000109", "robo@zitec.ai");
 
                             if (verificarStatus)
                             {
@@ -1424,7 +1424,7 @@ namespace TestePortalInterno.Pages
                                 fluxoDeCadastros.ListaErros.Add("Erro ao trocar status na tabela");
                             }
 
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new TestePortalInterno.Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Investidor - IDSF!");
 
                             if (emailChegou)
@@ -1485,7 +1485,7 @@ namespace TestePortalInterno.Pages
 
                         for (int i = 0; i < 5; i++)
                         {
-                            statusAtual = InvestidoresRepository.VerificaStatusAgdAss("16695922000109", "robo@zitec.ai");
+                            statusAtual = Repositorys.Investidores.VerificaStatusAgdAss("16695922000109", "robo@zitec.ai");
 
                             if (statusAtual)
                             {
@@ -1504,14 +1504,14 @@ namespace TestePortalInterno.Pages
                         if (statusAtual == true)
                         {
 
-                            string idDocumentoAutentique = Repository.Investidores.InvestidoresRepository.ObterIdDocumentoAutentique(idCotista);
+                            string idDocumentoAutentique = Repositorys.Investidores.ObterIdDocumentoAutentique(idCotista);
                             var response = AssinarDocumentosAutentique.AssinarDocumento("9ad54b27a864625573ad40327a1916db61b687c3fe8641ff7f3efdc3e985d3b3", idDocumentoAutentique);
 
                             if (response != null && response.Success)
                             {
                                 Console.WriteLine("Documento assinado");
 
-                                var updateStatus = Repository.Investidores.InvestidoresRepository.UpdateStatusAprovado("16695922000109", "robo@zitec.ai");
+                                var updateStatus = Repositorys.Investidores.UpdateStatusAprovado("16695922000109", "robo@zitec.ai");
 
                                 if (updateStatus == true)
                                 {
@@ -1540,7 +1540,7 @@ namespace TestePortalInterno.Pages
                             for (int i = 0; i < 5; i++)
                             {
 
-                                statusAprovado = InvestidoresRepository.VerificaStatusAprovado("16695922000109", "robo@zitec.ai");
+                                statusAprovado = Repositorys.Investidores.VerificaStatusAprovado("16695922000109", "robo@zitec.ai");
 
                                 if (statusAprovado == true)
                                 {
@@ -1577,7 +1577,7 @@ namespace TestePortalInterno.Pages
 
                         //verificar no banco de dados
 
-                        var investidorExiste = Repository.Investidores.InvestidoresRepository.VerificaExistenciaInvestidores("16695922000109", "robo@zitec.ai");
+                        var investidorExiste = Repositorys.Investidores.VerificaExistenciaInvestidores("16695922000109", "robo@zitec.ai");
 
                         if (investidorExiste)
                         {
@@ -1586,7 +1586,7 @@ namespace TestePortalInterno.Pages
 
 
 
-                            var apagarInvestidor = Repository.Investidores.InvestidoresRepository.ApagarInvestidores("16695922000109", "robo@zitec.ai");
+                            var apagarInvestidor = Repositorys.Investidores.ApagarInvestidores("16695922000109", "robo@zitec.ai");
 
                             if (apagarInvestidor)
                             {
@@ -1709,7 +1709,7 @@ namespace TestePortalInterno.Pages
                     if (nivelLogado == NivelEnum.Master)
                     {
 
-                        var apagarInvestidor2 = Repository.Investidores.InvestidoresFundInvest.ApagarInvestidores("24426716000113", "robo@zitec.ai");
+                        var apagarInvestidor2 = Repositorys.Investidores.ApagarInvestidores("24426716000113", "robo@zitec.ai");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Investidor" }).ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").ClickAsync();
                         await Page.Locator("#cpfCnpjCotistaInterno").FillAsync("244.267.160-00113");
@@ -1730,9 +1730,9 @@ namespace TestePortalInterno.Pages
                         await primeiroTd.ClickAsync();
                         await Task.Delay(400);
 
-                        int idCotista = InvestidoresFundInvest.ObterIdCotista("24426716000113", "robo@zitec.ai");
+                        int idCotista = Repositorys.InvestidoresFundInvest.ObterIdCotista("24426716000113", "robo@zitec.ai");
                         await Task.Delay(400);
-                        string token = InvestidoresFundInvest.ObterToken("24426716000113", "robo@zitec.ai");
+                        string token = Repositorys.InvestidoresFundInvest.ObterToken("24426716000113", "robo@zitec.ai");
                         string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.COTISTAFUNDINVST"];
                         string copiedUrl = $"{baseUrl}{token}";
                         var newPage = await context.NewPageAsync();
@@ -2137,7 +2137,7 @@ namespace TestePortalInterno.Pages
 
                         //verificar no banco de dados
 
-                        var investidorExiste = Repository.Investidores.InvestidoresFundInvest.VerificaExistenciaInvestidores("24426716000113", "robo@zitec.ai");
+                        var investidorExiste = Repositorys.Investidores.VerificaExistenciaInvestidores("24426716000113", "robo@zitec.ai");
 
                         if (investidorExiste)
                         {
@@ -2145,7 +2145,7 @@ namespace TestePortalInterno.Pages
                             Console.WriteLine("investidor adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
 
-                            var verificarStatus = Repository.Investidores.InvestidoresFundInvest.VerificarStatus("24426716000113", "robo@zitec.ai");
+                            var verificarStatus = Repositorys.Investidores.VerificarStatus("24426716000113", "robo@zitec.ai");
 
                             if (verificarStatus)
                             {
@@ -2160,7 +2160,7 @@ namespace TestePortalInterno.Pages
                                 fluxoDeCadastros.ListaErros.Add("Erro ao trocar status na tabela");
                             }
 
-                            var apagarInvestidor = Repository.Investidores.InvestidoresFundInvest.ApagarInvestidores("24426716000113", "robo@zitec.ai");
+                            var apagarInvestidor = Repositorys.Investidores.ApagarInvestidores("24426716000113", "robo@zitec.ai");
 
                             if (apagarInvestidor)
                             {

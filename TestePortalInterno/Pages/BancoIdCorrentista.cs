@@ -1,18 +1,16 @@
 ﻿using Microsoft.Playwright;
 using Newtonsoft.Json.Linq;
-using Segment.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using TestePortal.Model;
-using TestePortal.Repository.Correntistas;
-using TestePortal.Repository.Investidores;
-using static TestePortal.Model.Usuario;
-using TestePortal.Utils;
+//using System.Windows.Controls;
+using TestePortalInterno.Model;
+using TestePortalInterno.Repositorys;
+using static TestePortalInterno.Model.Usuario;
+using TestePortalInterno.Utils;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Drawing;
 
@@ -65,7 +63,7 @@ namespace TestePortalInterno.Pages
                         try
 
                         {
-                            var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+                            var apagarCorrentista = Repositorys.Correntistas.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                             fluxoDeCadastros.Fluxo = "Correntista - Movimentação";
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                             await Page.Locator("#cpfcnpj").ClickAsync();
@@ -83,8 +81,8 @@ namespace TestePortalInterno.Pages
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                             await Task.Delay(400);
 
-                            var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
-                            var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
+                            var idCorrentista = Repositorys.Correntistas.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                            var token = Repositorys.Correntistas.ObterToken("robo@zitec.ai", "16695922000109");
                             string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTA"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
@@ -337,7 +335,7 @@ namespace TestePortalInterno.Pages
                                 errosTotais2++;
                             }
 
-                            var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("robo@zitec.ai", "16695922000109");
+                            var status = Repositorys.Correntistas.VerificarStatus("robo@zitec.ai", "16695922000109");
 
                             if (status == true)
                             {
@@ -386,7 +384,7 @@ namespace TestePortalInterno.Pages
 
                             for (int i = 0; i < 5; i++)
                             {
-                                statusAtual = CorrentistaRepository.statusAgrAss("16695922000109", "robo@zitec.ai");
+                                statusAtual = Repositorys.Correntistas.statusAgrAss("16695922000109", "robo@zitec.ai");
 
                                 if (statusAtual)
                                 {
@@ -403,14 +401,14 @@ namespace TestePortalInterno.Pages
 
                             if (statusAtual == true)
                             {
-                                string idDocumentoAutentique = Repository.Correntistas.CorrentistaRepository.ObterDocumentosAutentique(idCorrentista);
+                                string idDocumentoAutentique = Repositorys.Correntistas.ObterDocumentosAutentique(idCorrentista);
                                 var response = AssinarDocumentosAutentique.AssinarDocumento("9ad54b27a864625573ad40327a1916db61b687c3fe8641ff7f3efdc3e985d3b3", idDocumentoAutentique);
 
                                 if (response != null && response.Success)
                                 {
 
                                     Console.WriteLine("Documento assinado");
-                                    var updateStatus = Repository.Correntistas.CorrentistaRepository.UpdateStatusAguardandoConta("robo@zitec.ai", "16695922000109");
+                                    var updateStatus = Repositorys.Correntistas.UpdateStatusAguardandoConta("robo@zitec.ai", "16695922000109");
 
                                     if (updateStatus == true)
                                     {
@@ -445,12 +443,12 @@ namespace TestePortalInterno.Pages
                             for (int i = 0; i < 5; i++)
                             {
 
-                                statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
+                                statusAgdConta = Repositorys.Correntistas.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
 
                                 if (statusAgdConta == true)
                                 {
                                     await Page.ReloadAsync();
-                                    var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Movimentacao", idCorrentista);
+                                    var apagarContaBan = Repositorys.Correntistas.ApagarContaBancaria("778899", "5", "Movimentacao", idCorrentista);
                                     await Page.GetByLabel("Pesquisar").ClickAsync();
                                     await Task.Delay(800);
                                     await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
@@ -466,7 +464,7 @@ namespace TestePortalInterno.Pages
                                     await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
                                     await Task.Delay(10000);
                                     //verificar se enviou e-mail
-                                    var emailChecker = new TestePortal.Utils.EmailChecker();
+                                    var emailChecker = new TestePortalInterno.Utils.EmailChecker();
                                     bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                                     if (emailChegou)
@@ -484,7 +482,7 @@ namespace TestePortalInterno.Pages
 
 
                                     await Task.Delay(8000);
-                                    var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
+                                    var statusAprovado = Repositorys.Correntistas.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
 
                                     if (statusAprovado)
                                     {
@@ -528,7 +526,7 @@ namespace TestePortalInterno.Pages
                             Console.WriteLine($"erro {ex.Message}");
                         }
 
-                        var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
+                        var correntistaExiste = Repositorys.Correntistas.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
 
                         if (correntistaExiste)
                         {
@@ -536,15 +534,15 @@ namespace TestePortalInterno.Pages
                             pagina.InserirDados = "✅";
 
 
-                            var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                            var idCorrentista = Repositorys.Correntistas.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
 
-                            var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+                            var apagarCorrentista = Repositorys.Correntistas.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                             if (apagarCorrentista)
                             {
                                 Console.WriteLine("Correntista apagado com sucesso");
                                 pagina.Excluir = "✅";
 
-                                var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Movimentacao", idCorrentista);
+                                var apagarContaBan = Repositorys.Correntistas.ApagarContaBancaria("778899", "5", "Movimentacao", idCorrentista);
 
                                 if (apagarContaBan)
                                 {
@@ -632,7 +630,7 @@ namespace TestePortalInterno.Pages
             {
                 if (nivelLogado == NivelEnum.Master)
                 {
-                    var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+                    var apagarCorrentista2 = Repositorys.Correntistas.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                     var PaginaBancoIdCorrentista = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Correntistas.aspx");
                     fluxoDeCadastros.Fluxo = "Correntista - Escrow";
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
@@ -651,8 +649,8 @@ namespace TestePortalInterno.Pages
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                     await Task.Delay(400);
 
-                    var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
-                    var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
+                    var idCorrentista = Repositorys.Correntistas.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                    var token = Repositorys.Correntistas.ObterToken("robo@zitec.ai", "16695922000109");
                     string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTAESCROW"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
@@ -805,7 +803,7 @@ namespace TestePortalInterno.Pages
                         fluxoDeCadastros.FormularioCompletoNoPortal = "❌";
                     }
 
-                    var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("robo@zitec.ai", "16695922000109");
+                    var status = Repositorys.Correntistas.VerificarStatus("robo@zitec.ai", "16695922000109");
 
                     if (status == true)
                     {
@@ -867,12 +865,12 @@ namespace TestePortalInterno.Pages
                     for (int i = 0; i < 5; i++)
                     {
 
-                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
+                        statusAgdConta = Repositorys.Correntistas.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
 
                         if (statusAgdConta == true)
                         {
                             await Page.ReloadAsync();
-                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow", idCorrentista);
+                            var apagarContaBan = Repositorys.Correntistas.ApagarContaBancaria("778899", "5", "Escrow", idCorrentista);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
                             await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
@@ -889,7 +887,7 @@ namespace TestePortalInterno.Pages
                             await Task.Delay(10000);
 
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new TestePortalInterno.Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)
@@ -907,7 +905,7 @@ namespace TestePortalInterno.Pages
 
 
                             await Task.Delay(8000);
-                            var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
+                            var statusAprovado = Repositorys.Correntistas.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
 
                             if (statusAprovado)
                             {
@@ -945,7 +943,7 @@ namespace TestePortalInterno.Pages
                     }
 
 
-                    var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
+                    var correntistaExiste = Repositorys.Correntistas.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
 
                     if (correntistaExiste)
                     {
@@ -953,13 +951,13 @@ namespace TestePortalInterno.Pages
                         pagina.InserirDados = "✅";
 
 
-                        var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+                        var apagarCorrentista = Repositorys.Correntistas.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                         if (apagarCorrentista)
                         {
                             Console.WriteLine("Correntista apagado com sucesso");
                             pagina.Excluir = "✅";
 
-                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow", idCorrentista);
+                            var apagarContaBan = Repositorys.Correntistas.ApagarContaBancaria("778899", "5", "Escrow", idCorrentista);
 
                             if (apagarContaBan)
                             {
@@ -1030,7 +1028,7 @@ namespace TestePortalInterno.Pages
             int errosTotais2 = 0;
             int formularioOk = 0;
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
-            var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+            var apagarCorrentista2 = Repositorys.Correntistas.ApagarCorrentista("robo@zitec.ai", "16695922000109");
 
             try
             {
@@ -1052,8 +1050,8 @@ namespace TestePortalInterno.Pages
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                 await Task.Delay(400);
 
-                var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
-                var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
+                var idCorrentista = Repositorys.Correntistas.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                var token = Repositorys.Correntistas.ObterToken("robo@zitec.ai", "16695922000109");
                 string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTA"];
                 string copiedUrl = $"{baseUrl}{token}";
                 var newPage = await context.NewPageAsync();
@@ -1313,7 +1311,7 @@ namespace TestePortalInterno.Pages
 
                 }
 
-                var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("robo@zitec.ai", "16695922000109");
+                var status = Repositorys.Correntistas.VerificarStatus("robo@zitec.ai", "16695922000109");
 
                 if (status == true)
                 {
@@ -1363,7 +1361,7 @@ namespace TestePortalInterno.Pages
 
                 for (int i = 0; i < 5; i++)
                 {
-                    statusAtual = CorrentistaRepository.statusAgrAss("16695922000109", "robo@zitec.ai");
+                    statusAtual = Repositorys.Correntistas.statusAgrAss("16695922000109", "robo@zitec.ai");
 
                     if (statusAtual)
                     {
@@ -1381,7 +1379,7 @@ namespace TestePortalInterno.Pages
                 if (statusAtual == true)
                 {
 
-                    string idDocumentoAutentique = Repository.Correntistas.CorrentistaRepository.ObterDocumentosAutentique(idCorrentista);
+                    string idDocumentoAutentique = Repositorys.Correntistas.ObterDocumentosAutentique(idCorrentista);
                     var response = AssinarDocumentosAutentique.AssinarDocumento("9ad54b27a864625573ad40327a1916db61b687c3fe8641ff7f3efdc3e985d3b3", idDocumentoAutentique);
 
                     if (response != null && response.Success)
@@ -1389,7 +1387,7 @@ namespace TestePortalInterno.Pages
                         fluxoDeCadastros.DocumentoAssinado = "✅";
                         Console.WriteLine("Documento assinado");
 
-                        var updateStatus = Repository.Correntistas.CorrentistaRepository.UpdateStatusAguardandoConta("robo@zitec.ai", "16695922000109");
+                        var updateStatus = Repositorys.Correntistas.UpdateStatusAguardandoConta("robo@zitec.ai", "16695922000109");
 
                         if (updateStatus == true)
                         {
@@ -1416,12 +1414,12 @@ namespace TestePortalInterno.Pages
                     for (int i = 0; i < 5; i++)
                     {
 
-                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
+                        statusAgdConta = Repositorys.Correntistas.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
 
                         if (statusAgdConta == true)
 
                         {
-                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca", idCorrentista);
+                            var apagarContaBancaria = Repositorys.Correntistas.ApagarContaBancaria("121212", "5", "Cobranca", idCorrentista);
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
@@ -1438,7 +1436,7 @@ namespace TestePortalInterno.Pages
                             await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
                             await Task.Delay(10000);
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new TestePortalInterno.Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)
@@ -1478,7 +1476,7 @@ namespace TestePortalInterno.Pages
                     for (int tentativa = 1; tentativa <= 5; tentativa++)
                     {
 
-                        var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
+                        var statusAprovado = Repositorys.Correntistas.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
 
                         if (statusAprovado)
                         {
@@ -1512,20 +1510,20 @@ namespace TestePortalInterno.Pages
                 }
 
 
-                var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
+                var correntistaExiste = Repositorys.Correntistas.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
 
                 if (correntistaExiste)
                 {
                     Console.WriteLine("Correntista adicionado com sucesso na tabela.");
                     pagina.InserirDados = "✅";
 
-                    var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+                    var apagarCorrentista = Repositorys.Correntistas.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                     if (apagarCorrentista)
                     {
                         Console.WriteLine("Correntista apagado com sucesso");
                         pagina.Excluir = "✅";
 
-                        var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca", idCorrentista);
+                        var apagarContaBancaria = Repositorys.Correntistas.ApagarContaBancaria("121212", "5", "Cobranca", idCorrentista);
 
                         if (apagarContaBancaria)
                         {
@@ -1591,7 +1589,7 @@ namespace TestePortalInterno.Pages
             int errosTotais2 = 0;
             int formularioOk = 0;
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
-            var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+            var apagarCorrentista2 = Repositorys.Correntistas.ApagarCorrentista("robo@zitec.ai", "16695922000109");
 
             if (nivelLogado == NivelEnum.Master)
             {
@@ -1614,8 +1612,8 @@ namespace TestePortalInterno.Pages
                     await Task.Delay(300);
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
 
-                    var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
-                    var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
+                    var idCorrentista = Repositorys.Correntistas.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                    var token = Repositorys.Correntistas.ObterToken("robo@zitec.ai", "16695922000109");
                     string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTAESCROW"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
@@ -1781,7 +1779,7 @@ namespace TestePortalInterno.Pages
 
                     }
 
-                    var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("robo@zitec.ai", "16695922000109");
+                    var status = Repositorys.Correntistas.VerificarStatus("robo@zitec.ai", "16695922000109");
 
                     if (status == true)
                     {
@@ -1829,11 +1827,11 @@ namespace TestePortalInterno.Pages
                     for (int i = 0; i < 5; i++)
                     {
 
-                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
+                        statusAgdConta = Repositorys.Correntistas.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
 
                         if (statusAgdConta == true)
                         {
-                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Selic", idCorrentista);
+                            var apagarContaBan = Repositorys.Correntistas.ApagarContaBancaria("778899", "5", "Selic", idCorrentista);
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
@@ -1851,7 +1849,7 @@ namespace TestePortalInterno.Pages
                             await Task.Delay(10000);
 
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new TestePortalInterno.Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)
@@ -1869,7 +1867,7 @@ namespace TestePortalInterno.Pages
 
 
                             await Task.Delay(3000);
-                            var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
+                            var statusAprovado = Repositorys.Correntistas.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
 
                             if (statusAprovado)
                             {
@@ -1907,7 +1905,7 @@ namespace TestePortalInterno.Pages
                     }
 
 
-                    var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
+                    var correntistaExiste = Repositorys.Correntistas.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
 
                     if (correntistaExiste)
                     {
@@ -1915,13 +1913,13 @@ namespace TestePortalInterno.Pages
                         pagina.InserirDados = "✅";
                         fluxoDeCadastros.DocumentoAssinado = "❓";
 
-                        var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+                        var apagarCorrentista = Repositorys.Correntistas.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                         if (apagarCorrentista)
                         {
                             Console.WriteLine("Correntista apagado com sucesso");
                             pagina.Excluir = "✅";
 
-                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Selic", idCorrentista);
+                            var apagarContaBan = Repositorys.Correntistas.ApagarContaBancaria("778899", "5", "Selic", idCorrentista);
 
                             if (apagarContaBan)
                             {
@@ -1988,7 +1986,7 @@ namespace TestePortalInterno.Pages
             int errosTotais2 = 0;
             int formularioOk = 0;
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
-            var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+            var apagarCorrentista2 = Repositorys.Correntistas.ApagarCorrentista("robo@zitec.ai", "16695922000109");
 
             if (nivelLogado == NivelEnum.Master)
             {
@@ -2016,8 +2014,8 @@ namespace TestePortalInterno.Pages
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                     await Task.Delay(400);
 
-                    var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
-                    var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
+                    var idCorrentista = Repositorys.Correntistas.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
+                    var token = Repositorys.Correntistas.ObterToken("robo@zitec.ai", "16695922000109");
                     string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTA"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
@@ -2272,7 +2270,7 @@ namespace TestePortalInterno.Pages
 
                     }
 
-                    var status = Repository.Correntistas.CorrentistaRepository.VerificarStatus("robo@zitec.ai", "16695922000109");
+                    var status = Repositorys.Correntistas.VerificarStatus("robo@zitec.ai", "16695922000109");
 
                     if (status == true)
                     {
@@ -2374,11 +2372,11 @@ namespace TestePortalInterno.Pages
                     for (int i = 0; i < 5; i++)
                     {
 
-                        statusAgdConta = CorrentistaRepository.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
+                        statusAgdConta = Repositorys.Correntistas.VerificaStatusAgdConta("16695922000109", "robo@zitec.ai");
 
                         if (statusAgdConta == true)
                         {
-                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("988998", "5", "cetip", idCorrentista);
+                            var apagarContaBancaria = Repositorys.Correntistas.ApagarContaBancaria("988998", "5", "cetip", idCorrentista);
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
@@ -2395,7 +2393,7 @@ namespace TestePortalInterno.Pages
                             await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
                             await Task.Delay(10000);
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new TestePortalInterno.Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)
@@ -2430,7 +2428,7 @@ namespace TestePortalInterno.Pages
                     for (int tentativa = 1; tentativa <= 5; tentativa++)
                     {
 
-                        var statusAprovado = Repository.Correntistas.CorrentistaRepository.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
+                        var statusAprovado = Repositorys.Correntistas.VerificaStsAprovado("16695922000109", "robo@zitec.ai");
 
                         if (statusAprovado)
                         {
@@ -2463,7 +2461,7 @@ namespace TestePortalInterno.Pages
                         //    fluxoDeCadastros.ListaErros.Add("Status não foi trocado para aguardando assinatura");
                     }
 
-                    var correntistaExiste = Repository.Correntistas.CorrentistaRepository.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
+                    var correntistaExiste = Repositorys.Correntistas.VerificaExistenciaCorrentista("robo@zitec.ai", "16695922000109");
 
                     if (correntistaExiste)
                     {
@@ -2471,14 +2469,14 @@ namespace TestePortalInterno.Pages
                         pagina.InserirDados = "✅";
 
 
-                        var apagarCorrentista = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
+                        var apagarCorrentista = Repositorys.Correntistas.ApagarCorrentista("robo@zitec.ai", "16695922000109");
                         if (apagarCorrentista)
                         {
                             Console.WriteLine("Correntista apagado com sucesso");
                             pagina.Excluir = "✅";
 
 
-                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("988998", "5", "cetip", idCorrentista);
+                            var apagarContaBancaria = Repositorys.Correntistas.ApagarContaBancaria("988998", "5", "cetip", idCorrentista);
 
                             if (apagarContaBancaria)
                             {

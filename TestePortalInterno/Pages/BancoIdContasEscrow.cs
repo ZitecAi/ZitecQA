@@ -1,17 +1,13 @@
 ﻿using Microsoft.Playwright;
 using Newtonsoft.Json.Linq;
-using Segment.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using TestePortalInterno.Model;
-using TestePortalInterno.Repository.Correntistas;
-using TestePortalInterno.Repository.Investidores;
-using static TestePortalInterno.Usuario;
+using static TestePortalInterno.Model.Usuario;
 using TestePortalInterno.Utils;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Drawing;
@@ -59,7 +55,7 @@ namespace TestePortalInterno.Pages
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora)
                     {
-                        var apagarContasEscrow2 = Repository.ContasEscrows.ContasEscrows.ApagarContasEscrow("teste robo", "titular teste");
+                        var apagarContasEscrow2 = Repositorys.ContasEscrows.ApagarContasEscrow("teste robo", "titular teste");
                         await Page.GetByRole(AriaRole.Button, new() { Name = " Nova" }).ClickAsync();
                         await Page.Locator("#fundoBanco").SelectOptionAsync(new[] { "54638076000176" });
                         await Task.Delay(300);
@@ -103,7 +99,7 @@ namespace TestePortalInterno.Pages
 
                         //}); //verificar a mensagem ants de continuar
 
-                        var contasEcrowExiste = Repository.ContasEscrows.ContasEscrows.VerificaExistenciaContasEscrow("teste robo", "titular teste");
+                        var contasEcrowExiste = Repositorys.ContasEscrows.VerificaExistenciaContasEscrow("teste robo", "titular teste");
                         await Task.Delay(700);
 
                         if (contasEcrowExiste)
@@ -111,7 +107,7 @@ namespace TestePortalInterno.Pages
                             Console.WriteLine("Conta Escrow adicionada com sucesso na tabela.");
                             pagina.InserirDados = "✅";
 
-                            var apagarContasEscrow = Repository.ContasEscrows.ContasEscrows.ApagarContasEscrow("teste robo", "titular teste");
+                            var apagarContasEscrow = Repositorys.ContasEscrows.ApagarContasEscrow("teste robo", "titular teste");
                             if (apagarContasEscrow)
                             {
                                 Console.WriteLine("Conta Escrow apagada com sucesso");

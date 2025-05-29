@@ -5,7 +5,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+
 
 namespace TestePortalInterno.Pages
 {
@@ -44,7 +44,7 @@ namespace TestePortalInterno.Pages
                         errosTotais++;
                     }
 
-                    var apagarBoletagemAmortizacao2 = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.ApagarBoletagemAmortizacao("teste robo", "49624866830");
+                    var apagarBoletagemAmortizacao2 = Repositorys.BoletagemAmortizacao.ApagarBoletagemAmortizacao("teste robo", "49624866830");
 
                     var dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
                     await Task.Delay(300);
@@ -98,14 +98,14 @@ namespace TestePortalInterno.Pages
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                     await Task.Delay(700);
 
-                    var BoletagemAmortizacaoExiste = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.VerificaExistenciaBoletagemAmortizacao("teste robo", "49624866830");
+                    var BoletagemAmortizacaoExiste = Repositorys.BoletagemAmortizacao.VerificaExistenciaBoletagemAmortizacao("teste robo", "49624866830");
 
 
                     if (BoletagemAmortizacaoExiste)
                     {
                         Console.WriteLine("Amortização adicionada com sucesso na tabela.");
                         pagina.InserirDados = "✅";
-                        var apagarBoletagemAmortizacao = Repository.BoletagemAmortizacao.BoletagemAmortizacaoRepository.ApagarBoletagemAmortizacao("teste robo", "49624866830");
+                        var apagarBoletagemAmortizacao = Repositorys.BoletagemAmortizacao.ApagarBoletagemAmortizacao("teste robo", "49624866830");
 
                         if (apagarBoletagemAmortizacao)
                         {

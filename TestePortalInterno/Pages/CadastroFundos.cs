@@ -45,7 +45,7 @@ namespace TestePortalInterno.Pages
                     {
 
 
-                        var apagarFundo2 = Repository.Fundos.FundosRepository.ApagarFundo("45543915000181", "teste QA");
+                        var apagarFundo2 = Repositorys.Fundos.ApagarFundo("45543915000181", "teste QA");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Fundo" }).ClickAsync();
                         await Page.Locator("#Nome").FillAsync("teste QA");
                         await Page.GetByPlaceholder("/0000-00").ClickAsync();
@@ -57,13 +57,13 @@ namespace TestePortalInterno.Pages
                         await Task.Delay(1500);
 
 
-                        var fundoExiste = Repository.Fundos.FundosRepository.VerificaExistenciaFundo("45543915000181", "teste QA");
+                        var fundoExiste = Repositorys.Fundos.VerificaExistenciaFundo("45543915000181", "teste QA");
 
                         if (fundoExiste)
                         {
                             Console.WriteLine("Fundo adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarFundo = Repository.Fundos.FundosRepository.ApagarFundo("45543915000181", "teste QA");
+                            var apagarFundo = Repositorys.Fundos.ApagarFundo("45543915000181", "teste QA");
 
                             if (apagarFundo)
                             {

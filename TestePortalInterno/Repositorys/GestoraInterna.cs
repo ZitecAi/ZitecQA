@@ -151,7 +151,7 @@ namespace TestePortalInterno.Repositorys
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "GestoraInternaRepository.ObterTokenGestoraInterna()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e);
             }
 
             return token;

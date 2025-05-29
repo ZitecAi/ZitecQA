@@ -48,7 +48,7 @@ namespace TestePortalInterno.Pages
                     }
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
-                        var apagarAtivo2 = Repository.Ativos.AtivosRepository.ApagarAtivos("24426716000113", "teste robo");
+                        var apagarAtivo2 = Repositorys.Ativos.ApagarAtivos("24426716000113", "teste robo");
                         fluxoDeCadastros.Fluxo = "Operações - ativos";
                         fluxoDeCadastros.Formulario = "❓";
                         fluxoDeCadastros.FormularioCompletoNoPortal = "❓";
@@ -108,13 +108,13 @@ namespace TestePortalInterno.Pages
 
                         await Task.Delay(40000);
 
-                        var idAtivo = Repository.Ativos.AtivosRepository.RetornaIdAtivo("24426716000113", "teste robo");
+                        var idAtivo = Repositorys.Ativos.RetornaIdAtivo("24426716000113", "teste robo");
 
                         bool statusAtual = false;
 
                         for (int i = 0; i < 5; i++)
                         {
-                            statusAtual = Repository.Ativos.AtivosRepository.statusAgrAss("24426716000113", "teste robo");
+                            statusAtual = Repositorys.Ativos.statusAgrAss("24426716000113", "teste robo");
 
                             if (statusAtual)
                             {
@@ -131,7 +131,7 @@ namespace TestePortalInterno.Pages
 
                         if (statusAtual == true)
                         {
-                            string idDocumentoAutentique = Repository.Ativos.AtivosRepository.ObterDocAutentique(idAtivo);
+                            string idDocumentoAutentique = Repositorys.Ativos.ObterDocAutentique(idAtivo);
                             var response = AssinarDocumentosAutentique.AssinarDocumento("9ad54b27a864625573ad40327a1916db61b687c3fe8641ff7f3efdc3e985d3b3", idDocumentoAutentique);
 
                             if (response != null && response.Success)
@@ -159,7 +159,7 @@ namespace TestePortalInterno.Pages
 
                         for (int i = 0; i < 5; i++)
                         {
-                            statusAgdLiqui = Repository.Ativos.AtivosRepository.statusAprovado("24426716000113", "teste robo");
+                            statusAgdLiqui = Repositorys.Ativos.statusAprovado("24426716000113", "teste robo");
 
                             if (statusAgdLiqui)
                             {
@@ -179,13 +179,13 @@ namespace TestePortalInterno.Pages
                             }
                         }
 
-                        var ativoExiste = Repository.Ativos.AtivosRepository.VerificaExistenciaAtivos("24426716000113", "teste robo");
+                        var ativoExiste = Repositorys.Ativos.VerificaExistenciaAtivos("24426716000113", "teste robo");
 
                         if (ativoExiste)
                         {
                             Console.WriteLine("Ativo adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarAtivo = Repository.Ativos.AtivosRepository.ApagarAtivos("24426716000113", "teste robo");
+                            var apagarAtivo = Repositorys.Ativos.ApagarAtivos("24426716000113", "teste robo");
                             if (apagarAtivo)
                             {
                                 Console.WriteLine("Ativo apagado com sucesso");

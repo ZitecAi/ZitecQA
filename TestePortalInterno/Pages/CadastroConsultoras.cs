@@ -5,7 +5,6 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace TestePortalInterno.Pages
 {
@@ -34,7 +33,7 @@ namespace TestePortalInterno.Pages
                 {
                     errosTotais++;
                 }
-                var ApagarConsultoras2 = Repository.Consultoras.ConsultorasRepository.ApagarConsultoras("16695922000109", "Jessica Vitoria Tavares");
+                var ApagarConsultoras2 = Repositorys.Consultoras.ApagarConsultoras("16695922000109", "Jessica Vitoria Tavares");
 
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Adicionar Consultora +" }).ClickAsync();
                 await Page.Locator("#Nome").ClickAsync();
@@ -47,13 +46,13 @@ namespace TestePortalInterno.Pages
                 await Page.GetByPlaceholder("(00) 0000-").FillAsync("11960183248");
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" }).ClickAsync();
                 await Task.Delay(800);
-                var ConsultorasExiste = Repository.Consultoras.ConsultorasRepository.VerificaExistenciaConsultoras("16695922000109", "Jessica Vitoria Tavares");
+                var ConsultorasExiste = Repositorys.Consultoras.VerificaExistenciaConsultoras("16695922000109", "Jessica Vitoria Tavares");
 
                 if (ConsultorasExiste)
                 {
                     Console.WriteLine("Consultora adicionada com sucesso na tabela.");
                     pagina.InserirDados = "✅";
-                    var ApagarConsultoras = Repository.Consultoras.ConsultorasRepository.ApagarConsultoras("16695922000109", "Jessica Vitoria Tavares");
+                    var ApagarConsultoras = Repositorys.Consultoras.ApagarConsultoras("16695922000109", "Jessica Vitoria Tavares");
 
                     if (ApagarConsultoras)
                     {

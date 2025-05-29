@@ -1,5 +1,8 @@
 ﻿using Microsoft.Playwright;
 using System.Configuration;
+using TestePortalInterno.Model;
+using TestePortalInterno.Repositorys;
+using static TestePortalInterno.Model.Usuario;
 
 namespace TestePortalInterno.Pages
 {
@@ -44,7 +47,7 @@ namespace TestePortalInterno.Pages
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
-                        var apagarNotaPagamento2 = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "teste jessica");
+                        var apagarNotaPagamento2 = Repositorys.NotaPagamento.ApagarNotaPagamento("36614123000160", "teste jessica");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("#agendamentoFiltro").FillAsync("2024-09-02");
@@ -73,13 +76,13 @@ namespace TestePortalInterno.Pages
                         await Task.Delay(700);
 
 
-                        var notaPagamentoExiste = Repository.NotaPagamento.NotaPagamentoRepository.VerificaExistenciaNotaPagamento("36614123000160", "teste jessica");
+                        var notaPagamentoExiste = Repositorys.NotaPagamento.VerificaExistenciaNotaPagamento("36614123000160", "teste jessica");
 
                         if (notaPagamentoExiste)
                         {
                             Console.WriteLine("Notas pagamento adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarNotaPagamento = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "teste jessica");
+                            var apagarNotaPagamento = Repositorys.NotaPagamento.ApagarNotaPagamento("36614123000160", "teste jessica");
 
                             if (apagarNotaPagamento)
                             {

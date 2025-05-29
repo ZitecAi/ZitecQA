@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using Microsoft.Playwright;
 
 namespace TestePortalInterno.Repositorys
 {
