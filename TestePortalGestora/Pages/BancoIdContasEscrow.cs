@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TestePortalGestora.Model;
 using static TestePortalGestora.Model.Usuario;
-using TestePortalInterno.Utils;
+using TestePortalGestora.Utils;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Drawing;
 

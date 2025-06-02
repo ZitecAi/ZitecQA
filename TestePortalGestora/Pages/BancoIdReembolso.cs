@@ -5,7 +5,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static TestePortalInterno.Model.Usuario;
+using static TestePortalGestora.Model.Usuario;
 
 namespace TestePortalGestora.Pages
 {

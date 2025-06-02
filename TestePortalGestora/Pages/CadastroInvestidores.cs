@@ -689,7 +689,7 @@ namespace TestePortalGestora.Pages
 
                         }
 
-                        var emailChecker = new TestePortalInterno.Utils.EmailChecker();
+                        var emailChecker = new TestePortalGestora.Utils.EmailChecker();
                         bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Investidor - IDSF!");
 
                         if (emailChegou)
@@ -1424,7 +1424,7 @@ namespace TestePortalGestora.Pages
                                 fluxoDeCadastros.ListaErros.Add("Erro ao trocar status na tabela");
                             }
 
-                            var emailChecker = new TestePortalInterno.Utils.EmailChecker();
+                            var emailChecker = new TestePortalGestora.Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Investidor - IDSF!");
 
                             if (emailChegou)

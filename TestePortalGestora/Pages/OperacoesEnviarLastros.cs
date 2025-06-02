@@ -1,6 +1,6 @@
 ﻿using Microsoft.Playwright;
 using System.Configuration;
-using TestePortalInterno.Repositorys;
+using TestePortalGestora.Repositorys;
 
 namespace TestePortalGestora.Pages
 {

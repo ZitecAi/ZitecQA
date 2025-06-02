@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using System.Configuration;
-using TestePortalInterno;
+using TestePortalGestora;
 using Microsoft.Playwright;
 using TestePortalGestora.Repositorys;
 

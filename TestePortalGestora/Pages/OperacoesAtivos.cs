@@ -1,9 +1,9 @@
 ﻿using Microsoft.Playwright;
 using System.Configuration;
-using TestePortalInterno.Utils;
+using TestePortalGestora.Utils;
 using static TestePortalGestora.Model.Usuario;
 
-namespace TestePortalInterno.Pages
+namespace TestePortalGestora.Pages
 {
     public class OperacoesAtivos
     {

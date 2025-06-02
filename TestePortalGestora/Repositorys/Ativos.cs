@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 using System.Data.SqlClient;
-using TestePortalInterno.Utils;
+using TestePortalGestora.Utils;
 using System.Threading.Tasks;
 using System.Configuration;
 using Microsoft.Data.SqlClient;

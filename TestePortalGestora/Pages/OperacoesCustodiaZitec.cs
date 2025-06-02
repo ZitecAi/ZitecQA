@@ -6,7 +6,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 //using System.Windows.Controls;
-using TestePortalInterno.Utils;
+using TestePortalGestora.Utils;
 using System.Configuration;
 using System.Linq.Expressions;
 using System.Threading;

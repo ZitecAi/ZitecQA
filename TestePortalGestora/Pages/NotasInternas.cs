@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 
 
-namespace TestePortalInterno.Pages
+namespace TestePortalGestora.Pages
 {
     public class NotasInternas
     {

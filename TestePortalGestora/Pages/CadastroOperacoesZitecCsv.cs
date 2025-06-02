@@ -2,7 +2,7 @@
 //using System.Windows.Controls;
 using System.Configuration;
 using TestePortalGestora.Model;
-using TestePortalInterno.Utils;
+using TestePortalGestora.Utils;
 using static TestePortalGestora.Model.Usuario;
 
 

@@ -14,7 +14,7 @@ using TestePortalGestora.Utils;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Drawing;
 
-namespace TestePortalInterno.Pages
+namespace TestePortalGestora.Pages
 {
     public class BancoIdCorrentista
 
@@ -464,7 +464,7 @@ namespace TestePortalInterno.Pages
                                     await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
                                     await Task.Delay(10000);
                                     //verificar se enviou e-mail
-                                    var emailChecker = new TestePortalInterno.Utils.EmailChecker();
+                                    var emailChecker = new TestePortalGestora.Utils.EmailChecker();
                                     bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                                     if (emailChegou)
@@ -887,7 +887,7 @@ namespace TestePortalInterno.Pages
                             await Task.Delay(10000);
 
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortalInterno.Utils.EmailChecker();
+                            var emailChecker = new TestePortalGestora.Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)
@@ -1436,7 +1436,7 @@ namespace TestePortalInterno.Pages
                             await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
                             await Task.Delay(10000);
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortalInterno.Utils.EmailChecker();
+                            var emailChecker = new TestePortalGestora.Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)
@@ -1849,7 +1849,7 @@ namespace TestePortalInterno.Pages
                             await Task.Delay(10000);
 
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortalInterno.Utils.EmailChecker();
+                            var emailChecker = new TestePortalGestora.Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)
@@ -2393,7 +2393,7 @@ namespace TestePortalInterno.Pages
                             await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
                             await Task.Delay(10000);
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortalInterno.Utils.EmailChecker();
+                            var emailChecker = new TestePortalGestora.Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)

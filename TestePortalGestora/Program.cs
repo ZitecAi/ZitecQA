@@ -11,6 +11,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using System.Drawing;
 using System.Linq;
+using static TestePortalGestora.Model.Usuario;
 
 namespace TestePortalGestora
 {
@@ -73,7 +74,7 @@ namespace TestePortalGestora
             {
                 foreach (var usuario in Usuarios)
                 {
-                    listaPagina.Add(await TestePortal.Pages.LoginGeral.Login(Page, usuario));
+                    listaPagina.Add(await TestePortalGestora.Pages.LoginGeral.Login(Page, usuario));
 
                     if (usuario.Nivel == Usuario.NivelEnum.Master)
                     {

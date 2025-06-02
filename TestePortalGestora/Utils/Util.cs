@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TestePortalGestora.Model;
 
-namespace TestePortalInterno.Utils
+namespace TestePortalGestora.Utils
 {
     public class Util
     {

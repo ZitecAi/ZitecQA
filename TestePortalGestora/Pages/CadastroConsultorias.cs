@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestePortalGestora.Model;
-using TestePortalInterno.Repositorys;
+using TestePortalGestora.Repositorys;
 using static TestePortalGestora.Model.Usuario;
 using System.IO.Packaging;
 

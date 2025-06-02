@@ -23,7 +23,8 @@ namespace TestePortalGestora.Utils
                 return false;
             }
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
             try
             {

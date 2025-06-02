@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestePortalConsultoria.Model
+namespace TestePortalGestora.Model
 {
     public class EmailPadrao
     {

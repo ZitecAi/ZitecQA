@@ -1,9 +1,10 @@
 ﻿using Microsoft.Playwright;
 using System.Configuration;
-using static TestePortalGestora.Model.Usuario;
 using TestePortalGestora.Model;
+using static TestePortalGestora.Model.Usuario;
 
-namespace TestePortalInterno.Pages
+
+namespace TestePortalGestora.Pages
 {
     public class NotaComercial
     {

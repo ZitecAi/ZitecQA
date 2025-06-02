@@ -5,7 +5,7 @@ using TestePortalGestora.Utils;
 using TestePortalGestora.Repositorys;
 using static TestePortalGestora.Model.Usuario;
 
-namespace TestePortalInterno.Pages
+namespace TestePortalGestora.Pages
 {
     public class NotasPagamentos
     {

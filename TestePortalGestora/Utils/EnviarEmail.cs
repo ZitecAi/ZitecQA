@@ -5,12 +5,12 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using TestePortalInterno.Model;
+using TestePortalGestora.Model;
 using System.Security.Cryptography;
-using TestePortalInterno.Pages;
-using TestePortalInterno.Utils;
+using TestePortalGestora.Pages;
+using TestePortalGestora.Utils;
 using System.Xml.Schema;
-using static TestePortalInterno.Model.FluxosDeCadastros;
+using static TestePortalGestora.Model.FluxosDeCadastros;
 
 
 namespace TestePortalGestora.Utils
