@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnviarMensagemSlack", "Envi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestePortalInterno", "TestePortalInterno\TestePortalInterno.csproj", "{09F187B0-00B9-4085-9FFC-EB7434D2176D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestePortalConsultoria", "TestePortalConsultoria\TestePortalConsultoria.csproj", "{F1239208-137E-43D1-AC80-0374037D5588}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestePortalConsultoria", "TestePortalConsultoria\TestePortalConsultoria.csproj", "{F1239208-137E-43D1-AC80-0374037D5588}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestePortalGestora", "TestePortalGestora\TestePortalGestora.csproj", "{DC39B93B-BCB6-4695-BB53-1C4A08A9FE7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,12 @@ Global
 		{F1239208-137E-43D1-AC80-0374037D5588}.Debug2|Any CPU.Build.0 = Debug|Any CPU
 		{F1239208-137E-43D1-AC80-0374037D5588}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1239208-137E-43D1-AC80-0374037D5588}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC39B93B-BCB6-4695-BB53-1C4A08A9FE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC39B93B-BCB6-4695-BB53-1C4A08A9FE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC39B93B-BCB6-4695-BB53-1C4A08A9FE7E}.Debug2|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC39B93B-BCB6-4695-BB53-1C4A08A9FE7E}.Debug2|Any CPU.Build.0 = Debug|Any CPU
+		{DC39B93B-BCB6-4695-BB53-1C4A08A9FE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC39B93B-BCB6-4695-BB53-1C4A08A9FE7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
