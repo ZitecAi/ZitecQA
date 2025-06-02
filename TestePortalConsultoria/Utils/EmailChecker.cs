@@ -4,6 +4,10 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using MailKit.Net.Imap;
+using MailKit.Search;
+using MailKit;
 
 namespace TestePortalConsultoria.Utils
 {

@@ -43,7 +43,7 @@ namespace TestePortalConsultoria.Repository.Consultorias
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConsultoriasRepository.VerificaExistenciaConsultorias()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return existe;
@@ -78,7 +78,7 @@ namespace TestePortalConsultoria.Repository.Consultorias
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConsultoriasRepository.ApagarConsultorias()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return apagado;
@@ -114,7 +114,7 @@ namespace TestePortalConsultoria.Repository.Consultorias
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConsultoriasRepository.ObterToken()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return token;
@@ -150,7 +150,7 @@ namespace TestePortalConsultoria.Repository.Consultorias
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConsultoriasRepository.ObterIdConsultoria()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return idConsultoria;
@@ -183,7 +183,7 @@ namespace TestePortalConsultoria.Repository.Consultorias
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConsultoriasRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return emAnalise;

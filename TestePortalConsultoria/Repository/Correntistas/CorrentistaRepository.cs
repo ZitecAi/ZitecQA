@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -44,7 +44,7 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.VerificaExistenciaCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return existe;
@@ -79,7 +79,7 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "UsuarioRepository.ApagarCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return apagado;
@@ -115,7 +115,7 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.ObterIdCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return idCorrentista;
@@ -151,7 +151,7 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.ObterToken()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return token;
@@ -191,7 +191,7 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return isEmAnalise;
@@ -230,7 +230,7 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return statusAguardandoAssinatura;
@@ -269,7 +269,7 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusAprovadoCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return statusAprovado;
@@ -313,7 +313,7 @@ namespace TestePortal.Repository.Correntistas
             catch (Exception e)
             {
      
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return statusAprovado;
@@ -346,7 +346,7 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.ApagarContaBancaria()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return contaApagada;
@@ -380,7 +380,7 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.ObterDocumentosAutentique", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return idDocumentoAutentique;
@@ -412,7 +412,7 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.UpdateStatusAguardandoConta()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return atualizacaoRealizada;

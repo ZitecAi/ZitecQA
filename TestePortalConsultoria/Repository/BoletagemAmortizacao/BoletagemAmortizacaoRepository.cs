@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestePortal.Repository.BoletagemAmortizacao
+namespace TestePortalConsultoria.Repository.BoletagemAmortizacao
 {
     public class BoletagemAmortizacaoRepository
     {
@@ -44,7 +44,7 @@ namespace TestePortal.Repository.BoletagemAmortizacao
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "BoletagemAmortizacaoRepository.VerificaExistenciaBoletagemAmortizacao()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return existe;
@@ -79,7 +79,7 @@ namespace TestePortal.Repository.BoletagemAmortizacao
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "BoletagemAmortizacaoRepository.ApagarBoletagemAmortizacao()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return apagado;

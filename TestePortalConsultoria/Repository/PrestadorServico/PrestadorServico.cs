@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestePortal.Repository.PrestadorServico
+namespace TestePortalConsultoria.Repository.PrestadorServico
 {
     public class PrestadorServico
     {
@@ -44,7 +44,8 @@ namespace TestePortal.Repository.PrestadorServico
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "PrestadorServicoRepository.VerificaExistenciaPrestadorServico()", "Automações Jessica", e.StackTrace);
+                //Utils.Slack.MandarMsgErroGrupoDev(e.Message, "PrestadorServicoRepository.VerificaExistenciaPrestadorServico()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return existe;
@@ -79,7 +80,7 @@ namespace TestePortal.Repository.PrestadorServico
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "PrestadorServicoRepository.ApagarPrestadorServico()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return apagado;

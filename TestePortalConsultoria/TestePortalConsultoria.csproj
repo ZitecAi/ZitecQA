@@ -9,6 +9,9 @@
 
   <ItemGroup>
     <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
+    <PackageReference Include="EPPlus" Version="8.0.5" />
+    <PackageReference Include="ExcelPackage" Version="1.0.0" />
+    <PackageReference Include="JsonConverter.Abstractions" Version="0.7.1" />
     <PackageReference Include="MailKit" Version="4.12.1" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
     <PackageReference Include="Microsoft.Playwright" Version="1.52.0" />

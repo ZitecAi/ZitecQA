@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestePortal.Repository.Ativos
+namespace TestePortalConsultoria.Repository.Ativos
 {
     public class AtivosRepository
     {
@@ -44,7 +44,7 @@ namespace TestePortal.Repository.Ativos
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "AtivosRepository.VerificaExistenciaAtivos()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return existe;
@@ -79,7 +79,7 @@ namespace TestePortal.Repository.Ativos
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "AtivosRepository.ApagarAtivos()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return apagado;
@@ -118,7 +118,7 @@ namespace TestePortal.Repository.Ativos
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return statusAguardandoAssinatura;
@@ -154,12 +154,7 @@ namespace TestePortal.Repository.Ativos
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(
-                    e.Message,
-                    "InvestidoresRepository.RetornaIdAtivo()",
-                    "Automações Jessica",
-                    e.StackTrace
-                );
+                Console.WriteLine(e.ToString());
             }
 
             return idAtivo;
@@ -192,12 +187,7 @@ namespace TestePortal.Repository.Ativos
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(
-                    e.Message,
-                    "AtivosRepository.ObterAtivosAutentique",
-                    "Automações Jessica",
-                    e.StackTrace
-                );
+                Console.WriteLine(e.ToString());
             }
 
             return idDocumentoAutentique;
@@ -236,7 +226,7 @@ namespace TestePortal.Repository.Ativos
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusCorrentista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return statusAguardandoLiquidacao;

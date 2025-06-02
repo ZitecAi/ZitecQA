@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TestePortalConsultoria.Model;
 using Newtonsoft.Json;
+using System.Configuration;
 
 namespace TestePortalConsultoria.Utils
 {
@@ -49,7 +50,7 @@ namespace TestePortalConsultoria.Utils
             }
             finally
             {
-                Service.LogRequestService.Add(apiUrl, "", "", Convert.ToString(responseBody), "GET", "200", DateTime.Now, "make");
+                //Service.LogRequestService.Add(apiUrl, "", "", Convert.ToString(responseBody), "GET", "200", DateTime.Now, "make");
             }
         }
     }

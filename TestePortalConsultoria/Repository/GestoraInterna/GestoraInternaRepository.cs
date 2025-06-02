@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -44,7 +44,7 @@ namespace TestePortal.Repository.GestoraInterna
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "GestoraInternaRepository.VerificaExistenciaGestoraInterna()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return existe;
@@ -79,7 +79,7 @@ namespace TestePortal.Repository.GestoraInterna
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "GestoraInternaRepository.ApagarGestoraInterna()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return apagado;
@@ -116,7 +116,7 @@ namespace TestePortal.Repository.GestoraInterna
                 }
                 catch (Exception e)
                 {
-                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "GestoraInternaRepository.ObterIdGestoraInterna()", "Automações Jessica", e.StackTrace);
+                    Console.WriteLine(e.ToString());
                 }
 
                 return idGestora;
@@ -152,7 +152,7 @@ namespace TestePortal.Repository.GestoraInterna
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "GestoraInternaRepository.ObterTokenGestoraInterna()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return token;
@@ -186,7 +186,7 @@ namespace TestePortal.Repository.GestoraInterna
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConsultoriasRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return emAnalise;
