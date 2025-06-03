@@ -6,11 +6,11 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using TestePortalDenver.Utils;
+using TestePortalDenver.Model;
 using TestePortalDenver.Repository;
 using static TestePortalDenver.Model.Usuario;
 
-namespace TestePortalConsultoria.Pages
+namespace TestePortalDenver.Pages
 {
     public class BoletagemResgate
     {

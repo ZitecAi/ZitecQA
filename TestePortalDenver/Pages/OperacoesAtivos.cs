@@ -3,13 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Text;
+using static TestePortalDenver.Model.Usuario;
+using TestePortalDenver.Repository;
 using System.Threading.Tasks;
-using TestePortaldenver.Repository.Correntistas;
 using TestePortalDenver.Utils;
-using static TestePortalDever.Model.Usuario;
 
-namespace TestePortaldenver.Pages
+namespace TestePortalDenver.Pages
 {
     public class OperacoesAtivos
     {

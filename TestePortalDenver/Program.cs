@@ -7,7 +7,7 @@ using TestePortalDenver.Model;
 using TestePortalDenver.Utils;
 using TestePortalDenver.Pages;
 using System.IO;
-using System.Windows.Controls;
+//using System.Windows.Controls;
 using System.Net.Http.Headers;
 using System.Drawing;
 using System.Linq;
@@ -73,7 +73,7 @@ namespace TestePortalDenver
             {
                 foreach (var usuario in Usuarios)
                 {
-                    listaPagina.Add(await TestePortal.Pages.LoginGeral.Login(Page, usuario));
+                    listaPagina.Add(await TestePortalDenver.Pages.LoginGeral.Login(Page, usuario));
 
                     if (usuario.Nivel == Usuario.NivelEnum.Master)
                     {
