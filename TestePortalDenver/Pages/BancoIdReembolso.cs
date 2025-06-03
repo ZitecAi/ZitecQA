@@ -5,7 +5,6 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestePortalDenver.Repository;
 using static TestePortalDenver.Model.Usuario;
 using TestePortalDenver.Utils;
 using TestePortalDenver.Repository;

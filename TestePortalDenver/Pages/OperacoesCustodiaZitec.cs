@@ -14,6 +14,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using static TestePortalDenver.Model.Usuario;
 using TestePortalDenver.Repository.Operacoes;
+using TestePortalDenver.Repository.OperacoesCsvRepository;
 using TestePortalDenver.Model;
 
 namespace TestePortalDenver

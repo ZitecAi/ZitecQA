@@ -72,7 +72,7 @@ namespace TestePortalDenver.Utils
 
         }
 
-        public static string GerarHtml(List<Pagina> listaPagina, List<FluxosDeCadastros> listaFluxos, List<Operacoes> operacoes)
+        public static string GerarHtml(List<Pagina> listaPagina, List<FluxosDeCadastros> listaFluxos, List<Operacoes> operacoes, Conciliacao conciliacao)
         {
 
 
