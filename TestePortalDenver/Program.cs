@@ -78,7 +78,7 @@ namespace TestePortalDenver
                     
                     if (usuario.Nivel == Usuario.NivelEnum.Denver)
                     {
-                        listaPagina.Add(await BancoIdReembolso.Reembolso(Page));
+                        listaPagina.Add(await BancoIdReembolso.Reembolso(Page, usuario.Nivel));
                         listaPagina.Add(await BancoIdExtratos.Extratos(Page));
                         listaPagina.Add(await BancoIdSaldos.Saldos(Page));
                         await Task.Delay(600);
@@ -87,6 +87,7 @@ namespace TestePortalDenver
                         listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
+                        listaPagina.Add(await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel));
                         listaPagina.Add(await OperacoesConciliacao.Conciliacao(Page));
                         listaPagina.Add(await RelatorioCadastro.Cadastro(Page));
                         listaPagina.Add(await RelatorioFundos.Fundos(Page));

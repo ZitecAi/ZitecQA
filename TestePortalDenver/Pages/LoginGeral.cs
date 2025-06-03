@@ -10,8 +10,6 @@ using TestePortalDenver.Utils;
 
 namespace TestePortalDever.Pages
 {
-
-
     public class LoginGeral
     {
         public async static Task<Model.Pagina> Login(IPage Page, Usuario usuario)
