@@ -7,7 +7,8 @@ using System.Text;
 using TestePortalDenver.Utils;
 using System.Threading.Tasks;
 
-namespace TestePortalDever.Pages
+
+namespace TestePortalDenver.Pages
 {
     public class ControleInternoPoliticas
     {

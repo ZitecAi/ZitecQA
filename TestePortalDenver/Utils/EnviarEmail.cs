@@ -78,9 +78,9 @@ namespace TestePortalDenver.Utils
 
             Console.WriteLine("A lista contém " + listaPagina.Count + " itens.");
             int totalPaginas = listaPagina.Count;
-            var listaMaster = listaPagina.Where(p => p.Perfil == "Master").ToList();
-            var listaConsultoria = listaPagina.Where(p => p.Perfil == "Consultoria").ToList();
-            var listaGestora = listaPagina.Where(p => p.Perfil == "Gestora").ToList();
+            //var listaMaster = listaPagina.Where(p => p.Perfil == "Master").ToList();
+            //var listaConsultoria = listaPagina.Where(p => p.Perfil == "Consultoria").ToList();
+            //var listaGestora = listaPagina.Where(p => p.Perfil == "Gestora").ToList();
             var listaDenver = listaPagina.Where(p => p.Perfil == "Denver").ToList();
 
             var listaErros = listaPagina.Where(p => p.TotalErros > 0 || p.Listagem == "❌" || p.Acentos == "❌" || p.InserirDados == "❌" || p.Excluir == "❌").ToList();
@@ -110,11 +110,11 @@ namespace TestePortalDenver.Utils
            "<h4>Total de Páginas Verificadas: " + totalPaginas + "</h4>";
 
             
-            Html += "<h2>Relatório com o usuário: Consultoria</h2>";
+            Html += "<h2>Relatório com o usuário: Denver</h2>";
             Html += "<table>";
             Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
 
-            foreach (var pagina in listaConsultoria)
+            foreach (var pagina in listaDenver)
             {
                 Html += "<tr>";
                 Html += "<td> " + pagina.Nome + "</td>\n";

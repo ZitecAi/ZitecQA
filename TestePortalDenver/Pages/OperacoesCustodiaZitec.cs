@@ -1,20 +1,9 @@
 ﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Threading.Tasks;
-//using System.Windows.Controls;
-using TestePortalDenver.Utils;
 using System.Configuration;
-using System.Linq.Expressions;
-using System.Threading;
-using System.Net.Http;
-using Newtonsoft.Json;
 using static TestePortalDenver.Model.Usuario;
 using TestePortalDenver.Repository.Operacoes;
 using TestePortalDenver.Model;
+using TestePortalDenver.Utils;
 
 namespace TestePortalDenver
 {
@@ -43,6 +32,8 @@ namespace TestePortalDenver
                     pagina.BaixarExcel = "❓";
                     pagina.Acentos = await Utils.Acentos.ValidarAcentos(Page) ?? "❌";
                     if (pagina.Acentos == "❌") errosTotais++;
+                    pagina.InserirDados = "❓";
+                    pagina.Excluir = "❓";
 
                     pagina.Listagem = await Utils.Listagem.VerificarListagem(Page, seletorTabela) ?? "❌";
                     if (pagina.Listagem == "❌") errosTotais++;

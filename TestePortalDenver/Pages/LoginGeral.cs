@@ -1,21 +1,16 @@
 ﻿using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestePortalDenver.Model;
 using TestePortalDenver.Utils;
 
-namespace TestePortalDever.Pages
+namespace TestePortalDenver.Pages
 {
     public class LoginGeral
     {
-        public async static Task<Model.Pagina> Login(IPage Page, Usuario usuario)
+        public async static Task<TestePortalDenver.Model.Pagina> Login(IPage Page, Usuario usuario)
         {
 
-            var pagina = new Model.Pagina();
+            var pagina = new TestePortalDenver.Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
 
@@ -42,7 +37,7 @@ namespace TestePortalDever.Pages
                         pagina.InserirDados = "❓";
                         pagina.Excluir = "❓";
                         pagina.Reprovar = "❓";
-                        pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+                        pagina.Acentos = TestePortalDenver.Utils.Acentos.ValidarAcentos(Page).Result;
                     }
                     else
                     {

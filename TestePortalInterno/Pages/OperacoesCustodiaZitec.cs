@@ -49,53 +49,57 @@ namespace TestePortalInterno.Pages
 
                     if (nivelLogado == NivelEnum.Master)
                     {
-                        var processamentoFundo = Repositorys.OperacoesZitec.VerificaProcessamentoFundo(9991);
-
-                        if (processamentoFundo)
+                        for (int i = 0; i < 3;)
                         {
-                            operacoes.TipoOperacao2 = "Nova Operação - CNAB";
-                            await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CNAB" }).ClickAsync();
-                            await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "54638076000176" });
+                            var processamentoFundo = Repositorys.OperacoesZitec.VerificaProcessamentoFundo(9991);
 
-                            // Valida se AtualizarDataEEnviarArquivo NÃO retornou null
-                            operacoes.NovoNomeArquivo2 = await Utils.AtualizarTxt.AtualizarDataEEnviarArquivo(Page, caminhoArquivo);
-                            if (string.IsNullOrEmpty(operacoes.NovoNomeArquivo2))
+                            if (processamentoFundo)
                             {
-                                throw new NullReferenceException("AtualizarDataEEnviarArquivo retornou null ou vazio.");
+                                i = 3;
+                                operacoes.TipoOperacao2 = "Nova Operação - CNAB";
+                                await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CNAB" }).ClickAsync();
+                                await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "54638076000176" });
+
+                                // Valida se AtualizarDataEEnviarArquivo NÃO retornou null
+                                operacoes.NovoNomeArquivo2 = await Utils.AtualizarTxt.AtualizarDataEEnviarArquivo(Page, caminhoArquivo);
+                                if (string.IsNullOrEmpty(operacoes.NovoNomeArquivo2))
+                                {
+                                    throw new NullReferenceException("AtualizarDataEEnviarArquivo retornou null ou vazio.");
+                                }
+
+                                await Task.Delay(500);
+
+                                var CadastroOperacoes = await Page.GetByText("Arquivo recebido com sucesso! Aguarde a Validação").ElementHandleAsync();
+                                await Page.GetByRole(AriaRole.Button, new() { Name = "Close" }).ClickAsync();
+                                await Task.Delay(25000);
+
+                                if (CadastroOperacoes != null)
+                                {
+                                    var (existe, idOperacao) = Repositorys.OperacoesZitec.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+
+                                    await Task.Delay(600);
+
+                                    if (existe)
+                                    {
+                                        Console.WriteLine("Operação lançada.");
+                                        pagina.InserirDados = "✅";
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Não foi possível lançar operação");
+                                        pagina.InserirDados = "❌";
+                                        pagina.Excluir = "❌";
+                                        errosTotais += 2;
+                                        operacoes.ListaErros2.Add("Erro ao lançar operação");
+                                    }
+                                }
                             }
-
-                            await Task.Delay(500);
-
-                            var CadastroOperacoes = await Page.GetByText("Arquivo recebido com sucesso! Aguarde a Validação").ElementHandleAsync();
-                            await Page.GetByRole(AriaRole.Button, new() { Name = "Close" }).ClickAsync();
-                            await Task.Delay(25000);
-
-                            if (CadastroOperacoes != null)
+                            else
                             {
-                                var (existe, idOperacao) = Repositorys.OperacoesZitec.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
-
-                                await Task.Delay(600);
-
-                                if (existe)
-                                {
-                                    Console.WriteLine("Operação lançada.");
-                                    pagina.InserirDados = "✅";
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Não foi possível lançar operação");
-                                    pagina.InserirDados = "❌";
-                                    pagina.Excluir = "❌";
-                                    errosTotais += 2;
-                                    operacoes.ListaErros2.Add("Erro ao lançar operação");
-                                }
+                                Console.WriteLine("O fundo não está na data atual");
+                                errosTotais2++;
+                                operacoes.ListaErros2.Add("Não foi possível processar o fundo para a data de hoje");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("O fundo não está na data atual");
-                            errosTotais2++;
-                            operacoes.ListaErros2.Add("Não foi possível processar o fundo para a data de hoje");
                         }
                     }
                     else if (nivelLogado == NivelEnum.Consultoria)

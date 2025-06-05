@@ -137,51 +137,6 @@ namespace TestePortalInterno.Utils
             Html += "<br>";
             Html += "<hr class=\"solid\">";
 
-            //terceira tabela
-            Html += "<h2>Aprovação de operação no nível consultoria</h2>";
-            Html += "<table>";
-            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
-
-            foreach (var pagina in listaConsultoria)
-            {
-                Html += "<tr>";
-                Html += "<td> " + pagina.Nome + "</td>\n";
-                Html += "<td> " + pagina.StatusCode + "</td>\n";
-                Html += "<td> " + pagina.Acentos + "</td>\n";
-                Html += "<td> " + pagina.Listagem + "</td>\n";
-                Html += "<td> " + pagina.BaixarExcel + "</td>\n";
-                Html += "<td> " + pagina.InserirDados + "</td>\n";
-                Html += "<td> " + pagina.Excluir + "</td>\n";
-                Html += "<td> " + pagina.TotalErros + "</td>\n";
-                Html += "</tr>";
-            }
-            Html += "</table>";
-            Html += "<br>";
-            Html += "<hr class=\"solid\">";
-
-            //segunda tabela com o relatório das páginas
-            Html += "<h2>Aprovação de operação no nível gestora</h2>";
-            Html += "<table>";
-            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
-
-            foreach (var pagina in listaGestora)
-            {
-                Html += "<tr>";
-                Html += "<td> " + pagina.Nome + "</td>\n";
-                Html += "<td> " + pagina.StatusCode + "</td>\n";
-                Html += "<td> " + pagina.Acentos + "</td>\n";
-                Html += "<td> " + pagina.Listagem + "</td>\n";
-                Html += "<td> " + pagina.BaixarExcel + "</td>\n";
-                Html += "<td> " + pagina.InserirDados + "</td>\n";
-                Html += "<td> " + pagina.Excluir + "</td>\n";
-                Html += "<td> " + pagina.TotalErros + "</td>\n";
-                Html += "</tr>";
-            }
-            Html += "</table>";
-            Html += "<br>";
-            Html += "<hr class=\"solid\">";
-
-
 
             // tabela com validações especificas de operações 
 

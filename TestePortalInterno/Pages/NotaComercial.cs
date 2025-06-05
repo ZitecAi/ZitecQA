@@ -47,6 +47,7 @@ namespace TestePortalInterno.Pages
                                 errosTotais++;
                             }
                             var apagarNotaComercial2 = Repositorys.NotaComercial.ApagarNotaComercial("54638076000176", "teste nota comercial");
+                            //await Page.PauseAsync();
                             var dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
                             await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
                             await Task.Delay(200);

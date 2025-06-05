@@ -47,8 +47,10 @@ namespace TestePortalConsultoria
                     pagina.Listagem = await Utils.Listagem.VerificarListagem(Page, seletorTabela) ?? "❌";
                     if (pagina.Listagem == "❌") errosTotais++;
 
-                    if (nivelLogado == NivelEnum.Master)
+                   
+                    if (nivelLogado == NivelEnum.Consultoria)
                     {
+
                         var processamentoFundo = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaProcessamentoFundo(9991);
 
                         if (processamentoFundo)
@@ -97,9 +99,7 @@ namespace TestePortalConsultoria
                             errosTotais2++;
                             operacoes.ListaErros2.Add("Não foi possível processar o fundo para a data de hoje");
                         }
-                    }
-                    else if (nivelLogado == NivelEnum.Consultoria)
-                    {
+
                         await Page.ReloadAsync();
 
                         if (string.IsNullOrEmpty(operacoes.NovoNomeArquivo2))

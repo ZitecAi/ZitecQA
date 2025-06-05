@@ -115,50 +115,7 @@ namespace TestePortalGestora.Utils
            "<h4>Olá, prezados. Segue o relatório com os status code das páginas e com as verificações solicitadas:</h4>" +
            "<h4>Total de Páginas Verificadas: " + totalPaginas + "</h4>";
 
-            //primeira tabela com o relatório das páginas
-            Html += "<h2>Relatório com o usuário: Interno</h2>";
-            Html += "<table>";
-            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
-
-            foreach (var pagina in listaMaster)
-            {
-                Html += "<tr>";
-                Html += "<td> " + pagina.Nome + "</td>\n";
-                Html += "<td> " + pagina.StatusCode + "</td>\n";
-                Html += "<td> " + pagina.Acentos + "</td>\n";
-                Html += "<td> " + pagina.Listagem + "</td>\n";
-                Html += "<td> " + pagina.BaixarExcel + "</td>\n";
-                Html += "<td> " + pagina.InserirDados + "</td>\n";
-                Html += "<td> " + pagina.Excluir + "</td>\n";
-                Html += "<td> " + pagina.TotalErros + "</td>\n";
-                Html += "</tr>";
-            }
-            Html += "</table>";
-            Html += "<br>";
-            Html += "<hr class=\"solid\">";
-
-            //terceira tabela
-            Html += "<h2>Aprovação de operação no nível consultoria</h2>";
-            Html += "<table>";
-            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
-
-            foreach (var pagina in listaConsultoria)
-            {
-                Html += "<tr>";
-                Html += "<td> " + pagina.Nome + "</td>\n";
-                Html += "<td> " + pagina.StatusCode + "</td>\n";
-                Html += "<td> " + pagina.Acentos + "</td>\n";
-                Html += "<td> " + pagina.Listagem + "</td>\n";
-                Html += "<td> " + pagina.BaixarExcel + "</td>\n";
-                Html += "<td> " + pagina.InserirDados + "</td>\n";
-                Html += "<td> " + pagina.Excluir + "</td>\n";
-                Html += "<td> " + pagina.TotalErros + "</td>\n";
-                Html += "</tr>";
-            }
-            Html += "</table>";
-            Html += "<br>";
-            Html += "<hr class=\"solid\">";
-
+        
             //segunda tabela com o relatório das páginas
             Html += "<h2>Aprovação de operação no nível gestora</h2>";
             Html += "<table>";
@@ -182,41 +139,6 @@ namespace TestePortalGestora.Utils
             Html += "<hr class=\"solid\">";
 
 
-
-            // tabela com validações especificas de operações 
-
-            Html += "<h2>Fluxo de cadastro de Operações</h2>";
-            Html += "<table border='1'>";
-            Html += "<tr><th>Arquivo</th><th>Tipo Operação</th><th>Aprovações realizadas</th><th>Todos os status trocados</th><th>Total de erros</th><th>Lista de erros</th></tr>";
-
-            foreach (var item in operacoes)
-            {
-                // Linha para os dados com sufixo 2
-                Html += "<tr>";
-                Html += "<td>" + item.NovoNomeArquivo2 + "</td>\n";
-                Html += "<td>" + item.TipoOperacao2 + "</td>\n";
-                Html += "<td>" + item.AprovacoesRealizadas2 + "</td>\n";
-                Html += "<td>" + item.StatusTrocados2 + "</td>\n";
-                Html += "<td>" + item.totalErros2 + "</td>\n";
-                Html += "<td>" + string.Join(", ", item.ListaErros2) + "</td>\n";
-                Html += "</tr>";
-
-                // Linha para os dados com sufixo 3
-                Html += "<tr>";
-                Html += "<td>" + item.NovoNomeArquivo3 + "</td>\n";
-                Html += "<td>" + item.TipoOperacao3 + "</td>\n";
-                Html += "<td>" + item.AprovacoesRealizadas3 + "</td>\n";
-                Html += "<td>" + item.StatusTrocados3 + "</td>\n";
-                Html += "<td>" + item.totalErros3 + "</td>\n";
-                Html += "<td>" + string.Join(", ", item.ListaErros3) + "</td>\n";
-                Html += "</tr>";
-            }
-
-            Html += "</table>";
-            Html += "<br>";
-            Html += "<hr class=\"solid\">";
-
-
             // tabela com validações especificas de conciliacao 
 
             Html += "<h2>Fluxo de Conciliação</h2>";
@@ -230,59 +152,6 @@ namespace TestePortalGestora.Utils
             Html += "<td> " + conciliacao.TotalErros + "</td>\n";
             Html += "<td> " + string.Join(", ", conciliacao.ListaErros) + "</td>\n";
             Html += "</tr>";
-
-            Html += "</table>";
-            Html += "<br>";
-            Html += "<hr class=\"solid\">";
-
-            //tabela com fluxos de cadastros
-
-            Html += "<h2>Tabela com o resultado dos fluxos de cadastro.</h2>";
-            Html += "<table>";
-            Html += "<tr><th>Fluxo</th><th>Formulario</th><th>Status em análise</th><th>Formulario completo</th><th>Doc Assinado</th><th>Email recebido</th><th>Status Aprovado</th><th>Total erros</th><th>Lista de erros</th></tr>";
-
-            foreach (var fluxoDeCadastros in listaFluxos)
-            {
-                Html += "<tr>";
-                Html += "<td> " + fluxoDeCadastros.Fluxo + "</td>\n";
-                Html += "<td> " + fluxoDeCadastros.Formulario + "</td>\n";
-                Html += "<td> " + fluxoDeCadastros.StatusEmAnalise + "</td>\n";
-                Html += "<td> " + fluxoDeCadastros.FormularioCompletoNoPortal + "</td>\n";
-                Html += "<td> " + fluxoDeCadastros.DocumentoAssinado + "</td>\n";
-                Html += "<td> " + fluxoDeCadastros.EmailRecebido + "</td>\n";
-                Html += "<td> " + fluxoDeCadastros.statusAprovado + "</td>\n";
-                Html += "<td> " + fluxoDeCadastros.TotalErros + "</td>\n";
-                Html += "<td> " + string.Join(", ", fluxoDeCadastros.ListaErros) + "</td>\n";
-                Html += "</tr>";
-            }
-            Html += "</table>";
-            Html += "<br>";
-            Html += "<hr class=\"solid\">";
-
-            //tabela com os erros 
-
-            Html += "<h2>Resumo de Páginas com Erros (Perfil: Master)</h2>";
-            Html += "<table>";
-            Html += "<tr><th>Nome da Página</th><th>Erro</th></tr>";
-
-            foreach (var pagina in listaErros.Where(p => p.Perfil == "Master"))
-            {
-                var erros = new List<string>();
-
-                // Adiciona erros específicos
-                if (pagina.Listagem == "❌") erros.Add("Listagem");
-                if (pagina.Acentos == "❌") erros.Add("Acentos");
-                if (pagina.BaixarExcel == "❌") erros.Add("BaixarExcel");
-                if (pagina.InserirDados == "❌") erros.Add("InserirDados");
-                if (pagina.Excluir == "❌") erros.Add("Excluir");
-                //if (pagina.TotalErros > 0) erros.Add("Total de Erros: " + pagina.TotalErros);
-
-                // Adiciona à tabela
-                Html += "<tr>";
-                Html += "<td> " + pagina.Nome + "</td>\n";
-                Html += "<td>" + string.Join(", ", erros) + "</td>\n"; // Lista de erros
-                Html += "</tr>";
-            }
 
             Html += "</table>";
             Html += "<br>";

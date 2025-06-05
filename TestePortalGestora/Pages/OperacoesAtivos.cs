@@ -201,11 +201,7 @@ namespace TestePortalGestora.Pages
                                 errosTotais++;
 
                             }
-
-
                         }
-
-
                         else
                         {
                             Console.WriteLine("Não foi possível inserir ativo");

@@ -87,7 +87,8 @@ namespace TestePortalDenver
                         listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
-                        listaPagina.Add(await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel));
+                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
+                        listaPagina.Add(pagina);
                         listaPagina.Add(await OperacoesConciliacao.Conciliacao(Page));
                         listaPagina.Add(await RelatorioCadastro.Cadastro(Page));
                         listaPagina.Add(await RelatorioFundos.Fundos(Page));
@@ -137,7 +138,7 @@ namespace TestePortalDenver
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
                     "todos@zitec.ai",
-                    "Relatório das páginas do portal em produção teste.",
+                    "Relatório das páginas do portal com o nível denver",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
                   //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
                   //"C:\\Temp\\Paginas.txt"

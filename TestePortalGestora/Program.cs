@@ -99,6 +99,8 @@ namespace TestePortalGestora
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        (pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
+                        listaFluxos.Add(fluxoDeCadastros);
                         listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
@@ -159,7 +161,7 @@ namespace TestePortalGestora
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
                     "todos@zitec.ai",
-                    "Relatório das páginas do portal em produção teste.",
+                    "Relatório das páginas do portal no nível gestora.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
                   //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
                   //"C:\\Temp\\Paginas.txt"
