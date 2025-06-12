@@ -1,18 +1,15 @@
 ﻿using Microsoft.Playwright;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 using TestePortal.Model;
 
 namespace TestePortal.Pages
 {
     public class AdministrativoGrupos
     {
-
-        public static async Task<Model.Pagina> Grupos(IPage Page)
+        public static async Task<Model.Pagina> Grupos(IPage page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -20,7 +17,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var PaginaAdministrativoGrupos = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Permissoes/GrupoPermissoes.aspx");
+                var portalLink = config["Links:Portal"];
+                var PaginaAdministrativoGrupos = await page.GotoAsync(portalLink + "/Permissoes/GrupoPermissoes.aspx");
 
                 if (PaginaAdministrativoGrupos.Status == 200)
                 {
@@ -34,15 +32,13 @@ namespace TestePortal.Pages
                     pagina.InserirDados = "❓";
                     pagina.Excluir = "❓";
                     pagina.Reprovar = "❓";
-                    pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+                    pagina.Acentos = Utils.Acentos.ValidarAcentos(page).Result;
 
                     if (pagina.Acentos == "❌")
                     {
                         errosTotais++;
                     }
-
                 }
-
                 else
                 {
                     Console.Write("Erro ao carregar a página de Grupos no tópico Administrativo ");
@@ -50,7 +46,7 @@ namespace TestePortal.Pages
                     pagina.Nome = "Administrativo Grupos";
                     pagina.StatusCode = PaginaAdministrativoGrupos.Status;
                     errosTotais++;
-                    await Page.GotoAsync("https://portal.idsf.com.br/Home.aspx");
+                    await page.GotoAsync(portalLink + "/Home.aspx");
                 }
             }
             catch (TimeoutException ex)
@@ -58,8 +54,6 @@ namespace TestePortal.Pages
                 Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
                 Console.WriteLine($"Exceção: {ex.Message}");
                 errosTotais++;
-                return pagina;
-
             }
 
             pagina.TotalErros = errosTotais;

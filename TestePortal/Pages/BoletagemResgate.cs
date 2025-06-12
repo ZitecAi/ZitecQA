@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,14 +14,15 @@ namespace TestePortal.Pages
 {
     public class BoletagemResgate
     {
-        public static async Task<Model.Pagina> Resgate (IPage Page, NivelEnum nivelLogado)
+        public static async Task<Model.Pagina> Resgate (IPage Page, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var BoletagemResgate = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Boleta/Resgate.aspx");
+                var portalLink = config["Links:Portal"];
+                var BoletagemResgate = await Page.GotoAsync(portalLink + "/Boleta/Resgate.aspx");
 
                 if (BoletagemResgate.Status == 200)
                 {
@@ -73,7 +75,7 @@ namespace TestePortal.Pages
                         await Page.Locator("#ContaCorrente").FillAsync("46091");
                         await Page.Locator("#DigitoConta").ClickAsync();
                         await Page.Locator("#DigitoConta").FillAsync("5");
-                        await Page.Locator("#fileResgate").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "documentosteste.zip" });
+                        await Page.Locator("#fileResgate").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "documentosteste.zip" });
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("obs");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();

@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,7 +14,7 @@ namespace TestePortal.Pages
     public class BancoIdReembolso
     {
 
-        public static async Task<Model.Pagina> Reembolso(IPage Page, NivelEnum nivelLogado)
+        public static async Task<Model.Pagina> Reembolso(IPage Page, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -21,8 +22,8 @@ namespace TestePortal.Pages
 
             try
             {
-
-                var BancoIdDevolucao = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/BancoID/Reembolso.aspx");
+                var portalLink = config["Links:Portal"];
+                var BancoIdDevolucao = await Page.GotoAsync(portalLink + "/BancoID/Reembolso.aspx");
 
                 if (BancoIdDevolucao.Status == 200)
                 {

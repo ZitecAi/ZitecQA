@@ -1,20 +1,11 @@
-﻿using Microsoft.Playwright;
-using Newtonsoft.Json.Linq;
-using Segment.Model;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using TestePortal.Model;
 using TestePortal.Repository.Correntistas;
-using TestePortal.Repository.Investidores;
-using static TestePortal.Model.Usuario;
 using TestePortal.Utils;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Drawing;
+using static TestePortal.Model.Usuario;
 
 
 namespace TestePortal.Pages
@@ -23,7 +14,7 @@ namespace TestePortal.Pages
 
     {
         #region Cadastro Correntista PJ - Movimentação
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaMov(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaMov(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -35,7 +26,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var PaginaBancoIdCorrentista = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Correntistas.aspx");
+                var portalLink = config["Links:Portal"];
+                var PaginaBancoIdCorrentista = await Page.GotoAsync(portalLink + "/Correntistas.aspx");
 
                 if (PaginaBancoIdCorrentista.Status == 200)
                 {
@@ -86,7 +78,8 @@ namespace TestePortal.Pages
 
                             var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                             var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                            string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTA"];
+
+                            var baseUrl = config["Links:FichaCorrentista"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);
@@ -127,15 +120,15 @@ namespace TestePortal.Pages
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).FillAsync("(11) 7548-75944");
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
-                            await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                             await newPage.Locator("input[name=\"assinaRepresentantes\"]").CheckAsync();
                             await Task.Delay(300);
@@ -467,7 +460,7 @@ namespace TestePortal.Pages
                                     await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
                                     await Task.Delay(10000);
                                     //verificar se enviou e-mail
-                                    var emailChecker = new TestePortal.Utils.EmailChecker();
+                                    var emailChecker = new Utils.EmailChecker();
                                     bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                                     if (emailChegou)
@@ -620,7 +613,7 @@ namespace TestePortal.Pages
         #endregion
 
         #region Cadastro de Correntista com conta escrow 
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaEscrow(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaEscrow(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -634,7 +627,8 @@ namespace TestePortal.Pages
                 if (nivelLogado == NivelEnum.Master)
                 {
                     var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
-                    var PaginaBancoIdCorrentista = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Correntistas.aspx");
+                    var portalLink = config["Links:Portal"];
+                    var PaginaBancoIdCorrentista = await Page.GotoAsync(portalLink + "/Correntistas.aspx");
                     fluxoDeCadastros.Fluxo = "Correntista - Escrow";
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                     await Page.Locator("#cpfcnpj").ClickAsync();
@@ -654,7 +648,7 @@ namespace TestePortal.Pages
 
                     var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                     var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                    string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTAESCROW"];
+                    string baseUrl = config["FichaCorrentista"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
                     await newPage.GotoAsync(copiedUrl);
@@ -890,7 +884,7 @@ namespace TestePortal.Pages
                             await Task.Delay(10000);
 
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)
@@ -1022,7 +1016,7 @@ namespace TestePortal.Pages
         #endregion
 
         #region Cadastro de correntista com conta cobrança
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaCobranca(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaCobranca(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
         {
 
             var pagina = new Model.Pagina();
@@ -1035,7 +1029,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var PaginaBancoIdCorrentista = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Correntistas.aspx");
+                var portalLink = config["Links:Portal"];
+                var PaginaBancoIdCorrentista = await Page.GotoAsync(portalLink + "/Correntistas.aspx");
                 fluxoDeCadastros.Fluxo = "Correntista - Cobrança";
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
                 await Page.Locator("#cpfcnpj").ClickAsync();
@@ -1055,7 +1050,7 @@ namespace TestePortal.Pages
 
                 var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                 var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTA"];
+                string baseUrl = config["FichaCorrentista"];
                 string copiedUrl = $"{baseUrl}{token}";
                 var newPage = await context.NewPageAsync();
                 await newPage.GotoAsync(copiedUrl);
@@ -1098,15 +1093,15 @@ namespace TestePortal.Pages
                 await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).FillAsync("(11) 9547-86244");
                 await newPage.Locator("#EmailUsuarioMaster").ClickAsync();
                 await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
-                await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                 await Task.Delay(200);
-                await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                 await Task.Delay(200);
-                await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                 await Task.Delay(200);
-                await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                 await Task.Delay(200);
-                await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                 await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                 await newPage.Locator("input[name=\"assinaRepresentantes\"]").CheckAsync();
                 await newPage.Locator("#checkTermos").CheckAsync();
@@ -1439,7 +1434,7 @@ namespace TestePortal.Pages
                             await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
                             await Task.Delay(10000);
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)
@@ -1583,7 +1578,7 @@ namespace TestePortal.Pages
         #endregion
 
         #region Cadastro de correntista com conta selic
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaSelic(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaSelic(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -1595,7 +1590,8 @@ namespace TestePortal.Pages
 
             if (nivelLogado == NivelEnum.Master)
             {
-                var PaginaBancoIdCorrentista = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Correntistas.aspx");
+                var portalLink = config["Links:Portal"];
+                var PaginaBancoIdCorrentista = await Page.GotoAsync( portalLink + "/Correntistas.aspx");
                 try
                 {
                     fluxoDeCadastros.Fluxo = "Correntista - Selic";
@@ -1616,7 +1612,7 @@ namespace TestePortal.Pages
 
                     var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                     var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                    string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTAESCROW"];
+                    string baseUrl = config["Links:FichaCorrentista"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
                     await newPage.GotoAsync(copiedUrl);
@@ -1851,7 +1847,7 @@ namespace TestePortal.Pages
                             await Task.Delay(10000);
 
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)
@@ -1980,7 +1976,7 @@ namespace TestePortal.Pages
         #endregion
 
         #region Cadastro de correntista com conta Cetip 
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaCetip(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaCetip(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -1992,8 +1988,8 @@ namespace TestePortal.Pages
 
             if (nivelLogado == NivelEnum.Master)
             {
-
-                var PaginaBancoIdCorrentista = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Correntistas.aspx");
+                var portalLink = config["Links:Portal"];
+                var PaginaBancoIdCorrentista = await Page.GotoAsync(portalLink + "/Correntistas.aspx");
 
                 try
 
@@ -2018,7 +2014,7 @@ namespace TestePortal.Pages
 
                     var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                     var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                    string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CORRENTISTA"];
+                    string baseUrl = config["Links:FichaCorrentista"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
                     await newPage.GotoAsync(copiedUrl);
@@ -2059,15 +2055,15 @@ namespace TestePortal.Pages
                     await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).FillAsync("(11) 7548-75944");
                     await Task.Delay(200);
                     await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
-                    await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                    await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                     await Task.Delay(200);
-                    await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                    await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                     await Task.Delay(200);
-                    await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                    await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                     await Task.Delay(200);
-                    await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                    await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                     await Task.Delay(200);
-                    await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                    await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                     await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                     await newPage.Locator("input[name=\"assinaRepresentantes\"]").CheckAsync();
                     await Task.Delay(300);
@@ -2395,7 +2391,7 @@ namespace TestePortal.Pages
                             await Page.Locator("#btnSalvarContaCorrentista").ClickAsync();
                             await Task.Delay(10000);
                             //verificar se enviou e-mail
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Correntista - ID Banco Digital");
 
                             if (emailChegou)

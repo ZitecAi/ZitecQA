@@ -10,12 +10,14 @@ using TestePortal.Model;
 using TestePortal.Repository.Consultorias;
 using static TestePortal.Model.Usuario;
 using System.IO.Packaging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class CadastroConsultorias
     {
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> Consultorias (IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> Consultorias (IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -25,7 +27,8 @@ namespace TestePortal.Pages
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
             try
             {
-                var CadastroConsultorias = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Consultoria.aspx");
+                var portalLink = config["Links:Portal"];
+                var CadastroConsultorias = await Page.GotoAsync(portalLink + "/Consultoria.aspx");
 
                 if (CadastroConsultorias.Status == 200)
                 {
@@ -96,7 +99,7 @@ namespace TestePortal.Pages
                             await Task.Delay(400);
 
                             string token = ConsultoriasRepository.ObterToken("16695922000109", "robo@zitec.ai");
-                            string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.CONSULTORIA"];
+                            string baseUrl = config["Links:FichaCorrentista"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);
@@ -238,7 +241,7 @@ namespace TestePortal.Pages
                             await newPage.Locator("#addContaBancBtn").ClickAsync();
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
-                            await newPage.Locator("#fileQddAmbima").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#fileQddAmbima").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
                             await newPage.Locator("#btnFinalizar").ClickAsync();
                             await Task.Delay(8000);

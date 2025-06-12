@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class BoletagemControleCapital
     {
 
-        public static async Task<Model.Pagina> ControleCapital(IPage Page)
+        public static async Task<Model.Pagina> ControleCapital(IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -20,7 +21,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var controleCapital = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Boleta/ControleCapital.aspx");
+                var portalLink = config["Links:Portal"];
+                var controleCapital = await Page.GotoAsync( portalLink + "/Boleta/ControleCapital.aspx");
 
                 if (controleCapital.Status == 200)
                 {

@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class BoletagemAmortizacao
     {
-        public static async Task<Model.Pagina> Amortizacao (IPage Page)
+        public static async Task<Model.Pagina> Amortizacao (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -20,8 +21,8 @@ namespace TestePortal.Pages
 
             try
             {
-
-                var BoletagemAmortizacao = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Boleta/Amortizacao.aspx");
+                var portalLink = config["Links:Portal"];
+                var BoletagemAmortizacao = await Page.GotoAsync(portalLink + "/Boleta/Amortizacao.aspx");
 
                 if (BoletagemAmortizacao.Status == 200)
                 {

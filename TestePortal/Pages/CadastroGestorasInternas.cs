@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +16,7 @@ namespace TestePortal.Pages
 {
     public class CadastroGestorasInternas
     {
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> GestorasInternas(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> GestorasInternas(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -26,7 +27,8 @@ namespace TestePortal.Pages
             int formularioOk = 0;
             try
             {
-                var CadastroGestorasInternas = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/GestoraInterno.aspx");
+                var portalLink = config["Links:Portal"];
+                var CadastroGestorasInternas = await Page.GotoAsync(portalLink + "/GestoraInterno.aspx");
 
                 if (CadastroGestorasInternas.Status == 200)
                 {
@@ -94,7 +96,7 @@ namespace TestePortal.Pages
                             await Task.Delay(400);
 
                             string token = GestoraInternaRepository.ObterTokenGestora("16695922000109", "robo@zitec.ai");
-                            string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.GESTORA"];
+                            string baseUrl = config["FichaGestora"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);

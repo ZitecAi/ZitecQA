@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using TestePortal.Model;
 using static TestePortal.Model.Usuario;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class BancoIdContasEscrow
     {
 
-        public static async Task<Model.Pagina> ContasEscrow (IPage Page, NivelEnum nivelLogado)
+        public static async Task<Model.Pagina> ContasEscrow (IPage Page, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -22,8 +23,8 @@ namespace TestePortal.Pages
 
             try
             {
-
-                var PaginaContasEscrow = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Escrow/Escrows.aspx");
+                var portalLink = config["Links:Portal"];
+                var PaginaContasEscrow = await Page.GotoAsync( portalLink + "/Escrow/Escrows.aspx");
                 if (PaginaContasEscrow.Status == 200)
                 {
 

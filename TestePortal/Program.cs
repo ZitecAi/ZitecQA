@@ -6,6 +6,7 @@ using TestePortal;
 using TestePortal.Model;
 using TestePortal.Utils;
 using TestePortal.Pages;
+using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Windows.Controls;
 using System.Net.Http.Headers;
@@ -66,6 +67,13 @@ namespace TestePortalIDSF
             var conciliacao = new Conciliacao();
             var fluxoDeConciliacao = new Conciliacao();
 
+            var builder = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            var config = builder.Build();
+
+
             #region VerificaçãoDeStatusDasPáginas
 
             try
@@ -77,75 +85,75 @@ namespace TestePortalIDSF
 
                     if (usuario.Nivel == Usuario.NivelEnum.Master)
                     {
-                        listaPagina.Add(await AdministrativoGrupos.Grupos(Page));
-                        listaPagina.Add(await AdministrativoUsuarios.Usuarios(Page));
+                        listaPagina.Add(await AdministrativoGrupos.Grupos(Page, config));
+                        listaPagina.Add(await AdministrativoUsuarios.Usuarios(Page, config));
                         await Task.Delay(500);
-                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaMov(Page, context, usuario.Nivel);
+                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaMov(Page, context, usuario.Nivel, config);
                         listaPagina.Add(pagina);
                         listaFluxos.Add(fluxoDeCadastros);
                         await Task.Delay(500);
-                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaSelic(Page, context, usuario.Nivel);
+                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaSelic(Page, context, usuario.Nivel, config);
                         listaFluxos.Add(fluxoDeCadastros);
-                        listaPagina.Add(await CadastroCarteira.Carteira(Page));
-                        listaPagina.Add(await BancoIdReembolso.Reembolso(Page, usuario.Nivel));
-                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaCobranca(Page, context, usuario.Nivel);
+                        listaPagina.Add(await CadastroCarteira.Carteira(Page, config));
+                        listaPagina.Add(await BancoIdReembolso.Reembolso(Page, usuario.Nivel, config));
+                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaCobranca(Page, context, usuario.Nivel, config);
                         listaFluxos.Add(fluxoDeCadastros);
-                        listaPagina.Add(await BancoIdExtratos.Extratos(Page));
-                        listaPagina.Add(await BancoIdSaldos.Saldos(Page));
+                        listaPagina.Add(await BancoIdExtratos.Extratos(Page, config));
+                        listaPagina.Add(await BancoIdSaldos.Saldos(Page, config));
                         await Task.Delay(500);
-                        listaPagina.Add(await BancoIdZeragem.Zeragem(Page));
+                        listaPagina.Add(await BancoIdZeragem.Zeragem(Page, config));
                         await Task.Delay(500);
                         (pagina, fluxoDeCadastros) = await CadastroInvestidores.InvestidoresPf(Page, context, usuario.Nivel);
                         listaPagina.Add(pagina);
                         listaFluxos.Add(fluxoDeCadastros);
                         await Task.Delay(500);
-                        listaPagina.Add(await CadastroConsultoras.Consultoras(Page));
+                        listaPagina.Add(await CadastroConsultoras.Consultoras(Page, config));
                         await Task.Delay(500);
-                        (pagina, fluxoDeCadastros) = await CadastroConsultorias.Consultorias(Page, context, usuario.Nivel);
+                        (pagina, fluxoDeCadastros) = await CadastroConsultorias.Consultorias(Page, context, usuario.Nivel, config);
                         listaPagina.Add(pagina);
                         listaFluxos.Add(fluxoDeCadastros);
                         await Task.Delay(500);
-                        listaPagina.Add(await CadastroCotistas.Cotista(Page));
+                        listaPagina.Add(await CadastroCotistas.Cotista(Page, config));
                         await Task.Delay(500);
                         (pagina, fluxoDeCadastros) = await CadastroInvestidores.InvestidoresPj(Page, context, usuario.Nivel);
                         listaPagina.Add(pagina);
                         listaFluxos.Add(fluxoDeCadastros);
                         await Task.Delay(500);
-                        listaPagina.Add(await CadastroFundos.Fundos(Page, usuario.Nivel));
+                        listaPagina.Add(await CadastroFundos.Fundos(Page, usuario.Nivel, config));
                         await Task.Delay(500);
-                        listaPagina.Add(await CadastroFundosTransferencia.FundosTransf(Page, usuario.Nivel));
+                        listaPagina.Add(await CadastroFundosTransferencia.FundosTransf(Page, usuario.Nivel, config));
                         await Task.Delay(500);
                         (pagina, fluxoDeCadastros) = await CadastroInvestidores.InvestidoresFundoDeInvestimento(Page, context, usuario.Nivel);
                         listaFluxos.Add(fluxoDeCadastros);
-                        listaPagina.Add(await CadastroGestoras.Gestoras(Page));
+                        listaPagina.Add(await CadastroGestoras.Gestoras(Page, config));
                         await Task.Delay(500);
-                        (pagina, fluxoDeCadastros) = await CadastroGestorasInternas.GestorasInternas(Page, context, usuario.Nivel);
+                        (pagina, fluxoDeCadastros) = await CadastroGestorasInternas.GestorasInternas(Page, context, usuario.Nivel, config);
                         listaPagina.Add(pagina);
                         listaFluxos.Add(fluxoDeCadastros);
                         await Task.Delay(500);
                         listaPagina.Add(await CadastroPrestServico.PrestServico(Page));
                         listaPagina.Add(await CadastroOfertas.Ofertas(Page));
-                        listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel));
-                        listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel));
-                        listaPagina.Add(await BoletagemAmortizacao.Amortizacao(Page));
+                        listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel, config));
+                        listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel, config));
+                        listaPagina.Add(await BoletagemAmortizacao.Amortizacao(Page, config));
                         listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
-                        //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
                         (pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
                         listaFluxos.Add(fluxoDeCadastros);
-                        listaPagina.Add(await BoletagemControleCapital.ControleCapital(Page));
+                        listaPagina.Add(await BoletagemControleCapital.ControleCapital(Page, config));
                         listaPagina.Add(await OperacoesBaixaEmLote.BaixaLote(Page));
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         await Task.Delay(500);
-                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaCetip(Page, context, usuario.Nivel);
+                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaCetip(Page, context, usuario.Nivel, config);
                         listaFluxos.Add(fluxoDeCadastros);
-                        listaPagina.Add(await BancoIdContasEscrow.ContasEscrow(Page, usuario.Nivel));
+                        listaPagina.Add(await BancoIdContasEscrow.ContasEscrow(Page, usuario.Nivel, config));
                         await Task.Delay(600);
-                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaEscrow(Page, context, usuario.Nivel);
+                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaEscrow(Page, context, usuario.Nivel, config);
                         listaFluxos.Add(fluxoDeCadastros);
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
@@ -178,15 +186,15 @@ namespace TestePortalIDSF
                     else if (usuario.Nivel == Usuario.NivelEnum.Consultoria)
                     {
 
-                        listaPagina.Add(await BancoIdContasEscrow.ContasEscrow(Page, usuario.Nivel));
-                        listaPagina.Add(await BancoIdReembolso.Reembolso(Page, usuario.Nivel));
-                        listaPagina.Add(await BancoIdExtratos.Extratos(Page));
-                        listaPagina.Add(await BancoIdSaldos.Saldos(Page));
-                        listaPagina.Add(await BancoIdZeragem.Zeragem(Page));
-                        listaPagina.Add(await CadastroFundos.Fundos(Page, usuario.Nivel));
+                        listaPagina.Add(await BancoIdContasEscrow.ContasEscrow(Page, usuario.Nivel, config));
+                        listaPagina.Add(await BancoIdReembolso.Reembolso(Page, usuario.Nivel, config));
+                        listaPagina.Add(await BancoIdExtratos.Extratos(Page, config));
+                        listaPagina.Add(await BancoIdSaldos.Saldos(Page, config));
+                        listaPagina.Add(await BancoIdZeragem.Zeragem(Page, config));
+                        listaPagina.Add(await CadastroFundos.Fundos(Page, usuario.Nivel, config));
                         listaPagina.Add(await CadastroPrestServico.PrestServico(Page));
-                        listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel));
-                        listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel));
+                        listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel, config));
+                        listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel, config));
                         listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
@@ -215,20 +223,20 @@ namespace TestePortalIDSF
                     }
                     else if (usuario.Nivel == Usuario.NivelEnum.Gestora)
                     {
-                        listaPagina.Add(await BancoIdContasEscrow.ContasEscrow(Page, usuario.Nivel));
+                        listaPagina.Add(await BancoIdContasEscrow.ContasEscrow(Page, usuario.Nivel, config));
                         await Task.Delay(500);
-                        listaPagina.Add(await BancoIdReembolso.Reembolso(Page, usuario.Nivel));
-                        listaPagina.Add(await BancoIdExtratos.Extratos(Page));
-                        listaPagina.Add(await BancoIdSaldos.Saldos(Page));
-                        listaPagina.Add(await BancoIdZeragem.Zeragem(Page));
-                        listaPagina.Add(await CadastroCarteira.Carteira(Page));
-                        listaPagina.Add(await CadastroFundos.Fundos(Page, usuario.Nivel));
-                        listaPagina.Add(await CadastroFundosTransferencia.FundosTransf(Page, usuario.Nivel));
+                        listaPagina.Add(await BancoIdReembolso.Reembolso(Page, usuario.Nivel, config));
+                        listaPagina.Add(await BancoIdExtratos.Extratos(Page, config));
+                        listaPagina.Add(await BancoIdSaldos.Saldos(Page, config));
+                        listaPagina.Add(await BancoIdZeragem.Zeragem(Page, config));
+                        listaPagina.Add(await CadastroCarteira.Carteira(Page, config));
+                        listaPagina.Add(await CadastroFundos.Fundos(Page, usuario.Nivel, config));
+                        listaPagina.Add(await CadastroFundosTransferencia.FundosTransf(Page, usuario.Nivel, config));
                         await Task.Delay(500);
                         listaPagina.Add(await CadastroPrestServico.PrestServico(Page));
                         listaPagina.Add(await CadastroOfertas.Ofertas(Page));
-                        listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel));
-                        listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel));
+                        listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel, config));
+                        listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel, config));
                         listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
@@ -264,14 +272,14 @@ namespace TestePortalIDSF
                     }
                     else if (usuario.Nivel == Usuario.NivelEnum.Denver)
                     {
-                        listaPagina.Add(await AdministrativoGrupos.Grupos(Page));
-                        listaPagina.Add(await BancoIdExtratos.Extratos(Page));
-                        listaPagina.Add(await BancoIdSaldos.Saldos(Page));
-                        listaPagina.Add(await CadastroFundos.Fundos(Page, usuario.Nivel));
+                        listaPagina.Add(await AdministrativoGrupos.Grupos(Page, config));
+                        listaPagina.Add(await BancoIdExtratos.Extratos(Page, config));
+                        listaPagina.Add(await BancoIdSaldos.Saldos(Page, config));
+                        listaPagina.Add(await CadastroFundos.Fundos(Page, usuario.Nivel, config));
                         await Task.Delay(600);
-                        listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel));
+                        listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel, config));
                         await Task.Delay(600);
-                        listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel));
+                        listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel, config));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
