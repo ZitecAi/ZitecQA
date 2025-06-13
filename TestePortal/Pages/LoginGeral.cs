@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,7 +15,7 @@ namespace TestePortal.Pages
 
     public class LoginGeral
     {
-        public async static Task<Model.Pagina> Login(IPage Page, Usuario usuario)
+        public async static Task<Model.Pagina> Login(IPage Page, Usuario usuario, IConfiguration config)
         {
 
             var pagina = new Model.Pagina();
@@ -23,7 +24,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var PaginaLogin = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/login.aspx");
+                var portalLink = config["Links:Portal"];
+                var PaginaLogin = await Page.GotoAsync(portalLink + "/login.aspx");
                 await Page.GetByPlaceholder("E-mail").FillAsync(usuario.Email);
                 await Page.GetByPlaceholder("Senha").FillAsync(usuario.Senha);
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Entrar" }).ClickAsync();

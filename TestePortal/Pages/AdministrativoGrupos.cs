@@ -17,7 +17,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                    var portalLink = config["Links:Portal"];
                 var PaginaAdministrativoGrupos = await page.GotoAsync(portalLink + "/Permissoes/GrupoPermissoes.aspx");
 
                 if (PaginaAdministrativoGrupos.Status == 200)

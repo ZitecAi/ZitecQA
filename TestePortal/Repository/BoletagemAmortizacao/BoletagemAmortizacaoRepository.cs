@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using TestePortal.TestePortal.Model; // Importa a classe AppSettings
 
 namespace TestePortal.Repository.BoletagemAmortizacao
 {
     public class BoletagemAmortizacaoRepository
     {
+        private static readonly string connectionString = AppSettings.GetConnectionString("myConnectionString");
 
         public static bool VerificaExistenciaBoletagemAmortizacao(string nomeCotista, string cpfCotista)
         {
@@ -18,33 +15,32 @@ namespace TestePortal.Repository.BoletagemAmortizacao
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (var myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
 
-                    string query = "SELECT * FROM Amortizacao WHERE NomeCotista = @nomeCotista AND CpfCnpj = @cpfCotista";
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    string query = "SELECT 1 FROM Amortizacao WHERE NomeCotista = @nomeCotista AND CpfCnpj = @cpfCotista";
+                    using (var oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@nomeCotista", SqlDbType.NVarChar).Value = nomeCotista;
-                        oCmd.Parameters.AddWithValue("@cpfCotista", SqlDbType.NVarChar).Value = cpfCotista;
+                        oCmd.Parameters.AddWithValue("@nomeCotista", nomeCotista);
+                        oCmd.Parameters.AddWithValue("@cpfCotista", cpfCotista);
 
-                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                        using (var oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
-                            {
                                 existe = true;
-
-                            }
-
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "BoletagemAmortizacaoRepository.VerificaExistenciaBoletagemAmortizacao()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(
+                    e.Message,
+                    "BoletagemAmortizacaoRepository.VerificaExistenciaBoletagemAmortizacao()",
+                    "Automações Jessica",
+                    e.StackTrace
+                );
             }
 
             return existe;
@@ -56,30 +52,28 @@ namespace TestePortal.Repository.BoletagemAmortizacao
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (var myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
 
-                    string query = "DELETE FROM  Amortizacao WHERE NomeCotista = @nomeCotista AND CpfCnpj = @cpfCotista";
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    string query = "DELETE FROM Amortizacao WHERE NomeCotista = @nomeCotista AND CpfCnpj = @cpfCotista";
+                    using (var oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@nomeCotista", SqlDbType.NVarChar).Value = nomeCotista;
-                        oCmd.Parameters.AddWithValue("@cpfCotista", SqlDbType.NVarChar).Value = cpfCotista;
+                        oCmd.Parameters.AddWithValue("@nomeCotista", nomeCotista);
+                        oCmd.Parameters.AddWithValue("@cpfCotista", cpfCotista);
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            apagado = true;
-                        }
-
+                        apagado = oCmd.ExecuteNonQuery() > 0;
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "BoletagemAmortizacaoRepository.ApagarBoletagemAmortizacao()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(
+                    e.Message,
+                    "BoletagemAmortizacaoRepository.ApagarBoletagemAmortizacao()",
+                    "Automações Jessica",
+                    e.StackTrace
+                );
             }
 
             return apagado;

@@ -3,19 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class ControleInternoDiario
     {
-        public static async Task<Model.Pagina> Diario(IPage Page)
+        public static async Task<Model.Pagina> Diario(IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
 
             try
             {
-                var InformeDiario = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Risco/InformeDiario.aspx");
+                var portalLink = config["Links:Portal"];
+                var InformeDiario = await Page.GotoAsync(portalLink + "/Risco/InformeDiario.aspx");
 
                 if (InformeDiario.Status == 200)
                 {

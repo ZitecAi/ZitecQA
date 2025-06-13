@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace TestePortal.Repository.Lastros
 {
     public class LastrosRepository
     {
-
         public static bool VerificaExistenciaLastros(string cnpjFundo, string observacao)
         {
             var existe = false;
@@ -27,17 +22,15 @@ namespace TestePortal.Repository.Lastros
                     string query = "SELECT * FROM lastros WHERE CnpjFundo = @cnpjFundo AND Observacao = @observacao";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
-                        oCmd.Parameters.AddWithValue("@Observacao", SqlDbType.NVarChar).Value = observacao;
+                        oCmd.Parameters.Add("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
+                        oCmd.Parameters.Add("@observacao", SqlDbType.NVarChar).Value = observacao;
 
                         using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -50,7 +43,7 @@ namespace TestePortal.Repository.Lastros
             return existe;
         }
 
-        public static bool ApagarLastros (string cnpjFundo, string observacao)
+        public static bool ApagarLastros(string cnpjFundo, string observacao)
         {
             var apagado = false;
 
@@ -65,15 +58,11 @@ namespace TestePortal.Repository.Lastros
                     string query = "DELETE FROM lastros WHERE CnpjFundo = @cnpjFundo AND Observacao = @observacao";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
-                        oCmd.Parameters.AddWithValue("@Observacao", SqlDbType.NVarChar).Value = observacao;
+                        oCmd.Parameters.Add("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
+                        oCmd.Parameters.Add("@observacao", SqlDbType.NVarChar).Value = observacao;
 
                         int rowsAffected = oCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            apagado = true;
-                        }
-
+                        apagado = rowsAffected > 0;
                     }
                 }
             }
@@ -84,6 +73,5 @@ namespace TestePortal.Repository.Lastros
 
             return apagado;
         }
-
     }
 }

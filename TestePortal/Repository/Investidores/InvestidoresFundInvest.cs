@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
@@ -14,6 +13,7 @@ using System.Security.Cryptography;
 using TestePortal.Pages;
 using System.IO;
 using System.Windows.Controls;
+using TestePortal.TestePortal.Model;
 
 namespace TestePortal.Repository.Investidores
 {
@@ -25,7 +25,7 @@ namespace TestePortal.Repository.Investidores
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -42,9 +42,7 @@ namespace TestePortal.Repository.Investidores
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -63,7 +61,7 @@ namespace TestePortal.Repository.Investidores
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -80,7 +78,6 @@ namespace TestePortal.Repository.Investidores
                         {
                             apagado = true;
                         }
-
                     }
                 }
             }
@@ -98,7 +95,8 @@ namespace TestePortal.Repository.Investidores
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
+
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
@@ -129,7 +127,7 @@ namespace TestePortal.Repository.Investidores
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -158,7 +156,7 @@ namespace TestePortal.Repository.Investidores
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -186,8 +184,6 @@ namespace TestePortal.Repository.Investidores
             return emAnalise;
         }
 
-
-
         public static async Task<bool> BaixarArquivo(IPage Page, string botaoId, string nomeArquivo)
         {
             string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
@@ -196,7 +192,6 @@ namespace TestePortal.Repository.Investidores
 
             try
             {
-                // Aguarda o download após clicar no botão especificado
                 var download = await Page.RunAndWaitForDownloadAsync(async () =>
                 {
                     await Page.Locator($"#{botaoId}").ClickAsync(new LocatorClickOptions
@@ -205,20 +200,16 @@ namespace TestePortal.Repository.Investidores
                     });
                 });
 
-                // Remove o arquivo se ele já existir na pasta de download
                 if (File.Exists(filePath))
                     File.Delete(filePath);
 
-                // Salva o novo download na pasta
                 await download.SaveAsAsync(filePath);
 
-                // Verifica se o download foi concluído com sucesso
                 if (File.Exists(filePath))
                 {
                     Console.WriteLine("Arquivo foi baixado");
                     resultadoDownload = true;
 
-                    // Exclui o arquivo após verificação
                     File.Delete(filePath);
                     Console.WriteLine("Arquivo excluído");
                 }
@@ -241,6 +232,5 @@ namespace TestePortal.Repository.Investidores
 
             return resultadoDownload;
         }
-
     }
 }

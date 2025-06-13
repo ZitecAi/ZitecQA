@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,7 +11,7 @@ namespace TestePortal.Pages
 {
     public class MeusRelatorios
     {
-        public static async Task<Model.Pagina> Relatorios (IPage Page)
+        public static async Task<Model.Pagina> Relatorios (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -18,7 +19,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var MeusRelatorios = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Relatorios/MeusRelatorios.aspx");
+                var portalLink = config["Links:Portal"];
+                var MeusRelatorios = await Page.GotoAsync(portalLink + "/Relatorios/MeusRelatorios.aspx");
 
                 if (MeusRelatorios.Status == 200)
                 {

@@ -217,7 +217,7 @@ namespace TestePortal.Pages
                             await newPage.GetByRole(AriaRole.Radio, new() { Name = "Não" }).CheckAsync();
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "ADICIONAR" }).ClickAsync();
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
-                            await newPage.Locator("#fileQddAmbima").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#fileQddAmbima").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await newPage.Locator("#btnFinalizar").ClickAsync();
                             await Task.Delay(2000);
                             await newPage.CloseAsync();

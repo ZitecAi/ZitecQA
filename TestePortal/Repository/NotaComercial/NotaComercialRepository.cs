@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace TestePortal.Repository.NotaComercial
 {
@@ -26,17 +22,15 @@ namespace TestePortal.Repository.NotaComercial
                     string query = "SELECT * FROM NC_Operacoes WHERE Fundo = @fundo AND Observacoes = @observacoes";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@fundo", SqlDbType.NVarChar).Value = fundo;
-                        oCmd.Parameters.AddWithValue("@observacoes", SqlDbType.NVarChar).Value = observacoes;
+                        oCmd.Parameters.Add("@fundo", SqlDbType.NVarChar).Value = fundo;
+                        oCmd.Parameters.Add("@observacoes", SqlDbType.NVarChar).Value = observacoes;
 
                         using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -64,15 +58,11 @@ namespace TestePortal.Repository.NotaComercial
                     string query = "DELETE FROM NC_Operacoes WHERE Fundo = @fundo AND Observacoes = @observacoes";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@fundo", SqlDbType.NVarChar).Value = fundo;
-                        oCmd.Parameters.AddWithValue("@observacoes", SqlDbType.NVarChar).Value = observacoes;
+                        oCmd.Parameters.Add("@fundo", SqlDbType.NVarChar).Value = fundo;
+                        oCmd.Parameters.Add("@observacoes", SqlDbType.NVarChar).Value = observacoes;
 
                         int rowsAffected = oCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            apagado = true;
-                        }
-
+                        apagado = rowsAffected > 0;
                     }
                 }
             }
@@ -83,7 +73,5 @@ namespace TestePortal.Repository.NotaComercial
 
             return apagado;
         }
-
-
     }
 }

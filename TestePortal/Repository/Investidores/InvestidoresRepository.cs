@@ -11,7 +11,6 @@ namespace TestePortal.Repository.Investidores
 {
     public class InvestidoresRepository
     {
-
         public static bool VerificaExistenciaInvestidores(string cpfcnpj, string email)
         {
             var existe = false;
@@ -27,17 +26,15 @@ namespace TestePortal.Repository.Investidores
                     string query = "SELECT * FROM Cotista_Interno WHERE CpfCnpj = @cpfcnpj AND Email = @email";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
-                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
+                        oCmd.Parameters.Add("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
+                        oCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
 
                         using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -65,15 +62,10 @@ namespace TestePortal.Repository.Investidores
                     string query = "DELETE FROM Cotista_Interno WHERE CpfCnpj = @cpfcnpj AND Email = @email";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
-                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
+                        oCmd.Parameters.Add("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
+                        oCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            apagado = true;
-                        }
-
+                        apagado = oCmd.ExecuteNonQuery() > 0;
                     }
                 }
             }
@@ -98,13 +90,11 @@ namespace TestePortal.Repository.Investidores
                     string query = "SELECT Id FROM Cotista_Interno WHERE CpfCnpj = @cpfcnpj AND Email = @email";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
-                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
-                        object result = oCmd.ExecuteScalar();
+                        oCmd.Parameters.Add("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
+                        oCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
+                        var result = oCmd.ExecuteScalar();
                         if (result != null)
-                        {
                             idCotista = Convert.ToInt32(result);
-                        }
                     }
                 }
             }
@@ -130,8 +120,8 @@ namespace TestePortal.Repository.Investidores
                     string query = "SELECT Token FROM Cotista_interno WHERE CpfCnpj = @cpfcnpj AND Email = @email";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
-                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
+                        oCmd.Parameters.Add("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
+                        oCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
                         var result = oCmd.ExecuteScalar();
                         token = result?.ToString();
                     }
@@ -160,14 +150,11 @@ namespace TestePortal.Repository.Investidores
                     string query = "SELECT Status_Cadastro FROM Cotista_Interno WHERE CpfCnpj = @cpfcnpj AND Email = @email";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
-                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
+                        oCmd.Parameters.Add("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
+                        oCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
 
                         var result = oCmd.ExecuteScalar();
-                        if (result != null && result.ToString() == "EM_ANALISE")
-                        {
-                            emAnalise = true;
-                        }
+                        emAnalise = result?.ToString() == "EM_ANALISE";
                     }
                 }
             }
@@ -181,7 +168,7 @@ namespace TestePortal.Repository.Investidores
 
         public static bool VerificaStatusAgdAss(string cpfcnpj, string email)
         {
-            bool statusAguardandoAssinatura = false;
+            bool aguardandoAssinatura = false;
 
             try
             {
@@ -190,39 +177,31 @@ namespace TestePortal.Repository.Investidores
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
-
                     string query = "SELECT status FROM Cotista_Interno WHERE CpfCnpj = @cpfcnpj AND Email = @email";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                      
-                        oCmd.Parameters.AddWithValue("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
-                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
+                        oCmd.Parameters.Add("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
+                        oCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
 
                         using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
-                            {
-                                if (oReader["status"].ToString() == "AGUARDANDO_ASSINATURA")
-                                {
-                                    statusAguardandoAssinatura = true;
-                                }
-                            }
+                                aguardandoAssinatura = oReader["status"].ToString() == "AGUARDANDO_ASSINATURA";
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-           
                 Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusAguardandoAssinatura()", "Automações Jessica", e.StackTrace);
             }
 
-            return statusAguardandoAssinatura;
+            return aguardandoAssinatura;
         }
 
         public static bool VerificaStatusAprovado(string cpfcnpj, string email)
         {
-            bool statusAprovado = false;
+            bool aprovado = false;
 
             try
             {
@@ -231,22 +210,16 @@ namespace TestePortal.Repository.Investidores
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
-
                     string query = "SELECT status FROM Cotista_Interno WHERE CpfCnpj = @cpfcnpj AND Email = @email";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
-                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
+                        oCmd.Parameters.Add("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
+                        oCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
 
                         using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
-                            {
-                                if (oReader["status"].ToString() == "APROVADO")
-                                {
-                                    statusAprovado = true;
-                                }
-                            }
+                                aprovado = oReader["status"].ToString() == "APROVADO";
                         }
                     }
                 }
@@ -256,12 +229,12 @@ namespace TestePortal.Repository.Investidores
                 Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusAprovado()", "Automações Jessica", e.StackTrace);
             }
 
-            return statusAprovado;
+            return aprovado;
         }
 
         public static string ObterIdDocumentoAutentique(int idCotista)
         {
-            string idDocumentoAutentique = null;
+            string idDocumento = null;
 
             try
             {
@@ -270,18 +243,14 @@ namespace TestePortal.Repository.Investidores
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
-
                     string query = "SELECT ID_DOCUMENTO_AUTENTIQUE FROM dbo.Cotista_Interno_Documentos_Enviados WHERE ID_COTISTA = @idCotista";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@idCotista", idCotista);
+                        oCmd.Parameters.Add("@idCotista", SqlDbType.Int).Value = idCotista;
 
                         var result = oCmd.ExecuteScalar();
-
                         if (result != null)
-                        {
-                            idDocumentoAutentique = result.ToString();
-                        }
+                            idDocumento = result.ToString();
                     }
                 }
             }
@@ -290,12 +259,12 @@ namespace TestePortal.Repository.Investidores
                 Utils.Slack.MandarMsgErroGrupoDev(e.Message, "CorrentistaRepository.ObterIdDocumentoAutentique", "Automações Jessica", e.StackTrace);
             }
 
-            return idDocumentoAutentique;
+            return idDocumento;
         }
 
         public static bool UpdateStatusAprovado(string cpfcnpj, string email)
         {
-            bool atualizacaoRealizada = false;
+            bool atualizou = false;
 
             try
             {
@@ -304,16 +273,14 @@ namespace TestePortal.Repository.Investidores
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
-
                     string query = "UPDATE Cotista_Interno SET status = 'APROVADO' WHERE CpfCnpj = @cpfcnpj AND Email = @email";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
-                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
+                        oCmd.Parameters.Add("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
+                        oCmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        atualizacaoRealizada = rowsAffected > 0;
+                        atualizou = oCmd.ExecuteNonQuery() > 0;
                     }
                 }
             }
@@ -322,12 +289,7 @@ namespace TestePortal.Repository.Investidores
                 Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.UpdateStatusAprovado()", "Automações Jessica", e.StackTrace);
             }
 
-            return atualizacaoRealizada;
+            return atualizou;
         }
-
-
     }
-
-
 }
-

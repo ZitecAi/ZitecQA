@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using Segment.Model;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace TestePortal.Pages
 {
     public class OperacoesAtivos
     {
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastro)> Ativos (IPage Page, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastro)> Ativos (IPage Page, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -26,8 +27,8 @@ namespace TestePortal.Pages
 
             try
             {
-
-                var OperacoesAtivos = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Operacoes/Contratos.aspx");
+                var portalLink = config["Links:Portal"];
+                var OperacoesAtivos = await Page.GotoAsync(portalLink + "/Operacoes/Contratos.aspx");
 
 
                 if (OperacoesAtivos.Status == 200)
@@ -92,7 +93,7 @@ namespace TestePortal.Pages
                        // await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
                         await Task.Delay(300);
-                        await Page.Locator("input[data-id-anexo='7']").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "21321321321.pdf" });
+                        await Page.Locator("input[data-id-anexo='7']").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "21321321321.pdf" });
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Voltar" }).ClickAsync();
                         await Task.Delay(300);

@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,14 +11,15 @@ namespace TestePortal.Pages
 {
     public class OperacoesArquivosBaixa
     {
-        public static async Task<Model.Pagina> ArquivosBaixa (IPage Page)
+        public static async Task<Model.Pagina> ArquivosBaixa (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var ArquivosBaixa = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Operacoes/ArquivoBaixa.aspx");
+                var portalLink = config["Links:Portal"];
+                var ArquivosBaixa = await Page.GotoAsync(portalLink + "/Operacoes/ArquivoBaixa.aspx");
 
                 if (ArquivosBaixa.Status == 200)
                 {

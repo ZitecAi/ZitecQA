@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using TestePortal.Utils; // Certifique-se que este é o namespace correto da sua classe de configuração
 
 namespace TestePortal.Repository.NotaPagamento
 {
     public class NotaPagamentoRepository
     {
-
-        public static bool VerificaExistenciaNotaPagamento(string cnpjFundo, string observacao) 
+        public static bool VerificaExistenciaNotaPagamento(string cnpjFundo, string observacao)
         {
             var existe = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = ConfigurationHelper.GetConnectionString("MyConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -27,17 +22,15 @@ namespace TestePortal.Repository.NotaPagamento
                     string query = "SELECT * FROM pagamentosNotas WHERE CnpjFundo = @cnpjFundo AND observacao = @observacao";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
-                        oCmd.Parameters.AddWithValue("@observacao", SqlDbType.NVarChar).Value = observacao;
+                        oCmd.Parameters.Add("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
+                        oCmd.Parameters.Add("@observacao", SqlDbType.NVarChar).Value = observacao;
 
                         using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -56,7 +49,7 @@ namespace TestePortal.Repository.NotaPagamento
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = ConfigurationHelper.GetConnectionString("MyConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -65,15 +58,11 @@ namespace TestePortal.Repository.NotaPagamento
                     string query = "DELETE FROM pagamentosNotas WHERE CnpjFundo = @cnpjFundo AND observacao = @observacao";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
-                        oCmd.Parameters.AddWithValue("@observacao", SqlDbType.NVarChar).Value = observacao;
+                        oCmd.Parameters.Add("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
+                        oCmd.Parameters.Add("@observacao", SqlDbType.NVarChar).Value = observacao;
 
                         int rowsAffected = oCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            apagado = true;
-                        }
-
+                        apagado = rowsAffected > 0;
                     }
                 }
             }

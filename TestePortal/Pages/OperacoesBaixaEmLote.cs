@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,7 +11,7 @@ namespace TestePortal.Pages
 {
     public class OperacoesBaixaEmLote
     {
-        public static async Task<Model.Pagina> BaixaLote (IPage Page)
+        public static async Task<Model.Pagina> BaixaLote (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -18,7 +19,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var OperacoesBaixaLote = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Operacoes/Contratos.aspx");
+                var portalLink = config["Links:Portal"];
+                var OperacoesBaixaLote = await Page.GotoAsync(portalLink + "/Operacoes/Contratos.aspx");
 
                 if (OperacoesBaixaLote.Status == 200)
                 {

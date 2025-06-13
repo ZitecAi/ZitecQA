@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,7 +12,7 @@ namespace TestePortal.Pages
 {
     public class OperacoesEnviarLastros
     {
-        public static async Task<Model.Pagina> EnviarLastros(IPage Page)
+        public static async Task<Model.Pagina> EnviarLastros(IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -19,7 +20,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var OperacoesEnviarLastros = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Operacoes/EnviarLastros.aspx");
+                var portalLink = config["Links:Portal"];
+                var OperacoesEnviarLastros = await Page.GotoAsync(portalLink + "/Operacoes/EnviarLastros.aspx");
 
                 if (OperacoesEnviarLastros.Status == 200)
                 {
@@ -54,7 +56,7 @@ namespace TestePortal.Pages
                         await Page.Locator("#Fundos").SelectOptionAsync(new[] { "36614123000160" });
                         await Page.Locator("#dataOperacao").FillAsync(dataAtual);
                         await Task.Delay(300);
-                        await Page.Locator("#fileEnviarLastros").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste.zip" });
+                        await Page.Locator("#fileEnviarLastros").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste.zip" });
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                         await Task.Delay(300);
@@ -105,7 +107,7 @@ namespace TestePortal.Pages
                         Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
                         Console.WriteLine($"Exceção: {ex.Message}");
                         errosTotais++;
-                        await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/login.aspx");
+                        await Page.GotoAsync(portalLink + "/login.aspx");
 
                     }
 

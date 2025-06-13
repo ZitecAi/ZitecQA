@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class CedentesCedentes
     {
-        public static async Task<Model.Pagina> CedentesPJ(IPage Page)
+        public static async Task<Model.Pagina> CedentesPJ(IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -22,7 +23,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var BoletagemCedentes = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Cedentes.aspx");
+                var portalLink = config["Links:Portal"];
+                var BoletagemCedentes = await Page.GotoAsync(portalLink + "/Cedentes.aspx");
 
                 if (BoletagemCedentes.Status == 200)
                 {
@@ -53,7 +55,7 @@ namespace TestePortal.Pages
                     var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "53300608000106");
 
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
-                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "36614123000160_53300608000106_N.zip" });
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "36614123000160_53300608000106_N.zip" });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
 
                     {
@@ -128,7 +130,7 @@ namespace TestePortal.Pages
             return pagina;
         }
 
-        public static async Task<Model.Pagina> CedentesPf(IPage Page)
+        public static async Task<Model.Pagina> CedentesPf(IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -137,7 +139,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var BoletagemCedentes = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Cedentes.aspx");
+                var portalLink = config["Links:Portal"];
+                var BoletagemCedentes = await Page.GotoAsync(portalLink + "/Cedentes.aspx");
 
                 if (BoletagemCedentes.Status == 200)
                 {
@@ -182,7 +185,7 @@ namespace TestePortal.Pages
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
 
                     // Obtém o caminho base do arquivo a partir do App.config
-                    string basePath = ConfigurationManager.AppSettings["PATH.ARQUIVO"]?.ToString();
+                    string basePath = config["Paths:Arquivo"];
                     string fileName = "36614123000160_49624866830_N.zip";
                     string filePath = Path.Combine(basePath, fileName);
                     Console.WriteLine(filePath);
@@ -196,7 +199,7 @@ namespace TestePortal.Pages
                         throw new FileNotFoundException("Arquivo não encontrado para upload", filePath);
                     }
 
-                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "36614123000160_49624866830_N.zip" });
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "36614123000160_49624866830_N.zip" });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
                     {
                         Timeout = 90000

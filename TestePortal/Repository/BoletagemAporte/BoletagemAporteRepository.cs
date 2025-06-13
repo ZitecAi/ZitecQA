@@ -1,50 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using TestePortal.TestePortal.Model; // para acessar AppSettings
 
 namespace TestePortal.Repository.BoletagemAporte
 {
     public class BoletagemAporteRepository
     {
+        private static readonly string connectionString = AppSettings.GetConnectionString("myConnectionString");
 
         public static bool VerificaExistenciaBoletagemAporte(string nomeCotista, string tipoCota)
         {
-            var existe = false;
+            bool existe = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
 
-                    string query = "SELECT * FROM Boleta WHERE NomeCotista = @nomeCotista AND TipoCota = @tipoCota";
+                    string query = "SELECT 1 FROM Boleta WHERE NomeCotista = @nomeCotista AND TipoCota = @tipoCota";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@nomeCotista", SqlDbType.NVarChar).Value = nomeCotista;
-                        oCmd.Parameters.AddWithValue("@tipoCota", SqlDbType.NVarChar).Value = tipoCota;
+                        oCmd.Parameters.AddWithValue("@nomeCotista", nomeCotista);
+                        oCmd.Parameters.AddWithValue("@tipoCota", tipoCota);
 
                         using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
-                            {
                                 existe = true;
-
-                            }
-
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "BoletagemAporteRepository.VerificaExistenciaBoletagemAporte()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(
+                    e.Message,
+                    "BoletagemAporteRepository.VerificaExistenciaBoletagemAporte()",
+                    "Automações Jessica",
+                    e.StackTrace
+                );
             }
 
             return existe;
@@ -52,40 +48,35 @@ namespace TestePortal.Repository.BoletagemAporte
 
         public static bool ApagarBoletagemAporte(string nomeCotista, string tipoCota)
         {
-            var apagado = false;
+            bool apagado = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
 
                     string query = "DELETE FROM Boleta WHERE NomeCotista = @nomeCotista AND TipoCota = @tipoCota";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@nomeCotista", SqlDbType.NVarChar).Value = nomeCotista;
-                        oCmd.Parameters.AddWithValue("@tipoCota", SqlDbType.NVarChar).Value = tipoCota;
+                        oCmd.Parameters.AddWithValue("@nomeCotista", nomeCotista);
+                        oCmd.Parameters.AddWithValue("@tipoCota", tipoCota);
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            apagado = true;
-                        }
-
+                        apagado = oCmd.ExecuteNonQuery() > 0;
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "BoletagemAporteRepository.ApagarBoletagemAporte()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(
+                    e.Message,
+                    "BoletagemAporteRepository.ApagarBoletagemAporte()",
+                    "Automações Jessica",
+                    e.StackTrace
+                );
             }
 
             return apagado;
         }
-
-
-
     }
 }

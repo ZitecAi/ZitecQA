@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,7 +12,7 @@ namespace TestePortal.Pages
 {
     public class CadastroPrestServico
     {
-        public static async Task<Model.Pagina> PrestServico (IPage Page)
+        public static async Task<Model.Pagina> PrestServico (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -19,7 +20,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var CadastroPrestServico = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/PrestServicos/Prestservicos.aspx");
+                var portalLink = config["Links:Portal"];
+                var CadastroPrestServico = await Page.GotoAsync( portalLink + "/PrestServicos/Prestservicos.aspx");
 
                 if (CadastroPrestServico.Status == 200)
                 {
@@ -84,7 +86,7 @@ namespace TestePortal.Pages
                     await Task.Delay(300);
                     await Page.GetByLabel("E-mail:", new() { Exact = true }).FillAsync("jessica.tavares@gmail.com");
                     await Task.Delay(300);
-                    await Page.Locator("#FilePrestador").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "documentosteste.zip" });
+                    await Page.Locator("#FilePrestador").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "documentosteste.zip" });
                     await Task.Delay(300);
                     await Page.GetByRole(AriaRole.Button, new() { Name = "+ Representante" }).ClickAsync();
                     await Task.Delay(300);
