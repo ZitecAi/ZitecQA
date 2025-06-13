@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using TestePortal.TestePortal.Model; // ou ajuste para o namespace correto do seu AppSettings
 
 namespace TestePortal.Repository.NotaComercial
 {
@@ -13,7 +13,7 @@ namespace TestePortal.Repository.NotaComercial
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("MyConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -49,7 +49,7 @@ namespace TestePortal.Repository.NotaComercial
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("MyConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -61,8 +61,7 @@ namespace TestePortal.Repository.NotaComercial
                         oCmd.Parameters.Add("@fundo", SqlDbType.NVarChar).Value = fundo;
                         oCmd.Parameters.Add("@observacoes", SqlDbType.NVarChar).Value = observacoes;
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        apagado = rowsAffected > 0;
+                        apagado = oCmd.ExecuteNonQuery() > 0;
                     }
                 }
             }

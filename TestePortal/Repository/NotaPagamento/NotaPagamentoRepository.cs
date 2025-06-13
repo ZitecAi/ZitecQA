@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using TestePortal.Utils; // Certifique-se que este é o namespace correto da sua classe de configuração
 
 namespace TestePortal.Repository.NotaPagamento
 {
@@ -13,7 +13,7 @@ namespace TestePortal.Repository.NotaPagamento
 
             try
             {
-                var con = ConfigurationHelper.GetConnectionString("MyConnectionString");
+                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -49,7 +49,7 @@ namespace TestePortal.Repository.NotaPagamento
 
             try
             {
-                var con = ConfigurationHelper.GetConnectionString("MyConnectionString");
+                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
