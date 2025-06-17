@@ -2,7 +2,6 @@ using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TestePortal;
 using TestePortal.Model;
 using TestePortal.Utils;
 using TestePortal.Pages;
@@ -11,6 +10,17 @@ using System.Windows.Controls;
 using System.Net.Http.Headers;
 using System.Drawing;
 using System.Linq;
+using TestePortal.Pages.AdministrativoPage;
+using TestePortal.Pages.BancoIdPage;
+using TestePortal.Pages.BoletagemPage;
+using TestePortal.Pages.CadastroPage;
+using TestePortal.Pages.CedentesPage;
+using TestePortal.Pages.ControleInternoPage;
+using TestePortal.Pages.LoginPage;
+using TestePortal.Pages.RelatoriosPage;
+using TestePortal.Pages.NotaComercialPage;
+using TestePortal.Pages.NotasPage;
+using TestePortal.Pages.OperacoesPage;
 
 namespace TestePortalIDSF
 {
@@ -72,8 +82,10 @@ namespace TestePortalIDSF
 
             {
                 foreach (var usuario in Usuarios)
+
+                    
                 {
-                    listaPagina.Add(await TestePortal.Pages.LoginGeral.Login(Page, usuario));
+                    listaPagina.Add(await TestePortal.Pages.LoginPage.LoginGeral.Login(Page, usuario));
 
                     if (usuario.Nivel == Usuario.NivelEnum.Master)
                     {
@@ -326,7 +338,7 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "todos@zitec.ai",
+                    "al@zitec.ai",
                     "Relatório das páginas do portal em produção teste.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
                     //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
