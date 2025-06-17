@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,14 +13,15 @@ namespace TestePortal.Pages
 {
     public class NotaComercial
     {
-        public static async Task<Model.Pagina> NotasComerciais(IPage Page, NivelEnum nivelLogado)
+        public static async Task<Model.Pagina> NotasComerciais(IPage Page, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var NotaComercial = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Operacoes/NotaComercial.aspx");
+                var portalLink = config["Links:Portal"];
+                var NotaComercial = await Page.GotoAsync(portalLink + "/Operacoes/NotaComercial.aspx");
 
                 if (NotaComercial.Status == 200)
                 {
@@ -134,7 +136,7 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Button, new() { Name = "   Adicionar documento" }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.Locator("#fileNotaComercial").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await Page.Locator("#fileNotaComercial").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Page.Locator("#tipoDocumento").SelectOptionAsync(new[] { "cpf" });
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Atualizar documento" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar mudanças" }).ClickAsync();
@@ -194,7 +196,7 @@ namespace TestePortal.Pages
                         pagina.InserirDados = "❌";
                         pagina.Excluir = "❌";
                         errosTotais++;
-                        await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/login.aspx");
+                        await Page.GotoAsync(portalLink + "/login.aspx");
 
                     }
                 

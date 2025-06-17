@@ -5,12 +5,13 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class BancoIdZeragem
     {
-        public static async Task<Model.Pagina> Zeragem (IPage Page)
+        public static async Task<Model.Pagina> Zeragem (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -18,8 +19,8 @@ namespace TestePortal.Pages
 
             try
             {
-
-                var BancoIdZeragem = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/BancoID/Zeragem.aspx");
+                var portalLink = config["Links:Portal"];
+                var BancoIdZeragem = await Page.GotoAsync( portalLink + "/BancoID/Zeragem.aspx");
 
                 if (BancoIdZeragem.Status == 200)
                 {

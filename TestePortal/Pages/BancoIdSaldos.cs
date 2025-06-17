@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,14 +11,15 @@ namespace TestePortal.Pages
 {
     public class BancoIdSaldos
     {
-        public static async Task<Model.Pagina> Saldos (IPage Page)
+        public static async Task<Model.Pagina> Saldos (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var BancoIdSaldos = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/BancoID/Saldos.aspx");
+                var portalLink = config["Links:Portal"];
+                var BancoIdSaldos = await Page.GotoAsync(portalLink + "/BancoID/Saldos.aspx");
 
 
                 if (BancoIdSaldos.Status == 200)

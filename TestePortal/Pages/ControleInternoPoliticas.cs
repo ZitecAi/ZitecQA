@@ -5,12 +5,13 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class ControleInternoPoliticas
     {
-        public static async Task<Model.Pagina> Politicas (IPage Page)
+        public static async Task<Model.Pagina> Politicas (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -18,7 +19,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var ControlePoliticas = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Controles%20Internos/Politicas.aspx");
+                var portalLink = config["Links:Portal"];
+                var ControlePoliticas = await Page.GotoAsync(portalLink + "/Controles%20Internos/Politicas.aspx");
 
                 if (ControlePoliticas.Status == 200)
                 {

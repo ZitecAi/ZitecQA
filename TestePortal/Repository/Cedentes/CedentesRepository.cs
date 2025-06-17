@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestePortal.TestePortal.Model; // Garante acesso ao AppSettings
 
 namespace TestePortal.Repository.Cedentes
 {
@@ -17,7 +17,7 @@ namespace TestePortal.Repository.Cedentes
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -34,9 +34,7 @@ namespace TestePortal.Repository.Cedentes
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -55,7 +53,7 @@ namespace TestePortal.Repository.Cedentes
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -72,7 +70,6 @@ namespace TestePortal.Repository.Cedentes
                         {
                             apagado = true;
                         }
-
                     }
                 }
             }
@@ -83,6 +80,5 @@ namespace TestePortal.Repository.Cedentes
 
             return apagado;
         }
-
     }
 }

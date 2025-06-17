@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestePortal.TestePortal.Model; // Import necessário para AppSettings
 
 namespace TestePortal.Repository.Consultoras
 {
     public class ConsultorasRepository
     {
-
         public static bool VerificaExistenciaConsultoras(string cnpj, string nome)
         {
             var existe = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -35,9 +34,7 @@ namespace TestePortal.Repository.Consultoras
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -56,7 +53,7 @@ namespace TestePortal.Repository.Consultoras
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -73,7 +70,6 @@ namespace TestePortal.Repository.Consultoras
                         {
                             apagado = true;
                         }
-
                     }
                 }
             }
@@ -84,8 +80,5 @@ namespace TestePortal.Repository.Consultoras
 
             return apagado;
         }
-
-
-
     }
 }

@@ -5,12 +5,13 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class RelatorioCedentes
     {
-        public static async Task<Model.Pagina> Cedentes (IPage Page)
+        public static async Task<Model.Pagina> Cedentes (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -18,7 +19,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var RelatorioCedentes = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Relatorios/Cedentes.aspx");
+                var portalLink = config["Links:Portal"];
+                var RelatorioCedentes = await Page.GotoAsync(portalLink + "/Relatorios/Cedentes.aspx");
 
                 if (RelatorioCedentes.Status == 200)
                 {

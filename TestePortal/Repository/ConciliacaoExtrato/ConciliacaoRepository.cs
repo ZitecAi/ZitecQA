@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestePortal.TestePortal.Model; // Garante acesso ao AppSettings
 
 namespace TestePortal.Repository.ConciliacaoExtrato
 {
@@ -17,20 +17,19 @@ namespace TestePortal.Repository.ConciliacaoExtrato
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
                     string query = @"
-                SELECT id 
-                FROM TB_CONCILIACAO 
-                WHERE ID_CARTEIRA = @idCarteira 
-                  AND VALOR_EM_ABERTO = @valorEmAberto 
-                  AND DESCRICAO = @descricao";
+                    SELECT id 
+                    FROM TB_CONCILIACAO 
+                    WHERE ID_CARTEIRA = @idCarteira 
+                      AND VALOR_EM_ABERTO = @valorEmAberto 
+                      AND DESCRICAO = @descricao";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        // Adiciona os parâmetros ao comando
                         oCmd.Parameters.AddWithValue("@idCarteira", SqlDbType.Int).Value = idCarteira;
                         oCmd.Parameters.AddWithValue("@valorEmAberto", SqlDbType.Decimal).Value = valorEmAberto;
                         oCmd.Parameters.AddWithValue("@descricao", SqlDbType.NVarChar).Value = descricao;
@@ -57,8 +56,7 @@ namespace TestePortal.Repository.ConciliacaoExtrato
 
             try
             {
-                
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -73,12 +71,11 @@ namespace TestePortal.Repository.ConciliacaoExtrato
                     {
                         oCmd.Parameters.AddWithValue("@idCarteira", SqlDbType.Int).Value = idCarteira;
 
-                       
                         using (SqlDataReader reader = oCmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                idsConciliacao.Add(reader.GetInt32(0)); 
+                                idsConciliacao.Add(reader.GetInt32(0));
                             }
                         }
                     }
@@ -96,7 +93,7 @@ namespace TestePortal.Repository.ConciliacaoExtrato
         {
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -105,33 +102,31 @@ namespace TestePortal.Repository.ConciliacaoExtrato
                     foreach (var id in ids)
                     {
                         string query = @"
-                SELECT STATUS 
-                FROM TB_CONCILIACAO 
-                WHERE ID = @id";
+                        SELECT STATUS 
+                        FROM TB_CONCILIACAO 
+                        WHERE ID = @id";
 
                         using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                         {
                             oCmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
 
-                            object status = oCmd.ExecuteScalar(); // Retorna o valor da coluna STATUS
+                            object status = oCmd.ExecuteScalar();
 
-                            // Verifica se o status não é "CONCILIADO"
                             if (status == null || !status.ToString().Equals("CONCILIADO", StringComparison.OrdinalIgnoreCase))
                             {
-                                return false; // Se encontrar qualquer ID não conciliado, retorna falso
+                                return false;
                             }
                         }
                     }
                 }
 
-                return true; // Se todos os IDs tiverem o status "CONCILIADO", retorna verdadeiro
+                return true;
             }
             catch (Exception e)
             {
                 Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConciliacaoRepository.VerificarIdsConciliados()", "Automações Jessica", e.StackTrace);
-                return false; // Retorna falso caso ocorra uma exceção
+                return false;
             }
         }
-
     }
 }

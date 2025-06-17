@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using TestePortal.TestePortal.Model;
 
 namespace TestePortal.Repository.GestoraInterna
 {
     public class GestoraInternaRepository
     {
-
         public static bool VerificaExistenciaGestoraInterna(string cnpj, string email)
         {
-            var existe = false;
+            bool existe = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -30,14 +25,12 @@ namespace TestePortal.Repository.GestoraInterna
                         oCmd.Parameters.AddWithValue("@cnpj", SqlDbType.NVarChar).Value = cnpj;
                         oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
 
-                        using (SqlDataReader oReader = oCmd.ExecuteReader()) 
+                        using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
                             {
-                                existe = true; 
-
+                                existe = true;
                             }
-
                         }
                     }
                 }
@@ -52,11 +45,11 @@ namespace TestePortal.Repository.GestoraInterna
 
         public static bool ApagarGestoraInterna(string cnpj, string email)
         {
-            var apagado = false;
+            bool apagado = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -73,7 +66,6 @@ namespace TestePortal.Repository.GestoraInterna
                         {
                             apagado = true;
                         }
-
                     }
                 }
             }
@@ -85,42 +77,41 @@ namespace TestePortal.Repository.GestoraInterna
             return apagado;
         }
 
-        
-            public static int? ObterIdGestora(string cnpj, string email)
+        public static int? ObterIdGestora(string cnpj, string email)
+        {
+            int? idGestora = null;
+
+            try
             {
-                int? idGestora = null;
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
-                try
+                using (SqlConnection myConnection = new SqlConnection(con))
                 {
-                    var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                    myConnection.Open();
 
-                    using (SqlConnection myConnection = new SqlConnection(con))
+                    string query = "SELECT id FROM Gestora_Interno WHERE Cnpj = @cnpj AND Email = @email";
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        myConnection.Open();
+                        oCmd.Parameters.AddWithValue("@cnpj", SqlDbType.NVarChar).Value = cnpj;
+                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
 
-                        string query = "SELECT id FROM Gestora_Interno WHERE Cnpj = @cnpj AND Email = @email";
-                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                        using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
-                            oCmd.Parameters.AddWithValue("@cnpj", SqlDbType.NVarChar).Value = cnpj;
-                            oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
-
-                            using (SqlDataReader oReader = oCmd.ExecuteReader())
+                            if (oReader.Read())
                             {
-                                if (oReader.Read())
-                                {
-                                    idGestora = Convert.ToInt32(oReader["id"]);
-                                }
+                                idGestora = Convert.ToInt32(oReader["id"]);
                             }
                         }
                     }
                 }
-                catch (Exception e)
-                {
-                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "GestoraInternaRepository.ObterIdGestoraInterna()", "Automações Jessica", e.StackTrace);
-                }
-
-                return idGestora;
             }
+            catch (Exception e)
+            {
+                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "GestoraInternaRepository.ObterIdGestoraInterna()", "Automações Jessica", e.StackTrace);
+            }
+
+            return idGestora;
+        }
 
         public static string ObterTokenGestora(string cnpj, string email)
         {
@@ -128,7 +119,7 @@ namespace TestePortal.Repository.GestoraInterna
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -160,11 +151,11 @@ namespace TestePortal.Repository.GestoraInterna
 
         public static bool VerificarStatus(string cnpj, string email)
         {
-            var emAnalise = false;
+            bool emAnalise = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -186,7 +177,7 @@ namespace TestePortal.Repository.GestoraInterna
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConsultoriasRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "GestoraInternaRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
             }
 
             return emAnalise;

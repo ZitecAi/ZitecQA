@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +16,7 @@ namespace TestePortal.Pages
     public class AdministrativoUsuarios
     {
 
-        public static async Task<Model.Pagina> Usuarios(IPage Page)
+        public static async Task<Model.Pagina> Usuarios(IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -23,7 +24,9 @@ namespace TestePortal.Pages
 
             try
             {
-                var PaginaAdministrativoUsuarios = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Usuarios.aspx");
+                var portalLink = config["Links:Portal"];
+                var PaginaAdministrativoUsuarios = await Page.GotoAsync(portalLink + "/Usuarios.aspx");
+
                 if (PaginaAdministrativoUsuarios.Status == 200)
                 {
                     // await Listagem.VerificarListagem(Page, seletorTabela); outra forma de chamar o método

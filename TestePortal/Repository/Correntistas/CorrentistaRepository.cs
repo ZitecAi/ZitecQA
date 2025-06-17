@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TestePortal.Model;
+using TestePortal.TestePortal.Model;
 
 namespace TestePortal.Repository.Correntistas
 {
     public class CorrentistaRepository
     {
-
         public static bool VerificaExistenciaCorrentista(string emailCorrentista, string CpfCnpj)
         {
             var existe = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -35,9 +31,7 @@ namespace TestePortal.Repository.Correntistas
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -56,7 +50,7 @@ namespace TestePortal.Repository.Correntistas
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -73,7 +67,6 @@ namespace TestePortal.Repository.Correntistas
                         {
                             apagado = true;
                         }
-
                     }
                 }
             }
@@ -91,7 +84,7 @@ namespace TestePortal.Repository.Correntistas
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -127,7 +120,7 @@ namespace TestePortal.Repository.Correntistas
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -143,7 +136,7 @@ namespace TestePortal.Repository.Correntistas
                         {
                             if (oReader.Read())
                             {
-                                token = oReader.GetString(0);  
+                                token = oReader.GetString(0);
                             }
                         }
                     }
@@ -157,13 +150,14 @@ namespace TestePortal.Repository.Correntistas
             return token;
         }
 
+
         public static bool VerificarStatus(string emailCorrentista, string cpfCnpj)
         {
             bool isEmAnalise = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -203,7 +197,7 @@ namespace TestePortal.Repository.Correntistas
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -242,7 +236,7 @@ namespace TestePortal.Repository.Correntistas
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -281,19 +275,16 @@ namespace TestePortal.Repository.Correntistas
 
             try
             {
-                
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
-                    
                     string query = "SELECT status FROM Correntista WHERE CPFCNPJ = @cpfcnpj AND Email = @email";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        
                         oCmd.Parameters.AddWithValue("@cpfcnpj", SqlDbType.NVarChar).Value = cpfcnpj;
                         oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
 
@@ -312,7 +303,6 @@ namespace TestePortal.Repository.Correntistas
             }
             catch (Exception e)
             {
-     
                 Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusCorrentista()", "Automações Jessica", e.StackTrace);
             }
 
@@ -325,7 +315,7 @@ namespace TestePortal.Repository.Correntistas
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -340,7 +330,7 @@ namespace TestePortal.Repository.Correntistas
                         oCmd.Parameters.AddWithValue("@idCorrentista", SqlDbType.Int).Value = idCorrentista;
 
                         int rowsAffected = oCmd.ExecuteNonQuery();
-                        contaApagada = rowsAffected > 0; 
+                        contaApagada = rowsAffected > 0;
                     }
                 }
             }
@@ -358,7 +348,7 @@ namespace TestePortal.Repository.Correntistas
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -367,13 +357,13 @@ namespace TestePortal.Repository.Correntistas
                     string query = "SELECT TOP 1 ID_DOCUMENTO_AUTENTIQUE FROM dbo.Correntista_Autentique_Enviados WHERE ID_CORRENTISTA = @idCorrentista";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@idCorrentista", idCorrentista);
+                        oCmd.Parameters.AddWithValue("@idCorrentista", SqlDbType.Int).Value = idCorrentista;
 
                         var result = oCmd.ExecuteScalar();
 
                         if (result != null)
                         {
-                            idDocumentoAutentique = result.ToString(); 
+                            idDocumentoAutentique = result.ToString();
                         }
                     }
                 }
@@ -392,7 +382,7 @@ namespace TestePortal.Repository.Correntistas
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -417,8 +407,5 @@ namespace TestePortal.Repository.Correntistas
 
             return atualizacaoRealizada;
         }
-
-
-
     }
 }

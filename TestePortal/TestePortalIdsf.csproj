@@ -71,6 +71,8 @@
     <PackageReference Include="MailKit" Version="4.8.0" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.6" />
     <PackageReference Include="Microsoft.Playwright" Version="1.45.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NuGet.Build" Version="2.12.1" />
@@ -86,5 +88,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Repository\Fundos.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

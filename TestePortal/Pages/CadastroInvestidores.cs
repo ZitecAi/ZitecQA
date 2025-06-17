@@ -14,6 +14,7 @@ using Segment.Model;
 using TestePortal.Utils;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
@@ -21,7 +22,7 @@ namespace TestePortal.Pages
     #region Cadastro investidores PF
     public class CadastroInvestidores
     {
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> InvestidoresPf(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> InvestidoresPf(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             int errosTotais = 0;
@@ -32,7 +33,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var CadastroInvestidores = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/CotistaInterno.aspx");
+                var portalLink = config["Links:Portal"];
+                var CadastroInvestidores = await Page.GotoAsync(portalLink + "/CotistaInterno.aspx");
                 if (CadastroInvestidores.Status == 200)
                 {
                     string seletorTabela = "#tabelaCotista";
@@ -98,7 +100,7 @@ namespace TestePortal.Pages
                             await Task.Delay(400);
 
                             string token = InvestidoresRepository.ObterToken("49624866830", "robo@zitec.ai");
-                            string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.COTISTA"];
+                            string baseUrl = config["Links:FichaCotista"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);
@@ -225,9 +227,9 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.Locator("#fileDocIdentificacao").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#fileDocIdentificacao").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#fileDocComprovRes").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#fileDocComprovRes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "FINALIZAR" }).ClickAsync();
                             await Task.Delay(400);
@@ -700,7 +702,7 @@ namespace TestePortal.Pages
 
                         }
 
-                        var emailChecker = new TestePortal.Utils.EmailChecker();
+                        var emailChecker = new Utils.EmailChecker();
                         bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Investidor - IDSF!");
 
                         if (emailChegou)
@@ -803,7 +805,7 @@ namespace TestePortal.Pages
         #endregion
 
         #region Cadastro Investidores PJ
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> InvestidoresPj(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> InvestidoresPj(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
         {
 
             var pagina = new Model.Pagina();
@@ -816,7 +818,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var CadastroInvestidores = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/CotistaInterno.aspx");
+                var portalLink = config["Links:Portal"];
+                var CadastroInvestidores = await Page.GotoAsync(portalLink + "/CotistaInterno.aspx");
                 if (CadastroInvestidores.Status == 200)
                 {
                     string seletorTabela = "#tabelaCotista";
@@ -874,7 +877,7 @@ namespace TestePortal.Pages
                             await Task.Delay(400);
 
                             string token = InvestidoresRepository.ObterToken("16695922000109", "robo@zitec.ai");
-                            string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.COTISTAPJ"];
+                            string baseUrl = config["Link:COTISTAPJ"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);
@@ -1039,13 +1042,13 @@ namespace TestePortal.Pages
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
                             await Task.Delay(200);
                             await Task.Delay(200);
-                            await newPage.Locator("#fileDocIdentificacao").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#fileDocIdentificacao").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#fileDocComprovRes").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#fileDocComprovRes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#fileDocIdentifCpf").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#fileDocIdentifCpf").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#fileContratoSocUltimaAlt").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#fileContratoSocUltimaAlt").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "FINALIZAR" }).ClickAsync();
                             await Task.Delay(6000);
@@ -1435,7 +1438,7 @@ namespace TestePortal.Pages
                                 fluxoDeCadastros.ListaErros.Add("Erro ao trocar status na tabela");
                             }
 
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Investidor - IDSF!");
 
                             if (emailChegou)
@@ -1675,7 +1678,7 @@ namespace TestePortal.Pages
         #region Cadastro Investidores - Fundo de investimento 
 
 
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> InvestidoresFundoDeInvestimento(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> InvestidoresFundoDeInvestimento(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
         {
 
             var pagina = new Model.Pagina();
@@ -1691,7 +1694,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var CadastroInvestidores = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/CotistaInterno.aspx");
+                var portalLink = config["Links:Portal"];
+                var CadastroInvestidores = await Page.GotoAsync(portalLink + "/CotistaInterno.aspx");
                 if (CadastroInvestidores.Status == 200)
                 {
 
@@ -1744,7 +1748,7 @@ namespace TestePortal.Pages
                         int idCotista = InvestidoresFundInvest.ObterIdCotista("24426716000113", "robo@zitec.ai");
                         await Task.Delay(400);
                         string token = InvestidoresFundInvest.ObterToken("24426716000113", "robo@zitec.ai");
-                        string baseUrl = ConfigurationManager.AppSettings["LINK.FICHA.COTISTAFUNDINVST"];
+                        string baseUrl = config["FichaCotistaFundInvst"];
                         string copiedUrl = $"{baseUrl}{token}";
                         var newPage = await context.NewPageAsync();
                         await newPage.GotoAsync(copiedUrl);
@@ -1851,7 +1855,7 @@ namespace TestePortal.Pages
                         await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(__) _____-____" }).FillAsync("(11) 87451-4511");
                         await Task.Delay(200);
                         await newPage.Locator("#modal-AddRepresentante p").Filter(new() { HasText = "Não:" }).GetByRole(AriaRole.Radio).CheckAsync();
-                        await newPage.Locator("#input_DocRepresentante_RL").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                        await newPage.Locator("#input_DocRepresentante_RL").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                         await Task.Delay(200);
                         await newPage.GetByRole(AriaRole.Button, new() { Name = "Adicionar Representante", Exact = true }).ClickAsync();
                         await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
@@ -1874,9 +1878,9 @@ namespace TestePortal.Pages
                         await Task.Delay(200);
                         await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
                         await Task.Delay(200);
-                        await newPage.Locator("#regulamentoFundo_DI").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                        await newPage.Locator("#regulamentoFundo_DI").SetInputFilesAsync(new[] { config["Paths:Arquivo"]  + "Arquivo teste 2.pdf" });
                         await Task.Delay(200);
-                        await newPage.Locator("#comprovanteEndereco_DI").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "Arquivo teste 2.pdf" });
+                        await newPage.Locator("#comprovanteEndereco_DI").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                         await newPage.Locator("#btnFinalizar").ClickAsync();
                         await Task.Delay(2000);
                         await newPage.CloseAsync();

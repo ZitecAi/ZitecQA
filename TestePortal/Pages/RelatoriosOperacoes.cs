@@ -5,19 +5,21 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class RelatoriosOperacoes
     {
-        public static async Task<Model.Pagina> Operacoes (IPage Page)
+        public static async Task<Model.Pagina> Operacoes (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var RelatorioOperacoes = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Relatorios/Operacoes.aspx");
+                var portalLink = config["Links:Portal"];
+                var RelatorioOperacoes = await Page.GotoAsync(portalLink + "/Relatorios/Operacoes.aspx");
 
                 if (RelatorioOperacoes.Status == 200)
                 {

@@ -7,19 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using static TestePortal.Model.Usuario;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class BoletagemAporte
     {
-        public static async Task<Model.Pagina> Aporte (IPage Page, NivelEnum nivelLogado)
+        public static async Task<Model.Pagina> Aporte (IPage Page, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var BoletagemAporte = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Boleta/Boleta.aspx");
+                var portalLink = config["Links:Portal"];
+                var BoletagemAporte = await Page.GotoAsync(portalLink + "/Boleta/Boleta.aspx");
 
                 if (BoletagemAporte.Status == 200)
                 {
@@ -78,7 +80,7 @@ namespace TestePortal.Pages
                         await Task.Delay(200);
                         await Page.Locator("#Fundos").SelectOptionAsync(new[] { "54638076000176" });
                         await Task.Delay(200);
-                        await Page.Locator("#fileBoleta").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "documentosteste.zip" });
+                        await Page.Locator("#fileBoleta").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "documentosteste.zip" });
                         await Task.Delay(200);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                         await Task.Delay(200);

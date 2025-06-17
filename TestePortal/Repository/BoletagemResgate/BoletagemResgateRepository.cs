@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestePortal.TestePortal.Model; 
 
 namespace TestePortal.Repository.BoletagemResgate
 {
     public class BoletagemResgateRepository
     {
-
         public static bool VerificaExistenciaBoletagemResgate(string cpfCnpjCotista, string cnpjFundo)
         {
             var existe = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -35,9 +34,7 @@ namespace TestePortal.Repository.BoletagemResgate
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -56,7 +53,7 @@ namespace TestePortal.Repository.BoletagemResgate
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -73,7 +70,6 @@ namespace TestePortal.Repository.BoletagemResgate
                         {
                             apagado = true;
                         }
-
                     }
                 }
             }
@@ -84,6 +80,5 @@ namespace TestePortal.Repository.BoletagemResgate
 
             return apagado;
         }
-
     }
 }

@@ -15,12 +15,13 @@ using Newtonsoft.Json;
 using static TestePortal.Model.Usuario;
 using TestePortal.Repository.Operacoes;
 using TestePortal.Model;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal
 {
     public class OperacoesCustodiaZitec
     {
-        public static async Task<(Model.Pagina pagina, Operacoes operacoes)> OperacoesZitec(IPage Page, NivelEnum nivelLogado, Operacoes operacoes)
+        public static async Task<(Model.Pagina pagina, Operacoes operacoes)> OperacoesZitec(IPage Page, NivelEnum nivelLogado, Operacoes operacoes, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             int errosTotais = 0;
@@ -31,7 +32,8 @@ namespace TestePortal
 
             try
             {
-                var OperacoesZitec = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Operacoes/OperacoesZitec.aspx");
+                var portalLink = config["Links:Portal"];
+                var OperacoesZitec = await Page.GotoAsync(portalLink + "/Operacoes/Operacoes2.0.aspx ");
 
                 if (OperacoesZitec?.Status == 200)
                 {
@@ -72,6 +74,7 @@ namespace TestePortal
 
                             if (CadastroOperacoes != null)
                             {
+                                //await Page.PauseAsync();
                                 var (existe, idOperacao) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
 
                                 await Task.Delay(600);

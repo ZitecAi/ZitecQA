@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using TestePortal.TestePortal.Model;
 
 namespace TestePortal.Repository.OperacoesCsv
 {
@@ -17,26 +18,27 @@ namespace TestePortal.Repository.OperacoesCsv
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = @"
-            SELECT ID_OPERACAO_RECEBIVEL 
-FROM TB_OPERACAO_RECEBIVEL 
-WHERE ID_ARQUIVO = (
-    SELECT TOP 1 ID_ARQUIVO 
-    FROM TB_ARQUIVO 
-    WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
-    ORDER BY ID_ARQUIVO DESC
-);";
+                    SELECT ID_OPERACAO_RECEBIVEL 
+                    FROM TB_OPERACAO_RECEBIVEL 
+                    WHERE ID_ARQUIVO = (
+                        SELECT TOP 1 ID_ARQUIVO 
+                        FROM TB_ARQUIVO 
+                        WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
+                        ORDER BY ID_ARQUIVO DESC
+                    );";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", nomeArquivoEntrada);
                         Console.WriteLine("Valor do parâmetro nomeArquivoEntrada: " + nomeArquivoEntrada);
+
                         using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
@@ -61,22 +63,21 @@ WHERE ID_ARQUIVO = (
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = @"
-            SELECT *
-            FROM TB_OPERACAO 
-            WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
+                    SELECT COUNT(*) 
+                    FROM TB_OPERACAO 
+                    WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.AddWithValue("@idOperacaoRecebivel", idOperacaoRecebivel);
-
-                        operacaoExiste = (int)oCmd.ExecuteScalar() > 0;
+                        operacaoExiste = Convert.ToInt32(oCmd.ExecuteScalar()) > 0;
                     }
                 }
             }
@@ -95,16 +96,16 @@ WHERE ID_ARQUIVO = (
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = @"
-            SELECT ID_RECEBIVEL 
-            FROM TB_RECEBIVEL 
-            WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
+                    SELECT ID_RECEBIVEL 
+                    FROM TB_RECEBIVEL 
+                    WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
@@ -135,24 +136,21 @@ WHERE ID_ARQUIVO = (
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = @"
-    SELECT COUNT(*) 
-    FROM TB_RECEBIVEL_COMPLEMENTO 
-    WHERE ID_RECEBIVEL = @idRecebivel"; // Usando COUNT(*) para retornar um valor numérico
+                    SELECT COUNT(*) 
+                    FROM TB_RECEBIVEL_COMPLEMENTO 
+                    WHERE ID_RECEBIVEL = @idRecebivel";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.AddWithValue("@idRecebivel", idRecebivel);
-
-                        // Convertendo o valor de ExecuteScalar para long
                         long resultado = Convert.ToInt64(oCmd.ExecuteScalar());
-
                         complementoExiste = resultado > 0;
                     }
                 }
@@ -165,22 +163,21 @@ WHERE ID_ARQUIVO = (
             return complementoExiste;
         }
 
-
         public static bool DeletarRecebivelComplemento(long idRecebivel)
         {
             bool sucesso = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = @"
-            DELETE FROM TB_RECEBIVEL_COMPLEMENTO 
-            WHERE ID_RECEBIVEL = @idRecebivel";
+                    DELETE FROM TB_RECEBIVEL_COMPLEMENTO 
+                    WHERE ID_RECEBIVEL = @idRecebivel";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
@@ -197,21 +194,23 @@ WHERE ID_ARQUIVO = (
             return sucesso;
         }
 
+
+
         public static bool DeletarRecebivelLastro(long idRecebivel)
         {
             bool sucesso = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = @"
-            DELETE FROM TB_RECEBIVEL_LASTRO 
-            WHERE ID_RECEBIVEL = @idRecebivel";
+                DELETE FROM TB_RECEBIVEL_LASTRO 
+                WHERE ID_RECEBIVEL = @idRecebivel";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
@@ -234,15 +233,15 @@ WHERE ID_ARQUIVO = (
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = @"
-            DELETE FROM TB_RECEBIVEL 
-            WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
+                DELETE FROM TB_RECEBIVEL 
+                WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
@@ -265,15 +264,15 @@ WHERE ID_ARQUIVO = (
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = @"
-            DELETE FROM TB_OPERACAO 
-            WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
+                DELETE FROM TB_OPERACAO 
+                WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
@@ -296,15 +295,15 @@ WHERE ID_ARQUIVO = (
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = @"
-            DELETE FROM TB_OPERACAO_RECEBIVEL 
-            WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
+                DELETE FROM TB_OPERACAO_RECEBIVEL 
+                WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
@@ -327,20 +326,20 @@ WHERE ID_ARQUIVO = (
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = @"
-                    SELECT ST_OPERACAO, * 
-                    FROM TB_OPERACAO_RECEBIVEL 
-                    WHERE ID_ARQUIVO = (
-                        SELECT ID_ARQUIVO 
-                        FROM TB_ARQUIVO 
-                        WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
-                    )";
+                SELECT ST_OPERACAO, * 
+                FROM TB_OPERACAO_RECEBIVEL 
+                WHERE ID_ARQUIVO = (
+                    SELECT ID_ARQUIVO 
+                    FROM TB_ARQUIVO 
+                    WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
+                )";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
@@ -363,5 +362,6 @@ WHERE ID_ARQUIVO = (
 
             return statusOperacao;
         }
+
     }
 }

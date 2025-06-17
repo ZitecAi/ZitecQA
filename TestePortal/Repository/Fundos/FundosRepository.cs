@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using TestePortal.TestePortal.Model;
 
 namespace TestePortal.Repository.Fundos
 {
@@ -13,11 +9,11 @@ namespace TestePortal.Repository.Fundos
     {
         public static bool VerificaExistenciaFundo(string cnpjFundo, string nomeFundo)
         {
-            var existe = false;
+            bool existe = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -34,9 +30,7 @@ namespace TestePortal.Repository.Fundos
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -51,11 +45,11 @@ namespace TestePortal.Repository.Fundos
 
         public static bool ApagarFundo(string cnpjFundo, string nomeFundo)
         {
-            var apagado = false;
+            bool apagado = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -72,7 +66,6 @@ namespace TestePortal.Repository.Fundos
                         {
                             apagado = true;
                         }
-
                     }
                 }
             }
@@ -83,6 +76,5 @@ namespace TestePortal.Repository.Fundos
 
             return apagado;
         }
-
     }
 }

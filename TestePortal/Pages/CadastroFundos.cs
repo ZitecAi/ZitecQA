@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using Segment.Model;
 using System;
@@ -15,14 +16,15 @@ namespace TestePortal.Pages
 {
     public class CadastroFundos
     {
-        public static async Task<Model.Pagina> Fundos(IPage Page, NivelEnum nivelLogado)
+        public static async Task<Model.Pagina> Fundos(IPage Page, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var CadastroFundos = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Fundos.aspx");
+                var portalLink = config["Links:Portal"];
+                var CadastroFundos = await Page.GotoAsync(portalLink + "/Fundos.aspx");
 
                 if (CadastroFundos.Status == 200)
                 {

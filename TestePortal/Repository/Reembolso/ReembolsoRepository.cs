@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using TestePortal.TestePortal.Model;
+using TestePortal.Utils; // ajuste se necessário
 
 namespace TestePortal.Repository.Reembolso
 {
@@ -17,7 +14,7 @@ namespace TestePortal.Repository.Reembolso
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -34,9 +31,7 @@ namespace TestePortal.Repository.Reembolso
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -55,7 +50,7 @@ namespace TestePortal.Repository.Reembolso
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -68,11 +63,7 @@ namespace TestePortal.Repository.Reembolso
                         oCmd.Parameters.AddWithValue("@titularBanco", SqlDbType.NVarChar).Value = titularBanco;
 
                         int rowsAffected = oCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            apagado = true;
-                        }
-
+                        apagado = rowsAffected > 0;
                     }
                 }
             }
@@ -83,6 +74,5 @@ namespace TestePortal.Repository.Reembolso
 
             return apagado;
         }
-
     }
 }

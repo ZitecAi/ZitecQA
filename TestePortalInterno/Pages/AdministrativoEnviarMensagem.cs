@@ -1,69 +1,75 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Playwright;
+﻿using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
-namespace TestePortal.Pages
+namespace TestePortalInterno.Pages
 {
-    public class OperacoesArquivosBaixa
+    public class AdministrativoEnviarMensagem
     {
-        public static async Task<Model.Pagina> ArquivosBaixa (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> EnvMensagem (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
+
             try
             {
-                var portalLink = config["Links:Portal"];
-                var ArquivosBaixa = await Page.GotoAsync(portalLink + "/Operacoes/ArquivoBaixa.aspx");
-
-                if (ArquivosBaixa.Status == 200)
+                var PaginaEnviarMensagem = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/EnviarMensagem.aspx");
+                if (PaginaEnviarMensagem.Status == 200)
                 {
-                    string seletorTabela = "#tabelaCedentes";
+                    // await Listagem.VerificarListagem(Page, seletorTabela); outra forma de chamar o método
 
-                    Console.Write("Arquivos de Baixa : ");
-                    pagina.Nome = "Arquivos de Baixa";
-                    pagina.StatusCode = ArquivosBaixa.Status;
+                    Console.Write("Administrativo - Enviar Mensagem: ");
+                    pagina.Nome = "Administrativo Enviar Mensagem";
+                    pagina.StatusCode = PaginaEnviarMensagem.Status;
                     pagina.BaixarExcel = "❓";
-                    pagina.InserirDados = "❓";
-                    pagina.Excluir = "❓";
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+
                     if (pagina.Acentos == "❌")
                     {
                         errosTotais++;
                     }
+
+                    string seletorTabela = "#tabelaCedentes";
                     pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
                     if (pagina.Listagem == "❌")
                     {
                         errosTotais++;
                     }
+
                 }
                 else
                 {
-                    Console.Write("Erro ao carregar a página de Arquivos de baixa no tópico Operações ");
-                    pagina.Nome = "Arquivos de Baixa";
-                    pagina.StatusCode = ArquivosBaixa.Status;
+                    Console.Write("Erro ao carregar a página de Enviar Mensagem no tópico Administrativo ");
+                    Console.WriteLine(PaginaEnviarMensagem.Status);
+                    listErros.Add($"Erro {PaginaEnviarMensagem.Status} ao carregar a página de Enviar Mensagem no tópico Administrativo ");
+                    pagina.Nome = "Administrativo Enviar Mensagem";
+                    pagina.StatusCode = PaginaEnviarMensagem.Status;
                     errosTotais++;
                     await Page.GotoAsync("https://portal.idsf.com.br/Home.aspx");
+                    pagina.TotalErros = errosTotais;
+                    return pagina;
                 }
             }
-            catch (TimeoutException ex) {
+            catch (TimeoutException ex)
+            {
                 Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
                 Console.WriteLine($"Exceção: {ex.Message}");
+
                 pagina.InserirDados = "❌";
                 pagina.Excluir = "❌";
-                errosTotais++;
+                errosTotais += 2;
                 pagina.TotalErros = errosTotais;
                 return pagina;
             }
             pagina.TotalErros = errosTotais;
             return pagina;
+        }
 
-        } 
     }
 }

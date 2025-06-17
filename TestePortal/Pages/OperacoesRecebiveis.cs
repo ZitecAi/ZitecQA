@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,16 +11,16 @@ namespace TestePortal.Pages
 {
     public class OperacoesRecebiveis
     {
-        public static async Task<Model.Pagina> Recebiveis(IPage Page)
+        public static async Task<Model.Pagina> Recebiveis(IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var OperacoesRecebiveis = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/operacoes/recebiveis.aspx");
-                var urlFinal = OperacoesRecebiveis + "/operacoes/recebiveis.aspx";
-                Console.WriteLine("URL Final: " + urlFinal);
+                var portalLink = config["Links:Portal"];
+                var OperacoesRecebiveis = await Page.GotoAsync(portalLink + "/operacoes/recebiveis.aspx");
+              
 
                 if (OperacoesRecebiveis.Status == 200)
                 {
@@ -51,7 +52,6 @@ namespace TestePortal.Pages
             {
                 Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
                 Console.WriteLine($"Exceção: {ex.Message}");
-                await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/login.aspx");
                 pagina.InserirDados = "❌";
                 pagina.Excluir = "❌";
                 errosTotais++;

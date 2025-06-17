@@ -5,12 +5,13 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class CedentesKitCedente
     {
-        public static async Task<Model.Pagina> KitCedentes(IPage Page)
+        public static async Task<Model.Pagina> KitCedentes(IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -20,7 +21,8 @@ namespace TestePortal.Pages
 
             try
             {
-                var BoletagemKitCedentes = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/KitCedente.aspx");
+                var portalLink = config["Links:Portal"];
+                var BoletagemKitCedentes = await Page.GotoAsync(portalLink + "/KitCedente.aspx");
 
                 if (BoletagemKitCedentes.Status == 200)
                 {

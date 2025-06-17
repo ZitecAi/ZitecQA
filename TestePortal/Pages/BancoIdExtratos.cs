@@ -7,19 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using TestePortal.Utils;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages
 {
     public class BancoIdExtratos
     {
-        public static async Task<Model.Pagina> Extratos (IPage Page)
+        public static async Task<Model.Pagina> Extratos (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var BancoIdExtratos = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Relatorios/BancoID.aspx");
+                var portalLink = config["Links:Portal"];
+                var BancoIdExtratos = await Page.GotoAsync(portalLink + "/Relatorios/BancoID.aspx");
 
                 if (BancoIdExtratos.Status == 200)
                 {

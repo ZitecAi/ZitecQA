@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,9 +13,10 @@ namespace TestePortal
     public class CadastroConsultoras
     {
 
-        public static async Task<Model.Pagina> Consultoras (IPage Page)
+        public static async Task<Model.Pagina> Consultoras (IPage Page, IConfiguration config)
         {
-            var CadastroConsultoras = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Consultoras.aspx");
+            var portalLink = config["Links:Portal"];
+            var CadastroConsultoras = await Page.GotoAsync(portalLink + "/Consultoras.aspx");
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;

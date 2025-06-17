@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using TestePortal.TestePortal.Model;
+using TestePortal.Utils; // Ajuste o namespace se a AppSettings estiver em outro lugar
 
 namespace TestePortal.Repository.Lastros
 {
     public class LastrosRepository
     {
-
         public static bool VerificaExistenciaLastros(string cnpjFundo, string observacao)
         {
             var existe = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("MyConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -27,36 +23,38 @@ namespace TestePortal.Repository.Lastros
                     string query = "SELECT * FROM lastros WHERE CnpjFundo = @cnpjFundo AND Observacao = @observacao";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
-                        oCmd.Parameters.AddWithValue("@Observacao", SqlDbType.NVarChar).Value = observacao;
+                        oCmd.Parameters.Add("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
+                        oCmd.Parameters.Add("@observacao", SqlDbType.NVarChar).Value = observacao;
 
                         using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "LastrosRepository.VerificaExistenciaLastros()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(
+                    e.Message,
+                    "LastrosRepository.VerificaExistenciaLastros()",
+                    "Automações Jessica",
+                    e.StackTrace);
             }
 
             return existe;
         }
 
-        public static bool ApagarLastros (string cnpjFundo, string observacao)
+        public static bool ApagarLastros(string cnpjFundo, string observacao)
         {
             var apagado = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("MyConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -65,25 +63,23 @@ namespace TestePortal.Repository.Lastros
                     string query = "DELETE FROM lastros WHERE CnpjFundo = @cnpjFundo AND Observacao = @observacao";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
-                        oCmd.Parameters.AddWithValue("@Observacao", SqlDbType.NVarChar).Value = observacao;
+                        oCmd.Parameters.Add("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
+                        oCmd.Parameters.Add("@observacao", SqlDbType.NVarChar).Value = observacao;
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            apagado = true;
-                        }
-
+                        apagado = oCmd.ExecuteNonQuery() > 0;
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "LastrosRepository.ApagarLastros()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(
+                    e.Message,
+                    "LastrosRepository.ApagarLastros()",
+                    "Automações Jessica",
+                    e.StackTrace);
             }
 
             return apagado;
         }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,7 +11,7 @@ namespace TestePortal.Pages
 {
     public class CadastroCarteira
     {
-        public static async Task<Model.Pagina> Carteira (IPage Page)
+        public static async Task<Model.Pagina> Carteira (IPage Page, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -18,8 +19,8 @@ namespace TestePortal.Pages
 
             try
             {
-
-                var CadastroCarteira = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Carteira/Carteiras.aspx");
+                var portalLink = config["Links:Portal"];
+                var CadastroCarteira = await Page.GotoAsync(portalLink + "/Carteira/Carteiras.aspx");
 
                 if (CadastroCarteira.Status == 200)
                 {

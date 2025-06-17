@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestePortal.TestePortal.Model; // Para AppSettings
 
 namespace TestePortal.Repository.Consultorias
 {
@@ -17,7 +17,7 @@ namespace TestePortal.Repository.Consultorias
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -34,9 +34,7 @@ namespace TestePortal.Repository.Consultorias
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -55,7 +53,7 @@ namespace TestePortal.Repository.Consultorias
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -72,7 +70,6 @@ namespace TestePortal.Repository.Consultorias
                         {
                             apagado = true;
                         }
-
                     }
                 }
             }
@@ -90,7 +87,7 @@ namespace TestePortal.Repository.Consultorias
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -126,7 +123,7 @@ namespace TestePortal.Repository.Consultorias
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -155,13 +152,14 @@ namespace TestePortal.Repository.Consultorias
 
             return idConsultoria;
         }
+
         public static bool VerificarStatus(string cnpj, string email)
         {
             var emAnalise = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -188,6 +186,5 @@ namespace TestePortal.Repository.Consultorias
 
             return emAnalise;
         }
-
     }
 }

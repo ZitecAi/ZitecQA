@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,7 +13,7 @@ namespace TestePortal.Pages
 {
     public class NotasPagamentos
     {
-        public static async Task<Model.Pagina> Pagamentos(IPage Page, NivelEnum nivelLogado)
+        public static async Task<Model.Pagina> Pagamentos(IPage Page, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -23,8 +24,8 @@ namespace TestePortal.Pages
 
             try
             {
-
-                var NotasPagamentos = await Page.GotoAsync(ConfigurationManager.AppSettings["LINK.PORTAL"].ToString() + "/Notas/PagamentosNotas.aspx");
+                var portalLink = config["Links:Portal"];
+                var NotasPagamentos = await Page.GotoAsync(portalLink + "/Notas/PagamentosNotas.aspx");
                 if (NotasPagamentos.Status == 200)
                 {
                     string seletorTabela = "#tabelaNotas";
@@ -70,7 +71,7 @@ namespace TestePortal.Pages
                         await Task.Delay(300);
                         await Page.Locator("#Prestadores").SelectOptionAsync(new SelectOptionValue { Label = "teste qa" });
                         await Task.Delay(300);
-                        await Page.Locator("#filePagamentosNotas").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "21321321321.pdf" });
+                        await Page.Locator("#filePagamentosNotas").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "21321321321.pdf" });
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                         await Task.Delay(300);

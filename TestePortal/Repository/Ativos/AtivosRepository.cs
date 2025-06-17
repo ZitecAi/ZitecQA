@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using TestePortal.TestePortal.Model; // usando a sua classe AppSettings
 
 namespace TestePortal.Repository.Ativos
 {
     public class AtivosRepository
     {
+        private static readonly string connectionString = AppSettings.GetConnectionString("MyConnectionString");
 
         public static bool VerificaExistenciaAtivos(string fundo, string observacoes)
         {
@@ -18,26 +15,20 @@ namespace TestePortal.Repository.Ativos
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (var myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
+                    string query = "SELECT 1 FROM contratos WHERE Fundo = @fundo AND Observacoes = @observacoes";
 
-                    string query = "SELECT * FROM contratos WHERE Fundo = @fundo AND OBservacoes = @observacoes";
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    using (var oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@fundo", SqlDbType.NVarChar).Value = fundo;
-                        oCmd.Parameters.AddWithValue("@observacoes", SqlDbType.NVarChar).Value = observacoes;
+                        oCmd.Parameters.AddWithValue("@fundo", fundo);
+                        oCmd.Parameters.AddWithValue("@observacoes", observacoes);
 
-                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                        using (var oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
-                            {
                                 existe = true;
-
-                            }
-
                         }
                     }
                 }
@@ -56,24 +47,17 @@ namespace TestePortal.Repository.Ativos
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (var myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
+                    string query = "DELETE FROM contratos WHERE Fundo = @fundo AND Observacoes = @observacoes";
 
-                    string query = "DELETE FROM contratos WHERE Fundo = @fundo AND OBservacoes = @observacoes";
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    using (var oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@fundo", SqlDbType.NVarChar).Value = fundo;
-                        oCmd.Parameters.AddWithValue("@observacoes", SqlDbType.NVarChar).Value = observacoes;
+                        oCmd.Parameters.AddWithValue("@fundo", fundo);
+                        oCmd.Parameters.AddWithValue("@observacoes", observacoes);
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            apagado = true;
-                        }
-
+                        apagado = oCmd.ExecuteNonQuery() > 0;
                     }
                 }
             }
@@ -85,43 +69,36 @@ namespace TestePortal.Repository.Ativos
             return apagado;
         }
 
-        public static bool statusAgrAss(string fundo, string observacoes)
+        public static bool StatusAgrAss(string fundo, string observacoes)
         {
-            bool statusAguardandoAssinatura = false;
+            bool aguardando = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (var myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
-
                     string query = "SELECT status FROM Contratos WHERE Fundo = @fundo AND Observacoes = @observacoes";
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                    {
-                        oCmd.Parameters.AddWithValue("@fundo", SqlDbType.NVarChar).Value = fundo;
-                        oCmd.Parameters.AddWithValue("@observacoes", SqlDbType.NVarChar).Value = observacoes;
 
-                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                    using (var oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@fundo", fundo);
+                        oCmd.Parameters.AddWithValue("@observacoes", observacoes);
+
+                        using (var oReader = oCmd.ExecuteReader())
                         {
-                            if (oReader.Read())
-                            {
-                                if (oReader["status"].ToString() == "AGUARDANDO_ASSINATURAS")
-                                {
-                                    statusAguardandoAssinatura = true;
-                                }
-                            }
+                            if (oReader.Read() && oReader["status"].ToString() == "AGUARDANDO_ASSINATURAS")
+                                aguardando = true;
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusCorrentista()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "AtivosRepository.StatusAgrAss()", "Automações Jessica", e.StackTrace);
             }
 
-            return statusAguardandoAssinatura;
+            return aguardando;
         }
 
         public static int RetornaIdAtivo(string fundo, string observacoes)
@@ -130,36 +107,27 @@ namespace TestePortal.Repository.Ativos
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (var myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
-
                     string query = "SELECT id FROM Contratos WHERE Fundo = @fundo AND Observacoes = @observacoes";
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                    {
-                        oCmd.Parameters.AddWithValue("@fundo", SqlDbType.NVarChar).Value = fundo;
-                        oCmd.Parameters.AddWithValue("@observacoes", SqlDbType.NVarChar).Value = observacoes;
 
-                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                    using (var oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@fundo", fundo);
+                        oCmd.Parameters.AddWithValue("@observacoes", observacoes);
+
+                        using (var oReader = oCmd.ExecuteReader())
                         {
                             if (oReader.Read())
-                            {
                                 idAtivo = Convert.ToInt32(oReader["id"]);
-                            }
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(
-                    e.Message,
-                    "InvestidoresRepository.RetornaIdAtivo()",
-                    "Automações Jessica",
-                    e.StackTrace
-                );
+                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "AtivosRepository.RetornaIdAtivo()", "Automações Jessica", e.StackTrace);
             }
 
             return idAtivo;
@@ -167,83 +135,63 @@ namespace TestePortal.Repository.Ativos
 
         public static string ObterDocAutentique(int idAtivo)
         {
-            string idDocumentoAutentique = null;
+            string idDocumento = null;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (var myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
-
                     string query = "SELECT TOP 1 ID_DOCUMENTO_AUTENTIQUE FROM dbo.Ativos_Autentique_Enviados WHERE ID_ATIVO = @idAtivo";
 
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    using (var oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.AddWithValue("@idAtivo", idAtivo);
 
                         var result = oCmd.ExecuteScalar();
                         if (result != null)
-                        {
-                            idDocumentoAutentique = result.ToString();
-                        }
+                            idDocumento = result.ToString();
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(
-                    e.Message,
-                    "AtivosRepository.ObterAtivosAutentique",
-                    "Automações Jessica",
-                    e.StackTrace
-                );
+                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "AtivosRepository.ObterDocAutentique", "Automações Jessica", e.StackTrace);
             }
 
-            return idDocumentoAutentique;
+            return idDocumento;
         }
 
-        public static bool statusAprovado (string fundo, string observacoes)
+        public static bool StatusAprovado(string fundo, string observacoes)
         {
-            bool statusAguardandoLiquidacao = false;
+            bool aguardandoLiquidacao = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (var myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
-
                     string query = "SELECT status FROM Contratos WHERE Fundo = @fundo AND Observacoes = @observacoes";
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                    {
-                        oCmd.Parameters.AddWithValue("@fundo", SqlDbType.NVarChar).Value = fundo;
-                        oCmd.Parameters.AddWithValue("@observacoes", SqlDbType.NVarChar).Value = observacoes;
 
-                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                    using (var oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@fundo", fundo);
+                        oCmd.Parameters.AddWithValue("@observacoes", observacoes);
+
+                        using (var oReader = oCmd.ExecuteReader())
                         {
-                            if (oReader.Read())
-                            {
-                                if (oReader["status"].ToString() == "AGUARDANDO_LIQUIDACAO")
-                                {
-                                    statusAguardandoLiquidacao = true;
-                                }
-                            }
+                            if (oReader.Read() && oReader["status"].ToString() == "AGUARDANDO_LIQUIDACAO")
+                                aguardandoLiquidacao = true;
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "InvestidoresRepository.VerificaStatusCorrentista()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "AtivosRepository.StatusAprovado()", "Automações Jessica", e.StackTrace);
             }
 
-            return statusAguardandoLiquidacao;
+            return aguardandoLiquidacao;
         }
-
-
-
     }
-
 }
