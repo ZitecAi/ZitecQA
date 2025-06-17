@@ -7,7 +7,7 @@ namespace TestePortal.Repository.Ativos
 {
     public class AtivosRepository
     {
-        private static readonly string connectionString = AppSettings.GetConnectionString("myConnectionString");
+        private static readonly string connectionString = AppSettings.GetConnectionString("MyConnectionString");
 
         public static bool VerificaExistenciaAtivos(string fundo, string observacoes)
         {

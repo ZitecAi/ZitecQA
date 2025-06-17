@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using TestePortal.Model;
-using System.Configuration;
-using static System.Net.WebRequestMethods;
+using TestePortal.TestePortal.Model;
 
 namespace TestePortal.Utils
 {
@@ -35,7 +31,8 @@ namespace TestePortal.Utils
 
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.DefaultRequestHeaders.Add("token", ConfigurationManager.AppSettings["TokenPortal"]);
+                    string tokenPortal = AppSettings.Tokens.TokenPortal;
+                    httpClient.DefaultRequestHeaders.Add("token", tokenPortal);
 
                     var response = httpClient.PostAsync(apiUrl, content).Result;
 
@@ -56,5 +53,4 @@ namespace TestePortal.Utils
             }
         }
     }
-
 }

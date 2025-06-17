@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using TestePortal.TestePortal.Model;
+using TestePortal.Utils; // ajuste se necessário
 
 namespace TestePortal.Repository.NotaPagamento
 {
@@ -9,17 +10,18 @@ namespace TestePortal.Repository.NotaPagamento
     {
         public static bool VerificaExistenciaNotaPagamento(string cnpjFundo, string observacao)
         {
-            var existe = false;
+            bool existe = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("MyConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = "SELECT * FROM pagamentosNotas WHERE CnpjFundo = @cnpjFundo AND observacao = @observacao";
+
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.Add("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
@@ -37,7 +39,11 @@ namespace TestePortal.Repository.NotaPagamento
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "NotaPagamentoRepository.VerificaExistenciaNotaPagamento()", "Automações Jessica", e.StackTrace);
+                //Utils.Slack.MandarMsgErroGrupoDev(
+                //    e.Message,
+                //    "NotaPagamentoRepository.VerificaExistenciaNotaPagamento()",
+                //    "Automações Jessica",
+                //    e.StackTrace);
             }
 
             return existe;
@@ -45,30 +51,34 @@ namespace TestePortal.Repository.NotaPagamento
 
         public static bool ApagarNotaPagamento(string cnpjFundo, string observacao)
         {
-            var apagado = false;
+            bool apagado = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("MyConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
                     myConnection.Open();
 
                     string query = "DELETE FROM pagamentosNotas WHERE CnpjFundo = @cnpjFundo AND observacao = @observacao";
+
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.Add("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
                         oCmd.Parameters.Add("@observacao", SqlDbType.NVarChar).Value = observacao;
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        apagado = rowsAffected > 0;
+                        apagado = oCmd.ExecuteNonQuery() > 0;
                     }
                 }
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "NotaPagamentosRepository.ApagarNotaPagamentos()", "Automações Jessica", e.StackTrace);
+                //Utils.Slack.MandarMsgErroGrupoDev(
+                //    e.Message,
+                //    "NotaPagamentoRepository.ApagarNotaPagamento()",
+                //    "Automações Jessica",
+                //    e.StackTrace);
             }
 
             return apagado;

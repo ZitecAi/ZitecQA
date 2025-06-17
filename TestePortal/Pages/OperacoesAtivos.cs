@@ -17,7 +17,7 @@ namespace TestePortal.Pages
 {
     public class OperacoesAtivos
     {
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastro)> Ativos (IPage Page, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastro)> Ativos(IPage Page, NivelEnum nivelLogado, IConfiguration config)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -27,6 +27,7 @@ namespace TestePortal.Pages
 
             try
             {
+
                 var portalLink = config["Links:Portal"];
                 var OperacoesAtivos = await Page.GotoAsync(portalLink + "/Operacoes/Contratos.aspx");
 
@@ -78,7 +79,7 @@ namespace TestePortal.Pages
                         await Page.Locator("#ContaAtivos").FillAsync("460915");
                         await Task.Delay(300);
                         await Page.Locator("#RazSocDestino").FillAsync("teste robo");
-                        await Task.Delay(300); 
+                        await Task.Delay(300);
                         await Page.Locator("#CpfCnpjAtivos").FillAsync("49624866830");
                         await Page.GetByLabel("Valor").ClickAsync();
                         await Task.Delay(300);
@@ -90,7 +91,7 @@ namespace TestePortal.Pages
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Anexos" }).ClickAsync();
                         await Task.Delay(300);
-                       // await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
+                        // await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("input[data-id-anexo='7']").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "21321321321.pdf" });
@@ -124,7 +125,7 @@ namespace TestePortal.Pages
 
                         for (int i = 0; i < 5; i++)
                         {
-                            statusAtual = Repository.Ativos.AtivosRepository.statusAgrAss("24426716000113", "teste robo");
+                            statusAtual = Repository.Ativos.AtivosRepository.StatusAgrAss("24426716000113", "teste robo");
 
                             if (statusAtual)
                             {
@@ -169,7 +170,7 @@ namespace TestePortal.Pages
 
                         for (int i = 0; i < 5; i++)
                         {
-                            statusAgdLiqui = Repository.Ativos.AtivosRepository.statusAprovado("24426716000113", "teste robo");
+                            statusAgdLiqui = Repository.Ativos.AtivosRepository.StatusAprovado("24426716000113", "teste robo");
 
                             if (statusAgdLiqui)
                             {
@@ -200,7 +201,7 @@ namespace TestePortal.Pages
                             {
                                 Console.WriteLine("Ativo apagado com sucesso");
                                 pagina.Excluir = "✅";
-                               
+
 
                             }
                             else
@@ -209,7 +210,7 @@ namespace TestePortal.Pages
 
                                 pagina.Excluir = "❌";
                                 errosTotais++;
-                         
+
                             }
 
 
@@ -234,7 +235,7 @@ namespace TestePortal.Pages
 
                     }
                 }
-                
+
                 else
                 {
                     Console.Write("Erro ao carregar a página de Ativos de baixa no tópico Operações ");
@@ -244,12 +245,13 @@ namespace TestePortal.Pages
                     await Page.GotoAsync("https://portal.idsf.com.br/Home.aspx");
                 }
             }
-            catch (TimeoutException ex) {
+            catch (TimeoutException ex)
+            {
                 Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
                 Console.WriteLine($"Exceção: {ex.Message}");
                 pagina.InserirDados = "❌";
                 pagina.Excluir = "❌";
-                errosTotais+=2;
+                errosTotais += 2;
                 pagina.TotalErros = errosTotais;
                 if (fluxoDeCadastros.ListaErros.Count == 0)
                 {

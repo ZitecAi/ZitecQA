@@ -33,7 +33,7 @@ namespace TestePortal
             try
             {
                 var portalLink = config["Links:Portal"];
-                var OperacoesZitec = await Page.GotoAsync(portalLink + "/Operacoes/Operacoes2.0.aspx, ");
+                var OperacoesZitec = await Page.GotoAsync(portalLink + "/Operacoes/Operacoes2.0.aspx ");
 
                 if (OperacoesZitec?.Status == 200)
                 {
@@ -74,7 +74,7 @@ namespace TestePortal
 
                             if (CadastroOperacoes != null)
                             {
-                                await Page.PauseAsync();
+                                //await Page.PauseAsync();
                                 var (existe, idOperacao) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
 
                                 await Task.Delay(600);

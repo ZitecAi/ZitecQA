@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestePortal.Utils;
 using TestePortal.Model;
+using TestePortal.TestePortal.Model;
 
 namespace TestePortal.Repository.Usuarios
 {
@@ -19,7 +15,7 @@ namespace TestePortal.Repository.Usuarios
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -36,9 +32,7 @@ namespace TestePortal.Repository.Usuarios
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -46,7 +40,7 @@ namespace TestePortal.Repository.Usuarios
             catch (Exception e)
             {
                 Utils.Slack.MandarMsgErroGrupoDev(e.Message, "UsuarioRepository.VerificaExistenciaUsuario()", "Automações Jessica", e.StackTrace);
-            }           
+            }
 
             return existe;
         }
@@ -57,7 +51,7 @@ namespace TestePortal.Repository.Usuarios
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -70,11 +64,7 @@ namespace TestePortal.Repository.Usuarios
                         oCmd.Parameters.AddWithValue("@emailUsuario", SqlDbType.NVarChar).Value = emailUsuario;
 
                         int rowsAffected = oCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            apagado = true;
-                        }
-
+                        apagado = rowsAffected > 0;
                     }
                 }
             }
@@ -85,7 +75,5 @@ namespace TestePortal.Repository.Usuarios
 
             return apagado;
         }
-
-
     }
 }

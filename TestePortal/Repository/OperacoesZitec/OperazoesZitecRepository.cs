@@ -6,65 +6,61 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using TestePortal.TestePortal.Model;
 
 
 namespace TestePortal.Repository.OperacoesZitec
 {
     public class OperacoesZitecRepository
     {
-        public static (bool existe, int idOperacao) VerificaExistenciaOperacao(string arquivoEntrada)
-        {
-            bool existe = false;
-            int idOperacao = 0; // Valor padrão quando não há um ID válido
+            private static readonly string connectionString = AppSettings.GetConnectionString("ConnectionZitec");
 
-            try
+            public static (bool existe, int idOperacao) VerificaExistenciaOperacao(string arquivoEntrada)
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
+                bool existe = false;
+                int idOperacao = 0;
 
-                using (SqlConnection myConnection = new SqlConnection(con))
+                try
                 {
-                    myConnection.Open();
-
-                    string query = "SELECT ID_ARQUIVO FROM TB_ARQUIVO WHERE NM_ARQUIVO_ENTRADA = @arquivoEntrada";
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    using (SqlConnection myConnection = new SqlConnection(connectionString))
                     {
-                        oCmd.Parameters.AddWithValue("@arquivoEntrada", SqlDbType.NVarChar).Value = arquivoEntrada;
+                        myConnection.Open();
 
-                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                        string query = "SELECT ID_ARQUIVO FROM TB_ARQUIVO WHERE NM_ARQUIVO_ENTRADA = @arquivoEntrada";
+                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                         {
-                            if (oReader.Read())
+                            oCmd.Parameters.AddWithValue("@arquivoEntrada", SqlDbType.NVarChar).Value = arquivoEntrada;
+
+                            using (SqlDataReader oReader = oCmd.ExecuteReader())
                             {
-                                existe = true;
-                                idOperacao = oReader["ID_ARQUIVO"] != DBNull.Value ? Convert.ToInt32(oReader["ID_ARQUIVO"]) : 0;
+                                if (oReader.Read())
+                                {
+                                    existe = true;
+                                    idOperacao = oReader["ID_ARQUIVO"] != DBNull.Value ? Convert.ToInt32(oReader["ID_ARQUIVO"]) : 0;
+                                }
                             }
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificaExistenciaOperacoes()", "Automações Jessica", e.StackTrace);
-            }
-
-            return (existe, idOperacao);
-        }
-
-
-
-
-        public static string VerificarStatus(string nomeArquivoEntrada)
-        {
-            string statusOperacao = string.Empty;
-
-            try
-            {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                catch (Exception e)
                 {
-                    myConnection.Open();
+                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificaExistenciaOperacoes()", "Automações Jessica", e.StackTrace);
+                }
 
-                    string query = @"
+                return (existe, idOperacao);
+            }
+
+            public static string VerificarStatus(string nomeArquivoEntrada)
+            {
+                string statusOperacao = string.Empty;
+
+                try
+                {
+                    using (SqlConnection myConnection = new SqlConnection(connectionString))
+                    {
+                        myConnection.Open();
+
+                        string query = @"
                     SELECT ST_OPERACAO, * 
                     FROM TB_OPERACAO_RECEBIVEL 
                     WHERE ID_ARQUIVO = (
@@ -73,40 +69,39 @@ namespace TestePortal.Repository.OperacoesZitec
                         WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
                     )";
 
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                    {
-                        oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
-
-                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                         {
-                            if (oReader.Read())
+                            oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
+
+                            using (SqlDataReader oReader = oCmd.ExecuteReader())
                             {
-                                statusOperacao = oReader["ST_OPERACAO"].ToString();
+                                if (oReader.Read())
+                                {
+                                    statusOperacao = oReader["ST_OPERACAO"].ToString();
+                                }
                             }
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
-            }
-
-            return statusOperacao;
-        }
-        public static bool ExcluirRemessa(string nomeArquivoEntrada)
-        {
-            bool sucesso = false;
-
-            try
-            {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                catch (Exception e)
                 {
-                    myConnection.Open();
+                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
+                }
 
-                    string query = @"
+                return statusOperacao;
+            }
+
+            public static bool ExcluirRemessa(string nomeArquivoEntrada)
+            {
+                bool sucesso = false;
+
+                try
+                {
+                    using (SqlConnection myConnection = new SqlConnection(connectionString))
+                    {
+                        myConnection.Open();
+
+                        string query = @"
                     DELETE FROM TB_STG_REMESSA 
                     WHERE ID_OPERACAO_RECEBIVEL = (
                         SELECT ID_OPERACAO_RECEBIVEL 
@@ -118,37 +113,34 @@ namespace TestePortal.Repository.OperacoesZitec
                         )
                     )";
 
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                    {
-                        oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
+                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                        {
+                            oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        sucesso = rowsAffected > 0; // Se pelo menos uma linha for deletada, o sucesso é verdadeiro
+                            int rowsAffected = oCmd.ExecuteNonQuery();
+                            sucesso = rowsAffected > 0;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirRemessa()", "Automações Jessica", e.StackTrace);
-            }
-
-            return sucesso;
-        }
-
-
-        public static bool ExcluirTbTed(string nomeArquivoEntrada)
-        {
-            bool sucesso = false;
-
-            try
-            {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                catch (Exception e)
                 {
-                    myConnection.Open();
+                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirRemessa()", "Automações Jessica", e.StackTrace);
+                }
 
-                    string query = @"
+                return sucesso;
+            }
+
+            public static bool ExcluirTbTed(string nomeArquivoEntrada)
+            {
+                bool sucesso = false;
+
+                try
+                {
+                    using (SqlConnection myConnection = new SqlConnection(connectionString))
+                    {
+                        myConnection.Open();
+
+                        string query = @"
                     DELETE FROM dbo.TB_TED 
                     WHERE ID_OPERACAO_RECEBIVEL = (
                         SELECT ID_OPERACAO_RECEBIVEL 
@@ -160,36 +152,34 @@ namespace TestePortal.Repository.OperacoesZitec
                         )
                     )";
 
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                    {
-                        oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
+                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                        {
+                            oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        sucesso = rowsAffected > 0; // Se pelo menos uma linha for deletada, o sucesso é verdadeiro
+                            int rowsAffected = oCmd.ExecuteNonQuery();
+                            sucesso = rowsAffected > 0;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirTbTed()", "Automações Jessica", e.StackTrace);
-            }
-
-            return sucesso;
-        }
-
-        public static bool ExcluirOperacao(string nomeArquivoEntrada)
-        {
-            bool sucesso = false;
-
-            try
-            {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                catch (Exception e)
                 {
-                    myConnection.Open();
+                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirTbTed()", "Automações Jessica", e.StackTrace);
+                }
 
-                    string query = @"
+                return sucesso;
+            }
+
+            public static bool ExcluirOperacao(string nomeArquivoEntrada)
+            {
+                bool sucesso = false;
+
+                try
+                {
+                    using (SqlConnection myConnection = new SqlConnection(connectionString))
+                    {
+                        myConnection.Open();
+
+                        string query = @"
                     DELETE FROM TB_OPERACAO_RECEBIVEL 
                     WHERE ID_ARQUIVO = (
                         SELECT ID_ARQUIVO 
@@ -197,45 +187,42 @@ namespace TestePortal.Repository.OperacoesZitec
                         WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
                     )";
 
-                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                    {
-                        oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
+                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                        {
+                            oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
 
-                        int rowsAffected = oCmd.ExecuteNonQuery();
-                        sucesso = rowsAffected > 0; // Se pelo menos uma linha for deletada, o sucesso é verdadeiro
+                            int rowsAffected = oCmd.ExecuteNonQuery();
+                            sucesso = rowsAffected > 0;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirOperacao()", "Automações Jessica", e.StackTrace);
+                catch (Exception e)
+                {
+                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirOperacao()", "Automações Jessica", e.StackTrace);
+                }
+
+                return sucesso;
             }
 
-            return sucesso;
-
-        }
         public static bool ExcluirOperacaoCertificadora(int idOperacaoRecebivel)
         {
             bool sucesso = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
 
-                    string query = @"
-            DELETE FROM TB_OPERACAO_CERTIFICADORA 
-            WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
+                    string query = @"DELETE FROM TB_OPERACAO_CERTIFICADORA 
+                                     WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.AddWithValue("@idOperacaoRecebivel", idOperacaoRecebivel);
 
                         int rowsAffected = oCmd.ExecuteNonQuery();
-                        sucesso = rowsAffected > 0; 
+                        sucesso = rowsAffected > 0;
                     }
                 }
             }
@@ -253,20 +240,18 @@ namespace TestePortal.Repository.OperacoesZitec
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
 
                     string query = @"
-            SELECT TOP 1 ID_OPERACAO_RECEBIVEL 
-            FROM TB_OPERACAO_RECEBIVEL 
-            WHERE ID_ARQUIVO = (
-                SELECT ID_ARQUIVO 
-                FROM TB_ARQUIVO 
-                WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
-            )";
+                    SELECT TOP 1 ID_OPERACAO_RECEBIVEL 
+                    FROM TB_OPERACAO_RECEBIVEL 
+                    WHERE ID_ARQUIVO = (
+                        SELECT ID_ARQUIVO 
+                        FROM TB_ARQUIVO 
+                        WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
+                    )";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
@@ -290,29 +275,25 @@ namespace TestePortal.Repository.OperacoesZitec
             return idOperacaoRecebivel;
         }
 
-
         public static bool ExcluirAvalista(int idOperacaoRecebivel)
         {
             bool sucesso = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
 
-                    string query = @"
-                DELETE FROM TB_AVALISTA_OPERACAO_RECEBIVEL 
-                WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
+                    string query = @"DELETE FROM TB_AVALISTA_OPERACAO_RECEBIVEL 
+                                     WHERE ID_OPERACAO_RECEBIVEL = @idOperacaoRecebivel";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.AddWithValue("@idOperacaoRecebivel", SqlDbType.Int).Value = idOperacaoRecebivel;
 
                         int rowsAffected = oCmd.ExecuteNonQuery();
-                        sucesso = rowsAffected > 0; // Se pelo menos uma linha for deletada, o sucesso é verdadeiro
+                        sucesso = rowsAffected > 0;
                     }
                 }
             }
@@ -324,12 +305,9 @@ namespace TestePortal.Repository.OperacoesZitec
             return sucesso;
         }
 
-
-
         public static bool VerificaProcessamentoFundo(int idFundo)
         {
             bool sucesso = false;
-            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
             string dataHoje = DateTime.Now.ToString("yyyy-MM-dd");
 
             try
@@ -337,7 +315,7 @@ namespace TestePortal.Repository.OperacoesZitec
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    // Primeiro SELECT para pegar a data atual do fundo
+
                     string queryDataFundo = "SELECT dt_fundo FROM tb_fundo WHERE id_fundo = @idFundo";
                     DateTime dataFundo;
 
@@ -355,10 +333,8 @@ namespace TestePortal.Repository.OperacoesZitec
                     {
                         return true;
                     }
-
                     else if (dataFundo.Date > DateTime.Today)
                     {
-                        // Executar sp_ReverterFundo
                         using (SqlCommand cmd = new SqlCommand("exec sp_ReverterFundo @idFundo, @dataHoje, 1", connection))
                         {
                             cmd.Parameters.AddWithValue("@idFundo", idFundo);
@@ -368,7 +344,6 @@ namespace TestePortal.Repository.OperacoesZitec
                     }
                     else
                     {
-                        // Executar sp_ProcessarFundo
                         using (SqlCommand cmd = new SqlCommand("exec sp_ProcessarFundo @idFundo, @dataHoje, 1", connection))
                         {
                             cmd.Parameters.AddWithValue("@idFundo", idFundo);
@@ -404,9 +379,7 @@ namespace TestePortal.Repository.OperacoesZitec
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["ConnectionZitec"].ToString();
-
-                using (SqlConnection myConnection = new SqlConnection(con))
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
                     myConnection.Open();
 
@@ -420,7 +393,7 @@ namespace TestePortal.Repository.OperacoesZitec
                     }
                 }
             }
-            catch (SqlException ex) when (ex.Number == 547) // Erro de chave estrangeira
+            catch (SqlException ex) when (ex.Number == 547)
             {
                 Utils.Slack.MandarMsgErroGrupoDev($"Erro ao excluir o arquivo {idArquivo}: Existe uma referência em outra tabela.", "OperacoesRepository.DeletarArquivoGeral()", "Automações Jessica", ex.StackTrace);
             }
@@ -431,6 +404,5 @@ namespace TestePortal.Repository.OperacoesZitec
 
             return sucesso;
         }
-
     }
 }

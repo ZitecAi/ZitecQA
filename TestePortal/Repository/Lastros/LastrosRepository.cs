@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using TestePortal.TestePortal.Model; // Ajuste o namespace conforme sua estrutura
+using TestePortal.TestePortal.Model;
+using TestePortal.Utils; // Ajuste o namespace se a AppSettings estiver em outro lugar
 
-namespace TestePortal.Repository.NotaPagamento
+namespace TestePortal.Repository.Lastros
 {
-    public class NotaPagamentoRepository
+    public class LastrosRepository
     {
-        public static bool VerificaExistenciaNotaPagamento(string cnpjFundo, string observacao)
+        public static bool VerificaExistenciaLastros(string cnpjFundo, string observacao)
         {
             var existe = false;
 
@@ -19,7 +20,7 @@ namespace TestePortal.Repository.NotaPagamento
                 {
                     myConnection.Open();
 
-                    string query = "SELECT * FROM pagamentosNotas WHERE CnpjFundo = @cnpjFundo AND observacao = @observacao";
+                    string query = "SELECT * FROM lastros WHERE CnpjFundo = @cnpjFundo AND Observacao = @observacao";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.Add("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
@@ -37,13 +38,17 @@ namespace TestePortal.Repository.NotaPagamento
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "NotaPagamentoRepository.VerificaExistenciaNotaPagamento()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(
+                    e.Message,
+                    "LastrosRepository.VerificaExistenciaLastros()",
+                    "Automações Jessica",
+                    e.StackTrace);
             }
 
             return existe;
         }
 
-        public static bool ApagarNotaPagamento(string cnpjFundo, string observacao)
+        public static bool ApagarLastros(string cnpjFundo, string observacao)
         {
             var apagado = false;
 
@@ -55,7 +60,7 @@ namespace TestePortal.Repository.NotaPagamento
                 {
                     myConnection.Open();
 
-                    string query = "DELETE FROM pagamentosNotas WHERE CnpjFundo = @cnpjFundo AND observacao = @observacao";
+                    string query = "DELETE FROM lastros WHERE CnpjFundo = @cnpjFundo AND Observacao = @observacao";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.Add("@cnpjFundo", SqlDbType.NVarChar).Value = cnpjFundo;
@@ -67,7 +72,11 @@ namespace TestePortal.Repository.NotaPagamento
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "NotaPagamentoRepository.ApagarNotaPagamento()", "Automações Jessica", e.StackTrace);
+                Utils.Slack.MandarMsgErroGrupoDev(
+                    e.Message,
+                    "LastrosRepository.ApagarLastros()",
+                    "Automações Jessica",
+                    e.StackTrace);
             }
 
             return apagado;

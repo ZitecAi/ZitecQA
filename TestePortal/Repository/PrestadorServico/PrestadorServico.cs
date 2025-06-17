@@ -6,19 +6,19 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestePortal.TestePortal.Model;
 
 namespace TestePortal.Repository.PrestadorServico
 {
     public class PrestadorServico
     {
-
         public static bool VerificaExistenciaPrestadorServico(string tipoServico, string cep)
         {
             var existe = false;
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -35,9 +35,7 @@ namespace TestePortal.Repository.PrestadorServico
                             if (oReader.Read())
                             {
                                 existe = true;
-
                             }
-
                         }
                     }
                 }
@@ -56,7 +54,7 @@ namespace TestePortal.Repository.PrestadorServico
 
             try
             {
-                var con = ConfigurationManager.ConnectionStrings["myConnectionString"].ToString();
+                var con = AppSettings.GetConnectionString("myConnectionString");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -73,7 +71,6 @@ namespace TestePortal.Repository.PrestadorServico
                         {
                             apagado = true;
                         }
-
                     }
                 }
             }
@@ -84,6 +81,6 @@ namespace TestePortal.Repository.PrestadorServico
 
             return apagado;
         }
-
     }
+
 }
