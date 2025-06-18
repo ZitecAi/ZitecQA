@@ -16,7 +16,7 @@ namespace TestePortal.Pages
 {
     public class CadastroGestorasInternas
     {
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> GestorasInternas(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> GestorasInternas(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -27,7 +27,7 @@ namespace TestePortal.Pages
             int formularioOk = 0;
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var CadastroGestorasInternas = await Page.GotoAsync(portalLink + "/GestoraInterno.aspx");
 
                 if (CadastroGestorasInternas.Status == 200)
@@ -96,7 +96,7 @@ namespace TestePortal.Pages
                             await Task.Delay(400);
 
                             string token = GestoraInternaRepository.ObterTokenGestora("16695922000109", "robo@zitec.ai");
-                            string baseUrl = config["FichaGestora"];
+                            string baseUrl = TestePortalIDSF.Program.Config["FichaGestora"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);
@@ -217,7 +217,7 @@ namespace TestePortal.Pages
                             await newPage.GetByRole(AriaRole.Radio, new() { Name = "Não" }).CheckAsync();
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "ADICIONAR" }).ClickAsync();
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
-                            await newPage.Locator("#fileQddAmbima").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#fileQddAmbima").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await newPage.Locator("#btnFinalizar").ClickAsync();
                             await Task.Delay(2000);
                             await newPage.CloseAsync();

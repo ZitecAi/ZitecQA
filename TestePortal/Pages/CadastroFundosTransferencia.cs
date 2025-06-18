@@ -15,14 +15,14 @@ namespace TestePortal.Pages
     public class CadastroFundosTransferencia
     {
 
-        public static async Task<Model.Pagina> FundosTransf (IPage Page, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<Model.Pagina> FundosTransf (IPage Page, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var CadastroFundosTransferencia = await Page.GotoAsync(portalLink + "/FundosTransferencia.aspx");
 
                 if (CadastroFundosTransferencia.Status == 200)
@@ -92,7 +92,7 @@ namespace TestePortal.Pages
                         await Task.Delay(200);
                         await Page.Locator("#antigaConsultoria").FillAsync("Consultoria");
                         await Task.Delay(200);
-                        await Page.Locator("#FileArchives").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "documentosteste.zip" });
+                        await Page.Locator("#FileArchives").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "documentosteste.zip" });
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" }).ClickAsync();
 
                         var fundoTransferenciaExiste = Repository.FundoTransferencia.FundoTransferenciaRepository.VerificaExistenciaFundoTransferencia("16695922000109", "QA teste");

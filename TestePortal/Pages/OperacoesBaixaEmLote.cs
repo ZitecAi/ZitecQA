@@ -11,7 +11,7 @@ namespace TestePortal.Pages
 {
     public class OperacoesBaixaEmLote
     {
-        public static async Task<Model.Pagina> BaixaLote (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> BaixaLote (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -19,7 +19,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var OperacoesBaixaLote = await Page.GotoAsync(portalLink + "/Operacoes/Contratos.aspx");
 
                 if (OperacoesBaixaLote.Status == 200)

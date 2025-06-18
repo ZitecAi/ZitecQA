@@ -9,7 +9,7 @@ namespace TestePortal.Pages
 {
     public class AdministrativoGrupos
     {
-        public static async Task<Model.Pagina> Grupos(IPage page, IConfiguration config)
+        public static async Task<Model.Pagina> Grupos(IPage page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -17,7 +17,7 @@ namespace TestePortal.Pages
 
             try
             {
-                    var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var PaginaAdministrativoGrupos = await page.GotoAsync(portalLink + "/Permissoes/GrupoPermissoes.aspx");
 
                 if (PaginaAdministrativoGrupos.Status == 200)

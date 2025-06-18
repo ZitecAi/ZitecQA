@@ -11,8 +11,8 @@ namespace TestePortal.Pages
 {
     public class CedentesKitCedente
     {
-        public static async Task<Model.Pagina> KitCedentes(IPage Page, IConfiguration config)
-        {
+        public static async Task<Model.Pagina> KitCedentes(IPage Page)
+        { 
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
@@ -21,7 +21,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var BoletagemKitCedentes = await Page.GotoAsync(portalLink + "/KitCedente.aspx");
 
                 if (BoletagemKitCedentes.Status == 200)

@@ -18,7 +18,7 @@ namespace TestePortal.Pages
 {
     public class OperacoesConciliacaoExtrato
     {
-        public static async Task<(Model.Pagina pagina, Model.Conciliacao conciliacao )> ConciliacaoExtrato (IPage Page,  NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Model.Conciliacao conciliacao )> ConciliacaoExtrato (IPage Page,  NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var conciliacao = new Model.Conciliacao();
@@ -28,7 +28,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var ConciliacaoExtrato = await Page.GotoAsync(portalLink + "/operacoes/ConciliacaoExtrato.aspx");
 
                 if (ConciliacaoExtrato.Status == 200)
@@ -69,7 +69,7 @@ namespace TestePortal.Pages
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Extrato +" }).ClickAsync();
                         await Page.Locator("#extratoConciliacaoSelect").SelectOptionAsync(new[] { "SANTANDER" });
                         await Page.Locator("#fundosExtrato").SelectOptionAsync(new[] { "36614123000160" });
-                        await Page.Locator("#fileExtrato").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Extrato_Santander (1) (1).xlsx" });
+                        await Page.Locator("#fileExtrato").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Extrato_Santander (1) (1).xlsx" });
                         await Page.Locator("#enviarButtonExtrato").ClickAsync();
 
                         //conciliar 
@@ -82,7 +82,7 @@ namespace TestePortal.Pages
                         await Page.GetByPlaceholder("R$").FillAsync("R$ 300.000,00");
                         await Page.Locator("#selectTipo").SelectOptionAsync(new[] { "APORTE" });
                         await Page.Locator("#selectMovimento").SelectOptionAsync(new[] { "68" });
-                        await Page.Locator("#fileConciliar").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                        await Page.Locator("#fileConciliar").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
@@ -107,7 +107,7 @@ namespace TestePortal.Pages
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Conciliar em Lote" }).ClickAsync();
                         await Page.Locator("#selectTipoLote").SelectOptionAsync(new[] { "APORTE" });
                         await Page.Locator("#selectMovimentoLote").SelectOptionAsync(new[] { "45" });
-                        await Page.Locator("#fileLote").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "TemplateItem (1).xlsx" });
+                        await Page.Locator("#fileLote").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "TemplateItem (1).xlsx" });
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste ");
                         await Page.Locator("#enviarButtonLote").ClickAsync();

@@ -11,7 +11,7 @@ namespace TestePortal.Pages
 {
     public class CadastroOfertas
     {
-        public static async Task<Model.Pagina> Ofertas (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> Ofertas (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -19,7 +19,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var CadastroOfertas = await Page.GotoAsync(portalLink + "/Carteira/Ofertas.aspx");
 
                 if (CadastroOfertas.Status == 200)

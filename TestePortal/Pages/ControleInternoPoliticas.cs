@@ -11,7 +11,7 @@ namespace TestePortal.Pages
 {
     public class ControleInternoPoliticas
     {
-        public static async Task<Model.Pagina> Politicas (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> Politicas (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -19,7 +19,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var ControlePoliticas = await Page.GotoAsync(portalLink + "/Controles%20Internos/Politicas.aspx");
 
                 if (ControlePoliticas.Status == 200)

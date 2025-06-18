@@ -14,7 +14,7 @@ namespace TestePortal.Pages
 
     {
         #region Cadastro Correntista PJ - Movimentação
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaMov(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaMov(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -26,7 +26,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var PaginaBancoIdCorrentista = await Page.GotoAsync(portalLink + "/Correntistas.aspx");
 
                 if (PaginaBancoIdCorrentista.Status == 200)
@@ -79,7 +79,7 @@ namespace TestePortal.Pages
                             var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                             var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
 
-                            var baseUrl = config["Links:FichaCorrentista"];
+                            var baseUrl = TestePortalIDSF.Program.Config["Links:FichaCorrentista"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);
@@ -120,15 +120,15 @@ namespace TestePortal.Pages
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).FillAsync("(11) 7548-75944");
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
-                            await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
-                            await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                             await newPage.Locator("input[name=\"assinaRepresentantes\"]").CheckAsync();
                             await Task.Delay(300);
@@ -613,7 +613,7 @@ namespace TestePortal.Pages
         #endregion
 
         #region Cadastro de Correntista com conta escrow 
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaEscrow(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaEscrow(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -627,7 +627,7 @@ namespace TestePortal.Pages
                 if (nivelLogado == NivelEnum.Master)
                 {
                     var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
-                    var portalLink = config["Links:Portal"];
+                    var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                     var PaginaBancoIdCorrentista = await Page.GotoAsync(portalLink + "/Correntistas.aspx");
                     fluxoDeCadastros.Fluxo = "Correntista - Escrow";
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
@@ -648,7 +648,7 @@ namespace TestePortal.Pages
 
                     var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                     var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                    string baseUrl = config["FichaCorrentista"];
+                    string baseUrl = TestePortalIDSF.Program.Config["FichaCorrentista"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
                     await newPage.GotoAsync(copiedUrl);
@@ -1016,7 +1016,7 @@ namespace TestePortal.Pages
         #endregion
 
         #region Cadastro de correntista com conta cobrança
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaCobranca(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaCobranca(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
         {
 
             var pagina = new Model.Pagina();
@@ -1029,7 +1029,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var PaginaBancoIdCorrentista = await Page.GotoAsync(portalLink + "/Correntistas.aspx");
                 fluxoDeCadastros.Fluxo = "Correntista - Cobrança";
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
@@ -1050,7 +1050,7 @@ namespace TestePortal.Pages
 
                 var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                 var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                string baseUrl = config["FichaCorrentista"];
+                string baseUrl = TestePortalIDSF.Program.Config["FichaCorrentista"];
                 string copiedUrl = $"{baseUrl}{token}";
                 var newPage = await context.NewPageAsync();
                 await newPage.GotoAsync(copiedUrl);
@@ -1093,15 +1093,15 @@ namespace TestePortal.Pages
                 await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).FillAsync("(11) 9547-86244");
                 await newPage.Locator("#EmailUsuarioMaster").ClickAsync();
                 await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
-                await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                 await Task.Delay(200);
-                await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                 await Task.Delay(200);
-                await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                 await Task.Delay(200);
-                await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                 await Task.Delay(200);
-                await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                 await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                 await newPage.Locator("input[name=\"assinaRepresentantes\"]").CheckAsync();
                 await newPage.Locator("#checkTermos").CheckAsync();
@@ -1578,7 +1578,7 @@ namespace TestePortal.Pages
         #endregion
 
         #region Cadastro de correntista com conta selic
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaSelic(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaSelic(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -1590,7 +1590,7 @@ namespace TestePortal.Pages
 
             if (nivelLogado == NivelEnum.Master)
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var PaginaBancoIdCorrentista = await Page.GotoAsync( portalLink + "/Correntistas.aspx");
                 try
                 {
@@ -1612,7 +1612,7 @@ namespace TestePortal.Pages
 
                     var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                     var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                    string baseUrl = config["Links:FichaCorrentista"];
+                    string baseUrl = TestePortalIDSF.Program.Config["Links:FichaCorrentista"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
                     await newPage.GotoAsync(copiedUrl);
@@ -1976,7 +1976,7 @@ namespace TestePortal.Pages
         #endregion
 
         #region Cadastro de correntista com conta Cetip 
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaCetip(IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxoDeCadastros)> CorrentistaCetip(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -1988,7 +1988,7 @@ namespace TestePortal.Pages
 
             if (nivelLogado == NivelEnum.Master)
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var PaginaBancoIdCorrentista = await Page.GotoAsync(portalLink + "/Correntistas.aspx");
 
                 try
@@ -2014,7 +2014,7 @@ namespace TestePortal.Pages
 
                     var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                     var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                    string baseUrl = config["Links:FichaCorrentista"];
+                    string baseUrl = TestePortalIDSF.Program.Config["Links:FichaCorrentista"];
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
                     await newPage.GotoAsync(copiedUrl);
@@ -2055,15 +2055,15 @@ namespace TestePortal.Pages
                     await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).FillAsync("(11) 7548-75944");
                     await Task.Delay(200);
                     await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
-                    await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                    await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                     await Task.Delay(200);
-                    await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                    await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                     await Task.Delay(200);
-                    await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                    await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                     await Task.Delay(200);
-                    await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                    await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                     await Task.Delay(200);
-                    await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                    await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                     await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                     await newPage.Locator("input[name=\"assinaRepresentantes\"]").CheckAsync();
                     await Task.Delay(300);

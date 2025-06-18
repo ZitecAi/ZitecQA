@@ -12,7 +12,7 @@ namespace TestePortal.Pages
 {
     public class OperacoesEnviarLastros
     {
-        public static async Task<Model.Pagina> EnviarLastros(IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> EnviarLastros(IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -20,7 +20,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var OperacoesEnviarLastros = await Page.GotoAsync(portalLink + "/Operacoes/EnviarLastros.aspx");
 
                 if (OperacoesEnviarLastros.Status == 200)
@@ -56,7 +56,7 @@ namespace TestePortal.Pages
                         await Page.Locator("#Fundos").SelectOptionAsync(new[] { "36614123000160" });
                         await Page.Locator("#dataOperacao").FillAsync(dataAtual);
                         await Task.Delay(300);
-                        await Page.Locator("#fileEnviarLastros").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste.zip" });
+                        await Page.Locator("#fileEnviarLastros").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                         await Task.Delay(300);

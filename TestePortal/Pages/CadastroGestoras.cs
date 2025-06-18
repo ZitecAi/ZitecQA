@@ -12,14 +12,14 @@ namespace TestePortal.Pages
     public class CadastroGestoras
     {
 
-        public static async Task<Model.Pagina> Gestoras (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> Gestoras (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var CadastroGestora = await Page.GotoAsync(portalLink + "/Gestoras.aspx");
 
                 if (CadastroGestora.Status == 200)

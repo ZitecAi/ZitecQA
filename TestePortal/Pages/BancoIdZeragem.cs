@@ -11,7 +11,7 @@ namespace TestePortal.Pages
 {
     public class BancoIdZeragem
     {
-        public static async Task<Model.Pagina> Zeragem (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> Zeragem (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -19,7 +19,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var BancoIdZeragem = await Page.GotoAsync( portalLink + "/BancoID/Zeragem.aspx");
 
                 if (BancoIdZeragem.Status == 200)

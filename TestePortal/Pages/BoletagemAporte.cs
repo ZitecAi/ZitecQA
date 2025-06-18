@@ -13,14 +13,14 @@ namespace TestePortal.Pages
 {
     public class BoletagemAporte
     {
-        public static async Task<Model.Pagina> Aporte (IPage Page, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<Model.Pagina> Aporte (IPage Page, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var BoletagemAporte = await Page.GotoAsync(portalLink + "/Boleta/Boleta.aspx");
 
                 if (BoletagemAporte.Status == 200)

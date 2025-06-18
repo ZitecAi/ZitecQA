@@ -11,14 +11,14 @@ namespace TestePortal.Pages
 {
     public class OperacoesArquivosBaixa
     {
-        public static async Task<Model.Pagina> ArquivosBaixa (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> ArquivosBaixa (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var ArquivosBaixa = await Page.GotoAsync(portalLink + "/Operacoes/ArquivoBaixa.aspx");
 
                 if (ArquivosBaixa.Status == 200)

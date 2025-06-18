@@ -22,7 +22,7 @@ namespace TestePortal.Pages
 {
     public class CadastroOperacoesZitecCsv
     {
-        public static async Task<(Model.Pagina pagina, Model.Operacoes operacoes)> OperacoesZitecCsv(IPage Page, NivelEnum nivelLogado, Operacoes operacoes, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Model.Operacoes operacoes)> OperacoesZitecCsv(IPage Page, NivelEnum nivelLogado, Operacoes operacoes)
         {
 
             var pagina = new Model.Pagina();
@@ -34,7 +34,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var OperacoesZitec = await Page.GotoAsync(portalLink + "Operacoes/Operacoes2.0.aspx");
 
                 if (OperacoesZitec.Status == 200)
@@ -72,7 +72,7 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await Page.Locator("#fileEnviarOperacoesCsv").SetInputFilesAsync(new[] { caminhoModificado });
                             await Task.Delay(200);
-                            await Page.Locator("#fileEnviarLastro").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste.zip" });
+                            await Page.Locator("#fileEnviarLastro").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                             await Task.Delay(200);

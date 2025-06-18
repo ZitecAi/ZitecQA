@@ -16,7 +16,7 @@ namespace TestePortal.Pages
     public class AdministrativoUsuarios
     {
 
-        public static async Task<Model.Pagina> Usuarios(IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> Usuarios(IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -24,7 +24,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var PaginaAdministrativoUsuarios = await Page.GotoAsync(portalLink + "/Usuarios.aspx");
 
                 if (PaginaAdministrativoUsuarios.Status == 200)

@@ -11,14 +11,14 @@ namespace TestePortal.Pages
 {
     public class RelatoriosOperacoes
     {
-        public static async Task<Model.Pagina> Operacoes (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> Operacoes (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var RelatorioOperacoes = await Page.GotoAsync(portalLink + "/Relatorios/Operacoes.aspx");
 
                 if (RelatorioOperacoes.Status == 200)

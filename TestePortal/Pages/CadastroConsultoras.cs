@@ -13,9 +13,9 @@ namespace TestePortal
     public class CadastroConsultoras
     {
 
-        public static async Task<Model.Pagina> Consultoras (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> Consultoras (IPage Page)
         {
-            var portalLink = config["Links:Portal"];
+            var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
             var CadastroConsultoras = await Page.GotoAsync(portalLink + "/Consultoras.aspx");
             var pagina = new Model.Pagina();
             var listErros = new List<string>();

@@ -15,7 +15,7 @@ namespace TestePortal.Pages
 
     public class LoginGeral
     {
-        public async static Task<Model.Pagina> Login(IPage Page, Usuario usuario, IConfiguration config)
+        public async static Task<Model.Pagina> Login(IPage Page, Usuario usuario)
         {
 
             var pagina = new Model.Pagina();
@@ -24,7 +24,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var PaginaLogin = await Page.GotoAsync(portalLink + "/login.aspx");
                 await Page.GetByPlaceholder("E-mail").FillAsync(usuario.Email);
                 await Page.GetByPlaceholder("Senha").FillAsync(usuario.Senha);

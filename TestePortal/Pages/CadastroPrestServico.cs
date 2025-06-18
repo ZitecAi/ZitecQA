@@ -12,7 +12,7 @@ namespace TestePortal.Pages
 {
     public class CadastroPrestServico
     {
-        public static async Task<Model.Pagina> PrestServico (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> PrestServico (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -20,7 +20,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var CadastroPrestServico = await Page.GotoAsync( portalLink + "/PrestServicos/Prestservicos.aspx");
 
                 if (CadastroPrestServico.Status == 200)
@@ -86,7 +86,7 @@ namespace TestePortal.Pages
                     await Task.Delay(300);
                     await Page.GetByLabel("E-mail:", new() { Exact = true }).FillAsync("jessica.tavares@gmail.com");
                     await Task.Delay(300);
-                    await Page.Locator("#FilePrestador").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "documentosteste.zip" });
+                    await Page.Locator("#FilePrestador").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "documentosteste.zip" });
                     await Task.Delay(300);
                     await Page.GetByRole(AriaRole.Button, new() { Name = "+ Representante" }).ClickAsync();
                     await Task.Delay(300);

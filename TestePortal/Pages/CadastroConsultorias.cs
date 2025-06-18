@@ -17,7 +17,7 @@ namespace TestePortal.Pages
 {
     public class CadastroConsultorias
     {
-        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> Consultorias (IPage Page, IBrowserContext context, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Model.FluxosDeCadastros fluxosDeCadastros)> Consultorias (IPage Page, IBrowserContext context, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -27,7 +27,7 @@ namespace TestePortal.Pages
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var CadastroConsultorias = await Page.GotoAsync(portalLink + "/Consultoria.aspx");
 
                 if (CadastroConsultorias.Status == 200)
@@ -99,7 +99,7 @@ namespace TestePortal.Pages
                             await Task.Delay(400);
 
                             string token = ConsultoriasRepository.ObterToken("16695922000109", "robo@zitec.ai");
-                            string baseUrl = config["Links:FichaCorrentista"];
+                            string baseUrl = TestePortalIDSF.Program.Config["Links:FichaCorrentista"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);
@@ -241,7 +241,7 @@ namespace TestePortal.Pages
                             await newPage.Locator("#addContaBancBtn").ClickAsync();
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
-                            await newPage.Locator("#fileQddAmbima").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await newPage.Locator("#fileQddAmbima").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
                             await newPage.Locator("#btnFinalizar").ClickAsync();
                             await Task.Delay(8000);

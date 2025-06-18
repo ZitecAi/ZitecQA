@@ -19,7 +19,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var RelatorioCedentes = await Page.GotoAsync(portalLink + "/Relatorios/Cedentes.aspx");
 
                 if (RelatorioCedentes.Status == 200)

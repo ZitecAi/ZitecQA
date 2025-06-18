@@ -13,14 +13,14 @@ namespace TestePortal.Pages
 {
     public class NotaComercial
     {
-        public static async Task<Model.Pagina> NotasComerciais(IPage Page, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<Model.Pagina> NotasComerciais(IPage Page, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var NotaComercial = await Page.GotoAsync(portalLink + "/Operacoes/NotaComercial.aspx");
 
                 if (NotaComercial.Status == 200)
@@ -136,7 +136,7 @@ namespace TestePortal.Pages
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Button, new() { Name = "   Adicionar documento" }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.Locator("#fileNotaComercial").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await Page.Locator("#fileNotaComercial").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Page.Locator("#tipoDocumento").SelectOptionAsync(new[] { "cpf" });
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Atualizar documento" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar mudanças" }).ClickAsync();

@@ -14,7 +14,7 @@ namespace TestePortal.Pages
     public class BancoIdReembolso
     {
 
-        public static async Task<Model.Pagina> Reembolso(IPage Page, NivelEnum nivelLogado, IConfiguration config)
+        public static async Task<Model.Pagina> Reembolso(IPage Page, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -22,7 +22,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var BancoIdDevolucao = await Page.GotoAsync(portalLink + "/BancoID/Reembolso.aspx");
 
                 if (BancoIdDevolucao.Status == 200)

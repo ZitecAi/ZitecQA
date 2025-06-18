@@ -11,7 +11,7 @@ namespace TestePortal.Pages
 {
     public class MeusRelatorios
     {
-        public static async Task<Model.Pagina> Relatorios (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> Relatorios (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -19,7 +19,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var MeusRelatorios = await Page.GotoAsync(portalLink + "/Relatorios/MeusRelatorios.aspx");
 
                 if (MeusRelatorios.Status == 200)

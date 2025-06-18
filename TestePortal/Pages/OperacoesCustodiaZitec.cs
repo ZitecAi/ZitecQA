@@ -21,7 +21,7 @@ namespace TestePortal
 {
     public class OperacoesCustodiaZitec
     {
-        public static async Task<(Model.Pagina pagina, Operacoes operacoes)> OperacoesZitec(IPage Page, NivelEnum nivelLogado, Operacoes operacoes, IConfiguration config)
+        public static async Task<(Model.Pagina pagina, Operacoes operacoes)> OperacoesZitec(IPage Page, NivelEnum nivelLogado, Operacoes operacoes)
         {
             var pagina = new Model.Pagina();
             int errosTotais = 0;
@@ -32,7 +32,7 @@ namespace TestePortal
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var OperacoesZitec = await Page.GotoAsync(portalLink + "/Operacoes/Operacoes2.0.aspx ");
 
                 if (OperacoesZitec?.Status == 200)

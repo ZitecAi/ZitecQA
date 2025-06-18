@@ -12,7 +12,7 @@ namespace TestePortal.Pages
 {
     public class BoletagemAmortizacao
     {
-        public static async Task<Model.Pagina> Amortizacao (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> Amortizacao (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -21,7 +21,7 @@ namespace TestePortal.Pages
 
             try
             {
-                var portalLink = config["Links:Portal"];
+                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var BoletagemAmortizacao = await Page.GotoAsync(portalLink + "/Boleta/Amortizacao.aspx");
 
                 if (BoletagemAmortizacao.Status == 200)
