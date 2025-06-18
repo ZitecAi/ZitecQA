@@ -19,7 +19,7 @@ namespace TestePortal.Pages.AdministrativoPage
             try
             {
                 var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
-                var PaginaAdministrativoGrupos = await page.GotoAsync(portalLink + "/Permissoes/GrupoPermissoes.aspx");
+                var PaginaAdministrativoGrupos = await Page.GotoAsync(portalLink + "/Permissoes/GrupoPermissoes.aspx");
 
                 if (PaginaAdministrativoGrupos.Status == 200)
                 {
@@ -33,7 +33,7 @@ namespace TestePortal.Pages.AdministrativoPage
                     pagina.InserirDados = "❓";
                     pagina.Excluir = "❓";
                     pagina.Reprovar = "❓";
-                    pagina.Acentos = Utils.Acentos.ValidarAcentos(page).Result;
+                    pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
 
                     if (pagina.Acentos == "❌")
                     {
@@ -47,7 +47,7 @@ namespace TestePortal.Pages.AdministrativoPage
                     pagina.Nome = "Administrativo Grupos";
                     pagina.StatusCode = PaginaAdministrativoGrupos.Status;
                     errosTotais++;
-                    await page.GotoAsync(portalLink + "/Home.aspx");
+                    await Page.GotoAsync(portalLink + "/Home.aspx");
                 }
             }
             catch (TimeoutException ex)

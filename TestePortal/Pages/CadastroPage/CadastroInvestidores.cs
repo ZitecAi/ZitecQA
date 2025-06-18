@@ -1438,7 +1438,7 @@ namespace TestePortal.Pages.CadastroPage
                                 fluxoDeCadastros.ListaErros.Add("Erro ao trocar status na tabela");
                             }
 
-                            var emailChecker = new TestePortal.Utils.EmailChecker();
+                            var emailChecker = new Utils.EmailChecker();
                             bool emailChegou = await emailChecker.CheckForNotificationEmailAsync("Cadastro de Investidor - IDSF!");
 
                             if (emailChegou)
@@ -1855,7 +1855,7 @@ namespace TestePortal.Pages.CadastroPage
                         await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(__) _____-____" }).FillAsync("(11) 87451-4511");
                         await Task.Delay(200);
                         await newPage.Locator("#modal-AddRepresentante p").Filter(new() { HasText = "Não:" }).GetByRole(AriaRole.Radio).CheckAsync();
-                        await newPage.Locator("#input_DocRepresentante_RL").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                        await newPage.Locator("#input_DocRepresentante_RL").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                         await Task.Delay(200);
                         await newPage.GetByRole(AriaRole.Button, new() { Name = "Adicionar Representante", Exact = true }).ClickAsync();
                         await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();

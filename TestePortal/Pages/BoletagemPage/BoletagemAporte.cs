@@ -80,7 +80,7 @@ namespace TestePortal.Pages.BoletagemPage
                         await Task.Delay(200);
                         await Page.Locator("#Fundos").SelectOptionAsync(new[] { "54638076000176" });
                         await Task.Delay(200);
-                        await Page.Locator("#fileBoleta").SetInputFilesAsync(new[] { config["Paths:Arquivo"] + "documentosteste.zip" });
+                        await Page.Locator("#fileBoleta").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "documentosteste.zip" });
                         await Task.Delay(200);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                         await Task.Delay(200);

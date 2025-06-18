@@ -11,7 +11,7 @@ namespace TestePortal.Pages.RelatoriosPage
 {
     public class RelatorioCedentes
     {
-        public static async Task<Model.Pagina> Cedentes (IPage Page, IConfiguration config)
+        public static async Task<Model.Pagina> Cedentes (IPage Page)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
