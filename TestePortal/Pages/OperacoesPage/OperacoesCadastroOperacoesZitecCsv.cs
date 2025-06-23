@@ -20,7 +20,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages.OperacoesPage
 {
-    public class CadastroOperacoesZitecCsv
+    public class OperacoesCadastroOperacoesZitecCsv
     {
         public static async Task<(Pagina pagina, Operacoes operacoes)> OperacoesZitecCsv(IPage Page, NivelEnum nivelLogado, Operacoes operacoes)
         {

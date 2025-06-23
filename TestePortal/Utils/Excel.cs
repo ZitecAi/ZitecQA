@@ -72,6 +72,61 @@ namespace TestePortal.Utils
            
             return baixarExcel;
         }
+
+        public static async Task<bool> BaixarExtrato(IPage Page)
+        {
+            string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+            string fileName = "PortalIDSF.xlsx";
+            string filePath = Path.Combine(downloadPath, fileName);
+            bool baixarExtrato = false;
+            var listErros = new List<string>();
+
+            try
+            {
+                var download = await Page.RunAndWaitForDownloadAsync(async () =>
+                {
+                    await Page.Locator("#Gerar").ClickAsync(new LocatorClickOptions
+                    {
+                        Timeout = 1500
+                    });
+                    //await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync();
+                });
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
+
+                await download.SaveAsAsync(filePath);
+
+
+                if (File.Exists(filePath))
+                {
+                    Console.WriteLine("Arquivo foi baixado");
+                    baixarExtrato = true;
+
+                    File.Delete(filePath);
+                    Console.WriteLine("Arquivo excluído");
+                }
+                else
+                {
+                    baixarExtrato = false;
+                    Console.WriteLine("Erro ao baixar arquivo excel");
+
+                }
+            }
+            catch (TimeoutException ex)
+            {
+                Console.WriteLine($"TimeoutException: O download não foi concluído no tempo esperado. Detalhes: {ex.Message}");
+                baixarExtrato = false;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Exceção ao baixar o arquivo: {ex.Message}");
+                baixarExtrato = false;
+            }
+
+
+            return baixarExtrato;
+        }
     }
 }
 

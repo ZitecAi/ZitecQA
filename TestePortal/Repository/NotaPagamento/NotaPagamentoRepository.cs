@@ -74,11 +74,7 @@ namespace TestePortal.Repository.NotaPagamento
             }
             catch (Exception e)
             {
-                //Utils.Slack.MandarMsgErroGrupoDev(
-                //    e.Message,
-                //    "NotaPagamentoRepository.ApagarNotaPagamento()",
-                //    "Automações Jessica",
-                //    e.StackTrace);
+              Console.WriteLine(e.Message);
             }
 
             return apagado;
