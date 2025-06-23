@@ -48,10 +48,12 @@ namespace TestePortalExecutavel
             Page = await browser.NewPageAsync();
 
             var builder = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+      .SetBasePath(Directory.GetCurrentDirectory())
+      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
             Config = builder.Build();
+
+
             //var context = await browser.NewContextAsync();
             var listaPagina = new List<Pagina>();
             var listaFluxos = new List<FluxosDeCadastros>();
@@ -89,12 +91,12 @@ namespace TestePortalExecutavel
 
                         //listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         //listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
-                        
-                        listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
-                        (pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
-                        listaFluxos.Add(fluxoDeCadastros);
-                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
+                        //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        //(pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
+                        //listaFluxos.Add(fluxoDeCadastros);
+                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecInterno (Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
+                        listaOperacoes.Add(operacoes);
                         (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaOperacoes.Add(operacoes);
@@ -117,7 +119,7 @@ namespace TestePortalExecutavel
                         listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
-                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
+                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecConsultoria (Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         await Page.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Sim" }).ClickAsync();
@@ -135,7 +137,7 @@ namespace TestePortalExecutavel
                         listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
-                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
+                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZiteGestora(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);

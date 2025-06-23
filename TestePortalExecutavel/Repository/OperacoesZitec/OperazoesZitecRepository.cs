@@ -14,42 +14,43 @@ namespace TestePortalExecutavel.Repository.OperacoesZitec
     {
             private static readonly string connectionString = AppSettings.GetConnectionString("ConnectionZitec");
 
-            public static (bool existe, int idOperacao) VerificaExistenciaOperacao(string arquivoEntrada)
+        public static (bool existe, string idOperacao) VerificaExistenciaOperacao(string arquivoEntrada)
+        {
+            bool existe = false;
+            string idOperacao = string.Empty;
+
+            try
             {
-                bool existe = false;
-                int idOperacao = 0;
-
-                try
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection myConnection = new SqlConnection(connectionString))
+                    myConnection.Open();
+
+                    string query = "SELECT ID_ARQUIVO FROM TB_ARQUIVO WHERE NM_ARQUIVO_ENTRADA = @arquivoEntrada";
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        myConnection.Open();
+                        oCmd.Parameters.AddWithValue("@arquivoEntrada", arquivoEntrada);
 
-                        string query = "SELECT ID_ARQUIVO FROM TB_ARQUIVO WHERE NM_ARQUIVO_ENTRADA = @arquivoEntrada";
-                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                        using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
-                            oCmd.Parameters.AddWithValue("@arquivoEntrada", SqlDbType.NVarChar).Value = arquivoEntrada;
-
-                            using (SqlDataReader oReader = oCmd.ExecuteReader())
+                            if (oReader.Read())
                             {
-                                if (oReader.Read())
-                                {
-                                    existe = true;
-                                    idOperacao = oReader["ID_ARQUIVO"] != DBNull.Value ? Convert.ToInt32(oReader["ID_ARQUIVO"]) : 0;
-                                }
+                                existe = true;
+                                idOperacao = oReader["ID_ARQUIVO"] != DBNull.Value ? oReader["ID_ARQUIVO"].ToString() : string.Empty;
                             }
                         }
                     }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
-
-                return (existe, idOperacao);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
 
-            public static string VerificarStatus(string nomeArquivoEntrada)
+            return (existe, idOperacao);
+        }
+
+
+        public static string VerificarStatus(string nomeArquivoEntrada)
             {
                 string statusOperacao = string.Empty;
 
