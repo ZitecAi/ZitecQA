@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TestePortalExecutavel.Model;
 using TestePortalExecutavel.Utils;
 
-namespace TestePortalExecutavel.Pages.LoginPage
+namespace TestePortalExecutavel
 { 
     public class LoginGeral
     {
@@ -21,7 +21,7 @@ namespace TestePortalExecutavel.Pages.LoginPage
 
             try
             {
-                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
+                var portalLink = Program.Config["Links:Portal"];
                 var PaginaLogin = await Page.GotoAsync(portalLink + "/login.aspx");
                 await Page.GetByPlaceholder("E-mail").FillAsync(usuario.Email);
                 await Page.GetByPlaceholder("Senha").FillAsync(usuario.Senha);
@@ -76,6 +76,5 @@ namespace TestePortalExecutavel.Pages.LoginPage
         } 
             
             //"co@zitec.ai,mm@zitec.ai,jt@zitec.ai,mp@zitec.ai,ti@zitec.zi", id2021 -  senha
-
     }
 }

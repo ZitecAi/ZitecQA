@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using Microsoft.Data.SqlClient;
-using TestePortalExecutavel.TestePortal.Model;
+using TestePortalExecutavel.TestePortalExecutavel.Model;
 
 namespace TestePortalExecutavel.Repository.Ativos
 {

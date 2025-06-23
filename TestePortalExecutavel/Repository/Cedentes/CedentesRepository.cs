@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestePortalExecutavel.TestePortal.Model;
+using TestePortalExecutavel.TestePortalExecutavel.Model;
 
 namespace TestePortalExecutavel.Repository.Cedentes
 {

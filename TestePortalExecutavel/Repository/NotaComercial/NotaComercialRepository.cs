@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using Microsoft.Data.SqlClient;
-using TestePortalExecutavel.TestePortal.Model; // ou ajuste para o namespace correto do seu AppSettings
+using TestePortalExecutavel.TestePortalExecutavel.Model;// ou ajuste para o namespace correto do seu AppSettings
 
 namespace TestePortalExecutavel.Repository.NotaComercial
 {

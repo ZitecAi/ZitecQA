@@ -14,7 +14,7 @@ namespace TestePortalExecutavel.Pages.CedentesPage
 
             try
             {
-                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
+                var portalLink = Program.Config["Links:Portal"];
                 var BoletagemCedentes = await Page.GotoAsync(portalLink + "/Cedentes.aspx");
 
                 if (BoletagemCedentes.Status == 200)
@@ -46,7 +46,7 @@ namespace TestePortalExecutavel.Pages.CedentesPage
                     var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "53300608000106");
 
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
-                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_53300608000106_N.zip" });
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "36614123000160_53300608000106_N.zip" });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
 
                     {
@@ -130,7 +130,7 @@ namespace TestePortalExecutavel.Pages.CedentesPage
 
             try
             {
-                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
+                var portalLink = Program.Config["Links:Portal"];
                 var BoletagemCedentes = await Page.GotoAsync(portalLink + "/Cedentes.aspx");
 
                 if (BoletagemCedentes.Status == 200)
@@ -176,7 +176,7 @@ namespace TestePortalExecutavel.Pages.CedentesPage
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
 
                     // Obtém o caminho base do arquivo a partir do App.config
-                    string basePath = TestePortalIDSF.Program.Config["Paths:Arquivo"];
+                    string basePath = Program.Config["Paths:Arquivo"];
                     string fileName = "36614123000160_49624866830_N.zip";
                     string filePath = Path.Combine(basePath, fileName);
                     Console.WriteLine(filePath);
@@ -190,7 +190,7 @@ namespace TestePortalExecutavel.Pages.CedentesPage
                         throw new FileNotFoundException("Arquivo não encontrado para upload", filePath);
                     }
 
-                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_49624866830_N.zip" });
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "36614123000160_49624866830_N.zip" });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
                     {
                         Timeout = 90000

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using TestePortal.Model;
 
-namespace TestePortal.Utils
+using TestePortalExecutavel.Model;
+
+namespace TestePortalExecutavel.Utils
 {
     public class Util
     {

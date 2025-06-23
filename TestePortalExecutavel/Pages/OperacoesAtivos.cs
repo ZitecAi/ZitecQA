@@ -25,7 +25,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
             try
             {
 
-                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
+                var portalLink = Program.Config["Links:Portal"];
                 var OperacoesAtivos = await Page.GotoAsync(portalLink + "/Operacoes/Contratos.aspx");
 
 
@@ -91,7 +91,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         // await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
                         await Task.Delay(300);
-                        await Page.Locator("input[data-id-anexo='7']").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "21321321321.pdf" });
+                        await Page.Locator("input[data-id-anexo='7']").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "21321321321.pdf" });
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Voltar" }).ClickAsync();
                         await Task.Delay(300);

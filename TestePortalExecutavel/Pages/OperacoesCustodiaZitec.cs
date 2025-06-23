@@ -20,7 +20,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
             try
             {
-                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
+                var portalLink = Program.Config["Links:Portal"];
                 var OperacoesZitec = await Page.GotoAsync(portalLink + "/Operacoes/Operacoes2.0.aspx ");
 
                 if (OperacoesZitec?.Status == 200)

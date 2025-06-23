@@ -2,7 +2,7 @@
 using System;
 using System.Net.Http;
 using System.Text;
-using TestePortalExecutavel.TestePortal.Model;
+using TestePortalExecutavel.TestePortalExecutavel.Model;
 using TestePortalExecutavel.Model;
 
 namespace TestePortalExecutavel.Utils

@@ -20,7 +20,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
             try
             {
-                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
+                var portalLink = Program.Config["Links:Portal"];
                 var OperacoesZitec = await Page.GotoAsync(portalLink + "Operacoes/Operacoes2.0.aspx");
 
                 if (OperacoesZitec.Status == 200)
@@ -58,7 +58,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             await Task.Delay(200);
                             await Page.Locator("#fileEnviarOperacoesCsv").SetInputFilesAsync(new[] { caminhoModificado });
                             await Task.Delay(200);
-                            await Page.Locator("#fileEnviarLastro").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
+                            await Page.Locator("#fileEnviarLastro").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                             await Task.Delay(200);

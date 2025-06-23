@@ -13,7 +13,7 @@ namespace TestePortalExecutavel.Pages.NotaComercialPage
             int errosTotais = 0;
             try
             {
-                var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
+                var portalLink = Program.Config["Links:Portal"];
                 var NotaComercial = await Page.GotoAsync(portalLink + "/Operacoes/NotaComercial.aspx");
 
                 if (NotaComercial.Status == 200)
@@ -129,11 +129,11 @@ namespace TestePortalExecutavel.Pages.NotaComercialPage
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Button, new() { Name = "   Adicionar documento" }).ClickAsync();
                             await Task.Delay(200);
-                            await Page.Locator("#fileNotaComercial").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await Page.Locator("#fileNotaComercial").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Page.Locator("#tipoDocumento").SelectOptionAsync(new[] { "cpf" });
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Atualizar documento" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar mudanças" }).ClickAsync();
-
+                            await Page.PauseAsync();
 
                             var notaComercialExiste = Repository.NotaComercial.NotaComercialRepository.VerificaExistenciaNotaComercial("54638076000176", "teste nota comercial");
 

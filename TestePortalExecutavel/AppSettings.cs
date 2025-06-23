@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace TestePortalExecutavel
 {
-    using global::TestePortal.Model;
+    using global::TestePortalExecutavel.Model;
     using Microsoft.Extensions.Configuration;
     using System.IO;
 
-    namespace TestePortal.Model
+    namespace TestePortalExecutavel.Model
     {
         public static class AppSettings
         {
