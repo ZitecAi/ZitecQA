@@ -88,14 +88,11 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Anexos" }).ClickAsync();
                         await Task.Delay(300);
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
-                        await Task.Delay(300);
-                        await Page.EvaluateAsync(@"() => {
-                        const input = document.querySelector('input.file-input[data-id-anexo=""6""]');
-                        if(input) { input.removeAttribute('hidden'); }
-                        }");
-                        await Page.Locator("input.file-input[data-id-anexo='6']").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "21321321321.pdf" });
+                        //await Page.EvaluateAsync(@"() => {
+                        //const input = document.querySelector('input.file-input[data-id-anexo=""6""]');
+                        //if(input) { input.removeAttribute('hidden'); }
+                        //}");
+                        await Page.Locator("input.file-input[data-id-anexo='6']").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Voltar" }).ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("#termoRespCheck").ClickAsync();
