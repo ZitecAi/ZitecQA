@@ -92,8 +92,8 @@ namespace TestePortalExecutavel
                         //listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         //listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
-                        //(pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
-                        //listaFluxos.Add(fluxoDeCadastros);
+                        (pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
+                        listaFluxos.Add(fluxoDeCadastros);
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecInterno (Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaOperacoes.Add(operacoes);

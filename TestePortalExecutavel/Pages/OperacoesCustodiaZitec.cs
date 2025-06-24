@@ -86,20 +86,20 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             var primeiroTr = Page.Locator("#listaCedentes tr").First;
                             var primeiroTd = primeiroTr.Locator("td").First;
                             await primeiroTd.ClickAsync();
-                            var button = Page.Locator($"button[title='Excluir Arquivo'][onclick*=\"{operacoes.NovoNomeArquivo2}\"]");
-
+                            var button = Page.Locator("button[title='Excluir Arquivo']");
 
                             if (await button.CountAsync() > 0)
                             {
 
                                 Console.WriteLine("Botão de apagar operação encontrado.");
-                                await button.ClickAsync();
+                                await button.First.ClickAsync();
                                 var apagarOperacao = await Page.GetByText("Arquivo excluído com sucesso!").ElementHandleAsync();
 
                                 if (apagarOperacao != null)
                                 {
                                     operacoes.OpApagadaBtn = "✅";
                                 }
+
                                 else
                                 {
                                     operacoes.OpApagadaBtn = "❌";

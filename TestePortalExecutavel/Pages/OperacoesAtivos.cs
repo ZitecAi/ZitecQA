@@ -69,7 +69,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         await Task.Delay(300);
                         await Page.FillAsync("#cpfCnpjCedente", "533.006.080-00106");
                         await Task.Delay(300);
-                        await Page.Locator("#tipoNota").SelectOptionAsync(new[] { "AtivosImobiliarios" });
+                        await Page.Locator("#tipoNota").SelectOptionAsync(new[] { "Ações Judiciais" });
                         await Task.Delay(300);
                         await Page.Locator("#AgenciaAtivos").FillAsync("0001");
                         await Task.Delay(300);
@@ -88,11 +88,14 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Anexos" }).ClickAsync();
                         await Task.Delay(300);
-                        // await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Anterior" }).ClickAsync();
                         await Task.Delay(300);
-                        await Page.Locator("input[data-id-anexo='7']").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "21321321321.pdf" });
-                        await Task.Delay(300);
+                        await Page.EvaluateAsync(@"() => {
+                        const input = document.querySelector('input.file-input[data-id-anexo=""6""]');
+                        if(input) { input.removeAttribute('hidden'); }
+                        }");
+                        await Page.Locator("input.file-input[data-id-anexo='6']").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "21321321321.pdf" });
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Voltar" }).ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("#termoRespCheck").ClickAsync();
@@ -209,10 +212,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                                 errosTotais++;
 
                             }
-
-
                         }
-
 
                         else
                         {
