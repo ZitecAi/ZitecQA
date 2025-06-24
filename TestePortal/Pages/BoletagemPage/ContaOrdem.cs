@@ -43,9 +43,17 @@ namespace TestePortal.Pages.BoletagemPage
                         errosTotais++;
                     }
                     //await Page.PauseAsync();
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
+                    await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "53300608000106" });
+                    await Page.Locator("#selectCarteira").SelectOptionAsync(new[] { "777777" });
+                    await Page.Locator("#inputDistribuidor").ClickAsync();
+                    await Page.Locator("#inputDistribuidor").FillAsync("QA");
+                    await Page.GetByLabel("Novo Registro de Conta/Ordem").Locator("i").ClickAsync();
+                    await Page.GetByLabel("Novo Registro de Conta/Ordem").SetInputFilesAsync(new[] { "arquivoTest.csv" });
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Importar" }).ClickAsync();
 
                     //Fazer Fluxo de inserir dados e criar repository
-                    
+
 
 
                 }

@@ -127,6 +127,45 @@ namespace TestePortal.Utils
 
             return baixarExtrato;
         }
+
+        public static async Task<string> ValidarDownloadAsync(IDownload download, string nomeEsperado)
+        {
+            string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+            string filePath = Path.Combine(downloadPath, nomeEsperado);
+            string resultado = "❌";
+
+            try
+            {
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
+
+                await download.SaveAsAsync(filePath);
+
+                if (File.Exists(filePath))
+                {
+                    Console.WriteLine("✅ Arquivo foi baixado.");
+                    resultado = "✅";
+
+                    File.Delete(filePath); // opcional
+                    Console.WriteLine("Arquivo excluído.");
+                }
+                else
+                {
+                    Console.WriteLine("❌ Arquivo não encontrado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Erro ao salvar/verificar download: {ex.Message}");
+            }
+
+            return resultado;
+        }
+
+
+
+
+
     }
 }
 

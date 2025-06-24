@@ -26,6 +26,7 @@ namespace TestePortal.Model
         public string Reprovar { get; set; }
         public string Acentos { get; set; }
         public string Perfil { get; set;  }
+        public string EcluirBtn { get; set; }
 
         public string ToFormattedString(int padding = 20)
         {
