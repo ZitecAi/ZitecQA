@@ -5,7 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestePortal.TestePortal.Model; // Garante acesso ao AppSettings
+using TestePortal.TestePortal.Model;
+using System.IO; // Garante acesso ao AppSettings
 
 namespace TestePortal.Repository.ConciliacaoExtrato
 {
@@ -22,11 +23,13 @@ namespace TestePortal.Repository.ConciliacaoExtrato
                 {
                     myConnection.Open();
                     string query = @"
-                    SELECT id 
-                    FROM TB_CONCILIACAO 
-                    WHERE ID_CARTEIRA = @idCarteira 
-                      AND VALOR_EM_ABERTO = @valorEmAberto 
-                      AND DESCRICAO = @descricao";
+                        SELECT id 
+                        FROM TB_CONCILIACAO 
+                        WHERE ID_CARTEIRA = @idCarteira 
+                        AND VALOR_EM_ABERTO = @valorEmAberto 
+                        AND DESCRICAO = @descricao
+                        ORDER BY ID DESC
+                    ";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
@@ -127,6 +130,74 @@ namespace TestePortal.Repository.ConciliacaoExtrato
                 Utils.Slack.MandarMsgErroGrupoDev(e.Message, "ConciliacaoRepository.VerificarIdsConciliados()", "Automações Jessica", e.StackTrace);
                 return false;
             }
+
+
         }
+
+        public static bool ValidarDadosCsvBanco(int id, decimal valorEmAberto, string descricaoEsperada)
+        {
+            try
+            {
+                var con = AppSettings.GetConnectionString("myConnectionString");
+
+                using var conexao = new SqlConnection(con);
+                conexao.Open();
+
+                var comando = new SqlCommand(@"SELECT *
+                        FROM TB_CONCILIACAO 
+                        WHERE ID_CARTEIRA = @id 
+                        AND VALOR_EM_ABERTO = @valorEmAberto
+                        AND DESCRICAO = @descricaoEsperada
+                        ORDER BY ID DESC", conexao);
+                
+
+                comando.Parameters.AddWithValue("@id", id);
+                comando.Parameters.AddWithValue("@valorEmAberto", valorEmAberto);
+                comando.Parameters.AddWithValue("@descricaoEsperada", descricaoEsperada);
+
+                using var reader = comando.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    var descricaoBanco = reader["Descricao"].ToString();
+                    var valorBanco = Convert.ToDecimal(reader["Valor"]);
+
+                    bool descricaoIgual = descricaoBanco == descricaoEsperada;
+                    bool valorIgual = valorBanco == valorEmAberto;
+
+                    if (descricaoIgual == true && valorIgual == true)
+                    {
+                        Console.WriteLine($"✅ ID {id}: dados válidos.");
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"⚠️ ID {id}: divergência encontrada.");
+                        Console.WriteLine($"   Descrição esperada: {descricaoEsperada} | no banco: {descricaoBanco}");
+                        Console.WriteLine($"   Valor esperado:     {valorEmAberto}     | no banco: {valorBanco}");
+                        
+                    }
+                    
+                }
+                else
+                {
+                    Console.WriteLine($"❌ ID {id} não encontrado no banco.");
+                    
+                }
+                
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao validar dados para ID {id}: {ex.Message}");
+            }
+            return false;
+
+
+        }
+
+
+
+
     }
 }

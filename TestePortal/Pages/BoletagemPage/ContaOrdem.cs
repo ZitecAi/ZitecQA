@@ -59,7 +59,7 @@ namespace TestePortal.Pages.BoletagemPage
 
                     });
 
-                    //Fazer Fluxo de inserir dados e criar repository
+                    
                     var contaOrdemExiste = Repository.BoletagemContaOrdem.BoletagemContaOrdemRepository.VerificaExistenciaBoletagemContaOrdem("qazitec01@gmail.com", "TesteQA");
 
                     if (contaOrdemExiste)
