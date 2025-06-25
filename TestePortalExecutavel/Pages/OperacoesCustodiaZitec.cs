@@ -47,12 +47,12 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "54638076000176" });
 
                         // Valida se AtualizarDataEEnviarArquivo NÃO retornou null
+                        
                         operacoes.NovoNomeArquivo2 = await AtualizarTxt.AtualizarDataEEnviarArquivo(Page, caminhoArquivo);
                         if (string.IsNullOrEmpty(operacoes.NovoNomeArquivo2))
                         {
                             throw new NullReferenceException("AtualizarDataEEnviarArquivo retornou null ou vazio.");
                         }
-
                         await Task.Delay(300);
                         var CadastroOperacoes = await Page.GetByText("Arquivo recebido com sucesso! Aguarde a Validação").ElementHandleAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Close" }).ClickAsync();
@@ -61,7 +61,8 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
                         if (CadastroOperacoes != null)
                         {
-                            var (existe, idOperacao) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+                            var (existe, idArquivo) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+                            var idOperacaoRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo2);
 
                             await Page.ReloadAsync();
 
@@ -86,13 +87,17 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             var primeiroTr = Page.Locator("#listaCedentes tr").First;
                             var primeiroTd = primeiroTr.Locator("td").First;
                             await primeiroTd.ClickAsync();
-                            var button = Page.Locator("button[title='Excluir Arquivo']");
+                            var cnpj = "54638076000176";
+
+                            var button = Page.Locator($"button[onclick=\"ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}')\"]");
+                            //< button style = "background: none; border: none; color: #0E2E1C;" onclick = "ModalExcluirArquivo('58818003','50702206','FundoQA_20250625_9c285ed6.txt','54638076000176')"
+                            //    title = "Excluir Arquivo" type = "button" class="btn btn-default"><i class="fas fa-trash"></i></button>
+
 
                             if (await button.CountAsync() > 0)
                             {
-
+                                await button.ClickAsync(new() { Force = true });  
                                 Console.WriteLine("Botão de apagar operação encontrado.");
-                                await button.First.ClickAsync();
                                 var apagarOperacao = await Page.GetByText("Arquivo excluído com sucesso!").ElementHandleAsync();
 
                                 if (apagarOperacao != null)

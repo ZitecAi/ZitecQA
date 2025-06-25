@@ -404,5 +404,49 @@ namespace TestePortalExecutavel.Repository.OperacoesZitec
 
             return sucesso;
         }
+
+        public static int ObterIdOpRec(string nomeArquivoEntrada)
+        {
+            int idOperacaoRecebivel = 0;
+
+            try
+            {
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
+                {
+                    myConnection.Open();
+
+                    string query = @"
+                SELECT ID_OPERACAO_RECEBIVEL 
+                FROM TB_OPERACAO_RECEBIVEL 
+                WHERE ID_ARQUIVO = (
+                    SELECT ID_ARQUIVO 
+                    FROM TB_ARQUIVO 
+                    WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
+                )";
+
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", nomeArquivoEntrada);
+
+                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                        {
+                            if (oReader.Read())
+                            {
+                                idOperacaoRecebivel = oReader["ID_OPERACAO_RECEBIVEL"] != DBNull.Value
+                                    ? Convert.ToInt32(oReader["ID_OPERACAO_RECEBIVEL"])
+                                    : 0;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return idOperacaoRecebivel;
+        }
+
     }
 }
