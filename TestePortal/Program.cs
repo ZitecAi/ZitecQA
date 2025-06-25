@@ -156,7 +156,7 @@ namespace TestePortalIDSF
                         listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel));
                         listaPagina.Add(await BoletagemAmortizacao.Amortizacao(Page));
                         listaPagina.Add(await ContaOrdem.ContaEOrdem(Page));
-                        jlistaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
+                        listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
