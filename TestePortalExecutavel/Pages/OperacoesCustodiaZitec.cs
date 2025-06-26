@@ -28,7 +28,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                     string seletorTabela = "#divTabelaCedentes";
 
                     Console.Write("Operações Zitec : ");
-                    pagina.Nome = "Operações Zitec";
+                    pagina.Nome = "Operações Zitec - Interno";
                     pagina.StatusCode = OperacoesZitec.Status;
                     pagina.BaixarExcel = "❓";
                     pagina.Acentos = await Acentos.ValidarAcentos(Page) ?? "❌";
@@ -47,7 +47,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "54638076000176" });
 
                         // Valida se AtualizarDataEEnviarArquivo NÃO retornou null
-                        
+
                         operacoes.NovoNomeArquivo2 = await AtualizarTxt.AtualizarDataEEnviarArquivo(Page, caminhoArquivo);
                         if (string.IsNullOrEmpty(operacoes.NovoNomeArquivo2))
                         {
@@ -89,66 +89,59 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             await primeiroTd.ClickAsync();
                             var cnpj = "54638076000176";
 
-                            var button = Page.Locator($"button[onclick=\"ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}')\"]");
-                            //< button style = "background: none; border: none; color: #0E2E1C;" onclick = "ModalExcluirArquivo('58818003','50702206','FundoQA_20250625_9c285ed6.txt','54638076000176')"
-                            //    title = "Excluir Arquivo" type = "button" class="btn btn-default"><i class="fas fa-trash"></i></button>
+                            //var button = Page.Locator($"button[onclick=\"ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}')\"]").First.ClickAsync();
+                            await Page.EvaluateAsync($"""
+    ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}');
+""");
+                            await Page.Locator("#motivoExcluirArquivo").ClickAsync();
+                            await Task.Delay(200);
+                            await Page.Locator("#motivoExcluirArquivo").FillAsync("teste de exclus");
+                            await Task.Delay(200);
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
+                            Console.WriteLine("Botão de apagar operação encontrado.");
 
+                            var apagarOperacao = await Page.GetByText("Arquivo excluído com sucesso!").ElementHandleAsync();
 
-                            if (await button.CountAsync() > 0)
+                            if (apagarOperacao != null)
                             {
-                                await button.ClickAsync(new() { Force = true });  
-                                Console.WriteLine("Botão de apagar operação encontrado.");
-                                var apagarOperacao = await Page.GetByText("Arquivo excluído com sucesso!").ElementHandleAsync();
+                                operacoes.OpApagadaBtn = "✅";
+                            }
+                            else
+                            {
+                                operacoes.OpApagadaBtn = "❌";
 
-                                if (apagarOperacao != null)
+                                bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
+                                bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
+                                var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
+                                var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
+                                var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
+
+                                if (exclusaoRemessa && exclusaoTed && excluirAvalista)
                                 {
-                                    operacoes.OpApagadaBtn = "✅";
-                                }
+                                    bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
 
-                                else
-                                {
-                                    operacoes.OpApagadaBtn = "❌";
-
-                                    bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
-                                    bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
-                                    var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
-                                    var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
-                                    var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
-
-                                    if (exclusaoRemessa && exclusaoTed && excluirAvalista)
+                                    if (excluirOperacao)
                                     {
-                                        bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
+                                        Console.WriteLine("Operação excluída com sucesso pelo banco.");
+                                        pagina.Excluir = "✅";
 
-                                        if (excluirOperacao)
-                                        {
-                                            Console.WriteLine("Operação excluída com sucesso pelo banco.");
-                                            pagina.Excluir = "✅";
-
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Operação não excluída.");
-                                            pagina.Excluir = "❌";
-                                            errosTotais2++;
-                                            operacoes.ListaErros2.Add("Operação não excluída");
-                                        }
                                     }
                                     else
                                     {
                                         Console.WriteLine("Operação não excluída.");
                                         pagina.Excluir = "❌";
                                         errosTotais2++;
-                                        operacoes.ListaErros2.Add("Não foi possível excluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED");
+                                        operacoes.ListaErros2.Add("Operação não excluída");
                                     }
                                 }
+                                else
+                                {
+                                    Console.WriteLine("Operação não excluída.");
+                                    pagina.Excluir = "❌";
+                                    errosTotais2++;
+                                    operacoes.ListaErros2.Add("Não foi possível excluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED");
+                                }
                             }
-                            else
-                            {
-
-                                errosTotais2++;
-                                operacoes.ListaErros2.Add("Erro ao encontrar botão para apagar operação.");
-                            }
-
                         }
                     }
                     else
@@ -211,7 +204,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                     string seletorTabela = "#divTabelaCedentes";
 
                     Console.Write("Operações Zitec : ");
-                    pagina.Nome = "Operações Zitec";
+                    pagina.Nome = "Operações Zitec - Consultoria";
                     pagina.StatusCode = OperacoesZitec.Status;
                     pagina.BaixarExcel = "❓";
                     pagina.Acentos = await Acentos.ValidarAcentos(Page) ?? "❌";
@@ -245,7 +238,8 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         if (CadastroOperacoes != null)
                         {
 
-                            var (existe, idOperacao) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+                            var (existe, idArquivo) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+                            var idOperacaoRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo2);
                             await Page.ReloadAsync();
 
                             if (existe)
@@ -282,62 +276,61 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             var primeiroTr2 = Page.Locator("#listaCedentes tr").First;
                             var primeiroTd2 = primeiroTr.Locator("td").First;
                             await primeiroTd2.ClickAsync();
-                            var button = Page.Locator($"button[onclick*=\"'{operacoes.NovoNomeArquivo2}'\"]");
+                            var cnpj = "54638076000176";
 
-                            if (await button.CountAsync() > 0)
+                            //var button = Page.Locator($"button[onclick=\"ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}')\"]").First.ClickAsync();
+                            await Page.EvaluateAsync($"""
+    ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}');
+""");
+                            await Page.Locator("#motivoExcluirArquivo").ClickAsync();
+                            await Task.Delay(200);
+                            await Page.Locator("#motivoExcluirArquivo").FillAsync("teste de exclusão");
+                            await Task.Delay(200);
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
+                            Console.WriteLine("Botão de apagar operação encontrado.");
+
+                            var apagarOperacao = await Page.GetByText("Arquivo excluído com sucesso!").ElementHandleAsync();
+
+                            if (apagarOperacao != null)
                             {
+                                operacoes.OpApagadaBtn = "✅";
+                            }
+                            else
+                            {
+                                operacoes.OpApagadaBtn = "❌";
+                                operacoes.OpApagadaBtn = "❌";
 
-                                Console.WriteLine("Botão de apagar operação encontrado.");
+                                bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
+                                bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
+                                var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
+                                var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
+                                var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
 
-                                await button.ClickAsync();
-                                var apagarOperacao = await Page.GetByText("Arquivo excluído com sucesso!").ElementHandleAsync();
-
-                                if (apagarOperacao != null)
+                                if (exclusaoRemessa && exclusaoTed && excluirAvalista)
                                 {
-                                    operacoes.OpApagadaBtn = "✅";
-                                }
-                                else
-                                {
-                                    operacoes.OpApagadaBtn = "❌";
+                                    bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
 
-                                    bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
-                                    bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
-                                    var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
-                                    var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
-                                    var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
-
-                                    if (exclusaoRemessa && exclusaoTed && excluirAvalista)
+                                    if (excluirOperacao)
                                     {
-                                        bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
+                                        Console.WriteLine("Operação excluída com sucesso pelo banco.");
+                                        pagina.Excluir = "✅";
 
-                                        if (excluirOperacao)
-                                        {
-                                            Console.WriteLine("Operação excluída com sucesso pelo banco.");
-                                            pagina.Excluir = "✅";
-
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Operação não excluída.");
-                                            pagina.Excluir = "❌";
-                                            errosTotais2++;
-                                            operacoes.ListaErros2.Add("Operação não excluída");
-                                        }
                                     }
                                     else
                                     {
                                         Console.WriteLine("Operação não excluída.");
                                         pagina.Excluir = "❌";
                                         errosTotais2++;
-                                        operacoes.ListaErros2.Add("Não foi possível excluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED");
+                                        operacoes.ListaErros2.Add("Operação não excluída");
                                     }
                                 }
-                            }
-                            else
-                            {
-
-                                errosTotais2++;
-                                operacoes.ListaErros2.Add("Erro ao encontrar botão para apagar operação.");
+                                else
+                                {
+                                    Console.WriteLine("Operação não excluída.");
+                                    pagina.Excluir = "❌";
+                                    errosTotais2++;
+                                    operacoes.ListaErros2.Add("Não foi possível excluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED");
+                                }
                             }
                         }
                     }
@@ -367,7 +360,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
         }
 
 
-        public static async Task<(Pagina pagina, Operacoes operacoes)> OperacoesZiteGestora (IPage Page, NivelEnum nivelLogado, Operacoes operacoes)
+        public static async Task<(Pagina pagina, Operacoes operacoes)> OperacoesZiteGestora(IPage Page, NivelEnum nivelLogado, Operacoes operacoes)
         {
             var pagina = new Pagina();
             int errosTotais = 0;
@@ -386,7 +379,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                     string seletorTabela = "#divTabelaCedentes";
 
                     Console.Write("Operações Zitec : ");
-                    pagina.Nome = "Operações Zitec";
+                    pagina.Nome = "Operações Zitec - Gestora";
                     pagina.StatusCode = OperacoesZitec.Status;
                     pagina.BaixarExcel = "❓";
                     pagina.Acentos = await Acentos.ValidarAcentos(Page) ?? "❌";
@@ -412,16 +405,15 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         }
 
                         await Task.Delay(500);
-
                         var CadastroOperacoes = await Page.GetByText("Arquivo recebido com sucesso! Aguarde a Validação").ElementHandleAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Close" }).ClickAsync();
-                        await Task.Delay(25000);
-
+                        await Task.Delay(15000);
 
                         if (CadastroOperacoes != null)
                         {
-                            //await Page.PauseAsync();
-                            var (existe, idOperacao) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+
+                            var (existe, idArquivo) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+                            var idOperacaoRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo2);
 
                             await Page.ReloadAsync();
 
@@ -438,124 +430,106 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                                 errosTotais += 2;
                                 operacoes.ListaErros2.Add("Erro ao lançar operação");
                             }
-                            string status = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
-
-                            //fazer um update para que o status seja PG
-
-                            if (status == "PG")
+                            await Page.ReloadAsync();
+                            await Page.GetByLabel("Pesquisar").ClickAsync();
+                            await Task.Delay(200);
+                            await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo2);
+                            var primeiroTr = Page.Locator("#listaCedentes tr").First;
+                            var primeiroTd = primeiroTr.Locator("td").First;
+                            await primeiroTd.ClickAsync();
+                            await Page.Locator("span.dtr-title:has-text('Ações') >> xpath=.. >> button[title='Aprovação Consultoria']").ClickAsync();
+                            await Task.Delay(300);
+                            while (await Page.Locator("#aprovaOpConsultoriaBtn").IsVisibleAsync())
                             {
-                                pagina.InserirDados = "❓";
-                                Console.WriteLine("O status foi trocado para aguardar a aprovação da gestora");
+                                await Page.Locator("#aprovaOpConsultoriaBtn").ClickAsync();
+                                await Task.Delay(1000);
+                            }
+
+                            string status2 = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
+                            await Task.Delay(200);
+
+                            if (status2 == "PG")
+                            {
+                                operacoes.StatusTrocados2 = "✅";
+                                operacoes.AprovacoesRealizadas2 = "✅";
                                 statusTrocados++;
+                                Console.WriteLine("Todos os status foram trocados corretamente, aprovações realizadas! ");
+                            }
+                            else
+                            {
+                                operacoes.StatusTrocados2 = "❌";
+                                operacoes.AprovacoesRealizadas2 = "❌";
+                                errosTotais2++;
+                                operacoes.ListaErros2.Add("Status PI não encontrado");
+                                Console.WriteLine("Os status não foram trocados corretamente, aprovações realizadas! ");
+                                errosTotais2++;
+                                operacoes.ListaErros2.Add("Aprovações realizadas, mas status não foi trocado no banco de dados");
+                            }
 
-                                await Page.ReloadAsync();
-                                await Page.GetByLabel("Pesquisar").ClickAsync();
-                                await Task.Delay(2000);
-                                await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo2);
+                            await Page.GetByLabel("Pesquisar").ClickAsync();
+                            await Task.Delay(800);
+                            await Page.GetByLabel("Pesquisar").FillAsync("CEDENTE TESTE");
+                            await Task.Delay(600);
+                            var primeiroTr2 = Page.Locator("#listaCedentes tr").First;
+                            var primeiroTd2 = primeiroTr.Locator("td").First;
+                            await primeiroTd.ClickAsync();
+                            await primeiroTd2.ClickAsync();
+                            var cnpj = "54638076000176";
 
-                                var primeiroTr = Page.Locator("#listaCedentes tr").First;
-                                var primeiroTd = primeiroTr.Locator("td").First;
+                            //var button = Page.Locator($"button[onclick=\"ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}')\"]").First.ClickAsync();
+                            await Page.EvaluateAsync($"""
+                            ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}');
+                            """);
+                            await Page.Locator("#motivoExcluirArquivo").ClickAsync();
+                            await Task.Delay(200);
+                            await Page.Locator("#motivoExcluirArquivo").FillAsync("teste de exclusão");
+                            await Task.Delay(200);
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
+                            Console.WriteLine("Botão de apagar operação encontrado.");
 
-                                await primeiroTd.ClickAsync();
-                                await Page.Locator("span.dtr-title:has-text('Ações') >> xpath=.. >> button[title='Aprovação Gestora']").ClickAsync();
+                            var apagarOperacao = await Page.GetByText("Arquivo excluído com sucesso!").ElementHandleAsync();
 
-                                await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar", Exact = true }).ClickAsync();
-                                await Task.Delay(5000);
+                            if (apagarOperacao != null)
+                            {
+                                operacoes.OpApagadaBtn = "✅";
+                            }
+                            else
+                            {
+                                operacoes.OpApagadaBtn = "❌";
 
-                                string status2 = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
+                                bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
+                                bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
+                                var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
+                                var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
+                                var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
 
-                                if (status2 == "PI")
+                                if (exclusaoRemessa && exclusaoTed && excluirAvalista)
                                 {
-                                    statusTrocados++;
-                                    Console.WriteLine("Todos os status foram trocados corretamente, aprovações realizadas! ");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Os status não foram trocados corretamente, aprovações realizadas! ");
-                                    errosTotais2++;
-                                    operacoes.ListaErros2.Add("Aprovações realizadas, mas status não foi trocado no banco de dados");
-                                }
+                                    bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
 
-                                if (statusTrocados == 2)
-                                {
-                                    operacoes.StatusTrocados2 = "✅";
-                                    operacoes.AprovacoesRealizadas2 = "✅";
-                                }
-                                else
-                                {
-                                    operacoes.StatusTrocados2 = "❌";
-                                    operacoes.AprovacoesRealizadas2 = "❌";
-                                    errosTotais2++;
-                                    operacoes.ListaErros2.Add("Status PI não encontrado");
-                                }
-
-
-                                await Page.GetByLabel("Pesquisar").ClickAsync();
-                                await Task.Delay(800);
-                                await Page.GetByLabel("Pesquisar").FillAsync("CEDENTE TESTE");
-                                await Task.Delay(600);
-                                var primeiroTr2 = Page.Locator("#listaCedentes tr").First;
-                                var primeiroTd2 = primeiroTr.Locator("td").First;
-                                await primeiroTd.ClickAsync();
-                                var button = Page.Locator($"button[onclick*=\"'{operacoes.NovoNomeArquivo2}'\"]");
-
-                                if (await button.CountAsync() > 0)
-                                {
-
-                                    Console.WriteLine("Botão de apagar operação encontrado.");
-
-                                    await button.ClickAsync();
-                                    var apagarOperacao = await Page.GetByText("Arquivo excluído com sucesso!").ElementHandleAsync();
-
-                                    if (apagarOperacao != null)
+                                    if (excluirOperacao)
                                     {
-                                        operacoes.OpApagadaBtn = "✅";
+                                        Console.WriteLine("Operação excluída com sucesso pelo banco.");
+                                        pagina.Excluir = "✅";
+
                                     }
                                     else
                                     {
-                                        operacoes.OpApagadaBtn = "❌";
-
-                                        bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
-                                        bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
-                                        var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
-                                        var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
-                                        var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
-
-                                        if (exclusaoRemessa && exclusaoTed && excluirAvalista)
-                                        {
-                                            bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
-
-                                            if (excluirOperacao)
-                                            {
-                                                Console.WriteLine("Operação excluída com sucesso pelo banco.");
-                                                pagina.Excluir = "✅";
-
-                                            }
-                                            else
-                                            {
-                                                Console.WriteLine("Operação não excluída.");
-                                                pagina.Excluir = "❌";
-                                                errosTotais2++;
-                                                operacoes.ListaErros2.Add("Operação não excluída");
-                                            }
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Operação não excluída.");
-                                            pagina.Excluir = "❌";
-                                            errosTotais2++;
-                                            operacoes.ListaErros2.Add("Não foi possível excluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED");
-                                        }
+                                        Console.WriteLine("Operação não excluída.");
+                                        pagina.Excluir = "❌";
+                                        errosTotais2++;
+                                        operacoes.ListaErros2.Add("Operação não excluída");
                                     }
                                 }
                                 else
                                 {
-
+                                    Console.WriteLine("Operação não excluída.");
+                                    pagina.Excluir = "❌";
                                     errosTotais2++;
-                                    operacoes.ListaErros2.Add("Erro ao encontrar botão para apagar operação.");
+                                    operacoes.ListaErros2.Add("Não foi possível excluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED");
                                 }
-
                             }
+
                         }
                         else
                         {
@@ -563,10 +537,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             errosTotais2++;
                             operacoes.ListaErros2.Add("Não foi possível processar o fundo para a data de hoje");
                         }
-
                     }
-
-
                 }
             }
             catch (Exception ex)
@@ -576,7 +547,6 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                 errosTotais2++;
                 operacoes.totalErros2 = errosTotais2;
             }
-
             pagina.TotalErros = errosTotais;
             if (operacoes.ListaErros2.Count == 0)
             {

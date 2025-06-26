@@ -12,6 +12,7 @@ namespace TestePortalExecutavel.Model
     
         public string NovoNomeArquivo2 { get; set; }
         public string NovoNomeArquivo3 { get; set; }
+        public string ArquivoEnviado { get; set; }
 
         public string TipoOperacao2 { get; set; }
         public string TipoOperacao3 { get; set; }

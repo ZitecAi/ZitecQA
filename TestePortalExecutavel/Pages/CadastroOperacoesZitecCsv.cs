@@ -69,7 +69,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             await Page.Locator("#enviarButton").ClickAsync();
                             await Task.Delay(1000); 
                             }
-                            await Task.Delay(30000);
+                            await Task.Delay(3000);
 
                             var idOperacaoRecebivel = Repository.OperacoesCsv.OperacoesCsvRepository.ObterIdOperacaoRec(nomeArquivoModificado);
 
