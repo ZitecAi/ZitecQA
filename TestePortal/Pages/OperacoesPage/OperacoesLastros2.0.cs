@@ -116,7 +116,7 @@ namespace TestePortal.Pages.OperacoesPage
 
                 else
                 {
-                    Console.Write("Erro ao carregar a página de Enviar Lastros no tópico Operações: ");
+                    Console.Write("Erro ao carregar a página de Enviar Lastros 2.0 no tópico Operações: ");
                     pagina.Nome = "Operações - Enviar Lastro";
                     pagina.StatusCode = OperacoesEnviarLastros.Status;
                     errosTotais++;

@@ -80,9 +80,9 @@ namespace TestePortal.Pages.BancoIdPage
                 }
                 else
                 {
-                    Console.Write("Erro ao carregar a página de Devolução/Reembolso no tópico Banco ID ");
+                    Console.Write("Erro ao carregar a página de Extratos no tópico Banco ID ");
                     Console.WriteLine(BancoIdExtratos.Status);
-                    listErros.Add("Erro ao carregar a página de Devolução/Reembolso no tópico Banco ID ");
+                    listErros.Add("Erro ao carregar a página de Extratos no tópico Banco ID ");
                     pagina.Nome = "Extratos";
                     pagina.StatusCode = BancoIdExtratos.Status;
                     errosTotais++;
