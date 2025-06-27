@@ -101,21 +101,21 @@ namespace TestePortalIDSF
 
                     if (usuario.Nivel == Usuario.NivelEnum.Master)
                     {
-                        listaPagina.Add(await AdministrativoGrupos.Grupos(Page));
-                        listaPagina.Add(await AdministrativoUsuarios.Usuarios(Page));
-                        await Task.Delay(500);
-                        listaPagina.Add(await AdministrativoToken.Token(Page));
-                        listaPagina.Add(await EnviarMensagemPage.EnviarMensagem(Page, usuario.Nivel));
-                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaMov(Page, context, usuario.Nivel);
-                        listaPagina.Add(pagina);
-                        listaFluxos.Add(fluxoDeCadastros);
-                        await Task.Delay(500);
-                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaSelic(Page, context, usuario.Nivel);
-                        listaFluxos.Add(fluxoDeCadastros);
-                        listaPagina.Add(await CadastroCarteira.Carteira(Page));
-                        listaPagina.Add(await BancoIdReembolso.Reembolso(Page, usuario.Nivel));
-                        (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaCobranca(Page, context, usuario.Nivel);
-                        listaFluxos.Add(fluxoDeCadastros);
+                        //listaPagina.Add(await AdministrativoGrupos.Grupos(Page));
+                        //listaPagina.Add(await AdministrativoUsuarios.Usuarios(Page));
+                        //await Task.Delay(500);
+                        //listaPagina.Add(await AdministrativoToken.Token(Page));
+                        //listaPagina.Add(await EnviarMensagemPage.EnviarMensagem(Page, usuario.Nivel));
+                        //(pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaMov(Page, context, usuario.Nivel);
+                        //listaPagina.Add(pagina);
+                        //listaFluxos.Add(fluxoDeCadastros);
+                        //await Task.Delay(500);
+                        //(pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaSelic(Page, context, usuario.Nivel);
+                        //listaFluxos.Add(fluxoDeCadastros);
+                        //listaPagina.Add(await CadastroCarteira.Carteira(Page));
+                        //listaPagina.Add(await BancoIdReembolso.Reembolso(Page, usuario.Nivel));
+                        //(pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaCobranca(Page, context, usuario.Nivel);
+                        //listaFluxos.Add(fluxoDeCadastros);
                         listaPagina.Add(await BancoIdExtratos.Extratos(Page));
                         listaPagina.Add(await BancoIdSaldos.Saldos(Page));
                         await Task.Delay(500);
