@@ -12,6 +12,7 @@ using static TestePortal.Model.Usuario;
 using System.IO.Packaging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration;
+using System.Runtime.InteropServices;
 
 namespace TestePortal.Pages.CadastroPage
 {
@@ -99,7 +100,7 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(400);
 
                             string token = ConsultoriasRepository.ObterToken("16695922000109", "robo@zitec.ai");
-                            string baseUrl = TestePortalIDSF.Program.Config["Links:FichaCorrentista"];
+                            string baseUrl = TestePortalIDSF.Program.Config["Links:FichaConsultoria"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);
@@ -198,6 +199,7 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(200);
                             await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).FillAsync("(11)95478-5474");
                             await Task.Delay(200);
+                            await newPage.Locator("#assinaIsolSim").ClickAsync();
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "ADICIONAR REPRESENTANTE" }).ClickAsync();
                             await Task.Delay(200);
                             await newPage.GetByLabel("*Nome Completo", new() { Exact = true }).ClickAsync();
@@ -220,6 +222,7 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(200);
                             await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).FillAsync("(11)56498-4546");
                             await Task.Delay(200);
+                            await newPage.Locator("#assinaIsolSim").ClickAsync();
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "ADICIONAR REPRESENTANTE" }).ClickAsync();
                             await Task.Delay(200);
                             await newPage.Locator("#btnAvancar").ClickAsync();
