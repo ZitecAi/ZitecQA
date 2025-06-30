@@ -263,6 +263,8 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         }
                         else
                         {
+                            operacoes.AprovacoesRealizadas3 = "❌";
+                            operacoes.StatusTrocados3 = "❌";
                             Console.WriteLine("O status não foi trocado para aguardar a aprovação da gestora");
                             errosTotais2++;
                             operacoes.ListaErros3.Add("Status não foi trocado para aprovação da gestora");

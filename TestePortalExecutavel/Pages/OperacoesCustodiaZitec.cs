@@ -260,7 +260,8 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                                 pagina.Excluir = "❌";
                                 errosTotais += 2;
                                 operacoes.ListaErros2.Add("Erro ao lançar operação");
-                                operacoes.ArquivoEnviado = "❌";
+                                operacoes.ArquivoEnviado = "❌" +
+                                    "";
                             }
 
                             await Page.ReloadAsync();
@@ -564,7 +565,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
             catch (Exception ex)
             {
                 Console.WriteLine($"Exceção: {ex}");
-                operacoes.ListaErros2.Add($"Exceção lançada: {ex}");
+                operacoes.ListaErros2.Add($"Exceção lançada. ");
                 errosTotais2++;
                 operacoes.totalErros2 = errosTotais2;
             }
