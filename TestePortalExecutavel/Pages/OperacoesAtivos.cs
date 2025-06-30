@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -88,17 +89,12 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         await Task.Delay(300);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Anexos" }).ClickAsync();
                         await Task.Delay(300);
-                        //await Page.EvaluateAsync(@"() => {
-                        //const input = document.querySelector('input.file-input[data-id-anexo=""6""]');
-                        //if(input) { input.removeAttribute('hidden'); }
-                        //}");
-                        await Page.Locator("input.file-input[data-id-anexo='6']").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
+                        await EnviarArquivoZipAsync(Page);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Voltar" }).ClickAsync();
                         await Task.Delay(300);
                         await Page.Locator("#termoRespCheck").ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" }).ClickAsync();
                         await Task.Delay(1000);
-
 
                         //aprovação 
 
@@ -229,7 +225,6 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
                     }
                 }
-
                 else
                 {
                     Console.Write("Erro ao carregar a página de Ativos de baixa no tópico Operações ");
@@ -260,6 +255,63 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
             pagina.TotalErros = errosTotais;
             return (pagina, fluxoDeCadastros);
 
+
+
+        }
+
+        public static async Task EnviarArquivoZipAsync(IPage Page)
+        {
+            // Caminho do arquivo único
+            var caminho = Path.Combine(Program.Config["Paths:Arquivo"], "Arquivo teste.zip");
+
+            // Localiza o input oculto
+            var input = Page.Locator("input.file-input[data-id-anexo='6']");
+
+            // Envia o arquivo para o input
+            await input.SetInputFilesAsync(caminho);
+
+            // Localiza o ícone de upload (drop zone visual)
+            var dropTarget = Page.Locator("i.fas.fa-cloud-upload-alt[data-id-anexo='6']");
+            var box = await dropTarget.BoundingBoxAsync();
+
+            if (box != null)
+            {
+                // Move o mouse até o centro do ícone (ponto de drop)
+                await Page.Mouse.MoveAsync(box.X + box.Width / 2, box.Y + box.Height / 2);
+
+                // Simula os eventos dragenter e drop com o arquivo do input
+                await Page.EvaluateAsync(@"() => {
+            const input = document.querySelector('input.file-input[data-id-anexo=""6""]');
+            const dropZone = document.querySelector('i.fas.fa-cloud-upload-alt[data-id-anexo=""6""]');
+
+            if (input && dropZone) {
+                const dataTransfer = new DataTransfer();
+
+                for (let i = 0; i < input.files.length; i++) {
+                    dataTransfer.items.add(input.files[i]);
+                }
+
+                const dragEnter = new DragEvent('dragenter', {
+                    dataTransfer: dataTransfer,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                const drop = new DragEvent('drop', {
+                    dataTransfer: dataTransfer,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                dropZone.dispatchEvent(dragEnter);
+                dropZone.dispatchEvent(drop);
+            }
+        }");
+            }
+            else
+            {
+                Console.WriteLine("Não foi possível localizar a área de drop.");
+            }
         }
     }
 }

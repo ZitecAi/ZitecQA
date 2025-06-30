@@ -69,7 +69,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             await Page.Locator("#enviarButton").ClickAsync();
                             await Task.Delay(1000); 
                             }
-                            await Task.Delay(3000);
+                            await Task.Delay(1000);
 
                             var idOperacaoRecebivel = Repository.OperacoesCsv.OperacoesCsvRepository.ObterIdOperacaoRec(nomeArquivoModificado);
 
@@ -84,14 +84,15 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                                 if (recebivelExiste && complementoRelExiste)
                                 {
                                     pagina.InserirDados = "✅";
+                                    operacoes.ArquivoEnviado = "✅";
                                     //operacoes.StatusTrocados3 = "❓";
                                     //operacoes.AprovacoesRealizadas3 = "❓";
-                                //    await Page.GetByLabel("Pesquisar").FillAsync(nomeArquivoModificado);
-                                //    var primeiroTr = Page.Locator("#listaCedentes tr").First;
-                                //    var primeiroTd = primeiroTr.Locator("td").First;
-                                //    await primeiroTd.ClickAsync();
-                                //    await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
-                                //await Page.Locator("button[title='Aprovação Gestora']").ClickAsync();
+                                    //    await Page.GetByLabel("Pesquisar").FillAsync(nomeArquivoModificado);
+                                    //    var primeiroTr = Page.Locator("#listaCedentes tr").First;
+                                    //    var primeiroTd = primeiroTr.Locator("td").First;
+                                    //    await primeiroTd.ClickAsync();
+                                    //    await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                                    //await Page.Locator("button[title='Aprovação Gestora']").ClickAsync();
 
                                 //await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar", Exact = true }).ClickAsync();
                                 //    await Task.Delay(3000);
@@ -108,7 +109,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                                 //        operacoes.AprovacoesRealizadas3 = "❌";
                                 //    }
 
-                                    
+
                                 }
                                 else
                                 {
@@ -153,6 +154,9 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
                     {
                         string status = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo3);
+                        var (existe, idArquivo) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo3);
+                        var idOperacaoRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo3);
+
 
                         if (status == "PG")
                         {
@@ -176,25 +180,48 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             {
                                 statusTrocados++;
                                 Console.WriteLine("Todos os status foram trocados corretamente, aprovações realizadas! ");
+                                operacoes.AprovacoesRealizadas3 = "✅";
+                                operacoes.StatusTrocados3 = "✅";
                             }
                             else
                             {
                                 Console.WriteLine("Os status não foram trocados corretamente, aprovações realizadas! ");
                                 errosTotais2++;
-                                operacoes.ListaErros3.Add("Aprovações realizadas, mas status não foi trocado no banco de dados");
+                                operacoes.ListaErros3.Add("Não foi possível aprovar como gestora");
+                                operacoes.AprovacoesRealizadas3 = "❌";
+                                operacoes.StatusTrocados3 = "❌";
                             }
+                            //apagar pelo botão
+                            await Page.ReloadAsync();
+                            var cnpj = "54638076000176";
+                            await Page.GetByLabel("Pesquisar").ClickAsync();
+                            await Task.Delay(800);
+                            await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo3);
+                            await Task.Delay(600);
+                            var primeiroTr2 = Page.Locator("#listaCedentes tr").First;
+                            var primeiroTd2 = primeiroTr2.Locator("td").First;
+                            await primeiroTd2.ClickAsync();
+                            await Page.EvaluateAsync($"""
+    ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo3}','{cnpj}');
+""");
+                            await Page.Locator("#motivoExcluirArquivo").ClickAsync();
+                            await Task.Delay(200);
+                            await Page.Locator("#motivoExcluirArquivo").FillAsync("teste de exclus");
+                            await Task.Delay(200);
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
+                            Console.WriteLine("Botão de apagar operação encontrado.");
 
-                            if (statusTrocados == 1)
+                            var apagarOperacao = await Page.GetByText("Arquivo excluído com sucesso!").ElementHandleAsync();
+
+                            if (apagarOperacao != null)
                             {
-                                operacoes.StatusTrocados3 = "✅";
-                                operacoes.AprovacoesRealizadas3 = "✅";
+                                operacoes.OpApagadaBtn = "✅";
+                                pagina.Excluir = "✅";
                             }
                             else
-                            {
-                                operacoes.StatusTrocados3 = "❌";
-                                operacoes.AprovacoesRealizadas3 = "❌";
-                                errosTotais2++;
-                                operacoes.ListaErros3.Add("Status PI não encontrado");
+                            { 
+                                operacoes.OpApagadaBtn = "❌";
+                                pagina.Excluir = "❌";
                             }
 
                             bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo3);

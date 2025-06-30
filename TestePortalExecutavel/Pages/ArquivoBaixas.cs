@@ -57,6 +57,7 @@ namespace TestePortalExecutavel.Pages
                             operacoes.TipoOperacao2 = "Baixas";
                             operacoes.StatusTrocados2 = "❓";
                             operacoes.AprovacoesRealizadas2 = "❓";
+                            operacoes.OpApagadaBtn = "❓"; 
                             operacoes.NovoNomeArquivo2 = AtualizarArquivoBaixa.AtualizarDataArquivo(caminhoArquivo);
 
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Importar Baixa" }).ClickAsync();

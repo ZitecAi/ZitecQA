@@ -17,11 +17,13 @@ namespace TestePortalExecutavel
         public static IPage Page { get; set; }
         public static List<Usuario> Usuarios { get; set; }
 
-        public static Operacoes operacoes = new Operacoes();
+
         public static IConfigurationRoot Config { get; set; }
 
         public static async Task Main(string[] args)
         {
+            Operacoes operacoes = new Operacoes();
+            Operacoes operacoesGestora = new Operacoes();
             Pagina pagina = new Pagina();
 
             var playwright = await Playwright.CreateAsync();
@@ -81,28 +83,29 @@ namespace TestePortalExecutavel
 
             {
                 foreach (var usuario in Usuarios)
-
-
                 {
                     listaPagina.Add(await LoginGeral.Login(Page, usuario));
 
                     if (usuario.Nivel == Usuario.NivelEnum.Master)
                     {
 
-                        //listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
-                        //listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
-                        //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
-                        //(pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
-                        //listaFluxos.Add(fluxoDeCadastros);
-                        //(pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecInterno (Page, usuario.Nivel, operacoes);
-                        //listaPagina.Add(pagina);
-                        //listaOperacoes.Add(operacoes);
-                        //(pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
-                        //listaPagina.Add(pagina);
-                        //listaOperacoes.Add(operacoes);
+                        listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
+                        listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
+                        listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        (pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
+                        listaFluxos.Add(fluxoDeCadastros);
+                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecInterno(Page, usuario.Nivel, operacoes);
+                        listaPagina.Add(pagina);
+                        listaOperacoes.Add(operacoes);
+                        operacoes = new Operacoes();
+                        (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoesGestora);
+                        listaPagina.Add(pagina);
+                        listaOperacoes.Add(operacoesGestora);
+                        operacoes = new Operacoes();
                         (pagina, operacoes) = await ArquivoBaixas.Baixas(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
-                        listaFluxos.Add(fluxoDeCadastros);
+                        listaOperacoes.Add(operacoes);
+                        operacoes = new Operacoes();
                         await Page.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Sim" }).ClickAsync();
 
@@ -116,11 +119,13 @@ namespace TestePortalExecutavel
                     else if (usuario.Nivel == Usuario.NivelEnum.Consultoria)
                     {
 
-                        //listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
-                        //listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
-                        //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
-                        //(pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecConsultoria (Page, usuario.Nivel, operacoes);
-                        //listaPagina.Add(pagina);
+                        listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
+                        listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
+                        listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecConsultoria(Page, usuario.Nivel, operacoes);
+                        listaPagina.Add(pagina);
+                        listaOperacoes.Add(operacoes);
+                        operacoes = new Operacoes();
                         await Page.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Sim" }).ClickAsync();
 
@@ -134,12 +139,14 @@ namespace TestePortalExecutavel
                     else if (usuario.Nivel == Usuario.NivelEnum.Gestora)
                     {
 
-                        //listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
-                        //listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
-                        //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
+                        listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
+                        listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZiteGestora(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
-                        (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
+                        listaOperacoes.Add(operacoes);
+                        operacoes = new Operacoes();
+                        (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoesGestora);
                         listaPagina.Add(pagina);
                         await Task.Delay(500);
                         await Page.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync();
@@ -154,20 +161,20 @@ namespace TestePortalExecutavel
                         }
 
                     }
-                    else if (usuario.Nivel == Usuario.NivelEnum.Denver)
-                    {
-                        await Task.Delay(600);
-                        listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
-                        await Page.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync();
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Sim" }).ClickAsync();
+                    //else if (usuario.Nivel == Usuario.NivelEnum.Denver)
+                    //{
+                    //    await Task.Delay(600);
+                    //    listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                    //    await Page.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync();
+                    //    await Page.GetByRole(AriaRole.Button, new() { Name = "Sim" }).ClickAsync();
 
-                        foreach (var page in listaPagina)
-                        {
-                            if (page.Perfil == null)
-                                page.Perfil = usuario.Nivel.ToString();
-                        }
+                    //    foreach (var page in listaPagina)
+                    //    {
+                    //        if (page.Perfil == null)
+                    //            page.Perfil = usuario.Nivel.ToString();
+                    //    }
 
-                    }
+                    //}
 
                 }
             }
@@ -201,8 +208,8 @@ namespace TestePortalExecutavel
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
                     "jt@zitec.ai",
-                    "Relatório das páginas do portal em produção.",
-                    EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
+                    "Segue relatório com as páginas mais importantes do portal IDSF testadas. ",
+                    EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes)
                   //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
                   //"C:\\Temp\\Paginas.txt"
                   );

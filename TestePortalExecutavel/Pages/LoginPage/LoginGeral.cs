@@ -9,12 +9,11 @@ using TestePortalExecutavel.Model;
 using TestePortalExecutavel.Utils;
 
 namespace TestePortalExecutavel
-{ 
+{
     public class LoginGeral
     {
         public async static Task<Pagina> Login(IPage Page, Usuario usuario)
         {
-
             var pagina = new Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
@@ -22,59 +21,77 @@ namespace TestePortalExecutavel
             try
             {
                 var portalLink = Program.Config["Links:Portal"];
-                var PaginaLogin = await Page.GotoAsync(portalLink + "/login.aspx");
+                var PaginaLogin = await Page.GotoAsync(portalLink + "/login.aspx", new() { Timeout = 20000 }); // ajuste de timeout
+
                 await Page.GetByPlaceholder("E-mail").FillAsync(usuario.Email);
                 await Page.GetByPlaceholder("Senha").FillAsync(usuario.Senha);
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Entrar" }).ClickAsync();
-                await Page.WaitForTimeoutAsync(3000);
 
-                if (PaginaLogin.Status == 200)
+                var home = Page.Locator("#Home");
+                var erroSenha = Page.GetByText("Senha incorreta");
+
+                await Task.WhenAny(
+                    home.WaitForAsync(new() { Timeout = 5000 }),
+                    erroSenha.WaitForAsync(new() { Timeout = 5000 })
+                );
+
+                if (PaginaLogin?.Status == 200)
                 {
-
-                    var login = await Page.QuerySelectorAsync("#Home");
-                    if (login != null && await login.IsVisibleAsync())
+                    if (await home.IsVisibleAsync())
                     {
-                        Console.Write("Login: ");
-                        Console.WriteLine(PaginaLogin.Status);
-                        pagina.Nome = "Login";
-                        pagina.StatusCode = PaginaLogin.Status;
-                        pagina.Listagem = "❓";
-                        pagina.BaixarExcel = "❓";
-                        pagina.InserirDados = "❓";
-                        pagina.Excluir = "❓";
-                        pagina.Reprovar = "❓";
-                        pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
+                        Console.WriteLine("Login realizado com sucesso.");
+                    }
+                    else if (await erroSenha.IsVisibleAsync())
+                    {
+                        errosTotais++;
+                        EmailPadrao emailPadrao = new EmailPadrao(
+                            "jt@zitec.ai",
+                            "Erro de Login no Portal IDSF",
+                            "O login não teve sucesso. Não é possível fazer as verificações das páginas do portal."
+                        );
+                        EnviarEmail.SendMailWithAttachment(emailPadrao);
+                        Console.WriteLine("Senha incorreta detectada e e-mail enviado.");
                     }
                     else
                     {
-                        var errorLogin = await Page.GetByText("Senha incorreta").ElementHandleAsync();
-                        if (errorLogin != null && await errorLogin.IsVisibleAsync())
-                        {
-                            errosTotais++;
-                            EmailPadrao emailPadrao = new EmailPadrao(
-                                "jt@zitec.ai",
-                                "Erro de Login no Portal IDSF",
-                                "O login não teve sucesso. Não é possível fazer as verificações das páginas do portal."
-                            );
-
-                            EnviarEmail.SendMailWithAttachment(emailPadrao);
-                            Console.WriteLine("Senha incorreta detectada e e-mail enviado.");
-                        }
-
+                        Console.WriteLine("Login falhou: página carregada mas sem elemento esperado.");
+                        errosTotais++;
                     }
                 }
-
+                else
+                {
+                    Console.WriteLine("Página de login não retornou 200.");
+                    errosTotais++;
+                }
             }
             catch (Exception ex)
             {
                 errosTotais++;
-                Console.WriteLine($"Ocorreu um erro: {ex.Message}");
+                Console.WriteLine($"Ocorreu um erro no login: {ex.Message}");
             }
-            pagina.Perfil = usuario.Nivel.ToString();
-            pagina.TotalErros = errosTotais;
+            finally
+            {
+                // Sempre define os dados no relatório, mesmo com erro
+                pagina.Nome = "Login";
+                pagina.Perfil = usuario?.Nivel.ToString() ?? "Desconhecido";
+                pagina.StatusCode = 200; // ou use PaginaLogin?.Status ?? 0
+                pagina.Listagem = "❓";
+                pagina.BaixarExcel = "❓";
+                pagina.InserirDados = "❓";
+                pagina.Excluir = "❓";
+                pagina.Reprovar = "❓";
+                try
+                {
+                    pagina.Acentos = await Acentos.ValidarAcentos(Page);
+                }
+                catch
+                {
+                    pagina.Acentos = "Erro ao validar acentos";
+                }
+            }
+
             return pagina;
-        } 
-            
-            //"co@zitec.ai,mm@zitec.ai,jt@zitec.ai,mp@zitec.ai,ti@zitec.zi", id2021 -  senha
+        }
     }
+
 }

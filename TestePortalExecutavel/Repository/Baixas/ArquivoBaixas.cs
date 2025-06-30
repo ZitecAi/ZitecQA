@@ -12,8 +12,7 @@ namespace TestePortalExecutavel.Repository.Baixas
     {
         private static readonly string connectionString = AppSettings.GetConnectionString("ConnectionZitec");
 
-
-        public static (bool existe, int idMovimento) VerificaMovimento(int idRecebivel, int idTipoMovimento, int idFundo)
+        public static (bool existe, int idMovimentoAberto) VerificaMovimento(int idRecebivel, int idTipoMovimento, int idFundo)
         {
             bool existe = false;
             int idMovimento = 0;
@@ -25,8 +24,8 @@ namespace TestePortalExecutavel.Repository.Baixas
                     myConnection.Open();
 
                     string query = @"
-                SELECT id_movimento 
-                FROM TB_MOVIMENTO 
+                SELECT id_movimento_aberto 
+                FROM TB_MOVIMENTO_ABERTO
                 WHERE id_recebivel = @idRecebivel 
                   AND id_tipo_movimento = @idTipoMovimento 
                   AND id_fundo = @idFundo";
@@ -42,7 +41,7 @@ namespace TestePortalExecutavel.Repository.Baixas
                             if (oReader.Read())
                             {
                                 existe = true;
-                                idMovimento = oReader["id_movimento"] != DBNull.Value ? Convert.ToInt32(oReader["id_movimento"]) : 0;
+                                idMovimento = oReader["id_movimento_aberto"] != DBNull.Value ? Convert.ToInt32(oReader["id_movimento_aberto"]) : 0;
                             }
                         }
                     }
@@ -57,7 +56,7 @@ namespace TestePortalExecutavel.Repository.Baixas
         }
 
 
-        public static bool ExcluirMovimento(int idMovimento)
+        public static bool ExcluirMovimento(int idMovimentoAberto)
         {
             bool sucesso = false;
 
@@ -67,11 +66,11 @@ namespace TestePortalExecutavel.Repository.Baixas
                 {
                     myConnection.Open();
 
-                    string query = "DELETE FROM TB_MOVIMENTO WHERE ID_MOVIMENTO = @idMovimento";
+                    string query = "DELETE FROM TB_MOVIMENTO_ABERTO WHERE ID_MOVIMENTO_ABERTO = @idMovimentoAberto";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@idMovimento", idMovimento);
+                        oCmd.Parameters.AddWithValue("@idMovimentoAberto", idMovimentoAberto);
 
                         int rowsAffected = oCmd.ExecuteNonQuery();
                         sucesso = rowsAffected > 0;
@@ -80,7 +79,7 @@ namespace TestePortalExecutavel.Repository.Baixas
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Erro ao excluir movimento {idMovimento}: {e}");
+                Console.WriteLine($"Erro ao excluir movimento {idMovimentoAberto}: {e}");
             }
 
             return sucesso;

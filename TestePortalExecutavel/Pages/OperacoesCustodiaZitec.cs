@@ -42,7 +42,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
                     if (processamentoFundo)
                     {
-                        operacoes.TipoOperacao2 = "Nova Operação - CNAB";
+                        operacoes.TipoOperacao2 = "Nova Operação - Interno";
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CNAB" }).ClickAsync();
                         await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "54638076000176" });
 
@@ -70,9 +70,13 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             {
                                 Console.WriteLine("Operação lançada.");
                                 pagina.InserirDados = "✅";
+                                operacoes.ArquivoEnviado = "✅";
+                                operacoes.AprovacoesRealizadas2 = "❓";
+                                operacoes.StatusTrocados2 = "❓";
                             }
                             else
                             {
+                                operacoes.ArquivoEnviado = "❌";
                                 Console.WriteLine("Não foi possível lançar operação");
                                 pagina.InserirDados = "❌";
                                 pagina.Excluir = "❌";
@@ -105,6 +109,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             if (apagarOperacao != null)
                             {
                                 operacoes.OpApagadaBtn = "✅";
+                                pagina.Excluir = "✅";
                             }
                             else
                             {
@@ -217,7 +222,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
                     if (processamentoFundo)
                     {
-                        operacoes.TipoOperacao2 = "Nova Operação - CNAB";
+                        operacoes.TipoOperacao2 = "Nova Operação - Consultoria";
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CNAB" }).ClickAsync();
                         await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "54638076000176" });
 
@@ -246,6 +251,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             {
                                 Console.WriteLine("Operação lançada.");
                                 pagina.InserirDados = "✅";
+                                operacoes.ArquivoEnviado = "✅";
                             }
                             else
                             {
@@ -254,6 +260,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                                 pagina.Excluir = "❌";
                                 errosTotais += 2;
                                 operacoes.ListaErros2.Add("Erro ao lançar operação");
+                                operacoes.ArquivoEnviado = "❌";
                             }
 
                             await Page.ReloadAsync();
@@ -278,6 +285,17 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             await primeiroTd2.ClickAsync();
                             var cnpj = "54638076000176";
 
+                            var statusTrocado = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
+                            if (statusTrocado == "PG") 
+                            {
+                                operacoes.StatusTrocados2 = "✅";
+                                operacoes.AprovacoesRealizadas2 = "✅";
+                            }
+                            else 
+                            {
+                                operacoes.StatusTrocados2 = "❌";
+                                operacoes.AprovacoesRealizadas2 = "❌";
+                            }
                             //var button = Page.Locator($"button[onclick=\"ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}')\"]").First.ClickAsync();
                             await Page.EvaluateAsync($"""
     ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}');
@@ -294,6 +312,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             if (apagarOperacao != null)
                             {
                                 operacoes.OpApagadaBtn = "✅";
+                                pagina.Excluir = "✅";
                             }
                             else
                             {
@@ -393,7 +412,8 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
                     if (processamentoFundo)
                     {
-                        operacoes.TipoOperacao2 = "Nova Operação - CNAB";
+                        
+                      operacoes.TipoOperacao2 = "Nova Operação - Gestora";
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CNAB" }).ClickAsync();
                         await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "54638076000176" });
 
@@ -492,11 +512,12 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             if (apagarOperacao != null)
                             {
                                 operacoes.OpApagadaBtn = "✅";
+                                pagina.Excluir = "✅";
                             }
                             else
                             {
                                 operacoes.OpApagadaBtn = "❌";
-
+                                pagina.Excluir = "❌";
                                 bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
                                 bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
                                 var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
