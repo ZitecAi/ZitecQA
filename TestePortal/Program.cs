@@ -141,6 +141,7 @@ namespace TestePortalIDSF
                         //listaFluxos.Add(fluxoDeCadastros);
                         //listaPagina.Add(await CadastroGestoras.Gestoras(Page));
                         //await Task.Delay(500);
+<<<<<<< HEAD
                         (pagina, fluxoDeCadastros) = await CadastroGestorasInternas.GestorasInternas(Page, context, usuario.Nivel);
                         listaPagina.Add(pagina);
                         listaFluxos.Add(fluxoDeCadastros);
@@ -169,6 +170,36 @@ namespace TestePortalIDSF
                         await Task.Delay(600);
                         (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaEscrow(Page, context, usuario.Nivel);
                         listaFluxos.Add(fluxoDeCadastros);
+=======
+                        //(pagina, fluxoDeCadastros) = await CadastroGestorasInternas.GestorasInternas(Page, context, usuario.Nivel);
+                        //listaPagina.Add(pagina);
+                        //listaFluxos.Add(fluxoDeCadastros);
+                        //await Task.Delay(500);
+                        //listaPagina.Add(await CadastroPrestServico.PrestServico(Page));
+                        //listaPagina.Add(await CadastroOfertas.Ofertas(Page));
+                        //listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel));
+                        //listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel));
+                        //listaPagina.Add(await BoletagemAmortizacao.Amortizacao(Page));
+                        //listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
+                        //listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
+                        //listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
+                        //listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
+                        //await Task.Delay(500);
+                        //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        //listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
+                        //(pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
+                        //listaFluxos.Add(fluxoDeCadastros);
+                        //listaPagina.Add(await BoletagemControleCapital.ControleCapital(Page));
+                        //listaPagina.Add(await OperacoesBaixaEmLote.BaixaLote(Page));
+                        //listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
+                        //await Task.Delay(500);
+                        //(pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaCetip(Page, context, usuario.Nivel);
+                        //listaFluxos.Add(fluxoDeCadastros);
+                        //listaPagina.Add(await BancoIdContasEscrow.ContasEscrow(Page, usuario.Nivel));
+                        //await Task.Delay(600);
+                        //(pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaEscrow(Page, context, usuario.Nivel);
+                        //listaFluxos.Add(fluxoDeCadastros);
+>>>>>>> Feature/7913
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitec(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
@@ -348,8 +379,8 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "jt@zitec.ai",
-                    "Relatório das páginas do portal em produção teste.",
+                    "todos@zitec.ai",
+                    "Relatório das páginas do portal em produção.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
                     //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
                     //"C:\\Temp\\Paginas.txt"
