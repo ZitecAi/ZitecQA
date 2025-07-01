@@ -36,6 +36,7 @@ namespace TestePortal.Pages.CadastroPage
                 {
                     errosTotais++;
                 }
+
                 var ApagarConsultoras2 = Repository.Consultoras.ConsultorasRepository.ApagarConsultoras("16695922000109", "Jessica Vitoria Tavares");
 
                 await Page.GetByRole(AriaRole.Button, new() { Name = "Adicionar Consultora +" }).ClickAsync();

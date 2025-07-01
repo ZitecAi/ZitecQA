@@ -87,9 +87,19 @@ namespace TestePortal.Pages.OperacoesPage
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
 
-                        //conciliação em lote
+                        var validarDadosCsvBanco = Repository.ConciliacaoExtrato.ConciliacaoRepository.ValidarDadosCsvBanco(11111, 300000, "TAR ENVIO TIT CART COB SIMP-ELETR");
+                        if (validarDadosCsvBanco == false)
+                        {
+                            Console.WriteLine("Dados no Banco não são iguais");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Dados do Csv cadastrado e do Banco são iguais");
+                        }
 
-                        string caminhoExcel = @"C:\Temp\Arquivos\TemplateItem (1).xlsx";
+                            //conciliação em lote
+
+                            string caminhoExcel = @"C:\TempQA\Arquivos\TemplateItem (1).xlsx";
                         var ids = Repository.ConciliacaoExtrato.ConciliacaoRepository.ObterIdsNaoConciliados(11111);
 
 
@@ -173,6 +183,8 @@ namespace TestePortal.Pages.OperacoesPage
                         }
 
                     }
+
+                   
                   
 
                 }
@@ -193,6 +205,9 @@ namespace TestePortal.Pages.OperacoesPage
                     conciliacao.ListaErros.Add("Erro ao carregar página");
                     return (pagina, conciliacao);
                 }
+
+
+
             }
             catch (TimeoutException ex)
             {

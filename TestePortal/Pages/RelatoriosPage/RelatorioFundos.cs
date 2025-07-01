@@ -37,7 +37,20 @@ namespace TestePortal.Pages.RelatoriosPage
                     {
                         errosTotais++;
                     }
+                    //await Page.PauseAsync();
+                    await Page.Locator("#btnComposicaoCarteira").ClickAsync();
+                    await Page.Locator("#listFundos").SelectOptionAsync(new[] { "361" });
+                    await Page.GetByLabel("Composição de Carteira").Locator("i").ClickAsync();
+                    await Page.GetByRole(AriaRole.Cell, new() { Name = "23" }).ClickAsync();
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Carregar" }).ClickAsync();
+                    await Page.GetByText("Seu relatório foi enviado").ClickAsync();
+                    
+                    var contaEscrowCriada = await Page.WaitForSelectorAsync("text=Seu relatório foi enviado", new PageWaitForSelectorOptions
+                    {
 
+                        Timeout = 90000
+
+                    });
                 }
                 else
                 {

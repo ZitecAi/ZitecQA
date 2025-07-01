@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -118,7 +118,7 @@ namespace TestePortal.Utils
             //primeira tabela com o relatório das páginas
             Html += "<h2>Relatório com o usuário: Interno</h2>";
             Html += "<table>";
-            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
+            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>ExcluirBtn</th><th>Excluir</th><th>Erros</th></tr>";
 
             foreach (var pagina in listaMaster)
             {
@@ -129,6 +129,7 @@ namespace TestePortal.Utils
                 Html += "<td> " + pagina.Listagem + "</td>\n";
                 Html += "<td> " + pagina.BaixarExcel + "</td>\n";
                 Html += "<td> " + pagina.InserirDados + "</td>\n";
+                Html += "<td> " + pagina.EcluirBtn + "</td>\n";
                 Html += "<td> " + pagina.Excluir + "</td>\n";
                 Html += "<td> " + pagina.TotalErros + "</td>\n";
                 Html += "</tr>";
@@ -140,7 +141,7 @@ namespace TestePortal.Utils
             //terceira tabela
             Html += "<h2>Relatório com o usuário: Consultoria</h2>";
             Html += "<table>";
-            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
+            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>ExcluirBtn</th><th>Excluir</th><th>Erros</th></tr>";
 
             foreach (var pagina in listaConsultoria)
             {
@@ -151,6 +152,7 @@ namespace TestePortal.Utils
                 Html += "<td> " + pagina.Listagem + "</td>\n";
                 Html += "<td> " + pagina.BaixarExcel + "</td>\n";
                 Html += "<td> " + pagina.InserirDados + "</td>\n";
+                Html += "<td> " + pagina.EcluirBtn + "</td>\n";
                 Html += "<td> " + pagina.Excluir + "</td>\n";
                 Html += "<td> " + pagina.TotalErros + "</td>\n";
                 Html += "</tr>";
@@ -162,7 +164,7 @@ namespace TestePortal.Utils
             //segunda tabela com o relatório das páginas
             Html += "<h2>Relatório com o usuário: Gestora</h2>";
             Html += "<table>";
-            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
+            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>ExcluirBtn</th><th>Excluir</th><th>Erros</th></tr>";
 
             foreach (var pagina in listaGestora)
             {
@@ -173,6 +175,7 @@ namespace TestePortal.Utils
                 Html += "<td> " + pagina.Listagem + "</td>\n";
                 Html += "<td> " + pagina.BaixarExcel + "</td>\n";
                 Html += "<td> " + pagina.InserirDados + "</td>\n";
+                Html += "<td> " + pagina.EcluirBtn + "</td>\n";
                 Html += "<td> " + pagina.Excluir + "</td>\n";
                 Html += "<td> " + pagina.TotalErros + "</td>\n";
                 Html += "</tr>";
@@ -184,26 +187,27 @@ namespace TestePortal.Utils
 
             //quarta tabela
 
-            //Html += "<h2>Relatório com o usuário: Denver</h2>";
-            //Html += "<table>";
-            //Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
+            Html += "<h2>Relatório com o usuário: Denver</h2>";
+            Html += "<table>";
+            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>ExcluirBtn</th><th>Excluir</th><th>Erros</th></tr>";
 
-            //foreach (var pagina in listaDenver)
-            //{
-            //    Html += "<tr>";
-            //    Html += "<td> " + pagina.Nome + "</td>\n";
-            //    Html += "<td> " + pagina.StatusCode + "</td>\n";
-            //    Html += "<td> " + pagina.Acentos + "</td>\n";
-            //    Html += "<td> " + pagina.Listagem + "</td>\n";
-            //    Html += "<td> " + pagina.BaixarExcel + "</td>\n";
-            //    Html += "<td> " + pagina.InserirDados + "</td>\n";
-            //    Html += "<td> " + pagina.Excluir + "</td>\n";
-            //    Html += "<td> " + pagina.TotalErros + "</td>\n";
-            //    Html += "</tr>";
-            //}
-            //Html += "</table>";
-            //Html += "<br>";
-            //Html += "<hr class=\"solid\">";
+            foreach (var pagina in listaDenver)
+            {
+                Html += "<tr>";
+                Html += "<td> " + pagina.Nome + "</td>\n";
+                Html += "<td> " + pagina.StatusCode + "</td>\n";
+                Html += "<td> " + pagina.Acentos + "</td>\n";
+                Html += "<td> " + pagina.Listagem + "</td>\n";
+                Html += "<td> " + pagina.BaixarExcel + "</td>\n";
+                Html += "<td> " + pagina.InserirDados + "</td>\n";
+                Html += "<td> " + pagina.EcluirBtn + "</td>\n";
+                Html += "<td> " + pagina.Excluir + "</td>\n";
+                Html += "<td> " + pagina.TotalErros + "</td>\n";
+                Html += "</tr>";
+            }
+            Html += "</table>";
+            Html += "<br>";
+            Html += "<hr class=\"solid\">";
 
 
             // tabela com validações especificas de operações 
