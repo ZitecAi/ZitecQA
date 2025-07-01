@@ -12,8 +12,9 @@ namespace TestePortal.Model
         //public string NovoNomeArquivo1 { get; set; }
 
         public string NovoNomeArquivo2 { get; set; }
-
+        public string OpApagadaBtn { get; set; }
         public string NovoNomeArquivo3 { get; set; }
+        public string ArquivoEnviado { get; set; }
         //public string TipoOperacao1 { get; set; }
         public string TipoOperacao2 { get; set; }
         public string TipoOperacao3 { get; set; }

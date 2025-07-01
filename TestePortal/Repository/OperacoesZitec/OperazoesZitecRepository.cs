@@ -13,54 +13,55 @@ namespace TestePortal.Repository.OperacoesZitec
 {
     public class OperacoesZitecRepository
     {
-            private static readonly string connectionString = AppSettings.GetConnectionString("ConnectionZitec");
+        private static readonly string connectionString = AppSettings.GetConnectionString("ConnectionZitec");
 
-            public static (bool existe, int idOperacao) VerificaExistenciaOperacao(string arquivoEntrada)
+        public static (bool existe, string idOperacao) VerificaExistenciaOperacao(string arquivoEntrada)
+        {
+            bool existe = false;
+            string idOperacao = string.Empty;
+
+            try
             {
-                bool existe = false;
-                int idOperacao = 0;
-
-                try
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection myConnection = new SqlConnection(connectionString))
+                    myConnection.Open();
+
+                    string query = "SELECT ID_ARQUIVO FROM TB_ARQUIVO WHERE NM_ARQUIVO_ENTRADA = @arquivoEntrada";
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        myConnection.Open();
+                        oCmd.Parameters.AddWithValue("@arquivoEntrada", arquivoEntrada);
 
-                        string query = "SELECT ID_ARQUIVO FROM TB_ARQUIVO WHERE NM_ARQUIVO_ENTRADA = @arquivoEntrada";
-                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                        using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
-                            oCmd.Parameters.AddWithValue("@arquivoEntrada", SqlDbType.NVarChar).Value = arquivoEntrada;
-
-                            using (SqlDataReader oReader = oCmd.ExecuteReader())
+                            if (oReader.Read())
                             {
-                                if (oReader.Read())
-                                {
-                                    existe = true;
-                                    idOperacao = oReader["ID_ARQUIVO"] != DBNull.Value ? Convert.ToInt32(oReader["ID_ARQUIVO"]) : 0;
-                                }
+                                existe = true;
+                                idOperacao = oReader["ID_ARQUIVO"] != DBNull.Value ? oReader["ID_ARQUIVO"].ToString() : string.Empty;
                             }
                         }
                     }
                 }
-                catch (Exception e)
-                {
-                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificaExistenciaOperacoes()", "Automações Jessica", e.StackTrace);
-                }
-
-                return (existe, idOperacao);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
 
-            public static string VerificarStatus(string nomeArquivoEntrada)
+            return (existe, idOperacao);
+        }
+
+
+        public static string VerificarStatus(string nomeArquivoEntrada)
+        {
+            string statusOperacao = string.Empty;
+
+            try
             {
-                string statusOperacao = string.Empty;
-
-                try
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection myConnection = new SqlConnection(connectionString))
-                    {
-                        myConnection.Open();
+                    myConnection.Open();
 
-                        string query = @"
+                    string query = @"
                     SELECT ST_OPERACAO, * 
                     FROM TB_OPERACAO_RECEBIVEL 
                     WHERE ID_ARQUIVO = (
@@ -69,39 +70,39 @@ namespace TestePortal.Repository.OperacoesZitec
                         WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
                     )";
 
-                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                        {
-                            oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
 
-                            using (SqlDataReader oReader = oCmd.ExecuteReader())
+                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                        {
+                            if (oReader.Read())
                             {
-                                if (oReader.Read())
-                                {
-                                    statusOperacao = oReader["ST_OPERACAO"].ToString();
-                                }
+                                statusOperacao = oReader["ST_OPERACAO"].ToString();
                             }
                         }
                     }
                 }
-                catch (Exception e)
-                {
-                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.VerificarStatus()", "Automações Jessica", e.StackTrace);
-                }
-
-                return statusOperacao;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
 
-            public static bool ExcluirRemessa(string nomeArquivoEntrada)
+            return statusOperacao;
+        }
+
+        public static bool ExcluirRemessa(string nomeArquivoEntrada)
+        {
+            bool sucesso = false;
+
+            try
             {
-                bool sucesso = false;
-
-                try
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection myConnection = new SqlConnection(connectionString))
-                    {
-                        myConnection.Open();
+                    myConnection.Open();
 
-                        string query = @"
+                    string query = @"
                     DELETE FROM TB_STG_REMESSA 
                     WHERE ID_OPERACAO_RECEBIVEL = (
                         SELECT ID_OPERACAO_RECEBIVEL 
@@ -113,34 +114,34 @@ namespace TestePortal.Repository.OperacoesZitec
                         )
                     )";
 
-                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                        {
-                            oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
 
-                            int rowsAffected = oCmd.ExecuteNonQuery();
-                            sucesso = rowsAffected > 0;
-                        }
+                        int rowsAffected = oCmd.ExecuteNonQuery();
+                        sucesso = rowsAffected > 0;
                     }
                 }
-                catch (Exception e)
-                {
-                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirRemessa()", "Automações Jessica", e.StackTrace);
-                }
-
-                return sucesso;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
 
-            public static bool ExcluirTbTed(string nomeArquivoEntrada)
+            return sucesso;
+        }
+
+        public static bool ExcluirTbTed(string nomeArquivoEntrada)
+        {
+            bool sucesso = false;
+
+            try
             {
-                bool sucesso = false;
-
-                try
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection myConnection = new SqlConnection(connectionString))
-                    {
-                        myConnection.Open();
+                    myConnection.Open();
 
-                        string query = @"
+                    string query = @"
                     DELETE FROM dbo.TB_TED 
                     WHERE ID_OPERACAO_RECEBIVEL = (
                         SELECT ID_OPERACAO_RECEBIVEL 
@@ -152,34 +153,34 @@ namespace TestePortal.Repository.OperacoesZitec
                         )
                     )";
 
-                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                        {
-                            oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
 
-                            int rowsAffected = oCmd.ExecuteNonQuery();
-                            sucesso = rowsAffected > 0;
-                        }
+                        int rowsAffected = oCmd.ExecuteNonQuery();
+                        sucesso = rowsAffected > 0;
                     }
                 }
-                catch (Exception e)
-                {
-                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirTbTed()", "Automações Jessica", e.StackTrace);
-                }
-
-                return sucesso;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
 
-            public static bool ExcluirOperacao(string nomeArquivoEntrada)
+            return sucesso;
+        }
+
+        public static bool ExcluirOperacao(string nomeArquivoEntrada)
+        {
+            bool sucesso = false;
+
+            try
             {
-                bool sucesso = false;
-
-                try
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection myConnection = new SqlConnection(connectionString))
-                    {
-                        myConnection.Open();
+                    myConnection.Open();
 
-                        string query = @"
+                    string query = @"
                     DELETE FROM TB_OPERACAO_RECEBIVEL 
                     WHERE ID_ARQUIVO = (
                         SELECT ID_ARQUIVO 
@@ -187,22 +188,22 @@ namespace TestePortal.Repository.OperacoesZitec
                         WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
                     )";
 
-                        using (SqlCommand oCmd = new SqlCommand(query, myConnection))
-                        {
-                            oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", SqlDbType.NVarChar).Value = nomeArquivoEntrada;
 
-                            int rowsAffected = oCmd.ExecuteNonQuery();
-                            sucesso = rowsAffected > 0;
-                        }
+                        int rowsAffected = oCmd.ExecuteNonQuery();
+                        sucesso = rowsAffected > 0;
                     }
                 }
-                catch (Exception e)
-                {
-                    Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirOperacao()", "Automações Jessica", e.StackTrace);
-                }
-
-                return sucesso;
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return sucesso;
+        }
 
         public static bool ExcluirOperacaoCertificadora(int idOperacaoRecebivel)
         {
@@ -228,7 +229,7 @@ namespace TestePortal.Repository.OperacoesZitec
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirOperacaoCertificadora()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return sucesso;
@@ -269,7 +270,7 @@ namespace TestePortal.Repository.OperacoesZitec
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ObterIdOperacaoRecebivel()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return idOperacaoRecebivel;
@@ -299,7 +300,7 @@ namespace TestePortal.Repository.OperacoesZitec
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.ExcluirAvalista()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return sucesso;
@@ -366,7 +367,7 @@ namespace TestePortal.Repository.OperacoesZitec
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "VerificaProcessamentoFundo", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
                 sucesso = false;
             }
 
@@ -395,14 +396,58 @@ namespace TestePortal.Repository.OperacoesZitec
             }
             catch (SqlException ex) when (ex.Number == 547)
             {
-                Utils.Slack.MandarMsgErroGrupoDev($"Erro ao excluir o arquivo {idArquivo}: Existe uma referência em outra tabela.", "OperacoesRepository.DeletarArquivoGeral()", "Automações Jessica", ex.StackTrace);
+                Console.WriteLine(ex.ToString());
             }
             catch (Exception e)
             {
-                Utils.Slack.MandarMsgErroGrupoDev(e.Message, "OperacoesRepository.DeletarArquivoGeral()", "Automações Jessica", e.StackTrace);
+                Console.WriteLine(e.ToString());
             }
 
             return sucesso;
         }
+
+        public static int ObterIdOpRec(string nomeArquivoEntrada)
+        {
+            int idOperacaoRecebivel = 0;
+
+            try
+            {
+                using (SqlConnection myConnection = new SqlConnection(connectionString))
+                {
+                    myConnection.Open();
+
+                    string query = @"
+                SELECT ID_OPERACAO_RECEBIVEL 
+                FROM TB_OPERACAO_RECEBIVEL 
+                WHERE ID_ARQUIVO = (
+                    SELECT ID_ARQUIVO 
+                    FROM TB_ARQUIVO 
+                    WHERE NM_ARQUIVO_ENTRADA = @nomeArquivoEntrada
+                )";
+
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@nomeArquivoEntrada", nomeArquivoEntrada);
+
+                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                        {
+                            if (oReader.Read())
+                            {
+                                idOperacaoRecebivel = oReader["ID_OPERACAO_RECEBIVEL"] != DBNull.Value
+                                    ? Convert.ToInt32(oReader["ID_OPERACAO_RECEBIVEL"])
+                                    : 0;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return idOperacaoRecebivel;
+        }
+
     }
 }
