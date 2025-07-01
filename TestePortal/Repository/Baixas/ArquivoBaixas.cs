@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TestePortal.Repository.Baixas;
 using TestePortal.TestePortal.Model;
 
-namespace TestePortalIDSF.Repository.Baixas
+namespace TestePortal.Repository
 {
     public class ArquivoBaixas
     {
@@ -25,11 +20,11 @@ namespace TestePortalIDSF.Repository.Baixas
                     myConnection.Open();
 
                     string query = @"
-                SELECT id_movimento_aberto 
-                FROM TB_MOVIMENTO_ABERTO
-                WHERE id_recebivel = @idRecebivel 
-                  AND id_tipo_movimento = @idTipoMovimento 
-                  AND id_fundo = @idFundo";
+                        SELECT id_movimento_aberto 
+                        FROM TB_MOVIMENTO_ABERTO
+                        WHERE id_recebivel = @idRecebivel 
+                          AND id_tipo_movimento = @idTipoMovimento 
+                          AND id_fundo = @idFundo";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
@@ -42,7 +37,9 @@ namespace TestePortalIDSF.Repository.Baixas
                             if (oReader.Read())
                             {
                                 existe = true;
-                                idMovimento = oReader["id_movimento_aberto"] != DBNull.Value ? Convert.ToInt32(oReader["id_movimento_aberto"]) : 0;
+                                idMovimento = oReader["id_movimento_aberto"] != DBNull.Value
+                                    ? Convert.ToInt32(oReader["id_movimento_aberto"])
+                                    : 0;
                             }
                         }
                     }
@@ -55,7 +52,6 @@ namespace TestePortalIDSF.Repository.Baixas
 
             return (existe, idMovimento);
         }
-
 
         public static bool ExcluirMovimento(int idMovimentoAberto)
         {

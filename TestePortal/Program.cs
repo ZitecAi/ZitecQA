@@ -156,7 +156,9 @@ namespace TestePortalIDSF
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
-                        listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
+                        (pagina, operacoes) = await ArquivosBaixa.Baixas(Page, usuario.Nivel, operacoes);
+                        listaPagina.Add(pagina);
+                        listaOperacoes.Add(operacoes);
                         (pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
                         listaFluxos.Add(fluxoDeCadastros);
                         listaPagina.Add(await BoletagemControleCapital.ControleCapital(Page));
@@ -214,7 +216,9 @@ namespace TestePortalIDSF
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
-                        listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
+                        (pagina, operacoes) = await ArquivosBaixa.Baixas(Page, usuario.Nivel, operacoes);
+                        listaPagina.Add(pagina);
+                        listaOperacoes.Add(operacoes);
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecConsultoria(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
@@ -257,7 +261,9 @@ namespace TestePortalIDSF
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
-                        listaPagina.Add(await OperacoesArquivosBaixa.ArquivosBaixa(Page));
+                        (pagina, operacoes) = await ArquivosBaixa.Baixas(Page, usuario.Nivel, operacoes);
+                        listaPagina.Add(pagina);
+                        listaOperacoes.Add(operacoes);
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZiteGestora(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
@@ -348,7 +354,7 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "jt@zitec.ai",
+                    "todos@zitec.ai",
                     "Relatório das páginas do portal em produção teste.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
                     //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
