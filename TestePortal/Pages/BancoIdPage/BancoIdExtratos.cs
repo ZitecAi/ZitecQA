@@ -34,20 +34,25 @@ namespace TestePortal.Pages.BancoIdPage
                     pagina.BaixarExcel = "❓";
                     pagina.InserirDados = "❓";
                     pagina.Reprovar = "❓";
-                    pagina.Excluir = "❓";
+                    pagina.Excluir = "❓";                    
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
 
                     if (pagina.Acentos == "❌")
                     {
                         errosTotais++;
                     }
+                    string seletorGerarExtrato = ".modal-content";
+                    //await Page.PauseAsync();
 
                     await Page.GetByRole(AriaRole.Button, new() { Name = " Gerar Extrato" }).ClickAsync();
-                    await Page.Locator("#FundoFiltroExtrato").SelectOptionAsync(new[] { "54638076000176" });
-                    await Page.GetByRole(AriaRole.Button, new() { Name = "Gerar", Exact = true }).ClickAsync();
+                    pagina.Acentos = Utils.Acentos.ValidarAcentosDeAlgumElemento(Page, seletorGerarExtrato).Result;
+                    if (pagina.Acentos == "❌")
+                    {
+                        errosTotais++;
+                    }
+                    await Page.Locator("#FundoFiltroExtrato").SelectOptionAsync(new[] { "53300608000106" });
+                    bool sucesso = await Excel.BaixarExtrato(Page);
 
-                    //bool sucesso = await BaixarExtrato.BaixarRelatorio(Page);
-                    bool sucesso = false;
                     if (sucesso)
                     {
                         Console.WriteLine("Teste de download do relatório passou!");
@@ -59,12 +64,25 @@ namespace TestePortal.Pages.BancoIdPage
                         pagina.BaixarExcel = "❌";
                     }
 
+                    //await Task.Delay(1000);
+                    //await Page.GetByText("Relatório gerado com sucesso").ClickAsync();
+                    var contaEscrowCriada = await Page.WaitForSelectorAsync("text=Relatório gerado com sucesso", new PageWaitForSelectorOptions
+
+                    {
+
+                        Timeout = 90000
+
+                    });
+
+
+                    
+
                 }
                 else
                 {
-                    Console.Write("Erro ao carregar a página de Devolução/Reembolso no tópico Banco ID ");
+                    Console.Write("Erro ao carregar a página de Extratos no tópico Banco ID ");
                     Console.WriteLine(BancoIdExtratos.Status);
-                    listErros.Add("Erro ao carregar a página de Devolução/Reembolso no tópico Banco ID ");
+                    listErros.Add("Erro ao carregar a página de Extratos no tópico Banco ID ");
                     pagina.Nome = "Extratos";
                     pagina.StatusCode = BancoIdExtratos.Status;
                     errosTotais++;

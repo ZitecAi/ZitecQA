@@ -250,7 +250,7 @@ namespace TestePortal.Pages.CedentesPage
 
                 else
                 {
-                    Console.Write("Erro ao carregar a página de Cedentes no tópico Boletagem ");
+                    Console.Write("Erro ao carregar a página de Cedentes no tópico Cedentes ");
                     pagina.Nome = "Cedentes";
                     pagina.StatusCode = BoletagemCedentes.Status;
                     errosTotais++;

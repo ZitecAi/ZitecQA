@@ -43,7 +43,7 @@ namespace TestePortal.Pages
                 }
                 else
                 {
-                    Console.Write("Erro ao carregar a página de Kit Cedentes no tópico Boletagem ");
+                    Console.Write("Erro ao carregar a página de Kit Cedentes no tópico Cedentes ");
                     pagina.Nome = "Kit Cedentes";
                     pagina.StatusCode = BoletagemKitCedentes.Status;
                     errosTotais++;
