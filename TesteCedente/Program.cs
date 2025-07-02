@@ -2,7 +2,6 @@
 using TestePortalExecutavel.Model;
 using TestePortalExecutavel.Pages.CedentesPage;
 using TestePortalExecutavel.Pages.NotaComercialPage;
-using TestePortalExecutavel.Pages.OperacoesPage;
 using TestePortalExecutavel.Utils;
 using Microsoft.Extensions.Configuration;
 using TestePortalExecutavel.Pages;
@@ -102,23 +101,23 @@ namespace TestePortalExecutavel
                         listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
                         break;
 
-                    //case Usuario.NivelEnum.Consultoria:
-                    //    listaPagina.Add(await NotaComercial.NotasComerciais(page, usuario.Nivel));
-                    //    (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecConsultoria(page, usuario.Nivel, operacoes);
-                    //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
-                    //    listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
-                    //    listaPagina.Add(await CedentesCedentes.CedentesPf(page));
-                    //    break;
+                        //case Usuario.NivelEnum.Consultoria:
+                        //    listaPagina.Add(await NotaComercial.NotasComerciais(page, usuario.Nivel));
+                        //    (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecConsultoria(page, usuario.Nivel, operacoes);
+                        //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
+                        //    listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
+                        //    listaPagina.Add(await CedentesCedentes.CedentesPf(page));
+                        //    break;
 
-                    //case Usuario.NivelEnum.Gestora:
-                    //    (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZiteGestora(page, usuario.Nivel, operacoes);
-                    //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
-                    //    listaPagina.Add(await NotaComercial.NotasComerciais(page, usuario.Nivel));
-                    //    listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
-                    //    listaPagina.Add(await CedentesCedentes.CedentesPf(page));
-                    //    operacoes = new Operacoes();
-                    //    (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
-                    //    listaPagina.Add(pagina);
+                        //case Usuario.NivelEnum.Gestora:
+                        //    (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZiteGestora(page, usuario.Nivel, operacoes);
+                        //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
+                        //    listaPagina.Add(await NotaComercial.NotasComerciais(page, usuario.Nivel));
+                        //    listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
+                        //    listaPagina.Add(await CedentesCedentes.CedentesPf(page));
+                        //    operacoes = new Operacoes();
+                        //    (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
+                        //    listaPagina.Add(pagina);
                         //break;
                 }
 
