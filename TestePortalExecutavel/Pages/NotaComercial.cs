@@ -28,6 +28,12 @@ namespace TestePortalExecutavel.Pages.NotaComercialPage
                         pagina.Nome = "Notas Comerciais";
                         pagina.Reprovar = "❓";
 
+
+
+
+
+
+
                         if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                         {
 
