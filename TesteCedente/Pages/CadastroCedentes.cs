@@ -58,28 +58,68 @@ namespace TesteCedente.Pages.CedentesPage
                     {
 
                         await Page.Locator("#btnFecharNovoCedente").ClickAsync();
-                        await Page.Locator("[id=\"36614123000160_26038995000173_GESTORA\"]").ClickAsync();
-                        await Page.Locator(".option.option-1 > .dot").ClickAsync();
+                        await Page.GetByLabel("Pesquisar").FillAsync("FUNDO QA");
+                        await Task.Delay(600);
+                        var primeiroTr = Page.Locator("#tabelaCedentes tbody tr").First;
+                        var primeiroTd = primeiroTr.Locator("td").First;
+                        await primeiroTd.ClickAsync();
+                        await Page.Locator("[id='36614123000160_26038995000173_GESTORA']").ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).FillAsync("Teste de Aprovaçao");
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).PressAsync("Dead");
+                        await Page.Locator("#modal-parecer").GetByText("Aprovado", new() { Exact = true }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
-                        await Page.GetByRole(AriaRole.Gridcell, new() { Name = "Em espera  Em espera" }).ClickAsync();
+                        await Page.Locator("[id='36614123000160_26038995000173_CADASTRO_not_analysed']").Nth(0).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
-                        await Page.GetByRole(AriaRole.Gridcell, new() { Name = "Em espera " }).ClickAsync();
+                        await Page.Locator("[id='36614123000160_26038995000173_COMPLIANCE_not_analysed']").Nth(0).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
 
+                        var statusFormalizacao = Repository.Cedentes.CedentesRepository.CedenteEmFormalizacao("36614123000160", "26038995000173");
 
-                        
+                        if (statusFormalizacao)
+                        {
+
+                            //ativar e aprovar contrato mãe 
+                            await Page.Locator(".buttonParecer.btn.btn-success").First.ClickAsync();
+                            await Page.Locator("#fileAtivaCedente").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("Teste de ativaç");
+                            await Page.Locator("#submitButtonAtivacao").ClickAsync();
+                            await Page.GetByRole(AriaRole.Row, new() { Name = "FUNDO QA FIDC Teste robô -" }).GetByRole(AriaRole.Listitem).Nth(1).ClickAsync();
+                            await Page.Locator("#botaoStatus label").Filter(new() { HasText = "Aprovado" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste  de aprovaç");
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+
+                            var statusAtivo = Repository.Cedentes.CedentesRepository.CedenteAtivo("36614123000160", "26038995000173");
+
+                            if (statusAtivo)
+                            {
+
+                                //verificar cadastro no zCustódia
+                                var cedenteCadsZCust = Repository.Cedentes.CedentesRepository.CedenteCadastrodoZCust("26038995000173", "jt@zitec.ai");
+
+                                if (cedenteCadsZCust)
+                                {
+
+                                }
+                                else 
+                                { 
+                                
+                                
+                                }
 
 
 
+                            }
+                            else 
+                            
+                            { 
+                            
+                            }
 
 
-
-
-
+                        }
                         var cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "26038995000173");
 
                         if (cedenteExiste)
