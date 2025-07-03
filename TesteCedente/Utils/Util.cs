@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using TestePortalExecutavel.Model;
+using TesteCedente.Model;
 
-namespace TestePortalExecutavel.Utils
+namespace TesteCedente.Utils
 {
     public class Util
     {
@@ -15,9 +15,8 @@ namespace TestePortalExecutavel.Utils
             var usuarios = new List<Usuario>();
 
             usuarios.Add(new Usuario("qazitec01@gmail.com", "Testeqa01?!", Usuario.NivelEnum.Master));
-            usuarios.Add(new Usuario("jessica.tavares@aluno.ifsp.edu.br", "Jehtavares?123", Usuario.NivelEnum.Consultoria));
-            usuarios.Add(new Usuario("jt@zitec.ai", "Jehtavares?123", Usuario.NivelEnum.Gestora));
-            usuarios.Add(new Usuario("jessica.vitoria.tavares044@gmail.com", "Jehtavares?123", Usuario.NivelEnum.Denver));
+            //usuarios.Add(new Usuario("jessica.tavares@aluno.ifsp.edu.br", "Jehtavares?123", Usuario.NivelEnum.Consultoria));
+            //usuarios.Add(new Usuario("jt@zitec.ai", "Jehtavares?123", Usuario.NivelEnum.Gestora));
             return usuarios;
         }
 

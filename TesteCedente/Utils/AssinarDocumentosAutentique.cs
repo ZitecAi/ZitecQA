@@ -2,10 +2,9 @@
 using System;
 using System.Net.Http;
 using System.Text;
-using TestePortalExecutavel.TestePortalExecutavel.Model;
-using TestePortalExecutavel.Model;
+using TesteCedente.Model;
 
-namespace TestePortalExecutavel.Utils
+namespace TesteCedente.Utils
 {
     public class AssinarDocumentosAutentique
     {
@@ -31,7 +30,7 @@ namespace TestePortalExecutavel.Utils
 
                 using (var httpClient = new HttpClient())
                 {
-                    string tokenPortal = AppSettings.Tokens.TokenPortal;
+                    string tokenPortal = AppSettings.GetValue("Tokens:TokenPortal");
                     httpClient.DefaultRequestHeaders.Add("token", tokenPortal);
 
                     var response = httpClient.PostAsync(apiUrl, content).Result;

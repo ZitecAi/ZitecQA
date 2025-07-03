@@ -10,9 +10,8 @@ using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using OfficeOpenXml;
 
-namespace TestePortalExecutavel.Utils
-{
-
+namespace TesteCedente.Utils
+{ 
     public class AtualizarExcel
     {
         public static bool AtualizarExcelComIds(string caminhoExcel, List<int> ids)

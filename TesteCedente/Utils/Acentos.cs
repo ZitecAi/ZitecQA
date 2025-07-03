@@ -5,9 +5,9 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using TestePortalExecutavel.Model;
+using TesteCedente.Model;
 
-namespace TestePortalExecutavel.Utils
+namespace TesteCedente.Utils
 {
     public static class Acentos
     {

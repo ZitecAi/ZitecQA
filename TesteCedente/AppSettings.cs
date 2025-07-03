@@ -1,42 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
+using System.IO;
 
-namespace TestePortalExecutavel
+namespace TesteCedente
 {
-    using global::TestePortalExecutavel.Model;
-    using Microsoft.Extensions.Configuration;
-    using System.IO;
-
-    namespace TestePortalExecutavel.Model
+    public static class AppSettings
     {
-        public static class AppSettings
+        public static IConfigurationRoot Config;
+
+        static AppSettings()
         {
-            private static IConfigurationRoot _config;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-            static AppSettings()
-            {
-                var builder = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory()) // ou AppDomain.CurrentDomain.BaseDirectory
-                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-                _config = builder.Build();
-            }
-
-            public static Configurações.LinkSettings Links =>
-                _config.GetSection("Links").Get<Configurações.LinkSettings>();
-
-            public static Configurações.TokenSettings Tokens =>
-                _config.GetSection("Tokens").Get<Configurações.TokenSettings>();
-
-            public static Configurações.PathSettings Paths =>
-                _config.GetSection("Paths").Get<Configurações.PathSettings>();
-
-            public static string GetConnectionString(string name) =>
-                _config.GetConnectionString(name);
+            Config = builder.Build();
         }
-    }
 
+        public static string GetValue(string chave) =>
+            Config[chave];
+
+        public static string GetConnectionString(string name) =>
+            Config.GetConnectionString(name);
+    }
 }

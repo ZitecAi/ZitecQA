@@ -1,6 +1,6 @@
 ﻿using Microsoft.Playwright;
 
-namespace TestePortalExecutavel.Utils
+namespace TesteCedente.Utils
 {
     public static class Listagem
     {

@@ -5,8 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-namespace TestePortalExecutavel.Utils
+namespace TesteCedente.Utils
 {
     public class EmailChecker
     {

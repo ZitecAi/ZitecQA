@@ -2,7 +2,7 @@
 using System.IO.Compression;
 
 
-namespace TestePortalExecutavel.Utils
+namespace TesteCedente.Utils
 {
     public class AtualizarTxt
     {

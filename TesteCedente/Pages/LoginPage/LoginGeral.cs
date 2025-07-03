@@ -5,10 +5,10 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestePortalExecutavel.Model;
-using TestePortalExecutavel.Utils;
+using TesteCedente.Model;
+using TesteCedente.Utils;
 
-namespace TestePortalExecutavel
+namespace TesteCedente
 {
     public class LoginGeral
     {
@@ -20,8 +20,8 @@ namespace TestePortalExecutavel
 
             try
             {
-                var portalLink = Program.Config["Links:Portal"];
-                var PaginaLogin = await Page.GotoAsync(portalLink + "/login.aspx", new() { Timeout = 20000 }); // ajuste de timeout
+                var portalLink = AppSettings.Config["Links:Portal"];
+                var PaginaLogin = await Page.GotoAsync(portalLink + "/login.aspx"); // ajuste de timeout
 
                 await Page.GetByPlaceholder("E-mail").FillAsync(usuario.Email);
                 await Page.GetByPlaceholder("Senha").FillAsync(usuario.Senha);
