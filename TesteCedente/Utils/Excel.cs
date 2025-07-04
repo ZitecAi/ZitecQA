@@ -28,7 +28,6 @@ namespace TesteCedente.Utils
 
                 await download.SaveAsAsync(filePath);
 
-
                 if (File.Exists(filePath))
                 {
                     Console.WriteLine("Arquivo foi baixado");

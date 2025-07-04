@@ -47,7 +47,6 @@ namespace TesteCedente.Pages.CedentesPage
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                     await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "36614123000160_26038995000173_N.zip" });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
-
                     {
 
                         Timeout = 90000
@@ -102,10 +101,32 @@ namespace TesteCedente.Pages.CedentesPage
                                 if (cedenteCadsZCust)
                                 {
 
+
+                                    var kitBaixado = await BaixarKit(Page, "36614123000160", "26038995000173");
+
+                                    if (kitBaixado == true) 
+                                    {
+
+
+
+                                    }
+                                    else 
+                                    {
+                                    
+                                    
+                                    }
+                                    //clicar no outro botão
+
+                                    await Page.PauseAsync();
+
+
+
                                 }
                                 else 
                                 { 
                                 
+
+
                                 
                                 }
 
@@ -155,11 +176,7 @@ namespace TesteCedente.Pages.CedentesPage
                         pagina.Excluir = "❌";
                         errosTotais += 2;
                     }
-
-
                 }
-
-
                 else
                 {
                     Console.Write("Erro ao carregar a página de Cedentes no tópico Boletagem ");
@@ -326,5 +343,97 @@ namespace TesteCedente.Pages.CedentesPage
             return pagina;
         }
 
+        public static async Task<bool> BaixarKit(IPage Page, string fundoCnpj, string cedenteCnpj)
+        {
+            string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+            string prefixoNomeArquivo = $"{fundoCnpj}_{cedenteCnpj}_N_";
+
+            try
+            {
+                var download = await Page.RunAndWaitForDownloadAsync(async () =>
+                {
+                    await Page.Locator($"button[onclick*='{fundoCnpj}_{cedenteCnpj}']").First.ClickAsync(new LocatorClickOptions
+                    {
+                        Timeout = 2000
+                    });
+                });
+
+                string tempFileName = download.SuggestedFilename;
+                string fullFilePath = Path.Combine(downloadPath, tempFileName);
+
+                await download.SaveAsAsync(fullFilePath);
+
+                if (File.Exists(fullFilePath) && Path.GetFileName(fullFilePath).StartsWith(prefixoNomeArquivo))
+                {
+                    Console.WriteLine("Kit cadastral baixado com sucesso.");
+                    File.Delete(fullFilePath);
+                    return true;
+                }
+
+                Console.WriteLine("Arquivo não encontrado ou nome incorreto.");
+                return false;
+            }
+            catch (TimeoutException ex)
+            {
+                Console.WriteLine($"Timeout ao tentar baixar o kit: {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao baixar o kit cadastral: {ex.Message}");
+                return false;
+            }
+        }
+
+        public static async Task<bool> BaixarContratoMaeAsync(IPage page, string idBotao)
+        {
+            try
+            {
+                // Clica no botão principal que abre o modal
+                await page.Locator($"[id=\"{idBotao}\"]").First.ClickAsync();
+
+                // Download do Template Contrato-Mãe
+                var download1 = await page.RunAndWaitForDownloadAsync(async () =>
+                {
+                    var popup = await page.RunAndWaitForPopupAsync(async () =>
+                    {
+                        await page.GetByText("Template Contrato-Mãe").ClickAsync();
+                    });
+
+                    await popup.CloseAsync();
+                });
+
+                // Salva o primeiro arquivo
+                string path1 = Path.Combine(Path.GetTempPath(), download1.SuggestedFilename);
+                await download1.SaveAsAsync(path1);
+                bool existe1 = File.Exists(path1);
+                if (existe1) File.Delete(path1);
+
+                // Download do Contrato Atual
+                var download2 = await page.RunAndWaitForDownloadAsync(async () =>
+                {
+                    var popup = await page.RunAndWaitForPopupAsync(async () =>
+                    {
+                        await page.GetByText("Download Contrato Atual").ClickAsync();
+                    });
+
+                    await popup.CloseAsync();
+                });
+
+                // Salva o segundo arquivo
+                string path2 = Path.Combine(Path.GetTempPath(), download2.SuggestedFilename);
+                await download2.SaveAsAsync(path2);
+                bool existe2 = File.Exists(path2);
+                if (existe2) File.Delete(path2);
+
+                // Retorna true apenas se os dois arquivos existirem
+                return existe1 && existe2;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao baixar contratos: {ex.Message}");
+                return false;
+            }
+        }
     }
 }
