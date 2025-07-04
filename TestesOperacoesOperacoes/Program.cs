@@ -1,19 +1,18 @@
-﻿using Microsoft.Playwright;
-using TestePortalExecutavel.Model;
-using TestePortalExecutavel.Pages.CedentesPage;
-using TestePortalExecutavel.Pages.NotaComercialPage;
-using TestePortalExecutavel.Pages.OperacoesPage;
-using TestePortalExecutavel.Utils;
-using Microsoft.Extensions.Configuration;
-using TestePortalExecutavel.Pages;
-using System.IO;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
+using TesteOperacoesOperacoes.Model;
+using TesteOperacoesOperacoes;
+using TesteOperacoesOperacoes.Util;
 
-namespace TestePortalExecutavel
+
+
+namespace TestesOperacoesOperacoes
 {
-    class Program
+    public class Program
     {
-        public static List<Usuario> Usuarios { get; set; }
         public static IConfigurationRoot Config { get; set; }
+        public static List<Usuario> Usuarios { get; set; } = new List<Usuario>();
+
 
         public static async Task Main(string[] args)
         {
@@ -38,11 +37,12 @@ namespace TestePortalExecutavel
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-            Config = builder.Build();
-            Usuarios = Util.GetUsuariosForTest();
+            Program.Config = builder.Build();
+            var usuarios = Util.GetUsuariosForTest();
+            var tasks = usuarios.Select(u => ExecutarTesteParaUsuario(browser, u)).ToList();
 
-            var tasks = Usuarios.Select(u => ExecutarTesteParaUsuario(browser, u)).ToList();
             var resultados = await Task.WhenAll(tasks);
+            Console.WriteLine("Todos os testes foram executados.");
 
             var listaPagina = resultados.SelectMany(r => r.Item1).ToList();
             var listaFluxos = resultados.SelectMany(r => r.Item2).ToList();
@@ -51,10 +51,10 @@ namespace TestePortalExecutavel
             try
             {
                 //var emailPadrao = new EmailPadrao(
-                //    "todos@zitec.ai",
-                //    "Segue relatório com as páginas mais importantes do portal IDSF testadas.",
-                //    EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes)
-                //);
+                //            "todos@zitec.ai",
+                //            "Segue relatório com as páginas mais importantes do portal IDSF testadas.",
+                //            TesteOperacoesOperacoes.Util.EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes)
+                //        );
                 //EnviarEmail.SendMailWithAttachment(emailPadrao);
                 //Console.WriteLine("Email enviado");
             }
@@ -77,47 +77,37 @@ namespace TestePortalExecutavel
 
             try
             {
-                listaPagina.Add(await LoginGeral.Login(page, usuario));
+                listaPagina.Add(await TesteOperacoesOperacoes.Page.LoginGeral.Login(page, usuario));
 
                 switch (usuario.Nivel)
                 {
-                    case Usuario.NivelEnum.Master:
-                        //listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
-                        //listaPagina.Add(await CedentesCedentes.CedentesPf(page));
-                        //listaPagina.Add(await NotaComercial.NotasComerciais(page, usuario.Nivel));
-
+                    case TesteOperacoesOperacoes.Model.Usuario.NivelEnum.Master:
                         //esperar bloker
                         //(pagina, var fluxo) = await OperacoesAtivos.Ativos(page, usuario.Nivel);
                         //listaPagina.Add(pagina); listaFluxos.Add(fluxo);
 
-                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecInterno(page, usuario.Nivel, operacoes);
-                        listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
+                        //(pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecInterno(page, usuario.Nivel, operacoes);
+                        //listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
 
-                        operacoes = new Operacoes();
-                        (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
+                        //operacoes = new Operacoes();
+                        (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
                         listaPagina.Add(pagina); listaOperacoes.Add(operacoesGestora);
 
                         operacoes = new Operacoes();
-                        (pagina, operacoes) = await ArquivoBaixas.Baixas(page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
                         break;
 
                     case Usuario.NivelEnum.Consultoria:
-                        listaPagina.Add(await NotaComercial.NotasComerciais(page, usuario.Nivel));
-                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecConsultoria(page, usuario.Nivel, operacoes);
+                        (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecConsultoria(page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
-                        listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
-                        listaPagina.Add(await CedentesCedentes.CedentesPf(page));
+
                         break;
 
                     case Usuario.NivelEnum.Gestora:
-                        (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZiteGestora(page, usuario.Nivel, operacoes);
+                        (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZiteGestora(page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
-                        listaPagina.Add(await NotaComercial.NotasComerciais(page, usuario.Nivel));
-                        listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
-                        listaPagina.Add(await CedentesCedentes.CedentesPf(page));
                         operacoes = new Operacoes();
-                        (pagina, operacoes) = await CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
+                        (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
                         listaPagina.Add(pagina);
                         break;
                 }
@@ -144,3 +134,8 @@ namespace TestePortalExecutavel
         }
     }
 }
+
+
+
+
+

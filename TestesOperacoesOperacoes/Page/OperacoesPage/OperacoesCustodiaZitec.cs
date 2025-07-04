@@ -1,11 +1,11 @@
 ﻿using Microsoft.Playwright;
-using TestePortalExecutavel.Model;
+using TesteOperacoesOperacoes.Model;
 //using System.Windows.Controls;
-using TestePortalExecutavel.Utils;
-using TestePortalExecutavel.Repository;
-using static TestePortalExecutavel.Model.Usuario;
+using TesteOperacoesOperacoes.Util;
+using TesteOperacoesOperacoes.Repositories;
+using static TesteOperacoesOperacoes.Model.Usuario;
 
-namespace TestePortalExecutavel.Pages.OperacoesPage
+namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 {
     public class OperacoesCustodiaZitec
     {
@@ -20,7 +20,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
             try
             {
-                var portalLink = Program.Config["Links:Portal"];
+                var portalLink = TestesOperacoesOperacoes.Program.Config["Links:Portal"];
                 var OperacoesZitec = await Page.GotoAsync(portalLink + "/Operacoes/Operacoes2.0.aspx ");
 
                 if (OperacoesZitec?.Status == 200)
@@ -41,7 +41,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         errosTotais++;
                     }
 
-                    var processamentoFundo = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaProcessamentoFundo(9991);
+                    var processamentoFundo = Repositories.OperacoesZitec.OperacoesZitecRepository.VerificaProcessamentoFundo(9991);
 
                     if (processamentoFundo)
                     {
@@ -64,8 +64,8 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
                         if (CadastroOperacoes != null)
                         {
-                            var (existe, idArquivo) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
-                            var idOperacaoRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo2);
+                            var (existe, idArquivo) = Repositories.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+                            var idOperacaoRecebivel = Repositories.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo2);
 
                             await Page.ReloadAsync();
 
@@ -116,9 +116,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             var cnpj = "54638076000176";
 
                             //var button = Page.Locator($"button[onclick=\"ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}')\"]").First.ClickAsync();
-                            await Page.EvaluateAsync($"""
-    ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}');
-""");
+                            await Page.EvaluateAsync($"""ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}');""");
                             await Page.Locator("#motivoExcluirArquivo").ClickAsync();
                             await Task.Delay(200);
                             await Page.Locator("#motivoExcluirArquivo").FillAsync("teste de exclus");
@@ -137,15 +135,15 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             {
                                 operacoes.OpApagadaBtn = "❌";
 
-                                bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
-                                bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
-                                var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
-                                var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
-                                var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
+                                bool exclusaoRemessa = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
+                                bool exclusaoTed = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
+                                var idRecebivel = Repositories.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
+                                var excluirAvalista = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
+                                var excluirCertificadora = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
 
                                 if (exclusaoRemessa && exclusaoTed && excluirAvalista)
                                 {
-                                    bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
+                                    bool excluirOperacao = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
 
                                     if (excluirOperacao)
                                     {
@@ -223,7 +221,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
             try
             {
-                var portalLink = Program.Config["Links:Portal"];
+                var portalLink = TestesOperacoesOperacoes.Program.Config["Links:Portal"];
                 var OperacoesZitec = await Page.GotoAsync(portalLink + "/Operacoes/Operacoes2.0.aspx ");
 
                 if (OperacoesZitec?.Status == 200)
@@ -240,7 +238,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                     pagina.Listagem = await Listagem.VerificarListagem(Page, seletorTabela) ?? "❌";
                     if (pagina.Listagem == "❌") errosTotais++;
 
-                    var processamentoFundo = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaProcessamentoFundo(9991);
+                    var processamentoFundo = Repositories.OperacoesZitec.OperacoesZitecRepository.VerificaProcessamentoFundo(9991);
 
                     if (processamentoFundo)
                     {
@@ -265,8 +263,8 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         if (CadastroOperacoes != null)
                         {
 
-                            var (existe, idArquivo) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
-                            var idOperacaoRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo2);
+                            var (existe, idArquivo) = Repositories.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+                            var idOperacaoRecebivel = Repositories.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo2);
                             await Page.ReloadAsync();
 
                             if (existe)
@@ -308,7 +306,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             await primeiroTd2.ClickAsync();
                             var cnpj = "54638076000176";
 
-                            var statusTrocado = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
+                            var statusTrocado = Repositories.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
                             if (statusTrocado == "PG") 
                             {
                                 operacoes.StatusTrocados2 = "✅";
@@ -342,15 +340,15 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                                 operacoes.OpApagadaBtn = "❌";
                                 operacoes.OpApagadaBtn = "❌";
 
-                                bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
-                                bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
-                                var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
-                                var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
-                                var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
+                                bool exclusaoRemessa = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
+                                bool exclusaoTed = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
+                                var idRecebivel = Repositories.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
+                                var excluirAvalista = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
+                                var excluirCertificadora = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
 
                                 if (exclusaoRemessa && exclusaoTed && excluirAvalista)
                                 {
-                                    bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
+                                    bool excluirOperacao = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
 
                                     if (excluirOperacao)
                                     {
@@ -413,7 +411,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
 
             try
             {
-                var portalLink = Program.Config["Links:Portal"];
+                var portalLink = TestesOperacoesOperacoes.Program.Config["Links:Portal"];
                 var OperacoesZitec = await Page.GotoAsync(portalLink + "/Operacoes/Operacoes2.0.aspx ");
 
                 if (OperacoesZitec?.Status == 200)
@@ -431,7 +429,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                     if (pagina.Listagem == "❌") errosTotais++;
 
 
-                    var processamentoFundo = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaProcessamentoFundo(9991);
+                    var processamentoFundo = Repositories.OperacoesZitec.OperacoesZitecRepository.VerificaProcessamentoFundo(9991);
 
                     if (processamentoFundo)
                     {
@@ -455,8 +453,8 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                         if (CadastroOperacoes != null)
                         {
 
-                            var (existe, idArquivo) = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
-                            var idOperacaoRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo2);
+                            var (existe, idArquivo) = Repositories.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
+                            var idOperacaoRecebivel = Repositories.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo2);
 
                             await Page.ReloadAsync();
 
@@ -488,7 +486,7 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                                 await Task.Delay(1000);
                             }
 
-                            string status2 = Repository.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
+                            string status2 = Repositories.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
                             await Task.Delay(200);
 
                             if (status2 == "PG")
@@ -541,15 +539,15 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                             {
                                 operacoes.OpApagadaBtn = "❌";
                                 pagina.Excluir = "❌";
-                                bool exclusaoRemessa = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
-                                bool exclusaoTed = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
-                                var idRecebivel = Repository.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
-                                var excluirAvalista = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
-                                var excluirCertificadora = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
+                                bool exclusaoRemessa = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirRemessa(operacoes.NovoNomeArquivo2);
+                                bool exclusaoTed = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirTbTed(operacoes.NovoNomeArquivo2);
+                                var idRecebivel = Repositories.OperacoesZitec.OperacoesZitecRepository.ObterIdOperacaoRecebivel(operacoes.NovoNomeArquivo2);
+                                var excluirAvalista = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirAvalista(idRecebivel);
+                                var excluirCertificadora = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacaoCertificadora(idRecebivel);
 
                                 if (exclusaoRemessa && exclusaoTed && excluirAvalista)
                                 {
-                                    bool excluirOperacao = Repository.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
+                                    bool excluirOperacao = Repositories.OperacoesZitec.OperacoesZitecRepository.ExcluirOperacao(operacoes.NovoNomeArquivo2);
 
                                     if (excluirOperacao)
                                     {
