@@ -38,6 +38,8 @@ namespace TesteCedente.Pages.CedentesPage
                     }
                     pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
 
+                    //eae jessica quer trabalhar hoje nao veinho? 🥶
+
                     if (pagina.BaixarExcel == "❌")
                     {
                         errosTotais++;
@@ -58,7 +60,7 @@ namespace TesteCedente.Pages.CedentesPage
 
                         await Page.Locator("#btnFecharNovoCedente").ClickAsync();
                         await Page.GetByLabel("Pesquisar").FillAsync("FUNDO QA");
-                        await Task.Delay(600);
+                        await Task.Delay(200);
                         var primeiroTr = Page.Locator("#tabelaCedentes tbody tr").First;
                         var primeiroTd = primeiroTr.Locator("td").First;
                         await primeiroTd.ClickAsync();
@@ -67,11 +69,14 @@ namespace TesteCedente.Pages.CedentesPage
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).FillAsync("Teste de Aprovaçao");
                         await Page.Locator("#modal-parecer").GetByText("Aprovado", new() { Exact = true }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                        await Task.Delay(200);
                         await Page.Locator("[id='36614123000160_26038995000173_CADASTRO_not_analysed']").Nth(0).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                        await Task.Delay(200);
                         await Page.Locator("[id='36614123000160_26038995000173_COMPLIANCE_not_analysed']").Nth(0).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                        await Task.Delay(300);
 
                         var statusFormalizacao = Repository.Cedentes.CedentesRepository.CedenteEmFormalizacao("36614123000160", "26038995000173");
 
@@ -89,6 +94,7 @@ namespace TesteCedente.Pages.CedentesPage
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste  de aprovaç");
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                            await Task.Delay(300);
 
                             var statusAtivo = Repository.Cedentes.CedentesRepository.CedenteAtivo("36614123000160", "26038995000173");
 
@@ -118,6 +124,20 @@ namespace TesteCedente.Pages.CedentesPage
                                     //clicar no outro botão
 
                                     await Page.PauseAsync();
+
+                                    var btnContratoMae = await BaixarContratoMaeAsync(Page, "36614123000160_26038995000173");
+
+                                    if (!btnContratoMae) 
+                                    {
+                                    
+                                    } else
+                                    {
+                                    
+                                    }
+
+                                    var btnHistEvent = await VerificarHistoricoDeEventosAsync(Page, "52115758000179_31311565892");
+
+
 
 
 
@@ -435,5 +455,42 @@ namespace TesteCedente.Pages.CedentesPage
                 return false;
             }
         }
+        public static async Task<bool> VerificarHistoricoDeEventosAsync(IPage page, string idBotao)
+        {
+            try
+            {
+                // Clica no botão com título "Histórico de Eventos"
+                var botaoHistorico = page.Locator($"button[id='{idBotao}'][title='Histórico de Eventos']");
+                await botaoHistorico.ClickAsync();
+
+                // Localiza o modal
+                var modal = page.Locator("#modal-xl");
+
+                // Espera o modal ficar visível
+                await modal.WaitForAsync(new() { State = WaitForSelectorState.Visible, Timeout = 5000 });
+
+                // Modal abriu com sucesso
+                Console.WriteLine("✅ Modal de Histórico abriu corretamente.");
+
+                // Opcional: fechar o modal
+                var botaoFechar = modal.Locator("button", new() { HasTextString = "Fechar" });
+                if (await botaoFechar.IsVisibleAsync())
+                    await botaoFechar.ClickAsync();
+
+                return true;
+            }
+            catch (TimeoutException)
+            {
+                Console.WriteLine("❌ Modal de Histórico **não abriu** no tempo esperado.");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Erro ao tentar abrir modal de Histórico: {ex.Message}");
+                return false;
+            }
+        }
+
+
     }
 }

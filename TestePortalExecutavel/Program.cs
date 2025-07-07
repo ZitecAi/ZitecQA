@@ -82,8 +82,8 @@ namespace TestePortalExecutavel
                 switch (usuario.Nivel)
                 {
                     case Usuario.NivelEnum.Master:
-                        listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
-                        listaPagina.Add(await CedentesCedentes.CedentesPf(page));
+                        //listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
+                        //listaPagina.Add(await CedentesCedentes.CedentesPf(page));
                         //listaPagina.Add(await NotaComercial.NotasComerciais(page, usuario.Nivel));
 
                         //esperar bloker
