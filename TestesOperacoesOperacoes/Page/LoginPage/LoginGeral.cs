@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 using TesteOperacoesOperacoes.Model;
 using TesteOperacoesOperacoes.Util;
 using TesteOperacoesOperacoes;
+using TestesOperacoesOperacoes;
+using Program = TestesOperacoesOperacoes.Program;
 
-namespace TesteOperacoesOperacoes.Page
+namespace TesteOperacoesOperacoes.Pages
 {
     public class LoginGeral
     {
 
-        public async static Task<Pagina> Login(IPage Page, Usuario usuario)
+        public async static Task<Pagina> Login(IPage page, Usuario usuario)
         {
             var pagina = new Pagina();
             var listErros = new List<string>();
@@ -23,15 +25,15 @@ namespace TesteOperacoesOperacoes.Page
             
             try
             {
-                var portalLink = TestesOperacoesOperacoes.Program.Config["Links:Portal"];
-                var PaginaLogin = await Page.GotoAsync(portalLink + "/login.aspx", new() { Timeout = 20000 }); // ajuste de timeout
+                var portalLink = Program.Config["Links:Portal"];
+                var PaginaLogin = await page.GotoAsync(portalLink + "/login.aspx", new() { Timeout = 20000 }); // ajuste de timeout
 
-                await Page.GetByPlaceholder("E-mail").FillAsync(usuario.Email);
-                await Page.GetByPlaceholder("Senha").FillAsync(usuario.Senha);
-                await Page.GetByRole(AriaRole.Button, new() { Name = "Entrar" }).ClickAsync();
+                await page.GetByPlaceholder("E-mail").FillAsync(usuario.Email);
+                await page.GetByPlaceholder("Senha").FillAsync(usuario.Senha);
+                await page.GetByRole(AriaRole.Button, new() { Name = "Entrar" }).ClickAsync();
 
-                var home = Page.Locator("#Home");
-                var erroSenha = Page.GetByText("Senha incorreta");
+                var home = page.Locator("#Home");
+                var erroSenha = page.GetByText("Senha incorreta");
 
                 await Task.WhenAny(
                     home.WaitForAsync(new() { Timeout = 5000 }),
@@ -85,7 +87,7 @@ namespace TesteOperacoesOperacoes.Page
                 pagina.Reprovar = "❓";
                 try
                 {
-                    pagina.Acentos = await Acentos.ValidarAcentos(Page);
+                    pagina.Acentos = await Acentos.ValidarAcentos(page);
                 }
                 catch
                 {

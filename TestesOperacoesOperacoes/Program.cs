@@ -77,7 +77,7 @@ namespace TestesOperacoesOperacoes
 
             try
             {
-                listaPagina.Add(await TesteOperacoesOperacoes.Page.LoginGeral.Login(page, usuario));
+                listaPagina.Add(await TesteOperacoesOperacoes.Pages.LoginGeral.Login(page, usuario));
 
                 switch (usuario.Nivel)
                 {
@@ -89,7 +89,7 @@ namespace TestesOperacoesOperacoes
                         //(pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecInterno(page, usuario.Nivel, operacoes);
                         //listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
 
-                        //operacoes = new Operacoes();
+                        operacoes = new Operacoes();
                         (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
                         listaPagina.Add(pagina); listaOperacoes.Add(operacoesGestora);
 

@@ -1,7 +1,10 @@
-﻿using Microsoft.Playwright;
+﻿using Azure;
+using Microsoft.Playwright;
+using static Microsoft.Playwright.Assertions;
+
+using TesteOperacoesOperacoes.Model;
 //
 using TesteOperacoesOperacoes.Util;
-using TesteOperacoesOperacoes.Model;
 using static TesteOperacoesOperacoes.Model.Usuario;
 
 
@@ -9,6 +12,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 {
     public class CadastroOperacoesZitecCsv
     {
+
         public static async Task<(Pagina pagina, Operacoes operacoes)> OperacoesZitecCsv(IPage Page, NivelEnum nivelLogado, Operacoes operacoes)
         {
 
@@ -56,9 +60,9 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                         //string nomeArquivoModificado = TesteOperacoesOperacoes.Util.ModificarArquivoCsv.ModificarCsv(caminhoOriginal, pastaArquivos);
                         //string caminhoModificado = Path.Combine(pastaArquivos, nomeArquivoModificado);
 
-                        //operacoes.TipoOperacao3 = "Operacoes Zitec - csv";
-                        //operacoes.NovoNomeArquivo3 = nomeArquivoModificado;
-                        //// Envia o arquivo atualizado para o input
+                        operacoes.TipoOperacao3 = "Operacoes Zitec - csv";
+                        operacoes.NovoNomeArquivo3 = nomeArquivoModificado;
+                        // Envia o arquivo atualizado para o input
                         for (int i = 0; i < 2; i++)  // Tenta no máximo 2 vezes (inicial + 1 tentativa)
                         {
 
@@ -74,12 +78,14 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             await Task.Delay(200);
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste de envio csv");
                             await Task.Delay(200);
-                            while (await Page.Locator("#enviarButton").IsVisibleAsync())
-                            {
-                                await Page.Locator("#enviarButton").ClickAsync();
-                                await Task.Delay(1000);
-                            }
-                            await Task.Delay(1000);
+                            //while (await Page.Locator("#enviarButton").IsVisibleAsync())
+                            //{
+                            //    await Page.Locator("#enviarButton").ClickAsync();
+                            //    await Task.Delay(1000);
+                            //}
+                            await Page.Locator("#enviarButton").ClickAsync();
+                            await Task.Delay(5000);
+
 
                             var idOperacaoRecebivel = Repositories.OperacoesCsv.OperacoesCsvRepository.ObterIdOperacaoRec(nomeArquivoModificado);
 
@@ -144,6 +150,64 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             }
                         }
 
+                        #region Não deve Aceitar Envio de Operação Com Arquivo em Formato .pdf
+                        await Page.ReloadAsync();                        
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CSV" }).ClickAsync();
+                        await Task.Delay(200);
+                        await Page.Locator("#selectFundoCsv").SelectOptionAsync(new[] { "54638076000176" });
+                        await Task.Delay(200);
+                        await Page.Locator("#fileEnviarOperacoesCsv").SetInputFilesAsync(new[] { TestesOperacoesOperacoes.Program.Config["Paths:Arquivo"] + "teste.pdf" });
+                        await Task.Delay(200);
+                        await Page.Locator("#fileEnviarLastro").SetInputFilesAsync(new[] { TestesOperacoesOperacoes.Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
+                        await Task.Delay(200);
+                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
+                        await Task.Delay(200);
+                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste negativo de envio pdf");
+                        await Task.Delay(200);
+                        await Page.Locator("#enviarButton").ClickAsync();
+                        bool errorMsgPresent = true;
+                        if (errorMsgPresent)
+                        {
+                            await Expect(Page.GetByText("Arquivo CSV inválido: teste.pdf. Apenas arquivos .csv são permitidos.")).ToBeVisibleAsync();
+                            Console.WriteLine("Mensagem de erro presente.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Mensagem de erro de validação de arquivo csv ausente");
+                            //adicionar errosNegativos++
+
+                        }
+                        #endregion
+
+                        #region Não deve Aceitar Envio de Operação com Arquivo com CnpjOriginadorEmBranco
+                        await Page.ReloadAsync();
+                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorEmBranco - Copia.csv", "CnpjOriginadorEmBranco");
+                        #endregion
+
+                        #region Não deve Aceitar Envio de Operação com Arquivo com CnpjOriginadorInvalido13Char
+                        await Page.ReloadAsync();
+                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorInvalido13Char.csv", "CnpjOriginadorInvalido13Char");
+                        #endregion
+
+                        #region Não deve Aceitar Envio de Operação com Arquivo com CnpjOriginadorInvalido15Char
+                        await Page.ReloadAsync();
+                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorInvalido15Char.csv", "CnpjOriginadorInvalido15Char");
+                        #endregion
+
+                        #region Não deve Aceitar Envio de Operação com Arquivo com NomeCedenteEmBranco
+                        await Page.ReloadAsync();
+                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeCedenteEmBranco.csv", "NomeCedenteEmBranco");
+                        #endregion
+
+                        #region Não deve Aceitar Envio de Operação com Arquivo com NomeCedenteInexistente
+                        await Page.ReloadAsync();
+                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeCedenteInexistente.csv", "NomeCedenteInexistente");
+                        #endregion
+
+                        #region Não deve Aceitar Envio de Operação com Arquivo com NomeCedenteInvalido
+                        await Page.ReloadAsync();
+                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeCedenteInvalido.csv", "NomeCedenteInvalido");                       
+                        #endregion
                     }
 
                     else if (nivelLogado == NivelEnum.Consultoria)
@@ -211,9 +275,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             var primeiroTr2 = Page.Locator("#listaCedentes tr").First;
                             var primeiroTd2 = primeiroTr2.Locator("td").First;
                             await primeiroTd2.ClickAsync();
-                            await Page.EvaluateAsync($"""
-    ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo3}','{cnpj}');
-""");
+                            await Page.EvaluateAsync($"""ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo3}','{cnpj}');""");
                             await Page.Locator("#motivoExcluirArquivo").ClickAsync();
                             await Task.Delay(200);
                             await Page.Locator("#motivoExcluirArquivo").FillAsync("teste de exclus");
