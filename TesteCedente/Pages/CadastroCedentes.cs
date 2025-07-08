@@ -38,7 +38,7 @@ namespace TesteCedente.Pages.CedentesPage
                     }
                     pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
 
-                    //eae jessica quer trabalhar hoje nao veinho? 🥶
+                  
 
                     if (pagina.BaixarExcel == "❌")
                     {
@@ -123,7 +123,7 @@ namespace TesteCedente.Pages.CedentesPage
                                     }
                                     //clicar no outro botão
 
-                                    await Page.PauseAsync();
+                                  
 
                                     var btnContratoMae = await BaixarContratoMaeAsync(Page, "36614123000160_26038995000173");
 
@@ -136,10 +136,17 @@ namespace TesteCedente.Pages.CedentesPage
                                     }
 
                                     var btnHistEvent = await VerificarHistoricoDeEventosAsync(Page, "52115758000179_31311565892");
+                                    if (btnHistEvent)
+                                    {
+                                    }
+                                    else 
+                                    {
+
+                                    }
 
 
-
-
+                                    //atualização de kit
+                                    await Page.PauseAsync();
 
                                 }
                                 else 
@@ -409,10 +416,10 @@ namespace TesteCedente.Pages.CedentesPage
         {
             try
             {
-                // Clica no botão principal que abre o modal
+                // Clica no botão que abre o modal
                 await page.Locator($"[id=\"{idBotao}\"]").First.ClickAsync();
 
-                // Download do Template Contrato-Mãe
+                // 1º Download: Template Contrato-Mãe
                 var download1 = await page.RunAndWaitForDownloadAsync(async () =>
                 {
                     var popup = await page.RunAndWaitForPopupAsync(async () =>
@@ -423,30 +430,30 @@ namespace TesteCedente.Pages.CedentesPage
                     await popup.CloseAsync();
                 });
 
-                // Salva o primeiro arquivo
                 string path1 = Path.Combine(Path.GetTempPath(), download1.SuggestedFilename);
                 await download1.SaveAsAsync(path1);
                 bool existe1 = File.Exists(path1);
                 if (existe1) File.Delete(path1);
 
-                // Download do Contrato Atual
-                var download2 = await page.RunAndWaitForDownloadAsync(async () =>
+                // 2º Download: Contrato Atual (feito por nova aba que inicia download direto)
+                var popup2 = await page.RunAndWaitForPopupAsync(async () =>
                 {
-                    var popup = await page.RunAndWaitForPopupAsync(async () =>
-                    {
-                        await page.GetByText("Download Contrato Atual").ClickAsync();
-                    });
-
-                    await popup.CloseAsync();
+                    await page.GetByText("Download Contrato Atual").ClickAsync();
                 });
 
-                // Salva o segundo arquivo
+                var download2 = await popup2.RunAndWaitForDownloadAsync(async () =>
+                {
+                    // Aguarde o carregamento da aba para que o download seja iniciado automaticamente
+                    await popup2.WaitForLoadStateAsync(LoadState.Load);
+                });
+
+                await popup2.CloseAsync();
+
                 string path2 = Path.Combine(Path.GetTempPath(), download2.SuggestedFilename);
                 await download2.SaveAsAsync(path2);
                 bool existe2 = File.Exists(path2);
                 if (existe2) File.Delete(path2);
 
-                // Retorna true apenas se os dois arquivos existirem
                 return existe1 && existe2;
             }
             catch (Exception ex)
@@ -455,6 +462,9 @@ namespace TesteCedente.Pages.CedentesPage
                 return false;
             }
         }
+
+
+
         public static async Task<bool> VerificarHistoricoDeEventosAsync(IPage page, string idBotao)
         {
             try
