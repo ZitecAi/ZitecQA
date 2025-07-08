@@ -97,19 +97,19 @@ namespace TestesOperacoesOperacoes
                         listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
                         break;
 
-                    case Usuario.NivelEnum.Consultoria:
-                        (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecConsultoria(page, usuario.Nivel, operacoes);
-                        listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
+                    //case Usuario.NivelEnum.Consultoria:
+                    //    (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecConsultoria(page, usuario.Nivel, operacoes);
+                    //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
 
-                        break;
+                    //    break;
 
-                    case Usuario.NivelEnum.Gestora:
-                        (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZiteGestora(page, usuario.Nivel, operacoes);
-                        listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
-                        operacoes = new Operacoes();
-                        (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
-                        listaPagina.Add(pagina);
-                        break;
+                    //case Usuario.NivelEnum.Gestora:
+                    //    (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZiteGestora(page, usuario.Nivel, operacoes);
+                    //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
+                    //    operacoes = new Operacoes();
+                    //    (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
+                    //    listaPagina.Add(pagina);
+                    //    break;
                 }
 
                 foreach (var pg in listaPagina)

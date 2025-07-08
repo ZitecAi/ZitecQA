@@ -36,7 +36,8 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                     Console.Write("Operações Zitec csv: ");
                     pagina.Nome = "Operações Zitec csv";
                     pagina.StatusCode = OperacoesZitec.Status;
-                    pagina.BaixarExcel = "❓";
+                    pagina.BaixarExcel = Util.Excel.BaixarExcel(Page).Result;
+                    if (pagina.BaixarExcel == "❌") errosTotais++;
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌") errosTotais++;
                     pagina.Listagem = TesteOperacoesOperacoes.Util.Listagem.VerificarListagem(Page, seletorTabela).Result;
@@ -65,7 +66,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                         // Envia o arquivo atualizado para o input
                         for (int i = 0; i < 2; i++)  // Tenta no máximo 2 vezes (inicial + 1 tentativa)
                         {
-
+                            #region Deve enviar uma operação Csv
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CSV" }).ClickAsync();
                             await Task.Delay(200);
                             await Page.Locator("#selectFundoCsv").SelectOptionAsync(new[] { "54638076000176" });
@@ -85,6 +86,43 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             //}
                             await Page.Locator("#enviarButton").ClickAsync();
                             await Task.Delay(5000);
+
+                            ILocator xSelector = Page.Locator("#btnFecharNovoOperacaoCsv");
+                            if (await xSelector.IsVisibleAsync())
+                            {
+                                await xSelector.ClickAsync();
+                                break;
+                            }
+                            #endregion
+
+                            #region Deve Consultar Operação CSV pela Tabela
+                            //await Page.PauseAsync();
+                            await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(nomeArquivoModificado);
+                            bool arquivopresentenatabela = true;
+                            if (arquivopresentenatabela)
+                            {
+                                var linhas = await Page.Locator("#divTabelaCedentes").AllAsync();
+                                bool textoEncontrado = false;
+
+                                foreach (var linha in linhas)
+                                {
+                                    string textolinha = await linha.InnerTextAsync();
+
+                                    if (textolinha.Contains("CEDENTE TESTE"))
+                                    {
+                                        textoEncontrado = true;
+                                        Console.WriteLine($"texto encontrado: {textolinha} na tabela, Filtragem Funcionando corretamente");
+                                        //adicionar errosnegativos++
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Não foi possivel encontrar o Arquivo na tabela");
+                                    }
+                                }
+                            }
+                            #endregion
 
 
                             var idOperacaoRecebivel = Repositories.OperacoesCsv.OperacoesCsvRepository.ObterIdOperacaoRec(nomeArquivoModificado);

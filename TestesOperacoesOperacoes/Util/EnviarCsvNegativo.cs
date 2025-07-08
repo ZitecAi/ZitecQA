@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Azure;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,9 @@ namespace TesteOperacoesOperacoes.Util
             await page.Locator("#enviarButton").ClickAsync();
             await Task.Delay(200);
             await page.Locator("#btnFecharNovoOperacaoCsv").ClickAsync();
+            await page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(fileName);
+            await page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
+
             bool arquivopresentenatabela = true;
             if (arquivopresentenatabela)
             {
