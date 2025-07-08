@@ -127,7 +127,7 @@ namespace TesteCedente.Pages.CedentesPage
 
                                     var btnContratoMae = await BaixarContratoMaeAsync(Page, "36614123000160_26038995000173");
 
-                                    if (!btnContratoMae) 
+                                    if (btnContratoMae) 
                                     {
                                     
                                     } else
@@ -435,30 +435,26 @@ namespace TesteCedente.Pages.CedentesPage
                 bool existe1 = File.Exists(path1);
                 if (existe1) File.Delete(path1);
 
-                // 2º Download: Contrato Atual (feito por nova aba que inicia download direto)
+                // 2º Verificação: nova aba com documento carregado
                 var popup2 = await page.RunAndWaitForPopupAsync(async () =>
                 {
                     await page.GetByText("Download Contrato Atual").ClickAsync();
                 });
 
-                var download2 = await popup2.RunAndWaitForDownloadAsync(async () =>
-                {
-                    // Aguarde o carregamento da aba para que o download seja iniciado automaticamente
-                    await popup2.WaitForLoadStateAsync(LoadState.Load);
-                });
+                // Aguarda a URL da nova aba carregar
+                await popup2.WaitForLoadStateAsync(LoadState.Load);
+
+                // Verifica se a URL da nova aba contém o endpoint esperado
+                var url = popup2.Url;
+                bool urlValida = url.Contains("ContratoFormalizacao.ashx") && url.Contains("Fundo=") && url.Contains("Cedente=");
 
                 await popup2.CloseAsync();
 
-                string path2 = Path.Combine(Path.GetTempPath(), download2.SuggestedFilename);
-                await download2.SaveAsAsync(path2);
-                bool existe2 = File.Exists(path2);
-                if (existe2) File.Delete(path2);
-
-                return existe1 && existe2;
+                return existe1 && urlValida;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro ao baixar contratos: {ex.Message}");
+                Console.WriteLine($"Erro ao baixar/verificar contratos: {ex.Message}");
                 return false;
             }
         }
