@@ -1050,7 +1050,7 @@ namespace TestePortal.Pages
 
                 var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                 var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                string baseUrl = TestePortalIDSF.Program.Config["FichaCorrentista"];
+                string baseUrl = TestePortalIDSF.Program.Config["FichaCotistaPJ"];
                 string copiedUrl = $"{baseUrl}{token}";
                 var newPage = await context.NewPageAsync();
                 await newPage.GotoAsync(copiedUrl);
