@@ -35,13 +35,13 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 
                     Console.Write("Operações Zitec csv: ");
                     pagina.Nome = "Operações Zitec csv";
-                    pagina.StatusCode = OperacoesZitec.Status;
-                    pagina.BaixarExcel = Util.Excel.BaixarExcel(Page).Result;
-                    if (pagina.BaixarExcel == "❌") errosTotais++;
+                    pagina.StatusCode = OperacoesZitec.Status;                    
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌") errosTotais++;
                     pagina.Listagem = TesteOperacoesOperacoes.Util.Listagem.VerificarListagem(Page, seletorTabela).Result;
                     if (pagina.Listagem == "❌") errosTotais++;
+                    pagina.BaixarExcel = Util.Excel.BaixarExcelPorId(Page).Result;
+                    if (pagina.BaixarExcel == "❌") errosTotais++;
 
                     string pastaArquivos = "C:/TempQA/Arquivos/";
                     string nomeArquivoOriginal = "arquivoteste_operacoescsv_qa.csv";
@@ -95,8 +95,9 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             }
                             #endregion
 
+
+
                             #region Deve Consultar Operação CSV pela Tabela
-                            //await Page.PauseAsync();
                             await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(nomeArquivoModificado);
                             bool arquivopresentenatabela = true;
@@ -124,6 +125,46 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             }
                             #endregion
 
+                            #region Deve Baixar Arquivo Remessa
+                            
+                            await Page.ReloadAsync();
+                            await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync("CEDENTE TESTE");
+                            await Page.Locator("#listaCedentes input[type='checkbox']").First.CheckAsync(); 
+                            
+
+                            var page1 = await Page.RunAndWaitForPopupAsync(async () =>
+                            {
+                                var download = await Page.RunAndWaitForDownloadAsync(async () =>
+                                {
+                                    await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                                    
+                                });
+                                try
+                                {
+                                    await Util.Excel.ValidarDownloadAsync(download, "Arquivo Remessa CSV CEDENTE TESTE");
+                                    Console.WriteLine("Arquivo Remessa Baixado com Sucesso.");
+                                }
+                                catch
+                                {
+                                    throw new Exception("Não foi possivel baixar Arquivo Remessa.");
+                                }
+                                
+                                
+                            });
+
+                            #region Deve Alterar Status da Operação
+                            //await Page.PauseAsync();
+
+                            /**
+                             * Fazer Alterar Status da operação para reprovado depois lançar outra operação e fazer para aprovado por custodiante
+                            */
+                            
+                            #endregion
+
+
+
+                            #endregion
 
                             var idOperacaoRecebivel = Repositories.OperacoesCsv.OperacoesCsvRepository.ObterIdOperacaoRec(nomeArquivoModificado);
 

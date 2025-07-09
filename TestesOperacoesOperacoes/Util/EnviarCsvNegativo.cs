@@ -54,7 +54,7 @@ namespace TesteOperacoesOperacoes.Util
                     }
                     else
                     {
-                        Console.WriteLine("arquivo com cnpj originador em branco não foi aceito na tabela como esperado!");
+                        Console.WriteLine($"arquivo com {TestName} não foi aceito na tabela como esperado!");
                     }
                 }
             }
