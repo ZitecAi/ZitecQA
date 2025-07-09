@@ -444,7 +444,7 @@ namespace TestePortal.Pages
                                 if (statusAgdConta == true)
                                 {
                                     await Page.ReloadAsync();
-                                    var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Movimentacao", idCorrentista);
+                                    var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Movimentacao");
                                     await Page.GetByLabel("Pesquisar").ClickAsync();
                                     await Task.Delay(800);
                                     await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
@@ -538,7 +538,7 @@ namespace TestePortal.Pages
                                 Console.WriteLine("Correntista apagado com sucesso");
                                 pagina.Excluir = "✅";
 
-                                var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Movimentacao", idCorrentista);
+                                var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Movimentacao");
 
                                 if (apagarContaBan)
                                 {
@@ -867,7 +867,7 @@ namespace TestePortal.Pages
                         if (statusAgdConta == true)
                         {
                             await Page.ReloadAsync();
-                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow", idCorrentista);
+                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow");
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
                             await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
@@ -954,7 +954,7 @@ namespace TestePortal.Pages
                             Console.WriteLine("Correntista apagado com sucesso");
                             pagina.Excluir = "✅";
 
-                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow",idCorrentista);
+                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Escrow");
 
                             if (apagarContaBan)
                             {
@@ -1050,7 +1050,7 @@ namespace TestePortal.Pages
 
                 var idCorrentista = Repository.Correntistas.CorrentistaRepository.ObterIdCorrentista("robo@zitec.ai", "16695922000109");
                 var token = Repository.Correntistas.CorrentistaRepository.ObterToken("robo@zitec.ai", "16695922000109");
-                string baseUrl = TestePortalIDSF.Program.Config["FichaCorrentista"];
+                string baseUrl = TestePortalIDSF.Program.Config["Links:FichaCorrentista"];
                 string copiedUrl = $"{baseUrl}{token}";
                 var newPage = await context.NewPageAsync();
                 await newPage.GotoAsync(copiedUrl);
@@ -1417,7 +1417,7 @@ namespace TestePortal.Pages
                         if (statusAgdConta == true)
                         
                         {
-                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca", idCorrentista);
+                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca");
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
@@ -1452,10 +1452,6 @@ namespace TestePortal.Pages
                                 await Task.Delay(8000);
                                 break;
                             }
-
-
-                            
-
                         }
                         else
                         {
@@ -1521,7 +1517,7 @@ namespace TestePortal.Pages
                         Console.WriteLine("Correntista apagado com sucesso");
                         pagina.Excluir = "✅";
 
-                        var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca",idCorrentista);
+                        var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("121212", "5", "Cobranca");
 
                         if (apagarContaBancaria)
                         {
@@ -1616,35 +1612,67 @@ namespace TestePortal.Pages
                     string copiedUrl = $"{baseUrl}{token}";
                     var newPage = await context.NewPageAsync();
                     await newPage.GotoAsync(copiedUrl);
-
-                    await newPage.Locator("#NomeContato").FillAsync("carrefour");
-                    await Task.Delay(200);
-                    await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).ClickAsync();
-                    await Task.Delay(200);
-                    await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).FillAsync("(11) 9601-83248");
-                    await Task.Delay(200);
+                  
                     await newPage.Locator("#NomeContato").ClickAsync();
-                    await Task.Delay(200);
-                    await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
-                    await Task.Delay(200);
-                    await newPage.Locator("#NomeUsuarioMaster").ClickAsync();
-                    await Task.Delay(200);
-                    await newPage.Locator("#NomeUsuarioMaster").FillAsync("Jessica Vitoria Tavares");
-                    await Task.Delay(200);
-                    await newPage.Locator("#CPFUsuarioMaster").ClickAsync();
-                    await Task.Delay(200);
-                    await newPage.Locator("#CPFUsuarioMaster").FillAsync("49624866830");
-                    await Task.Delay(200);
+                    await Task.Delay(300);
+                    await newPage.Locator("#NomeContato").FillAsync("Teste");
+                    await Task.Delay(300);
                     await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).ClickAsync();
-                    await Task.Delay(200);
-                    await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).FillAsync("(11) 9601-83248");
-                    await Task.Delay(200);
-                    await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
-                    await Task.Delay(200);
-                    await newPage.Locator("#checkTermos").CheckAsync();
-                    await Task.Delay(200);
+                    await Task.Delay(300);
+                    await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).FillAsync("(11) 9784-56324");
+                    await Task.Delay(300);
                     await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                     await Task.Delay(300);
+                    await newPage.Locator("#NomeRepresentante").ClickAsync();
+                    await Task.Delay(300);
+                    await newPage.Locator("#NomeRepresentante").FillAsync("Teste de cadastro");
+                    await Task.Delay(300);
+                    await newPage.Locator("#CPFCNPJRepresentante").ClickAsync();
+                    await Task.Delay(300);
+                    await newPage.Locator("#CPFCNPJRepresentante").FillAsync("763.887.780-20");
+                    await Task.Delay(300);
+                    await newPage.Locator("#EmailRepresentante").ClickAsync();
+                    await Task.Delay(300);
+                    await newPage.Locator("#EmailRepresentante").FillAsync("teste@gmail.com");
+                    await Task.Delay(300);
+                    await newPage.GetByPlaceholder("0").ClickAsync();
+                    await Task.Delay(300);
+                    await newPage.GetByPlaceholder("0").FillAsync("10");
+                    await Task.Delay(300);
+                    await newPage.GetByRole(AriaRole.Button, new() { Name = "+ Adicionar Representante" }).ClickAsync();
+                    await Task.Delay(300);
+                    await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
+                    await Task.Delay(300);
+                    await newPage.Locator("#NomeUsuarioMaster").ClickAsync();
+                    await Task.Delay(300);
+                    await newPage.Locator("#NomeUsuarioMaster").FillAsync("usuario master");
+                    await Task.Delay(300);
+                    await newPage.Locator("#CPFUsuarioMaster").ClickAsync();
+                    await Task.Delay(300);
+                    await newPage.Locator("#CPFUsuarioMaster").FillAsync("152.114.410-95");
+                    await Task.Delay(300);
+                    await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).ClickAsync();
+                    await Task.Delay(300);
+                    await newPage.GetByRole(AriaRole.Textbox, new() { Name = "(DD) XXXXX-XXXX" }).FillAsync("(11) 9784-56321");
+                    await Task.Delay(300);
+                    await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
+                    await newPage.Locator("#input-Contrato").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                    await Task.Delay(300);
+                    await newPage.Locator("#input-Atas").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                    await Task.Delay(300);
+                    await newPage.Locator("#input-Procuracoes").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                    await Task.Delay(300);
+                    await newPage.Locator("#input-BalancoPatrimonial").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                    await Task.Delay(300);
+                    await newPage.Locator("#input-DocRepresentantes").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                    await Task.Delay(300);
+                    await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
+                    await Task.Delay(300);
+                    await newPage.Locator("input[name=\"assinaRepresentantes\"]").CheckAsync();
+                    await Task.Delay(300);
+                    await newPage.Locator("#checkTermos").CheckAsync();
+                    await Task.Delay(300);
+                    await newPage.GetByRole(AriaRole.Button, new() { Name = "Avançar" }).ClickAsync();
                     await newPage.CloseAsync();
                     await Task.Delay(6700);
                     await Page.ReloadAsync();
@@ -1714,8 +1742,8 @@ namespace TestePortal.Pages
                     var cep = await Page.EvaluateAsync<string>("() => document.getElementById('CEPMatriz').value");
                     var telefone = await Page.EvaluateAsync<string>("() => document.getElementById('TelefoneContato').value");
 
-                    if (endereco == "Avenida Presidente Juscelino Kubitschek" && cidade == "São Paulo" && nomeContato == "carrefour" && estado == "SP" && email == "robo@zitec.ai"
-                               && numero == "1726" && bairro == "Vila Nova Conceição" && cep == "04543-000" && telefone == "(11) 96018-3248"
+                    if (endereco == "Avenida Presidente Juscelino Kubitschek" && cidade == "São Paulo" && nomeContato == "Teste" && estado == "SP" && email == "robo@zitec.ai"
+                               && numero == "1726" && bairro == "Vila Nova Conceição" && cep == "04543-000" && telefone == "(11) 97845-6324"
                                )
                     {
                         Console.WriteLine("Campos de endereço salvos corretamente!");
@@ -1748,7 +1776,7 @@ namespace TestePortal.Pages
                     await Page.WaitForSelectorAsync("#EmailUsuarioMaster");
                     var emailUsuarioMaster = await Page.EvaluateAsync<string>("() => document.getElementById('EmailUsuarioMaster').value");
 
-                    if (UsuarioMaster == "Jessica Vitoria Tavares" && telefoneUsuMaster == "(11) 96018-3248" && cpfUsuarioMaster == "496.248.668-30" &&
+                    if (UsuarioMaster == "usuario master" && telefoneUsuMaster == "(11) 97845-6321" && cpfUsuarioMaster == "152.114.410-95" &&
                         emailUsuarioMaster == "robo@zitec.ai"
                         )
                     {
@@ -1829,7 +1857,7 @@ namespace TestePortal.Pages
 
                         if (statusAgdConta == true)
                         {
-                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Selic", idCorrentista);
+                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Selic");
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
@@ -1917,7 +1945,7 @@ namespace TestePortal.Pages
                             Console.WriteLine("Correntista apagado com sucesso");
                             pagina.Excluir = "✅";
 
-                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Selic", idCorrentista);
+                            var apagarContaBan = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("778899", "5", "Selic");
 
                             if (apagarContaBan)
                             {
@@ -2374,7 +2402,7 @@ namespace TestePortal.Pages
 
                         if (statusAgdConta == true)
                         {
-                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("988998", "5", "cetip", idCorrentista);
+                            var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("988998", "5", "cetip");
                             await Page.ReloadAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
@@ -2474,7 +2502,7 @@ namespace TestePortal.Pages
                                 pagina.Excluir = "✅";
 
 
-                                var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("988998", "5", "cetip", idCorrentista);
+                                var apagarContaBancaria = Repository.Correntistas.CorrentistaRepository.ApagarContaBancaria("988998", "5", "cetip");
 
                                 if (apagarContaBancaria)
                                 {

@@ -96,7 +96,7 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(400);
 
                             string token = GestoraInternaRepository.ObterTokenGestora("16695922000109", "robo@zitec.ai");
-                            string baseUrl = TestePortalIDSF.Program.Config["FichaGestora"];
+                            string baseUrl = TestePortalIDSF.Program.Config["Links:FichaGestora"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);
@@ -151,19 +151,21 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(200);
                             await newPage.GetByLabel("*Nome Completo", new() { Exact = true }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.GetByLabel("*Nome Completo", new() { Exact = true }).FillAsync("Jessica Vitoria Tavares");
+                            await newPage.GetByLabel("*Nome Completo", new() { Exact = true }).FillAsync("teste de cadastro");
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "*CPF" }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.GetByRole(AriaRole.Textbox, new() { Name = "*CPF" }).FillAsync("496.248.668-30");
+                            await newPage.GetByRole(AriaRole.Textbox, new() { Name = "*CPF" }).FillAsync("744.210.990-07");
                             await Task.Delay(200);
                             await newPage.Locator("#dtNascimentoProcurador").ClickAsync();
                             await Task.Delay(200);
-                            await newPage.Locator("#dtNascimentoProcurador").FillAsync("17/05/2004");
+                            await newPage.Locator("#dtNascimentoProcurador").FillAsync("13/02/2000");
                             await Task.Delay(200);
                             await newPage.GetByLabel("*Nome da Mãe", new() { Exact = true }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.GetByLabel("*Nome da Mãe", new() { Exact = true }).FillAsync("Bernadete Maria Cassimiro ");
+                            await newPage.GetByLabel("*Nome da Mãe", new() { Exact = true }).FillAsync("teste de cadastro");
+                            await Task.Delay(200);
+                            await newPage.Locator("#estadoCivilProcurador").SelectOptionAsync(new[] { "solteiro" });
                             await Task.Delay(200);
                             await newPage.Locator("#situacaoLegalProcurador").SelectOptionAsync(new[] { "maior" });
                             await Task.Delay(200);
@@ -173,9 +175,9 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(200);
                             await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).FillAsync("(11)65464-5454");
+                            await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).FillAsync("(11)97854-3248");
                             await Task.Delay(200);
-                            await newPage.Locator("#redMensalProLab").FillAsync("5000");
+                            await newPage.Locator("#assinaIsolSim").CheckAsync();
                             await Task.Delay(200);
                             await newPage.Locator("#validIndetSim").CheckAsync();
                             await Task.Delay(200);
@@ -183,27 +185,25 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(200);
                             await newPage.Locator("#referente").SelectOptionAsync(new[] { "titular" });
                             await Task.Delay(200);
+                            await newPage.Locator("#redMensalProLab").FillAsync("30.000,00");
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "ADICIONAR REPRESENTANTE" }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.Locator("#nacionalidadeProcurador").SelectOptionAsync(new[] { "br" });
+                            await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
+                            await newPage.GetByLabel("Conta Bancária Contas Bancá").GetByLabel("Default select example").SelectOptionAsync(new[] { "025" });
                             await Task.Delay(200);
-                            await newPage.Locator("#ufNascimentoProc").SelectOptionAsync(new[] { "SP" });
+                            await newPage.GetByPlaceholder("0000", new() { Exact = true }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.Locator("#natProcurador").SelectOptionAsync(new[] { "Guarulhos" });
+                            await newPage.GetByPlaceholder("0000", new() { Exact = true }).FillAsync("0002");
                             await Task.Delay(200);
-                            await newPage.GetByRole(AriaRole.Textbox, new() { Name = "Razão Social" }).ClickAsync();
+                            await newPage.GetByPlaceholder("00000", new() { Exact = true }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.GetByRole(AriaRole.Textbox, new() { Name = "Razão Social" }).FillAsync("raz");
+                            await newPage.GetByPlaceholder("00000", new() { Exact = true }).FillAsync("444844");
                             await Task.Delay(200);
-                            await newPage.GetByLabel("Ramal", new() { Exact = true }).ClickAsync();
+                            await newPage.GetByLabel("Digito", new() { Exact = true }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.GetByLabel("Ramal", new() { Exact = true }).FillAsync("1234");
+                            await newPage.GetByLabel("Digito", new() { Exact = true }).FillAsync("1");
                             await Task.Delay(200);
-                            await newPage.Locator("#partcipSocNao").CheckAsync();
-                            await Task.Delay(200);
-                            await newPage.Locator("#descBensImovNao").CheckAsync();
-                            await Task.Delay(200);
-                            await newPage.Locator("#outroBensInvestNao").CheckAsync();
+                            await newPage.GetByRole(AriaRole.Radio, new() { Name = "Não" }).CheckAsync();
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
                             await Task.Delay(200);
@@ -383,7 +383,7 @@ namespace TestePortal.Pages.CadastroPage
                             }
                             ");
 
-                            if (nomeProcurador == "Jessica Vitoria Tavares")
+                            if (nomeProcurador == "teste de cadastro")
                             {
                                 Console.WriteLine("Dados de representantes salvos corretamente");
                                 formularioOk++;
@@ -411,7 +411,7 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(200);
                             var desde = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaContasBancoResumo tbody tr:nth-child(1) td:nth-child(4)').innerText");
 
-                            if (banco == "260 - NUBANK" && agencia == "5465" && conta == "687467487-4" && desde == dataAtual)
+                            if (banco == "025 - Banco Alfa S.A." && agencia == "5465" && conta == "687467487-4" && desde == dataAtual)
                             {
                                 Console.WriteLine("Dados de conta bancária salvos corretamente");
                                 formularioOk++;

@@ -309,7 +309,7 @@ namespace TestePortal.Repository.Correntistas
             return statusAprovado;
         }
 
-        public static bool ApagarContaBancaria(string conta, string digConta, string tipoConta, int idCorrentista)
+        public static bool ApagarContaBancaria(string conta, string digConta, string tipoConta)
         {
             bool contaApagada = false;
 
@@ -321,13 +321,12 @@ namespace TestePortal.Repository.Correntistas
                 {
                     myConnection.Open();
 
-                    string query = "DELETE FROM ContasCorrentistas WHERE Conta = @conta AND digConta = @digConta AND tipoConta = @tipoConta AND idCorrentista = @idCorrentista";
+                    string query = "DELETE FROM ContasCorrentistas WHERE Conta = @conta AND digConta = @digConta AND tipoConta = @tipoConta";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.AddWithValue("@conta", SqlDbType.NVarChar).Value = conta;
                         oCmd.Parameters.AddWithValue("@digConta", SqlDbType.NVarChar).Value = digConta;
                         oCmd.Parameters.AddWithValue("@tipoConta", SqlDbType.NVarChar).Value = tipoConta;
-                        oCmd.Parameters.AddWithValue("@idCorrentista", SqlDbType.Int).Value = idCorrentista;
 
                         int rowsAffected = oCmd.ExecuteNonQuery();
                         contaApagada = rowsAffected > 0;

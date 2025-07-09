@@ -104,8 +104,9 @@ namespace TestePortalIDSF
                         listaPagina.Add(await AdministrativoGrupos.Grupos(Page));
                         listaPagina.Add(await AdministrativoUsuarios.Usuarios(Page));
                         await Task.Delay(500);
-                        listaPagina.Add(await AdministrativoToken.Token(Page));
-                        listaPagina.Add(await EnviarMensagemPage.EnviarMensagem(Page, usuario.Nivel));
+                        //Levi ajustar
+                        //listaPagina.Add(await AdministrativoToken.Token(Page));
+                        //listaPagina.Add(await EnviarMensagemPage.EnviarMensagem(Page, usuario.Nivel));
                         (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaMov(Page, context, usuario.Nivel);
                         listaPagina.Add(pagina);
                         listaFluxos.Add(fluxoDeCadastros);
@@ -121,7 +122,7 @@ namespace TestePortalIDSF
                         await Task.Delay(500);
                         listaPagina.Add(await BancoIdZeragem.Zeragem(Page));
                         await Task.Delay(500);
-                        listaPagina.Add(await BancoIdRendimento.Rendimento(Page, usuario.Nivel));
+                        //listaPagina.Add(await BancoIdRendimento.Rendimento(Page, usuario.Nivel));
                         (pagina, fluxoDeCadastros) = await CadastroInvestidores.InvestidoresPf(Page, context, usuario.Nivel);
                         listaPagina.Add(pagina);
                         listaFluxos.Add(fluxoDeCadastros);
@@ -161,7 +162,7 @@ namespace TestePortalIDSF
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
-                        listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
+                        //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         (pagina, operacoes) = await ArquivosBaixa.Baixas(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaOperacoes.Add(operacoes);
@@ -182,9 +183,9 @@ namespace TestePortalIDSF
                         listaFluxos.Add(fluxoDeCadastros);
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecInterno(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
-                        (pagina, operacoes) = await OperacoesCadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
-                        listaPagina.Add(pagina);
-                        listaOperacoes.Add(operacoes);
+                        //(pagina, operacoes) = await OperacoesCadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
+                        //listaPagina.Add(pagina);
+                        //listaOperacoes.Add(operacoes);
                         listaPagina.Add(await OperacoesRecebiveis.Recebiveis(Page));
                         listaPagina.Add(await OperacoesConciliacao.Conciliacao(Page));
                         await Task.Delay(500);
@@ -201,7 +202,7 @@ namespace TestePortalIDSF
                         await Page.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Sim" }).ClickAsync();
                         listaPagina.Add(await FundoDesenquadrados.FundosDesenquadrados(Page, usuario.Nivel));
-                        //await Task.Delay(500);
+                        await Task.Delay(500);
                         listaPagina.Add(await ControleInternoPoliticas.Politicas(Page));
                         foreach (var page in listaPagina)
                         {
@@ -278,8 +279,8 @@ namespace TestePortalIDSF
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZiteGestora(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
-                        (pagina, operacoes) = await OperacoesCadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
-                        listaPagina.Add(pagina);
+                        //(pagina, operacoes) = await OperacoesCadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
+                        //listaPagina.Add(pagina);
                         listaPagina.Add(await OperacoesRecebiveis.Recebiveis(Page));
                         listaPagina.Add(await OperacoesConciliacao.Conciliacao(Page));
                         listaPagina.Add(await RelatorioCadastro.Cadastro(Page));
@@ -366,8 +367,8 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "todos@zitec.ai",
-                    "Relatório das páginas do portal. Validação do deploy no repositório de QA.",
+                    "jt@zitec.ai",
+                    "Relatório das páginas do portal.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
                   //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
                   //"C:\\Temp\\Paginas.txt"

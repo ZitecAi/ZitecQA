@@ -83,7 +83,7 @@ namespace TestePortal.Pages.NotaComercialPage
                             await Task.Delay(200);
                             await Page.Locator("#relacionado").SelectOptionAsync(new[] { "1" });
                             await Task.Delay(200);
-                            await Page.Locator("#envolvido").SelectOptionAsync(new[] { "51324287896" });
+                            await Page.Locator("#envolvido").SelectOptionAsync(new[] { "39973705831" });
                             await Task.Delay(200);
                             await Page.Locator("#tipoRelacao").SelectOptionAsync(new[] { "empregador" });
                             await Task.Delay(200);

@@ -53,49 +53,44 @@ namespace TestePortal.Pages.BoletagemPage
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
-                        var apagarBoletagemAporte2 = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("Jessica Tavares", "cota");
-                        await Page.Locator("#tableButton").ClickAsync();
+                        var apagarBoletagemAporte2 = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("teste de cadastro", "COTAFIXA");
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                         await Task.Delay(200);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).ClickAsync();
                         await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).FillAsync("30/08/2024");
+                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).FillAsync("09/07/2025");
+                        await Page.Locator("#ValorAporte").ClickAsync();
                         await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "0000,00" }).ClickAsync();
-                        await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "0000,00" }).FillAsync("R$10");
+                        await Page.Locator("#ValorAporte").FillAsync("R$1.0000");
                         await Task.Delay(200);
                         await Page.Locator("#CPFCotista").ClickAsync();
                         await Task.Delay(200);
-                        await Page.Locator("#CPFCotista").FillAsync("49624866830");
+                        await Page.Locator("#CPFCotista").FillAsync("118.385.290-80");
                         await Task.Delay(200);
                         await Page.Locator("#NomeCotista").ClickAsync();
                         await Task.Delay(200);
-                        await Page.Locator("#NomeCotista").FillAsync("Jessica Tavares");
+                        await Page.Locator("#NomeCotista").FillAsync("teste de cadastro");
                         await Task.Delay(200);
-                        await Page.GetByPlaceholder("Tipo de Cota").ClickAsync();
+                        await Page.Locator("#tipoCota").SelectOptionAsync(new[] { "COTAFIXA" });
                         await Task.Delay(200);
-                        await Page.GetByPlaceholder("Tipo de Cota").FillAsync("cota");
+                        await Page.Locator("#valorCota").ClickAsync();
                         await Task.Delay(200);
-                        await Page.GetByText("Escolha o fundo:* Escolha o").ClickAsync();
+                        await Page.Locator("#valorCota").FillAsync("20");
                         await Task.Delay(200);
                         await Page.Locator("#Fundos").SelectOptionAsync(new[] { "54638076000176" });
                         await Task.Delay(200);
                         await Page.Locator("#fileBoleta").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "documentosteste.zip" });
-                        await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
-                        await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("Observaç");
-                        await Task.Delay(200);
+                      
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(500);
 
-                        var BoletagemAporteExiste = Repository.BoletagemAporte.BoletagemAporteRepository.VerificaExistenciaBoletagemAporte("Jessica Tavares", "cota");
+                        var BoletagemAporteExiste = Repository.BoletagemAporte.BoletagemAporteRepository.VerificaExistenciaBoletagemAporte("teste de cadastro", "COTAFIXA");
 
                         if (BoletagemAporteExiste)
                         {
                             Console.WriteLine("Boleta adicionada com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarBoletagemAporte = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("Jessica Tavares", "cota");
+                            var apagarBoletagemAporte = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("teste de cadastro", "COTAFIXA");
 
                             if (apagarBoletagemAporte)
                             {

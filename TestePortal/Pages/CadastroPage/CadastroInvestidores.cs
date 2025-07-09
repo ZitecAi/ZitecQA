@@ -213,7 +213,7 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(200);
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
                             await Task.Delay(200);
-                            await newPage.GetByLabel("Não aceito responder o Questionário de Suitability.", new() { Exact = true }).CheckAsync();
+                            await newPage.Locator("#recuseSuitability").ClickAsync();
                             await Task.Delay(200);
                             await newPage.Locator("#motivoRecuseSuitability").SelectOptionAsync(new[] { "investNaoResid" });
                             await Task.Delay(200);
@@ -231,6 +231,7 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(200);
                             await newPage.Locator("#fileDocComprovRes").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Task.Delay(200);
+                            await newPage.Locator("#fileDocProcuracao").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "FINALIZAR" }).ClickAsync();
                             await Task.Delay(400);
                             await Task.Delay(3000);
@@ -877,7 +878,7 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(400);
 
                             string token = InvestidoresRepository.ObterToken("16695922000109", "robo@zitec.ai");
-                            string baseUrl = TestePortalIDSF.Program.Config["Link:COTISTAPJ"];
+                            string baseUrl = TestePortalIDSF.Program.Config["Links:FichaCotistaPJ"];
                             string copiedUrl = $"{baseUrl}{token}";
                             var newPage = await context.NewPageAsync();
                             await newPage.GotoAsync(copiedUrl);
@@ -1492,7 +1493,7 @@ namespace TestePortal.Pages.CadastroPage
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira sua mensagem..." }).FillAsync("teste aprovação");
                         await Page.Locator("#statusComplianceButton").ClickAsync();
                         await Task.Delay(1000);
-                        await Task.Delay(50000);
+                        await Task.Delay(70000);
 
 
                         bool statusAtual = false;
@@ -1748,7 +1749,7 @@ namespace TestePortal.Pages.CadastroPage
                         int idCotista = InvestidoresFundInvest.ObterIdCotista("24426716000113", "robo@zitec.ai");
                         await Task.Delay(400);
                         string token = InvestidoresFundInvest.ObterToken("24426716000113", "robo@zitec.ai");
-                        string baseUrl = TestePortalIDSF.Program.Config["FichaCotistaFundInvst"];
+                        string baseUrl = TestePortalIDSF.Program.Config["Links:FichaCotistaFundInvst"];
                         string copiedUrl = $"{baseUrl}{token}";
                         var newPage = await context.NewPageAsync();
                         await newPage.GotoAsync(copiedUrl);
