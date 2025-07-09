@@ -155,11 +155,19 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 
                             #region Deve Alterar Status da Operação
                             //await Page.PauseAsync();
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                            await Page.Locator("#statusPosOp").SelectOptionAsync(new[] { "RI" });
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
+                            await Page.GetByText("Situação Aguardando aprovação").ClickAsync();
+                            await Page.ReloadAsync();
+                            await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(nomeArquivoModificado);
+                            await Page.Locator("#listaCedentes input[type='checkbox']").First.CheckAsync();
 
                             /**
                              * Fazer Alterar Status da operação para reprovado depois lançar outra operação e fazer para aprovado por custodiante
                             */
-                            
+
                             #endregion
 
 
