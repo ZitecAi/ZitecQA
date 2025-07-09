@@ -145,9 +145,9 @@ namespace TestePortalIDSF
                         //(pagina, fluxoDeCadastros) = await CadastroInvestidores.InvestidoresFundoDeInvestimento(Page, context, usuario.Nivel);
                         //listaFluxos.Add(fluxoDeCadastros);
                         //listaPagina.Add(await CadastroGestoras.Gestoras(Page));
-                        await Task.Delay(500);
-                        (pagina, fluxoDeCadastros) = await CadastroGestorasInternas.GestorasInternas(Page, context, usuario.Nivel);
-                        //listaPagina.Add(pagina);
+                        //await Task.Delay(500);
+                        //(pagina, fluxoDeCadastros) = await CadastroGestorasInternas.GestorasInternas(Page, context, usuario.Nivel);
+                        ////listaPagina.Add(pagina);
                         //listaFluxos.Add(fluxoDeCadastros);
                         //await Task.Delay(500);
                         //listaPagina.Add(await CadastroPrestServico.PrestServico(Page));
@@ -196,7 +196,7 @@ namespace TestePortalIDSF
                         //listaPagina.Add(await RelatorioFundos.Fundos(Page));
                         //listaPagina.Add(await MeusRelatorios.Relatorios(Page));
                         //listaPagina.Add(await RelatoriosOperacoes.Operacoes(Page));
-                        //listaPagina.Add(await ControleInternoPoliticas.Politicas(Page));
+                        listaPagina.Add(await ControleInternoPoliticas.Politicas(Page));
                         //listaPagina.Add(await ControleInternoDiario.Diario(Page));
                         //await Page.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync();
                         //await Page.GetByRole(AriaRole.Button, new() { Name = "Sim" }).ClickAsync();
