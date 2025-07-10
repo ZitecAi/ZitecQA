@@ -255,29 +255,29 @@ namespace TestePortal.Utils
 
             //tabela com fluxos de cadastros
 
-            //Html += "<h2>Tabela com o resultado dos fluxos de cadastro.</h2>";
-            //Html += "<table>";
-            //Html += "<tr><th>Fluxo</th><th>Formulario</th><th>Status em análise</th><th>Formulario completo</th><th>Doc Assinado</th><th>Email recebido</th><th>Status Aprovado</th><th>Total erros</th><th>Lista de erros</th></tr>";
+            Html += "<h2>Tabela com o resultado dos fluxos de cadastro.</h2>";
+            Html += "<table>";
+            Html += "<tr><th>Fluxo</th><th>Formulario</th><th>Status em análise</th><th>Formulario completo</th><th>Doc Assinado</th><th>Email recebido</th><th>Status Aprovado</th><th>Total erros</th><th>Lista de erros</th></tr>";
 
-            //foreach (var fluxoDeCadastros in listaFluxos)
-            //{
-            //    Html += "<tr>";
-            //    Html += "<td> " + fluxoDeCadastros.Fluxo + "</td>\n";
-            //    Html += "<td> " + fluxoDeCadastros.Formulario + "</td>\n";
-            //    Html += "<td> " + fluxoDeCadastros.StatusEmAnalise + "</td>\n";
-            //    Html += "<td> " + fluxoDeCadastros.FormularioCompletoNoPortal + "</td>\n";
-            //    Html += "<td> " + fluxoDeCadastros.DocumentoAssinado + "</td>\n";
-            //    Html += "<td> " + fluxoDeCadastros.EmailRecebido + "</td>\n";
-            //    Html += "<td> " + fluxoDeCadastros.statusAprovado + "</td>\n";
-            //    Html += "<td> " + fluxoDeCadastros.TotalErros + "</td>\n";
-            //    Html += "<td> " + string.Join(", ", fluxoDeCadastros.ListaErros) + "</td>\n";
-            //    Html += "</tr>";
-            //}
-            //Html += "</table>";
-            //Html += "<br>";
-            //Html += "<hr class=\"solid\">";
+            foreach (var fluxoDeCadastros in listaFluxos)
+            {
+                Html += "<tr>";
+                Html += "<td> " + fluxoDeCadastros.Fluxo + "</td>\n";
+                Html += "<td> " + fluxoDeCadastros.Formulario + "</td>\n";
+                Html += "<td> " + fluxoDeCadastros.StatusEmAnalise + "</td>\n";
+                Html += "<td> " + fluxoDeCadastros.FormularioCompletoNoPortal + "</td>\n";
+                Html += "<td> " + fluxoDeCadastros.DocumentoAssinado + "</td>\n";
+                Html += "<td> " + fluxoDeCadastros.EmailRecebido + "</td>\n";
+                Html += "<td> " + fluxoDeCadastros.statusAprovado + "</td>\n";
+                Html += "<td> " + fluxoDeCadastros.TotalErros + "</td>\n";
+                Html += "<td> " + string.Join(", ", fluxoDeCadastros.ListaErros) + "</td>\n";
+                Html += "</tr>";
+            }
+            Html += "</table>";
+            Html += "<br>";
+            Html += "<hr class=\"solid\">";
 
-            //tabela com os erros 
+            //tabela com os erros
 
             Html += "<h2>Resumo de Páginas com Erros (Perfil: Master)</h2>";
             Html += "<table>";

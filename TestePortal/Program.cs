@@ -166,6 +166,7 @@ namespace TestePortalIDSF
                         (pagina, operacoes) = await ArquivosBaixa.Baixas(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaOperacoes.Add(operacoes);
+                        operacoes = new Operacoes();
                         (pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
                         listaFluxos.Add(fluxoDeCadastros);
                         listaPagina.Add(await BoletagemControleCapital.ControleCapital(Page));
@@ -183,6 +184,7 @@ namespace TestePortalIDSF
                         listaFluxos.Add(fluxoDeCadastros);
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecInterno(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
+                        operacoes = new Operacoes();
                         //(pagina, operacoes) = await OperacoesCadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
                         //listaPagina.Add(pagina);
                         //listaOperacoes.Add(operacoes);
@@ -232,6 +234,7 @@ namespace TestePortalIDSF
                         listaPagina.Add(pagina);
                         listaOperacoes.Add(operacoes);
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
+                        operacoes = new Operacoes();
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZitecConsultoria(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
                         listaPagina.Add(await OperacoesRecebiveis.Recebiveis(Page));
@@ -277,8 +280,10 @@ namespace TestePortalIDSF
                         listaPagina.Add(pagina);
                         listaOperacoes.Add(operacoes);
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
+                        operacoes = new Operacoes();
                         (pagina, operacoes) = await OperacoesCustodiaZitec.OperacoesZiteGestora(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
+                        operacoes = new Operacoes();
                         //(pagina, operacoes) = await OperacoesCadastroOperacoesZitecCsv.OperacoesZitecCsv(Page, usuario.Nivel, operacoes);
                         //listaPagina.Add(pagina);
                         listaPagina.Add(await OperacoesRecebiveis.Recebiveis(Page));
@@ -367,8 +372,8 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "jt@zitec.ai",
-                    "Relatório das páginas do portal.",
+                    "todos@zitec.ai",
+                    "Relatório das páginas do portal em staging.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
                   //EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao, operacoes),
                   //"C:\\Temp\\Paginas.txt"
