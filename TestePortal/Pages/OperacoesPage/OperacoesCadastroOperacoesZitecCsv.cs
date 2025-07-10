@@ -41,7 +41,7 @@ namespace TestePortal.Pages.OperacoesPage
                 {
                     string seletorTabela = "#divTabelaCedentes";
 
-
+                    
                     Console.Write("Operações Zitec csv: ");
                     pagina.Nome = "Operações Zitec csv";
                     pagina.StatusCode = OperacoesZitec.Status;
