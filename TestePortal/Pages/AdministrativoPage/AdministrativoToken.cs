@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TestePortal.Model;
 using Microsoft.Playwright;
+using TestePortal.Utils;
 
 namespace TestePortal.Pages.AdministrativoPage
 {
@@ -29,13 +30,11 @@ namespace TestePortal.Pages.AdministrativoPage
                     Console.Write("Administrativo - Cedentes ");
                     Console.WriteLine(PaginaAdministrativoToken.Status);
                     pagina.StatusCode = PaginaAdministrativoToken.Status;
-                    
-                    
 
-                    if (pagina.Acentos == "❌")
-                    {
-                        errosTotais++;
-                    }
+
+                    pagina.Nome = "Administrativo/Token";
+                    pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
+                    if (pagina.Acentos == "❌") errosTotais++;
                     string seletorTabela = "#tabelaCedentes";
 
                     pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
@@ -44,9 +43,9 @@ namespace TestePortal.Pages.AdministrativoPage
                     {
                         errosTotais++;
                     }
-                    pagina.BaixarExcel = "?";
-                    pagina.Reprovar = "?";
-                    pagina.Excluir = "?";
+                    pagina.BaixarExcel = "❓";
+                    pagina.Reprovar = "❓";
+                    pagina.Excluir = "❓";
 
                     
                 }
