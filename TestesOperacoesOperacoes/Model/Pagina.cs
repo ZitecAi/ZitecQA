@@ -24,6 +24,8 @@ namespace TesteOperacoesOperacoes.Model
         public string Acentos { get; set; }
         public string Perfil { get; set;  }
 
+        public string TestesNegativos { get; set; }
+
         public string ToFormattedString(int padding = 20)
         {
             try

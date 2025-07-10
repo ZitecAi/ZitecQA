@@ -118,7 +118,7 @@ namespace TesteOperacoesOperacoes.Util
             //primeira tabela com o relatório das páginas
             Html += "<h2>Relatório com o usuário: Interno</h2>";
             Html += "<table>";
-            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
+            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr><th>TestesNegativos</th>";
 
             foreach (var pagina in listaMaster)
             {
@@ -131,6 +131,7 @@ namespace TesteOperacoesOperacoes.Util
                 Html += "<td> " + pagina.InserirDados + "</td>\n";
                 Html += "<td> " + pagina.Excluir + "</td>\n";
                 Html += "<td> " + pagina.TotalErros + "</td>\n";
+                Html += "<td> " + pagina.TestesNegativos + "</td>\n";
                 Html += "</tr>";
             }
             Html += "</table>";
