@@ -13,7 +13,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
     public class CadastroOperacoesZitecCsv
     {
 
-        public static async Task<(Pagina pagina, Operacoes operacoes)> OperacoesZitecCsv(IPage Page, NivelEnum nivelLogado, Operacoes operacoes)
+        public static async Task<(Pagina pagina, Operacoes operacoes, List<TesteNegativoResultado> resultadosNegativos)> OperacoesZitecCsv(IPage Page, NivelEnum nivelLogado, Operacoes operacoes)
         {
 
             var pagina = new Pagina();
@@ -22,6 +22,8 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
             int statusTrocados = 0;
             string caminhoArquivo = @"C:\Temp\Arquivos\CNABz.txt";
             operacoes.ListaErros3 = new List<string>();
+            List<TesteNegativoResultado> resultadosTestesNegativos = new();
+
 
             try
             {
@@ -306,183 +308,189 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 
                             }
                         }
+                        #region Testes Negativos
 
                         #region CTN-01 Não deve Aceitar Envio de Operação Com Arquivo em Formato .pdf
-                        await Page.ReloadAsync();                        
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CSV" }).ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#selectFundoCsv").SelectOptionAsync(new[] { "54638076000176" });
-                        await Task.Delay(200);
-                        await Page.Locator("#fileEnviarOperacoesCsv").SetInputFilesAsync(new[] { TestesOperacoesOperacoes.Program.Config["Paths:Arquivo"] + "teste.pdf" });
-                        await Task.Delay(200);
-                        await Page.Locator("#fileEnviarLastro").SetInputFilesAsync(new[] { TestesOperacoesOperacoes.Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
-                        await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
-                        await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste negativo de envio pdf");
-                        await Task.Delay(200);
-                        await Page.Locator("#enviarButton").ClickAsync();
-                        bool errorMsgPresent = true;
-                        if (errorMsgPresent)
-                        {
-                            await Expect(Page.GetByText("Arquivo CSV inválido: teste.pdf. Apenas arquivos .csv são permitidos.")).ToBeVisibleAsync();
-                            Console.WriteLine("Mensagem de erro presente.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Mensagem de erro de validação de arquivo csv ausente");
-                            //aproveitar essa ideia, e elaborar o restante, para adicionar como irão puxar o erro negativo, não esta dentro de if...                           
-                        }
+                        await Page.ReloadAsync();
+                        var resultado1 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarArquivoPdfNegativo(Page, "CTN-01 teste.pdf");
+                        resultadosTestesNegativos.Add(resultado1);
                         #endregion
 
                         #region CTN-02 Não deve Aceitar Envio de Operação com Arquivo com CnpjOriginadorEmBranco
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorEmBranco - Copia.csv", "CnpjOriginadorEmBranco");
-                       
+                        var resultado2 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorEmBranco - Copia.csv", "CTN-02 CnpjOriginadorEmBranco");
+                        resultadosTestesNegativos.Add(resultado2);
                         #endregion
 
                         #region CTN-03 Não deve Aceitar Envio de Operação com Arquivo com CnpjOriginadorInvalido13Char
                         await Page.ReloadAsync();
-                       await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorInvalido13Char.csv", "CnpjOriginadorInvalido13Char");
-                       
+                        var resultado3 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorInvalido13Char.csv", "CTN-03 CnpjOriginadorInvalido13Char");
+                        resultadosTestesNegativos.Add(resultado3);
                         #endregion
 
                         #region CTN-04 Não deve Aceitar Envio de Operação com Arquivo com CnpjOriginadorInvalido15Char
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorInvalido15Char.csv", "CnpjOriginadorInvalido15Char");
+                        var resultado4 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorInvalido15Char.csv", "CTN-04 CnpjOriginadorInvalido15Char");
+                        resultadosTestesNegativos.Add(resultado4);
                         #endregion
 
                         #region CTN-05 Não deve Aceitar Envio de Operação com Arquivo com NomeCedenteEmBranco
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeCedenteEmBranco.csv", "NomeCedenteEmBranco");
+                        var resultado5 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeCedenteEmBranco.csv", "CTN-05 NomeCedenteEmBranco");
+                        resultadosTestesNegativos.Add(resultado5);
                         #endregion
 
                         #region CTN-06 Não deve Aceitar Envio de Operação com Arquivo com NomeCedenteInexistente
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeCedenteInexistente.csv", "NomeCedenteInexistente");
+                        var resultado6 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeCedenteInexistente.csv", "CTN-06 NomeCedenteInexistente");
+                        resultadosTestesNegativos.Add(resultado6);
                         #endregion
 
                         #region CTN-07 Não deve Aceitar Envio de Operação com Arquivo com NomeCedenteInvalido
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeCedenteInvalido.csv", "NomeCedenteInvalido");
+                        var resultado7 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeCedenteInvalido.csv", "CTN-07 NomeCedenteInvalido");
+                        resultadosTestesNegativos.Add(resultado7);
                         #endregion
 
                         #region CTN-08 Não deve Aceitar Envio de Operação com Arquivo com CnpjCedenteEmBranco
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjCedenteEmBranco.csv", "CnpjCedenteEmBranco");
+                        var resultado8 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjCedenteEmBranco.csv", "CTN-08 CnpjCedenteEmBranco");
+                        resultadosTestesNegativos.Add(resultado8);
                         #endregion
 
                         #region CTN-09 Não deve Aceitar Envio de Operação com Arquivo com CnpjCedenteInvalido13Char
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjCedenteInvalido13Char.csv", "CnpjCedenteInvalido13Char");
+                        var resultado9 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjCedenteInvalido13Char.csv", "CTN-09 CnpjCedenteInvalido13Char");
+                        resultadosTestesNegativos.Add(resultado9);
                         #endregion
 
                         #region CTN-10 Não deve Aceitar Envio de Operação com Arquivo com CnpjCedenteInvalido15Char
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjCedenteInvalido15Char.csv", "CnpjCedenteInvalido15Char");
+                        var resultado10 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjCedenteInvalido15Char.csv", "CTN-10 CnpjCedenteInvalido15Char");
+                        resultadosTestesNegativos.Add(resultado10);
                         #endregion
 
                         #region CTN-11 Não deve Aceitar Envio de Operação com Arquivo com NomeSacadoEmBranco
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeSacadoEmBranco.csv", "NomeSacadoEmBranco");
+                        var resultado11 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeSacadoEmBranco.csv", "CTN-11 NomeSacadoEmBranco");
+                        resultadosTestesNegativos.Add(resultado11);
                         #endregion
 
                         #region CTN-12 Não deve Aceitar Envio de Operação com Arquivo com NomeSacadoInexistente
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeSacadoInexistente.csv", "NomeSacadoInexistente");
+                        var resultado12 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeSacadoInexistente.csv", "CTN-12 NomeSacadoInexistente");
+                        resultadosTestesNegativos.Add(resultado12);
                         #endregion
 
                         #region CTN-13 Não deve Aceitar Envio de Operação com Arquivo com NomeSacadoInvalido
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeSacadoInvalido.csv", "NomeSacadoInvalido");
+                        var resultado13 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNomeSacadoInvalido.csv", "CTN-13 NomeSacadoInvalido");
+                        resultadosTestesNegativos.Add(resultado13);
                         #endregion
 
                         #region CTN-14 Não deve Aceitar Envio de Operação com Arquivo com CnpjSacadoEmBranco
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjSacadoEmBranco.csv", "CnpjSacadoEmBranco");
+                        var resultado14 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjSacadoEmBranco.csv", "CTN-14 CnpjSacadoEmBranco");
+                        resultadosTestesNegativos.Add(resultado14);
                         #endregion
 
                         #region CTN-15 Não deve Aceitar Envio de Operação com Arquivo com CnpjSacadoInvalido13Char
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjSacadoInvalido13Char.csv", "CnpjSacadoInvalido13Char");
+                        var resultado15 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjSacadoInvalido13Char.csv", "CTN-15 CnpjSacadoInvalido13Char");
+                        resultadosTestesNegativos.Add(resultado15);
                         #endregion
 
                         #region CTN-16 Não deve Aceitar Envio de Operação com Arquivo com CnpjSacadoInvalido15Char
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjSacadoInvalido15Char.csv", "CnpjSacadoInvalido15Char");
+                        var resultado16 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjSacadoInvalido15Char.csv", "CTN-16 CnpjSacadoInvalido15Char");
+                        resultadosTestesNegativos.Add(resultado16);
                         #endregion
 
                         #region CTN-17 Não deve Aceitar Envio de Operação com Arquivo com DataVencFormatoInv
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataVencFormatoInv.csv", "DataVencFormatoInv");
+                        var resultado17 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataVencFormatoInv.csv", "CTN-17 DataVencFormatoInv");
+                        resultadosTestesNegativos.Add(resultado17);
                         #endregion
 
                         #region CTN-18 Não deve Aceitar Envio de Operação com Arquivo com DataVencEmBranco
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataVencEmBranco.csv", "DataVencEmBranco");
+                        var resultado18 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataVencEmBranco.csv", "CTN-18 DataVencEmBranco");
+                        resultadosTestesNegativos.Add(resultado18);
                         #endregion
 
                         #region CTN-19 Não deve Aceitar Envio de Operação com Arquivo com DataVencPassado
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataVencPassado.csv", "DataVencPassado");
+                        var resultado19 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataVencPassado.csv", "CTN-19 DataVencPassado");
+                        resultadosTestesNegativos.Add(resultado19);
                         #endregion
 
                         #region CTN-20 Não deve Aceitar Envio de Operação com Arquivo com DataEmisEmBranco
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataEmisEmBranco.csv", "DataEmisEmBranco");
+                        var resultado20 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataEmisEmBranco.csv", "CTN-20 DataEmisEmBranco");
+                        resultadosTestesNegativos.Add(resultado20);
                         #endregion
 
                         #region CTN-21 Não deve Aceitar Envio de Operação com Arquivo com DataEmissPassado
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataEmissPassado.csv", "DataEmissPassado");
+                        var resultado21 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataEmissPassado.csv", "CTN-21 DataEmissPassado");
+                        resultadosTestesNegativos.Add(resultado21);
                         #endregion
 
                         #region CTN-22 Não deve Aceitar Envio de Operação com Arquivo com DataAqFormatoInv
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataAqFormatoInv.csv", "DataAqFormatoInv");
+                        var resultado22 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataAqFormatoInv.csv", "CTN-22 DataAqFormatoInv");
+                        resultadosTestesNegativos.Add(resultado22);
                         #endregion
 
                         #region CTN-23 Não deve Aceitar Envio de Operação com Arquivo com DataAqEmBranco
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataAqEmBranco.csv", "DataAqEmBranco");
+                        var resultado23 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataAqEmBranco.csv", "CTN-23 DataAqEmBranco");
+                        resultadosTestesNegativos.Add(resultado23);
                         #endregion
 
                         #region CTN-24 Não deve Aceitar Envio de Operação com Arquivo com DataAqPassado
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataAqPassado.csv", "DataAqPassado");
+                        var resultado24 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoDataAqPassado.csv", "CTN-24 DataAqPassado");
+                        resultadosTestesNegativos.Add(resultado24);
                         #endregion
 
                         #region CTN-25 Não deve Aceitar Envio de Operação com Arquivo com NuDocEmBranco
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNuDocEmBranco.csv", "NuDocEmBranco");
+                        var resultado25 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNuDocEmBranco.csv", "CTN-25 NuDocEmBranco");
+                        resultadosTestesNegativos.Add(resultado25);
                         #endregion
 
                         #region CTN-26 Não deve Aceitar Envio de Operação com Arquivo com NuDocInexistente
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNuDocInexistente.csv", "NuDocInexistente");
+                        var resultado26 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNuDocInexistente.csv", "CTN-26 NuDocInexistente");
+                        resultadosTestesNegativos.Add(resultado26);
                         #endregion
 
                         #region CTN-27 Não deve Aceitar Envio de Operação com Arquivo com NuDocInvalido
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNuDocInvalido.csv", "NuDocInvalido");
+                        var resultado27 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoNuDocInvalido.csv", "CTN-27 NuDocInvalido");
+                        resultadosTestesNegativos.Add(resultado27);
                         #endregion
 
                         #region CTN-28 Não deve Aceitar Envio de Operação com Arquivo com SeuNumeroEmBranco
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoSeuNumeroEmBranco.csv", "SeuNumeroEmBranco");
+                        var resultado28 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoSeuNumeroEmBranco.csv", "CTN-28 SeuNumeroEmBranco");
+                        resultadosTestesNegativos.Add(resultado28);
                         #endregion
 
                         #region CTN-29 Não deve Aceitar Envio de Operação com Arquivo com SeuNumeroInexistente
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoSeuNumeroInexistente.csv", "SeuNumeroInexistente");
+                        var resultado29 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoSeuNumeroInexistente.csv", "CTN-29 SeuNumeroInexistente");
+                        resultadosTestesNegativos.Add(resultado29);
                         #endregion
 
                         #region CTN-30 Não deve Aceitar Envio de Operação com Arquivo com SeuNumeroInvalido
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoSeuNumeroInvalido.csv", "SeuNumeroInvalido");
+                        var resultado30 = await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoSeuNumeroInvalido.csv", "CTN-30 SeuNumeroInvalido");
+                        resultadosTestesNegativos.Add(resultado30);
                         #endregion
 
-
+                        #endregion
 
 
                     }
@@ -674,7 +682,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                 operacoes.ListaErros3.Add("0");
             }
             pagina.TotalErros = errosTotais;
-            return (pagina, operacoes);
+            return (pagina, operacoes, resultadosTestesNegativos);
         }
     }
 }

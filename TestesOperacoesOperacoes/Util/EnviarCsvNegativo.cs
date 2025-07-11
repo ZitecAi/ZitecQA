@@ -8,72 +8,109 @@ using System.Threading.Tasks;
 using TesteOperacoesOperacoes.Model;
 using TestesOperacoesOperacoes;
 using Program = TestesOperacoesOperacoes.Program;
-
+using static Microsoft.Playwright.Assertions;
 namespace TesteOperacoesOperacoes.Util
 {
     public static class EnviarCsvNegativo
     {
 
-        
 
-        public static async Task<string> EnviarAquivoCvsNegativo(IPage page, string fileName, string TestName)
+
+        public static async Task<TesteNegativoResultado> EnviarAquivoCvsNegativo(IPage page, string fileName, string testName)
         {
-
-            string TestesNegativos = "";
-
+            string resultado = "❌"; // default como falha
             try
             {
                 await page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CSV" }).ClickAsync();
                 await Task.Delay(200);
-                await page.Locator("#selectFundoCsv").SelectOptionAsync(new[] { "54638076000176" });
+                await page.Locator("#selectFundoCsv").SelectOptionAsync("54638076000176");
                 await Task.Delay(200);
-                await page.Locator("#fileEnviarOperacoesCsv").SetInputFilesAsync(new[] { TestesOperacoesOperacoes.Program.Config["Paths:Arquivo"] + fileName });
+                await page.Locator("#fileEnviarOperacoesCsv").SetInputFilesAsync(TestesOperacoesOperacoes.Program.Config["Paths:Arquivo"] + fileName);
                 await Task.Delay(200);
-                await page.Locator("#fileEnviarLastro").SetInputFilesAsync(new[] { TestesOperacoesOperacoes.Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
+                await page.Locator("#fileEnviarLastro").SetInputFilesAsync(TestesOperacoesOperacoes.Program.Config["Paths:Arquivo"] + "Arquivo teste.zip");
                 await Task.Delay(200);
-                await page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
-                await Task.Delay(200);
-                await page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync($"teste negativo de envio de Operação com Arquivo com {TestName} ");
+                await page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync($"teste negativo de envio com {testName}");
                 await Task.Delay(200);
                 await page.Locator("#enviarButton").ClickAsync();
                 await Task.Delay(200);
                 await page.Locator("#btnFecharNovoOperacaoCsv").ClickAsync();
                 await page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(fileName);
-                await page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
 
-                bool arquivopresentenatabela = true;
-                if (arquivopresentenatabela)
+                var linhas = await page.Locator("#divTabelaCedentes").AllAsync();
+
+                foreach (var linha in linhas)
                 {
-                    var linhas = await page.Locator("#divTabelaCedentes").AllAsync();
-                    bool textoEncontrado;
+                    string textoLinha = await linha.InnerTextAsync();
 
-                    foreach (var linha in linhas)
+                    if (textoLinha.Contains(fileName))
                     {
-                        string textolinha = await linha.InnerTextAsync();
-
-                        if (textolinha.Contains("testenegativocnpjoriginadorembranco - copia.csv"))
-                        {
-                            textoEncontrado = true;
-                            Console.WriteLine($"texto encontrado: {textolinha} na tabela.");
-                            TestesNegativos = "❌";
-                            break;
-                        }
-                        else
-                        {
-                            textoEncontrado = false;
-                            Console.WriteLine($"arquivo com {TestName} não foi aceito na tabela como esperado!");
-                            TestesNegativos = "✅";
-                        }
+                        Console.WriteLine($"[❌] Arquivo {fileName} foi aceito na tabela, mas não deveria.");
+                        resultado = "❌";
+                        return new TesteNegativoResultado { IdDoTeste = testName, Resultado = resultado };
                     }
                 }
+
+                // Caso ele NÃO esteja na tabela, o teste negativo passou (funcionou)
+                Console.WriteLine($"[✅] Arquivo {fileName} não está na tabela, teste negativo passou.");
+                resultado = "✅";
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Console.WriteLine($"TimeoutException: O arquivo envio de arquivo não foi concluído no tempo esperado. Detalhes: {ex.Message}");
-                TestesNegativos = "❌";
+                Console.WriteLine($"[❌] Exceção ao enviar {fileName}: {ex.Message}");
+                resultado = "❌";
             }
-            return TestesNegativos;
+
+            return new TesteNegativoResultado
+            {
+                IdDoTeste = testName,
+                Resultado = resultado
+            };
+
+
+
         }
 
+
+
+        public static async Task<TesteNegativoResultado> EnviarArquivoPdfNegativo(IPage Page, string idTeste)
+        {
+            try
+            {
+                await Page.ReloadAsync();
+                await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CSV" }).ClickAsync();
+                await Task.Delay(200);
+                await Page.Locator("#selectFundoCsv").SelectOptionAsync(new[] { "54638076000176" });
+                await Task.Delay(200);
+                await Page.Locator("#fileEnviarOperacoesCsv").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "teste.pdf" });
+                await Task.Delay(200);
+                await Page.Locator("#fileEnviarLastro").SetInputFilesAsync(new[] { Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
+                await Task.Delay(200);
+                await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste negativo de envio pdf");
+                await Task.Delay(200);
+                await Page.Locator("#enviarButton").ClickAsync();
+
+                await Expect(Page.GetByText("Arquivo CSV inválido: teste.pdf. Apenas arquivos .csv são permitidos.")).ToBeVisibleAsync();
+
+                return new TesteNegativoResultado
+                {
+                    IdDoTeste = idTeste,
+                    Resultado = "✅"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new TesteNegativoResultado
+                {
+                    IdDoTeste = idTeste,
+                    Resultado = $"Falha ao validar rejeição do PDF: {ex.Message}"
+                };
+            }
+        }
     }
+
+
+
+
+
 }
+

@@ -11,7 +11,8 @@ using TesteOperacoesOperacoes.Pages;
 using TesteOperacoesOperacoes.Util;
 using System.Xml.Schema;
 using static TesteOperacoesOperacoes.Model.FluxosDeCadastros;
-
+using static TesteOperacoesOperacoes.Model.TesteNegativoResultado;
+using static TesteOperacoesOperacoes.Pages.OperacoesPage.CadastroOperacoesZitecCsv;
 
 namespace TesteOperacoesOperacoes.Util
 {
@@ -78,7 +79,7 @@ namespace TesteOperacoesOperacoes.Util
 
         }
 
-        public static string GerarHtml(List<Pagina> listaPagina, List<FluxosDeCadastros> listaFluxos, List<Operacoes> operacoes)
+        public static string GerarHtml(List<Pagina> listaPagina, List<FluxosDeCadastros> listaFluxos, List<Operacoes> operacoes, List<TesteNegativoResultado> resultadosTestesNegativos)
         {
 
 
@@ -137,6 +138,18 @@ namespace TesteOperacoesOperacoes.Util
             Html += "</table>";
             Html += "<br>";
             Html += "<hr class=\"solid\">";
+
+            Html += "<h2>Relatório de Testes Negativos Cadastro de Operações CSV </h2>\n";
+            Html += "<table>\n";
+            Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
+
+            foreach (var teste in resultadosTestesNegativos)
+            {
+                Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
+            }
+
+            Html += "</table>\n";
+
 
             //terceira tabela
             Html += "<h2>Relatório com o usuário: Consultoria</h2>";
@@ -294,7 +307,6 @@ namespace TesteOperacoesOperacoes.Util
                 if (pagina.BaixarExcel == "❌") erros.Add("BaixarExcel");
                 if (pagina.InserirDados == "❌") erros.Add("InserirDados");
                 if (pagina.Excluir == "❌") erros.Add("Excluir");
-                if (pagina.TestesNegativos == "❌") erros.Add("TestesNegativos");
                 //if (pagina.TotalErros > 0) erros.Add("Total de Erros: " + pagina.TotalErros);
 
                 // Adiciona à tabela

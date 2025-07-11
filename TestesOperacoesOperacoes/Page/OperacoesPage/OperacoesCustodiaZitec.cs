@@ -36,6 +36,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 
                     pagina.Listagem = await Listagem.VerificarListagem(Page, seletorTabela) ?? "❌";
                     if (pagina.Listagem == "❌") errosTotais++;
+                    pagina.BaixarExcel = await Util.Excel.BaixarExcel(Page) ?? "❌";
                     if (pagina.BaixarExcel == "❌")
                     {
                         errosTotais++;
