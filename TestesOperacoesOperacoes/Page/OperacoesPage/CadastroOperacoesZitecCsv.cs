@@ -331,20 +331,20 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                         else
                         {
                             Console.WriteLine("Mensagem de erro de validação de arquivo csv ausente");
-                            //aproveitar essa ideia, e elaborar o restante, para adicionar como irão puxar o erro negativo, não esta dentro de if...
-                            pagina.TestesNegativos = "❌ CTN-01";
-
+                            //aproveitar essa ideia, e elaborar o restante, para adicionar como irão puxar o erro negativo, não esta dentro de if...                           
                         }
                         #endregion
 
                         #region CTN-02 Não deve Aceitar Envio de Operação com Arquivo com CnpjOriginadorEmBranco
                         await Page.ReloadAsync();
                         await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorEmBranco - Copia.csv", "CnpjOriginadorEmBranco");
+                       
                         #endregion
 
                         #region CTN-03 Não deve Aceitar Envio de Operação com Arquivo com CnpjOriginadorInvalido13Char
                         await Page.ReloadAsync();
-                        await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorInvalido13Char.csv", "CnpjOriginadorInvalido13Char");
+                       await TesteOperacoesOperacoes.Util.EnviarCsvNegativo.EnviarAquivoCvsNegativo(Page, "TesteNegativoCnpjOriginadorInvalido13Char.csv", "CnpjOriginadorInvalido13Char");
+                       
                         #endregion
 
                         #region CTN-04 Não deve Aceitar Envio de Operação com Arquivo com CnpjOriginadorInvalido15Char
