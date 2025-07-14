@@ -135,6 +135,7 @@ namespace TesteOperacoesOperacoes.Util
                 
                 Html += "</tr>";
             }
+            //validações negativas
             Html += "</table>";
             Html += "<br>";
             Html += "<hr class=\"solid\">";

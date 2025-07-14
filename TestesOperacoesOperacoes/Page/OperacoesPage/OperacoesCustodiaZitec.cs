@@ -87,6 +87,13 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                                 errosTotais += 2;
                                 operacoes.ListaErros2.Add("Erro ao lançar operação");
                             }
+
+                            #region Deve consultar arquivo CNAB enviado, pelo histórico
+                            await Page.PauseAsync();
+
+
+                            #endregion
+
                             //Reprovar Lote
                             //await Page.PauseAsync();
                             await Page.GetByLabel("Pesquisar").ClickAsync();
