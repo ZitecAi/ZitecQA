@@ -53,6 +53,9 @@ namespace TesteCedente
 
         private static async Task<List<Pagina>> ExecutarTesteParaUsuario(IBrowser browser, Usuario usuario)
         {
+            Cedente cedente;
+            Pagina pagina;
+            var listaCedente = new List<Cedente>();
             var listaPagina = new List<Pagina>();
             var page = await browser.NewPageAsync();
 
@@ -63,9 +66,12 @@ namespace TesteCedente
                 switch (usuario.Nivel)
                 {
                     case Usuario.NivelEnum.Master:
-                    case Usuario.NivelEnum.Consultoria:
-                    case Usuario.NivelEnum.Gestora:
-                        listaPagina.Add(await CadastroCedentes.CedentesPJ(page));
+                        //case Usuario.NivelEnum.Consultoria:
+                        //case Usuario.NivelEnum.Gestora:
+
+                        (pagina, cedente) = await CadastroCedentes.CedentesPJ(page);
+                        listaPagina.Add(pagina);
+                        listaCedente.Add(cedente);
                         listaPagina.Add(await CadastroCedentes.CedentesPf(page));
                         break;
                 }

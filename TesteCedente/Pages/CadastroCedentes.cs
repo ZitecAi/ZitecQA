@@ -1,13 +1,15 @@
 ﻿using Microsoft.Playwright;
+using System.Runtime.InteropServices;
 using TesteCedente.Utils;
 
 namespace TesteCedente.Pages.CedentesPage
 {
     public class CadastroCedentes
     {
-        public static async Task<Model.Pagina> CedentesPJ(IPage Page)
+        public static async Task<(Model.Pagina, Model.Cedente)> CedentesPJ(IPage Page)
         {
             var pagina = new Model.Pagina();
+            var cedente = new Model.Cedente();
             var listErros = new List<string>();
             int errosTotais = 0;
             await Page.WaitForLoadStateAsync();
@@ -38,14 +40,14 @@ namespace TesteCedente.Pages.CedentesPage
                     }
                     pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
 
-                  
-
                     if (pagina.BaixarExcel == "❌")
                     {
                         errosTotais++;
                     }
 
+                    cedente.TipoCedente = "Cedente PJ";
                     var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "26038995000173");
+                    var apagarCedenteZCustodia = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("26038995000173");
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                     await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "36614123000160_26038995000173_N.zip" });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
@@ -57,7 +59,7 @@ namespace TesteCedente.Pages.CedentesPage
 
                     if (cedenteCadastrado != null)
                     {
-
+                        cedente.ArquivoEnviado = "✅";
                         await Page.Locator("#btnFecharNovoCedente").ClickAsync();
                         await Page.GetByLabel("Pesquisar").FillAsync("FUNDO QA");
                         await Task.Delay(200);
@@ -82,8 +84,7 @@ namespace TesteCedente.Pages.CedentesPage
 
                         if (statusFormalizacao)
                         {
-
-                            //ativar e aprovar contrato mãe 
+                            cedente.AprovacaoDasAreas = "✅";
                             await Page.Locator(".buttonParecer.btn.btn-success").First.ClickAsync();
                             await Page.Locator("#fileAtivaCedente").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
@@ -100,108 +101,200 @@ namespace TesteCedente.Pages.CedentesPage
 
                             if (statusAtivo)
                             {
-
-                                //verificar cadastro no zCustódia
+                                cedente.AtivacaoCedente = "✅";
                                 var cedenteCadsZCust = Repository.Cedentes.CedentesRepository.CedenteCadastrodoZCust("26038995000173", "jt@zitec.ai");
 
                                 if (cedenteCadsZCust)
                                 {
-
+                                    cedente.InsertZCustodia = "✅";
+                                    pagina.InserirDados = "✅";
 
                                     var kitBaixado = await BaixarKit(Page, "36614123000160", "26038995000173");
 
-                                    if (kitBaixado == true) 
+                                    if (kitBaixado == true)
                                     {
-
-
-
+                                        cedente.BtnBaixarKit = "✅";
                                     }
-                                    else 
+                                    else
                                     {
-                                    
-                                    
+                                        cedente.BtnBaixarKit = "❌";
+
                                     }
                                     //clicar no outro botão
 
-                                  
-
                                     var btnContratoMae = await BaixarContratoMaeAsync(Page, "36614123000160_26038995000173");
 
-                                    if (btnContratoMae) 
+                                    if (btnContratoMae)
                                     {
-                                    
-                                    } else
+                                        cedente.BtnBaixarContratoMae = "✅";
+                                    }
+                                    else
                                     {
-                                    
+                                        cedente.BtnContratoMaeEFormalizacao = "❌";
                                     }
 
-                                    var btnHistEvent = await VerificarHistoricoDeEventosAsync(Page, "52115758000179_31311565892");
+                                    var btnHistEvent = await VerificarHistoricoDeEventosAsync(Page, "36614123000160_26038995000173");
                                     if (btnHistEvent)
                                     {
+                                        cedente.BtnHistoricoEventos = "✅";
                                     }
-                                    else 
+                                    else
                                     {
+                                        cedente.BtnHistoricoEventos = "❌";
+                                    }
+                                    var baixarArquivoContratoMae = await BaixarArquivoContratoMae(Page, "36614123000160_26038995000173");
+                                    if (baixarArquivoContratoMae)
+                                    {
+                                        cedente.BtnContratoMaeEFormalizacao = "✅";
 
                                     }
+                                    else
+                                    {
+                                        cedente.BtnContratoMaeEFormalizacao = "❌";
 
+                                    }
 
                                     //atualização de kit
-                                    await Page.PauseAsync();
+                                    await Page.GetByRole(AriaRole.Row, new() { Name = "FUNDO QA FIDC Teste robô -" }).Locator("[id=\"0\"]").ClickAsync();
+                                    await Page.Locator("#fileAtualizarKit").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "36614123000160_26038995000173_A.zip" });
+                                    var cedenteAtualizado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
+                                    {
+
+                                        Timeout = 140000
+
+                                    });
+
+                                    await Page.Locator("#btnFecharAtualizarKit").ClickAsync();
+                                    await Page.Locator("[id='36614123000160_26038995000173_CADASTRO_not_analysed']").Nth(0).ClickAsync();
+                                    await Page.Locator("#modal-parecer").GetByText("Aprovado", new() { Exact = true }).ClickAsync();
+                                    await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).ClickAsync();
+                                    await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                                    await Task.Delay(2000);
+
+                                    var cedenteAtualizadoBdd = Repository.Cedentes.CedentesRepository.VerificaAtualizacaoCedente("Teste de atualizacao", "testeatualizacao@gmail.com");
+                                    if (cedenteAtualizadoBdd)
+                                    {
+                                        cedente.FluxoAtualizacaoDeKit = "✅";
+                                        var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "26038995000173");
+                                        var apagarCedenteZCustodia2 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("26038995000173");
+
+                                        if (apagarCedente && apagarCedenteZCustodia2)
+                                        {
+                                            Console.WriteLine("Cedente apagado com sucesso");
+                                            pagina.Excluir = "✅";
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Não foi possível apagar cedente");
+                                            pagina.Excluir = "❌";
+                                            errosTotais++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        cedente.FluxoAtualizacaoDeKit = "❌";
+
+                                    }
+                                }
+                                else
+                                {
+                                    cedente.InsertZCustodia = "❌";
+                                    pagina.InserirDados = "❌";
 
                                 }
-                                else 
-                                { 
-                                
-
-
-                                
-                                }
-
-
-
-                            }
-                            else 
-                            
-                            { 
-                            
-                            }
-
-
-                        }
-                        var cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "26038995000173");
-
-                        if (cedenteExiste)
-                        {
-                        var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "26038995000173");
-                            Console.WriteLine("Cedente adicionado com sucesso na tabela.");
-                            pagina.InserirDados = "✅";
-
-                            if (apagarCedente)
-                            {
-                                Console.WriteLine("Cedente apagado com sucesso");
-                                pagina.Excluir = "✅";
                             }
                             else
                             {
-                                Console.WriteLine("Não foi possível apagar cedente");
-                                pagina.Excluir = "❌";
-                                errosTotais++;
+                                cedente.AtivacaoCedente = "✅";
                             }
-
                         }
                         else
                         {
-                            Console.WriteLine("Não foi possível inserir cedente");
-                            pagina.InserirDados = "❌";
-                            pagina.Excluir = "❌";
-                            errosTotais += 2;
+                            cedente.AprovacaoDasAreas = "❌";
                         }
                     }
                     else
                     {
+                        cedente.ArquivoEnviado = "❌";
                         pagina.InserirDados = "❌";
                         pagina.Excluir = "❌";
                         errosTotais += 2;
+                    }
+
+                    //cadastro de cedente com representante que assina isoladamente 
+
+                    var apagarCedente3 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "26038995000173");
+                    var apagarCedenteZCustodia3 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("26038995000173");
+                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "36614123000160_26038995000173_N.zip" });
+                    var cedenteCadastrado3 = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
+                    {
+
+                        Timeout = 90000
+
+                    });
+
+                    if (cedenteCadastrado3 != null)
+                    {
+                        await Page.Locator("#btnFecharNovoCedente").ClickAsync();
+                        await Page.GetByLabel("Pesquisar").FillAsync("FUNDO QA");
+                        await Task.Delay(200);
+                        var primeiroTr = Page.Locator("#tabelaCedentes tbody tr").First;
+                        var primeiroTd = primeiroTr.Locator("td").First;
+                        await primeiroTd.ClickAsync();
+                        await Page.Locator("[id='36614123000160_26038995000173_GESTORA']").ClickAsync();
+                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).ClickAsync();
+                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).FillAsync("Teste de Aprovaçao");
+                        await Page.Locator("#modal-parecer").GetByText("Aprovado", new() { Exact = true }).ClickAsync();
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                        await Task.Delay(200);
+                        await Page.Locator("[id='36614123000160_26038995000173_CADASTRO_not_analysed']").Nth(0).ClickAsync();
+                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).ClickAsync();
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                        await Task.Delay(200);
+                        await Page.Locator("[id='36614123000160_26038995000173_COMPLIANCE_not_analysed']").Nth(0).ClickAsync();
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                        await Task.Delay(300);
+
+                        var statusFormalizacao = Repository.Cedentes.CedentesRepository.CedenteEmFormalizacao("36614123000160", "26038995000173");
+
+                        if (statusFormalizacao)
+                        {
+                            await Page.Locator(".buttonParecer.btn.btn-success").First.ClickAsync();
+                            await Page.Locator("#fileAtivaCedente").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("Teste de ativaç");
+                            await Page.Locator("#submitButtonAtivacao").ClickAsync();
+                            await Page.GetByRole(AriaRole.Row, new() { Name = "FUNDO QA FIDC Teste robô -" }).GetByRole(AriaRole.Listitem).Nth(1).ClickAsync();
+                            await Page.Locator("#botaoStatus label").Filter(new() { HasText = "Aprovado" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste  de aprovaç");
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                            await Task.Delay(300);
+
+                            var statusAtivo = Repository.Cedentes.CedentesRepository.CedenteAtivo("36614123000160", "26038995000173");
+
+                            if (statusAtivo)
+                            {
+                                var cedenteCadsZCust = Repository.Cedentes.CedentesRepository.CedenteCadastrodoZCust("26038995000173", "jt@zitec.ai");
+
+                                if (cedenteCadsZCust)
+                                {
+                                    pagina.InserirDados = "✅";
+
+                                }
+                                else
+                                {
+
+
+
+                                }
+                            }
+                            else
+                            { 
+                            
+                            }
+                        }
                     }
                 }
                 else
@@ -221,11 +314,11 @@ namespace TesteCedente.Pages.CedentesPage
                 pagina.Excluir = "❌";
                 errosTotais += 2;
                 pagina.TotalErros = errosTotais;
-                return pagina;
+                return (pagina, cedente);
                 //await Page.GotoAsync("https://portal.idsf.com.br/Home.aspx");
             }
             pagina.TotalErros = errosTotais;
-            return pagina;
+            return (pagina, cedente);
         }
 
         public static async Task<Model.Pagina> CedentesPf(IPage Page)
@@ -272,8 +365,6 @@ namespace TesteCedente.Pages.CedentesPage
                     //await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "36614123000160_49624866830_N.zip" });
                     //var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
 
-
-
                     //{
 
                     //    Timeout = 90000
@@ -287,7 +378,6 @@ namespace TesteCedente.Pages.CedentesPage
                     string fileName = "36614123000160_49624866830_N.zip";
                     string filePath = Path.Combine(basePath, fileName);
                     Console.WriteLine(filePath);
-
                     Console.WriteLine($"Arquivo gerado: {filePath}");
 
 
@@ -323,7 +413,6 @@ namespace TesteCedente.Pages.CedentesPage
                                 pagina.Excluir = "❌";
                                 errosTotais++;
                             }
-
                         }
                         else
                         {
@@ -339,13 +428,7 @@ namespace TesteCedente.Pages.CedentesPage
                         pagina.Excluir = "❌";
                         errosTotais += 2;
                     }
-
-                    //pf
-
-
                 }
-
-
                 else
                 {
                     Console.Write("Erro ao carregar a página de Cedentes no tópico Boletagem ");
@@ -416,10 +499,8 @@ namespace TesteCedente.Pages.CedentesPage
         {
             try
             {
-                // Clica no botão que abre o modal
                 await page.Locator($"[id=\"{idBotao}\"]").First.ClickAsync();
 
-                // 1º Download: Template Contrato-Mãe
                 var download1 = await page.RunAndWaitForDownloadAsync(async () =>
                 {
                     var popup = await page.RunAndWaitForPopupAsync(async () =>
@@ -434,56 +515,56 @@ namespace TesteCedente.Pages.CedentesPage
                 await download1.SaveAsAsync(path1);
                 bool existe1 = File.Exists(path1);
                 if (existe1) File.Delete(path1);
-
-                // 2º Verificação: nova aba com documento carregado
                 var popup2 = await page.RunAndWaitForPopupAsync(async () =>
                 {
                     await page.GetByText("Download Contrato Atual").ClickAsync();
                 });
 
-                // Aguarda a URL da nova aba carregar
                 await popup2.WaitForLoadStateAsync(LoadState.Load);
 
-                // Verifica se a URL da nova aba contém o endpoint esperado
                 var url = popup2.Url;
                 bool urlValida = url.Contains("ContratoFormalizacao.ashx") && url.Contains("Fundo=") && url.Contains("Cedente=");
-
                 await popup2.CloseAsync();
-
+                await page.Locator("#btnFecharModalDownloadContraoMae").ClickAsync();
                 return existe1 && urlValida;
+               
             }
             catch (Exception ex)
             {
+                await page.Locator("#btnFecharModalDownloadContraoMae").ClickAsync();
                 Console.WriteLine($"Erro ao baixar/verificar contratos: {ex.Message}");
                 return false;
             }
         }
 
-
-
         public static async Task<bool> VerificarHistoricoDeEventosAsync(IPage page, string idBotao)
         {
             try
             {
-                // Clica no botão com título "Histórico de Eventos"
                 var botaoHistorico = page.Locator($"button[id='{idBotao}'][title='Histórico de Eventos']");
                 await botaoHistorico.ClickAsync();
 
-                // Localiza o modal
                 var modal = page.Locator("#modal-xl");
-
-                // Espera o modal ficar visível
                 await modal.WaitForAsync(new() { State = WaitForSelectorState.Visible, Timeout = 5000 });
 
-                // Modal abriu com sucesso
                 Console.WriteLine("✅ Modal de Histórico abriu corretamente.");
 
-                // Opcional: fechar o modal
-                var botaoFechar = modal.Locator("button", new() { HasTextString = "Fechar" });
-                if (await botaoFechar.IsVisibleAsync())
-                    await botaoFechar.ClickAsync();
+                var elementosEmail = modal.Locator(":text('qazitec01@gmail.com')");
+                int count = await elementosEmail.CountAsync();
 
-                return true;
+                for (int i = 0; i < count; i++)
+                {
+                    var item = elementosEmail.Nth(i);
+                    if (await item.IsVisibleAsync())
+                    {
+                        Console.WriteLine("✅ Pelo menos um 'qazitec01@gmail.com' visível no modal.");
+                        await page.ReloadAsync();
+                        return true;
+                    }
+                }
+
+                Console.WriteLine("❌ Nenhum 'qazitec01@gmail.com' visível no modal.");
+                return false;
             }
             catch (TimeoutException)
             {
@@ -492,11 +573,51 @@ namespace TesteCedente.Pages.CedentesPage
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Erro ao tentar abrir modal de Histórico: {ex.Message}");
+                Console.WriteLine($"❌ Erro ao tentar abrir/verificar modal de Histórico: {ex.Message}");
                 return false;
             }
         }
 
+        public static async Task<bool> BaixarArquivoContratoMae(IPage page, string idBotao)
+        {
+            try
+            {
+        
+                await page.Locator($"button[id='{idBotao}'][title='Contrato Mãe']").ClickAsync();
 
+                var linkDownload = page.Locator("a#linkContratoMae");
+                await linkDownload.WaitForAsync(new() { State = WaitForSelectorState.Visible, Timeout = 5000 });
+
+                var download = await page.RunAndWaitForDownloadAsync(async () =>
+                {
+                    await linkDownload.ClickAsync();
+                });
+
+                string caminho = Path.Combine(Path.GetTempPath(), download.SuggestedFilename);
+                await download.SaveAsAsync(caminho);
+
+                bool arquivoExiste = File.Exists(caminho);
+                if (arquivoExiste) File.Delete(caminho);
+
+                await page.Locator("#btnFecharParecerContratoMae").ClickAsync();
+
+                return arquivoExiste;
+            }
+            catch (Exception ex)
+            {
+           
+                try
+                {
+                    await page.Locator("#btnFecharParecerContratoMae").ClickAsync();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"{e.Message}"); 
+                }
+
+                Console.WriteLine($"❌ Erro ao baixar contrato mãe: {ex.Message}");
+                return false;
+            }
+        }
     }
 }
