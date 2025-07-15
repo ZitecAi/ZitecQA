@@ -17,10 +17,8 @@ namespace TesteCedente.Utils
             {
                 var download = await Page.RunAndWaitForDownloadAsync(async () =>
                 {
-                    await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync(new LocatorClickOptions
-                    {
-                        Timeout = 1500
-                    });
+                    await Page.Locator("#btnExportaExcel").ClickAsync();
+                    
                     //await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync();
                 });
                 if (File.Exists(filePath))

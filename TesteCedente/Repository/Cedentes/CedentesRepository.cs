@@ -333,6 +333,95 @@ namespace TesteCedente.Repository.Cedentes
             return existe;
         }
 
+        public static bool RepresentantesComEmailsCadastrados(List<string> listaEmails)
+        {
+            bool todosCadastrados = false;
 
+            try
+            {
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
+
+                using (SqlConnection myConnection = new SqlConnection(con))
+                {
+                    myConnection.Open();
+
+                    // Monta os parâmetros dinamicamente
+                    var emailParams = new List<string>();
+                    for (int i = 0; i < listaEmails.Count; i++)
+                    {
+                        emailParams.Add($"@email{i}");
+                    }
+
+                    string query = $@"
+                SELECT COUNT(*) 
+                FROM TB_REPRESENTANTE
+                WHERE DS_EMAIL IN ({string.Join(",", emailParams)})";
+
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        // Adiciona os parâmetros com valores
+                        for (int i = 0; i < listaEmails.Count; i++)
+                        {
+                            oCmd.Parameters.AddWithValue($"@email{i}", listaEmails[i]);
+                        }
+
+                        int count = (int)oCmd.ExecuteScalar();
+
+                        // Verifica se encontrou todos os e-mails
+                        if (count == listaEmails.Count)
+                        {
+                            todosCadastrados = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Erro ao verificar representantes: {e.Message}");
+            }
+
+            return todosCadastrados;
+        }
+        public static bool RepresentanteAssinaIso(string email)
+        {
+            bool assinaIsoladamente = false;
+
+            try
+            {
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
+
+                using (SqlConnection myConnection = new SqlConnection(con))
+                {
+                    myConnection.Open();
+
+                    string query = @"
+                SELECT IC_ASS_ISOLADAMENTE
+                FROM TB_REPRESENTANTE
+                WHERE DS_EMAIL = @email";
+
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@email", email);
+
+                        object resultado = oCmd.ExecuteScalar();
+
+                        if (resultado != null && resultado != DBNull.Value)
+                        {
+                            int valor = Convert.ToInt32(resultado);
+                            if (valor == 1)
+                            {
+                                assinaIsoladamente = true;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Erro ao verificar assinatura isolada do representante: {e.Message}");
+            }
+
+            return assinaIsoladamente;
+        }
     }
 }

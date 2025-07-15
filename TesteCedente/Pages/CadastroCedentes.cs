@@ -223,10 +223,10 @@ namespace TesteCedente.Pages.CedentesPage
 
                     //cadastro de cedente com representante que assina isoladamente 
 
-                    var apagarCedente3 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "26038995000173");
-                    var apagarCedenteZCustodia3 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("26038995000173");
+                    var apagarCedente3 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "19890232000190");
+                    var apagarCedenteZCustodia3 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("19890232000190");
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
-                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "36614123000160_26038995000173_N.zip" });
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "36614123000160_19890232000190_N.zip" });
                     var cedenteCadastrado3 = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
                     {
 
@@ -242,21 +242,21 @@ namespace TesteCedente.Pages.CedentesPage
                         var primeiroTr = Page.Locator("#tabelaCedentes tbody tr").First;
                         var primeiroTd = primeiroTr.Locator("td").First;
                         await primeiroTd.ClickAsync();
-                        await Page.Locator("[id='36614123000160_26038995000173_GESTORA']").ClickAsync();
+                        await Page.Locator("[id='36614123000160_19890232000190_GESTORA']").ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).FillAsync("Teste de Aprovaçao");
                         await Page.Locator("#modal-parecer").GetByText("Aprovado", new() { Exact = true }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(200);
-                        await Page.Locator("[id='36614123000160_26038995000173_CADASTRO_not_analysed']").Nth(0).ClickAsync();
+                        await Page.Locator("[id='36614123000160_19890232000190_CADASTRO_not_analysed']").Nth(0).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(200);
-                        await Page.Locator("[id='36614123000160_26038995000173_COMPLIANCE_not_analysed']").Nth(0).ClickAsync();
+                        await Page.Locator("[id='36614123000160_19890232000190_COMPLIANCE_not_analysed']").Nth(0).ClickAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(300);
 
-                        var statusFormalizacao = Repository.Cedentes.CedentesRepository.CedenteEmFormalizacao("36614123000160", "26038995000173");
+                        var statusFormalizacao = Repository.Cedentes.CedentesRepository.CedenteEmFormalizacao("36614123000160", "19890232000190");
 
                         if (statusFormalizacao)
                         {
@@ -272,27 +272,28 @@ namespace TesteCedente.Pages.CedentesPage
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                             await Task.Delay(300);
 
-                            var statusAtivo = Repository.Cedentes.CedentesRepository.CedenteAtivo("36614123000160", "26038995000173");
+                            var statusAtivo = Repository.Cedentes.CedentesRepository.CedenteAtivo("36614123000160", "19890232000190");
 
                             if (statusAtivo)
                             {
-                                var cedenteCadsZCust = Repository.Cedentes.CedentesRepository.CedenteCadastrodoZCust("26038995000173", "jt@zitec.ai");
+                                var emails = new List<string> { "jt@zitec.ai", "bot@gmail.com", "bot2@gmail.com" };
+                                var cedendeCadastrado = Repository.Cedentes.CedentesRepository.RepresentantesComEmailsCadastrados(emails);
+                                var repAssIso = Repository.Cedentes.CedentesRepository.RepresentanteAssinaIso("jt@zitec.ai");
 
-                                if (cedenteCadsZCust)
+                                if (cedendeCadastrado & repAssIso)
                                 {
-                                    pagina.InserirDados = "✅";
-
+                                    cedente.FluxoRepresentanteAssIso = "✅";
+                                    Console.WriteLine("Todos os e-mails estão cadastrados.");
                                 }
                                 else
                                 {
-
-
-
+                                    Console.WriteLine("Nem todos os e-mails foram encontrados.");
+                                    cedente.FluxoRepresentanteAssIso = "❌";
                                 }
                             }
                             else
-                            { 
-                            
+                            {
+                                Console.WriteLine("Status não está como ativo no banco de dados");
                             }
                         }
                     }
