@@ -72,7 +72,9 @@ namespace TesteCedente
                         (pagina, cedente) = await CadastroCedentes.CedentesPJ(page);
                         listaPagina.Add(pagina);
                         listaCedente.Add(cedente);
-                        listaPagina.Add(await CadastroCedentes.CedentesPf(page));
+                        (pagina, cedente) = await CadastroCedentes.CedentesPf(page);
+                        listaPagina.Add(pagina);
+                        listaCedente.Add(cedente);
                         break;
                 }
 
