@@ -41,7 +41,7 @@ namespace TestePortal.Pages.OperacoesPage
                 {
                     string seletorTabela = "#divTabelaCedentes";
 
-
+                    
                     Console.Write("Operações Zitec csv: ");
                     pagina.Nome = "Operações Zitec csv";
                     pagina.StatusCode = OperacoesZitec.Status;
@@ -78,13 +78,20 @@ namespace TestePortal.Pages.OperacoesPage
                         await Task.Delay(200);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste de envio csv");
                         await Task.Delay(200);
-                        while (await Page.Locator("#enviarButton").IsVisibleAsync())
-                        {
-                            await Page.Locator("#enviarButton").ClickAsync();
-                            await Task.Delay(1000);
-                        }
-                        await Task.Delay(1000);
+                        //while (await Page.Locator("#enviarButton").IsVisibleAsync())
+                        //{
+                        //    await Page.Locator("#enviarButton").ClickAsync();
+                        //    await Task.Delay(1000);
+                        //}
+                        await Page.Locator("#enviarButton").ClickAsync();
+                        await Task.Delay(5000);
 
+                        ILocator xSelector = Page.Locator("#btnFecharNovoOperacaoCsv");
+                        if (await xSelector.IsVisibleAsync())
+                        {
+                            await xSelector.ClickAsync();
+                            //break;
+                        }
                         var idOperacaoRecebivel = Repository.OperacoesCsv.OperacoesCsvRepository.ObterIdOperacaoRec(nomeArquivoModificado);
 
 

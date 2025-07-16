@@ -19,8 +19,7 @@ namespace TestePortal
             static AppSettings()
             {
                 var builder = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory()) // ou AppDomain.CurrentDomain.BaseDirectory
-                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                    .SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
                 _config = builder.Build();
             }

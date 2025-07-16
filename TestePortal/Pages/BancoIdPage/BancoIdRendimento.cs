@@ -17,6 +17,7 @@ namespace TestePortal.Pages.BancoIdPage
 
 
             try
+
             {
                 var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                 var BancoIdRendimento = await Page.GotoAsync(portalLink + "/BancoID/Rendimento.aspx");
@@ -31,7 +32,7 @@ namespace TestePortal.Pages.BancoIdPage
                     pagina.StatusCode = BancoIdRendimento.Status;
                     pagina.Nome = "BancoID/Rendimento";
                     listErros.Add("0");
-                    pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
+                    pagina.BaixarExcel = Utils.Excel.BaixarExcelRendimentoPorId(Page).Result;
                     if (pagina.BaixarExcel == "❌")
                     {
                         errosTotais++;
@@ -52,7 +53,7 @@ namespace TestePortal.Pages.BancoIdPage
                         //await Page.PauseAsync();
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                         await Page.Locator("#dataLiquid i").ClickAsync();
-                        await Page.GetByRole(AriaRole.Cell, new() { Name = "18", Exact = true }).ClickAsync();
+                        //await Page.GetByRole(AriaRole.Cell, new() { Name = "18", Exact = true }).ClickAsync();
                         await Page.GetByLabel("Valor:*").ClickAsync();
                         await Page.GetByLabel("Valor:*").FillAsync("R$2000");
                         await Page.GetByLabel("Fundo:*").SelectOptionAsync(new[] { "08621199000187" });

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static TestePortal.Model.Usuario;
 using TestePortal.Model;
+using TestePortal.Utils;
 
 
 namespace TestePortal.Pages.AdministrativoPage
@@ -34,15 +35,13 @@ namespace TestePortal.Pages.AdministrativoPage
 
 
 
-                    if (pagina.Acentos == "❌")
-                    {
-                        errosTotais++;
-                    }
-                    pagina.Listagem = "?";
-                    pagina.BaixarExcel = "?";
-                    pagina.Reprovar = "?";
-                    pagina.Excluir = "?";
-                    pagina.InserirDados = "?";                 
+                    pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
+                    if (pagina.Acentos == "❌") errosTotais++;
+                    pagina.Listagem = "❓";
+                    pagina.BaixarExcel = "❓";
+                    pagina.Reprovar = "❓";
+                    pagina.Excluir = "❓";
+                    pagina.InserirDados = "❓";                 
 
 
                 }
