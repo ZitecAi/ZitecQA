@@ -24,6 +24,7 @@ namespace TesteCedente.Model
         public string BtnHistoricoEventos { get; set; }
 
         public string BtnBaixarContratoMae {  get; set; }
+        public string BtnAtualizarKit { get; set; }
 
         public string FluxoAtualizacaoDeKit { get; set; }
 

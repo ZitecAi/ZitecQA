@@ -156,7 +156,7 @@ namespace TesteCedente.Pages.CedentesPage
                                     }
 
                                     //atualização de kit
-                                    await Page.GetByRole(AriaRole.Row, new() { Name = "FUNDO QA FIDC Teste robô -" }).Locator("[id=\"0\"]").ClickAsync();
+                                    await Page.GetByRole(AriaRole.Row, new() { Name = "FUNDO QA FIDC Teste robô - CNPJ: 26.038.995/0001-73" }).Locator("[id=\"0\"]").ClickAsync();
                                     await Page.Locator("#fileAtualizarKit").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "36614123000160_26038995000173_A.zip" });
                                     var cedenteAtualizado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
                                     {
@@ -176,8 +176,11 @@ namespace TesteCedente.Pages.CedentesPage
                                     if (cedenteAtualizadoBdd)
                                     {
                                         cedente.FluxoAtualizacaoDeKit = "✅";
+                                        cedente.BtnAtualizarKit = "✅";
                                         var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "26038995000173");
                                         var apagarCedenteZCustodia2 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("26038995000173");
+                                        var emails = new List<string> { "jt@zitec.ai" };
+                                        var apagarRepresentantes = Repository.Cedentes.CedentesRepository.ExcluirRepresentantesPorEmail(emails);
 
                                         if (apagarCedente && apagarCedenteZCustodia2)
                                         {
@@ -277,13 +280,17 @@ namespace TesteCedente.Pages.CedentesPage
                             if (statusAtivo)
                             {
                                 var emails = new List<string> { "jt@zitec.ai", "bot@gmail.com", "bot2@gmail.com" };
-                                var cedendeCadastrado = Repository.Cedentes.CedentesRepository.RepresentantesComEmailsCadastrados(emails);
+                                var representantesCadastrados = Repository.Cedentes.CedentesRepository.RepresentantesComEmailsCadastrados(emails);
                                 var repAssIso = Repository.Cedentes.CedentesRepository.RepresentanteAssinaIso("jt@zitec.ai");
 
-                                if (cedendeCadastrado & repAssIso)
+                                if (representantesCadastrados & repAssIso)
                                 {
                                     cedente.FluxoRepresentanteAssIso = "✅";
                                     Console.WriteLine("Todos os e-mails estão cadastrados.");
+                                    var apagarRepresentantes = Repository.Cedentes.CedentesRepository.ExcluirRepresentantesPorEmail(emails);
+                                    var apagarCedente4 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "19890232000190");
+                                    var apagarCedenteZCustodia4 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("19890232000190");
+
                                 }
                                 else
                                 {
@@ -403,7 +410,7 @@ namespace TesteCedente.Pages.CedentesPage
                         if (statusFormalizacao)
                         {
                             cedente.AprovacaoDasAreas = "✅";
-                            await Page.Locator(".buttonParecer.btn.btn-success").First.ClickAsync();
+                            await Page.Locator("#36614123000160_71011834090").ClickAsync();
                             await Page.Locator("#fileAtivaCedente").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("Teste de ativaç");
@@ -476,7 +483,7 @@ namespace TesteCedente.Pages.CedentesPage
                                     //atualização de kit
                                    
                                     await Page.GetByRole(AriaRole.Row, new() { Name = "FUNDO QA FIDC Teste de" }).Locator("[id=\"0\"]").ClickAsync();
-                                    await Page.Locator("#fileAtualizarKit").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "36614123000160_22596698080_A.zip" });
+                                    await Page.Locator("#fileAtualizarKit").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "36614123000160_71011834090_A.zip" });
                                     var cedenteAtualizado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
                                     {
 
@@ -485,18 +492,21 @@ namespace TesteCedente.Pages.CedentesPage
                                     });
 
                                     await Page.Locator("#btnFecharAtualizarKit").ClickAsync();
-                                    await Page.Locator("[id='36614123000160_22596698080_CADASTRO_not_analysed']").Nth(0).ClickAsync();
+                                    await Page.Locator("[id='36614123000160_71011834090_CADASTRO_not_analysed']").Nth(0).ClickAsync();
                                     await Page.Locator("#modal-parecer").GetByText("Aprovado", new() { Exact = true }).ClickAsync();
                                     await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem..." }).ClickAsync();
                                     await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                                     await Task.Delay(2000);
 
-                                    var cedenteAtualizadoBdd = Repository.Cedentes.CedentesRepository.VerificaAtualizacaoCedente("Teste de atualizacao", "testeatualizacao@gmail.com");
+                                    var cedenteAtualizadoBdd = Repository.Cedentes.CedentesRepository.CedenteCadastrodoZCust("71011834090", "testeatualizacao@gmail.com");
                                     if (cedenteAtualizadoBdd)
                                     {
                                         cedente.FluxoAtualizacaoDeKit = "✅";
-                                        var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "22596698080");
-                                        var apagarCedenteZCustodia2 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("22596698080");
+                                        cedente.BtnAtualizarKit = "✅";
+                                        var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "71011834090");
+                                        var apagarCedenteZCustodia2 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("71011834090");
+                                        var emails = new List<string> { "jt@zitec.ai"};
+                                        var apagarRepresentantes = Repository.Cedentes.CedentesRepository.ExcluirRepresentantesPorEmail(emails);
 
                                         if (apagarCedente && apagarCedenteZCustodia2)
                                         {
@@ -602,6 +612,9 @@ namespace TesteCedente.Pages.CedentesPage
                                 {
                                     cedente.FluxoRepresentanteAssIso = "✅";
                                     Console.WriteLine("Todos os e-mails estão cadastrados.");
+                                    var apagarRepresentantes = Repository.Cedentes.CedentesRepository.ExcluirRepresentantesPorEmail(emails);
+                                    var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "71011834090");
+                                    var apagarCedenteZCustodia2 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("71011834090");
                                 }
                                 else
                                 {

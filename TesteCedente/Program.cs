@@ -30,17 +30,21 @@ namespace TesteCedente
             });
 
             Usuarios = Util.GetUsuariosForTest();
-            var tasks = Usuarios.Select(u => ExecutarTesteParaUsuario(browser, u)).ToList();
+
+            // Executa os testes para cada usuário, mas abrindo duas páginas paralelas:
+            var tasks = Usuarios.Select(u => ExecutarTesteParaleloParaUsuario(browser, u)).ToList();
             var resultados = await Task.WhenAll(tasks);
 
-            var listaPagina = resultados.SelectMany(r => r).ToList();
+            // Combina todas as listas de páginas e cedentes
+            var listaPagina = resultados.SelectMany(r => r.paginas).ToList();
+            var listaCedente = resultados.SelectMany(r => r.cedentes).ToList();
 
             try
             {
                 var emailPadrao = new EmailPadrao(
                     "jt@zitec.ai",
-                    "Segue relatório com as páginas mais importantes do portal IDSF testadas.",
-                    EnviarEmail.GerarHtml(listaPagina)
+                    "Segue relatório da página de cedentes.",
+                    EnviarEmail.GerarHtml(listaPagina, listaCedente)
                 );
                 EnviarEmail.SendMailWithAttachment(emailPadrao);
                 Console.WriteLine("Email enviado");
@@ -49,42 +53,66 @@ namespace TesteCedente
             {
                 Console.WriteLine($"Erro ao enviar email: {e.Message}");
             }
+            finally
+            {
+                await browser.CloseAsync();
+            }
         }
 
-        private static async Task<List<Pagina>> ExecutarTesteParaUsuario(IBrowser browser, Usuario usuario)
+        private static async Task<(List<Pagina> paginas, List<Cedente> cedentes)> ExecutarTesteParaleloParaUsuario(IBrowser browser, Usuario usuario)
         {
-            Cedente cedente;
-            Pagina pagina;
-            var listaCedente = new List<Cedente>();
             var listaPagina = new List<Pagina>();
-            var page = await browser.NewPageAsync();
+            var listaCedente = new List<Cedente>();
+
+            // Cria duas páginas para rodar os testes em paralelo: uma para PF e outra para PJ
+            var pagePf = await browser.NewPageAsync();
+            var pagePj = await browser.NewPageAsync();
 
             try
             {
-                listaPagina.Add(await LoginGeral.Login(page, usuario));
+                listaPagina.Add(await LoginGeral.Login(pagePf, usuario));
+                listaPagina.Add(await LoginGeral.Login(pagePj, usuario));
 
-                switch (usuario.Nivel)
+                // Executa os testes em paralelo
+                var taskPj = Task.Run(async () =>
                 {
-                    case Usuario.NivelEnum.Master:
-                        //case Usuario.NivelEnum.Consultoria:
-                        //case Usuario.NivelEnum.Gestora:
+                    var (paginaPj, cedentePj) = await CadastroCedentes.CedentesPJ(pagePj);
+                    return (paginaPj, cedentePj);
+                });
 
-                        (pagina, cedente) = await CadastroCedentes.CedentesPJ(page);
-                        listaPagina.Add(pagina);
-                        listaCedente.Add(cedente);
-                        (pagina, cedente) = await CadastroCedentes.CedentesPf(page);
-                        listaPagina.Add(pagina);
-                        listaCedente.Add(cedente);
-                        break;
-                }
+                var taskPf = Task.Run(async () =>
+                {
+                    var (paginaPf, cedentePf) = await CadastroCedentes.CedentesPf(pagePf);
+                    return (paginaPf, cedentePf);
+                });
+
+                await Task.WhenAll(taskPj, taskPf);
+
+                // Coleta os resultados
+                var resultadoPj = taskPj.Result;
+                var resultadoPf = taskPf.Result;
+
+                listaPagina.Add(resultadoPj.paginaPj);
+                listaCedente.Add(resultadoPj.cedentePj);
+
+                listaPagina.Add(resultadoPf.paginaPf);
+                listaCedente.Add(resultadoPf.cedentePf);
 
                 foreach (var pg in listaPagina)
                 {
                     pg.Perfil ??= usuario.Nivel.ToString();
                 }
 
-                await page.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync();
-                await page.GetByRole(AriaRole.Button, new() { Name = "Sim" }).ClickAsync();
+                // Logout nas duas páginas
+                await Task.WhenAll(
+                    pagePf.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync(),
+                    pagePj.GetByRole(AriaRole.Link, new() { Name = " Sair" }).ClickAsync()
+                );
+
+                await Task.WhenAll(
+                    pagePf.GetByRole(AriaRole.Button, new() { Name = "Sim" }).ClickAsync(),
+                    pagePj.GetByRole(AriaRole.Button, new() { Name = "Sim" }).ClickAsync()
+                );
             }
             catch (Exception ex)
             {
@@ -92,10 +120,10 @@ namespace TesteCedente
             }
             finally
             {
-                await page.CloseAsync();
+                await Task.WhenAll(pagePf.CloseAsync(), pagePj.CloseAsync());
             }
 
-            return listaPagina;
+            return (listaPagina, listaCedente);
         }
     }
 }

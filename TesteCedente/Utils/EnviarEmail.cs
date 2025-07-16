@@ -76,7 +76,7 @@ namespace TesteCedente.Utils
             }
         }
 
-        public static string GerarHtml(List<Pagina> listaPagina)
+        public static string GerarHtml(List<Pagina> listaPagina, List<Cedente> listaCedente)
         {
 
             Console.WriteLine("A lista contém " + listaPagina.Count + " itens.");
@@ -134,49 +134,113 @@ namespace TesteCedente.Utils
             Html += "<br>";
             Html += "<hr class=\"solid\">";
 
-            //terceira tabela
-            Html += "<h2>Relatório com o usuário: Consultoria</h2>";
-            Html += "<table>";
-            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
+            // Tabela 1 - Validações dos fluxos PJ e PF
+            Html += "<h2>Relatório: Validações dos Fluxos PJ e PF</h2>";
+            Html += "<table border='1' cellpadding='5' cellspacing='0'>";
+            Html += "<tr>" +
+                    "<th>Tipo Cedente</th>" +
+                    "<th>Arquivo Enviado</th>" +
+                    "<th>Aprovação das Áreas</th>" +
+                    "<th>Ativação Cedente</th>" +
+                    "<th>Insert ZCustodia</th>" +
+                    "<th>Fluxo Atualização de Kit</th>" +
+                    "<th>Fluxo Representante Ass Iso</th>" +
+                    "</tr>";
 
-            foreach (var pagina in listaConsultoria)
+            foreach (var cedente in listaCedente)
             {
                 Html += "<tr>";
-                Html += "<td> " + pagina.Nome + "</td>\n";
-                Html += "<td> " + pagina.StatusCode + "</td>\n";
-                Html += "<td> " + pagina.Acentos + "</td>\n";
-                Html += "<td> " + pagina.Listagem + "</td>\n";
-                Html += "<td> " + pagina.BaixarExcel + "</td>\n";
-                Html += "<td> " + pagina.InserirDados + "</td>\n";
-                Html += "<td> " + pagina.Excluir + "</td>\n";
-                Html += "<td> " + pagina.TotalErros + "</td>\n";
+                Html += $"<td>{cedente.TipoCedente}</td>";
+                Html += $"<td>{cedente.ArquivoEnviado}</td>";
+                Html += $"<td>{cedente.AprovacaoDasAreas}</td>";
+                Html += $"<td>{cedente.AtivacaoCedente}</td>";
+                Html += $"<td>{cedente.InsertZCustodia}</td>";
+                Html += $"<td>{cedente.FluxoAtualizacaoDeKit}</td>";
+                Html += $"<td>{cedente.FluxoRepresentanteAssIso}</td>";
                 Html += "</tr>";
             }
             Html += "</table>";
-            Html += "<br>";
-            Html += "<hr class=\"solid\">";
+            Html += "<br><hr class='solid'>";
 
-            //segunda tabela com o relatório das páginas
-            Html += "<h2>Relatório com o usuário: Gestora</h2>";
-            Html += "<table>";
-            Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
+            // Filtra apenas os cedentes que têm ao menos um botão preenchido (não nulo ou vazio)
+            var cedentesComBotoes = listaCedente.Where(c =>
+                !string.IsNullOrWhiteSpace(c.BtnBaixarKit) ||
+                !string.IsNullOrWhiteSpace(c.BtnContratoMaeEFormalizacao) ||
+                !string.IsNullOrWhiteSpace(c.BtnHistoricoEventos) ||
+                !string.IsNullOrWhiteSpace(c.BtnBaixarContratoMae)
+            ).ToList();
 
-            foreach (var pagina in listaGestora)
+            // Só gera a tabela se houver dados
+            if (cedentesComBotoes.Any())
             {
-                Html += "<tr>";
-                Html += "<td> " + pagina.Nome + "</td>\n";
-                Html += "<td> " + pagina.StatusCode + "</td>\n";
-                Html += "<td> " + pagina.Acentos + "</td>\n";
-                Html += "<td> " + pagina.Listagem + "</td>\n";
-                Html += "<td> " + pagina.BaixarExcel + "</td>\n";
-                Html += "<td> " + pagina.InserirDados + "</td>\n";
-                Html += "<td> " + pagina.Excluir + "</td>\n";
-                Html += "<td> " + pagina.TotalErros + "</td>\n";
-                Html += "</tr>";
+                Html += "<h2>Relatório: Verificações dos Botões</h2>";
+                Html += "<table border='1' cellpadding='5' cellspacing='0'>";
+                Html += "<tr>" +
+                        "<th>Tipo Cedente</th>" +
+                        "<th>Btn Baixar Kit</th>" +
+                        "<th>Btn Contrato Mãe e Formalização</th>" +
+                        "<th>Btn Histórico Eventos</th>" +
+                        "<th>Btn Baixar Contrato Mãe</th>" +
+                        "</tr>";
+
+                foreach (var cedente in cedentesComBotoes)
+                {
+                    Html += "<tr>";
+                    Html += $"<td>{cedente.TipoCedente}</td>";
+                    Html += $"<td>{cedente.BtnBaixarKit}</td>";
+                    Html += $"<td>{cedente.BtnContratoMaeEFormalizacao}</td>";
+                    Html += $"<td>{cedente.BtnHistoricoEventos}</td>";
+                    Html += $"<td>{cedente.BtnBaixarContratoMae}</td>";
+                    Html += "</tr>";
+                }
+
+                Html += "</table>";
+                Html += "<br><hr class='solid'>";
             }
-            Html += "</table>";
-            Html += "<br>";
-            Html += "<hr class=\"solid\">";
+
+            ////terceira tabela
+            //Html += "<h2>Relatório com o usuário: Consultoria</h2>";
+            //Html += "<table>";
+            //Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
+
+            //foreach (var pagina in listaConsultoria)
+            //{
+            //    Html += "<tr>";
+            //    Html += "<td> " + pagina.Nome + "</td>\n";
+            //    Html += "<td> " + pagina.StatusCode + "</td>\n";
+            //    Html += "<td> " + pagina.Acentos + "</td>\n";
+            //    Html += "<td> " + pagina.Listagem + "</td>\n";
+            //    Html += "<td> " + pagina.BaixarExcel + "</td>\n";
+            //    Html += "<td> " + pagina.InserirDados + "</td>\n";
+            //    Html += "<td> " + pagina.Excluir + "</td>\n";
+            //    Html += "<td> " + pagina.TotalErros + "</td>\n";
+            //    Html += "</tr>";
+            //}
+            //Html += "</table>";
+            //Html += "<br>";
+            //Html += "<hr class=\"solid\">";
+
+            ////segunda tabela com o relatório das páginas
+            //Html += "<h2>Relatório com o usuário: Gestora</h2>";
+            //Html += "<table>";
+            //Html += "<tr><th>Nome</th><th>Status Code</th><th>Acentos</th><th>Listagem</th><th>BaixarExcel</th><th>InserirDados</th><th>Excluir</th><th>Erros</th></tr>";
+
+            //foreach (var pagina in listaGestora)
+            //{
+            //    Html += "<tr>";
+            //    Html += "<td> " + pagina.Nome + "</td>\n";
+            //    Html += "<td> " + pagina.StatusCode + "</td>\n";
+            //    Html += "<td> " + pagina.Acentos + "</td>\n";
+            //    Html += "<td> " + pagina.Listagem + "</td>\n";
+            //    Html += "<td> " + pagina.BaixarExcel + "</td>\n";
+            //    Html += "<td> " + pagina.InserirDados + "</td>\n";
+            //    Html += "<td> " + pagina.Excluir + "</td>\n";
+            //    Html += "<td> " + pagina.TotalErros + "</td>\n";
+            //    Html += "</tr>";
+            //}
+            //Html += "</table>";
+            //Html += "<br>";
+            //Html += "<hr class=\"solid\">";
 
             //Legenda
 

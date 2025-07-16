@@ -295,11 +295,11 @@ namespace TesteCedente.Repository.Cedentes
 
         public static bool VerificaAtualizacaoCedente(string nome, string email)
         {
-            var existe = false;
+            bool existe = false;
 
             try
             {
-                var con = AppSettings.GetConnectionString("myConnectionString");
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
 
                 using (SqlConnection myConnection = new SqlConnection(con))
                 {
@@ -307,13 +307,13 @@ namespace TesteCedente.Repository.Cedentes
 
                     string query = @"
                 SELECT 1 
-                FROM Cedentes 
-                WHERE Nome = @nome AND Email = @email";
+                FROM tb_fundo_cedente 
+                WHERE NM_CEDENTE = @nome AND DS_EMAIL = @email";
 
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
-                        oCmd.Parameters.AddWithValue("@nome", SqlDbType.NVarChar).Value = nome;
-                        oCmd.Parameters.AddWithValue("@email", SqlDbType.NVarChar).Value = email;
+                        oCmd.Parameters.AddWithValue("@nome", nome);
+                        oCmd.Parameters.AddWithValue("@email", email);
 
                         using (SqlDataReader oReader = oCmd.ExecuteReader())
                         {
@@ -333,9 +333,10 @@ namespace TesteCedente.Repository.Cedentes
             return existe;
         }
 
+
         public static bool RepresentantesComEmailsCadastrados(List<string> listaEmails)
         {
-            bool todosCadastrados = false;
+            bool existe = false;
 
             try
             {
@@ -367,10 +368,10 @@ namespace TesteCedente.Repository.Cedentes
 
                         int count = (int)oCmd.ExecuteScalar();
 
-                        // Verifica se encontrou todos os e-mails
-                        if (count == listaEmails.Count)
+                        // Se encontrou pelo menos 1, retorna true
+                        if (count > 0)
                         {
-                            todosCadastrados = true;
+                            existe = true;
                         }
                     }
                 }
@@ -380,8 +381,9 @@ namespace TesteCedente.Repository.Cedentes
                 Console.WriteLine($"Erro ao verificar representantes: {e.Message}");
             }
 
-            return todosCadastrados;
+            return existe;
         }
+
         public static bool RepresentanteAssinaIso(string email)
         {
             bool assinaIsoladamente = false;
@@ -423,5 +425,70 @@ namespace TesteCedente.Repository.Cedentes
 
             return assinaIsoladamente;
         }
+
+        public static bool ExcluirRepresentantesPorEmail(List<string> listaEmails)
+        {
+            bool excluido = false;
+
+            try
+            {
+                var con = AppSettings.GetConnectionString("ConnectionZitec");
+
+                using (SqlConnection myConnection = new SqlConnection(con))
+                {
+                    myConnection.Open();
+
+                    // Monta os parâmetros dinamicamente
+                    var emailParams = new List<string>();
+                    for (int i = 0; i < listaEmails.Count; i++)
+                    {
+                        emailParams.Add($"@email{i}");
+                    }
+
+                    string inClause = string.Join(",", emailParams);
+
+                    // 1. Excluir da TB_ASSOC_CEDENTE_REPRESENTANTE
+                    string queryDeleteAssociacoes = $@"
+                DELETE FROM TB_ASSOC_CEDENTE_REPRESENTANTE
+                WHERE ID_REPRESENTANTE IN (
+                    SELECT ID_REPRESENTANTE FROM TB_REPRESENTANTE
+                    WHERE DS_EMAIL IN ({inClause})
+                )";
+
+                    using (SqlCommand cmdDelAssoc = new SqlCommand(queryDeleteAssociacoes, myConnection))
+                    {
+                        for (int i = 0; i < listaEmails.Count; i++)
+                        {
+                            cmdDelAssoc.Parameters.AddWithValue($"@email{i}", listaEmails[i]);
+                        }
+
+                        cmdDelAssoc.ExecuteNonQuery();
+                    }
+
+                    // 2. Excluir da TB_REPRESENTANTE
+                    string queryDeleteRepresentantes = $@"
+                DELETE FROM TB_REPRESENTANTE
+                WHERE DS_EMAIL IN ({inClause})";
+
+                    using (SqlCommand cmdDelRep = new SqlCommand(queryDeleteRepresentantes, myConnection))
+                    {
+                        for (int i = 0; i < listaEmails.Count; i++)
+                        {
+                            cmdDelRep.Parameters.AddWithValue($"@email{i}", listaEmails[i]);
+                        }
+
+                        int linhasAfetadas = cmdDelRep.ExecuteNonQuery();
+                        excluido = linhasAfetadas > 0;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Erro ao excluir representantes: {e.Message}");
+            }
+
+            return excluido;
+        }
+
     }
 }
