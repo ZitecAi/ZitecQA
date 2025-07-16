@@ -216,10 +216,33 @@ namespace TesteOperacoesOperacoes.Util;
             return resultado;
         }
 
+    public static async Task ValidarAberturaDeNovaAbaAsync(IPage novaAba)
+    {
+        try
+        {
+            await novaAba.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
 
-
-
-
+            if (!string.IsNullOrWhiteSpace(novaAba.Url) && novaAba.Url.Contains("DownloadCessao.ashx"))
+            {
+                Console.WriteLine("✅ Nova aba aberta com PDF de Relatório de Cessão.");
+            }
+            else
+            {
+                Console.WriteLine("❌ Aba aberta, mas URL inesperada: " + novaAba.Url);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Erro ao validar nova aba: " + ex.Message);
+        }
     }
+
+
+
+
+
+
+
+}
 
 

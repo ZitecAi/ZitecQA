@@ -79,7 +79,8 @@ namespace TesteOperacoesOperacoes.Util
 
         }
 
-        public static string GerarHtml(List<Pagina> listaPagina, List<FluxosDeCadastros> listaFluxos, List<Operacoes> operacoes, List<TesteNegativoResultado> resultadosTestesNegativos)
+        public static string GerarHtml(List<Pagina> listaPagina, List<FluxosDeCadastros> listaFluxos, List<Operacoes> operacoes, List<TesteNegativoResultado> resultadosTestesNegativos, List<TestePositivoResultado> resultadosTestesPositivos)
+
         {
 
 
@@ -135,21 +136,10 @@ namespace TesteOperacoesOperacoes.Util
                 
                 Html += "</tr>";
             }
-            //validações negativas
             Html += "</table>";
             Html += "<br>";
             Html += "<hr class=\"solid\">";
-
-            Html += "<h2>Relatório de Testes Negativos Cadastro de Operações CSV </h2>\n";
-            Html += "<table>\n";
-            Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
-
-            foreach (var teste in resultadosTestesNegativos)
-            {
-                Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
-            }
-
-            Html += "</table>\n";
+           
 
 
             //terceira tabela
@@ -291,6 +281,38 @@ namespace TesteOperacoesOperacoes.Util
             //Html += "</table>";
             //Html += "<br>";
             //Html += "<hr class=\"solid\">";
+
+
+            // validações positivas
+            Html += "<h2>Relatório de Testes Positivos Cadastro de Operações CSV </h2>\n";
+            Html += "<table>\n";
+            Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
+
+            foreach (var teste in resultadosTestesPositivos)
+            {
+                Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
+            }
+
+            Html += "</table>\n";
+            Html += "<br>\n";
+            Html += "<hr class=\"solid\">\n";
+
+
+            //validações negativas
+            Html += "</table>";
+            Html += "<br>";
+            Html += "<hr class=\"solid\">";
+
+            Html += "<h2>Relatório de Testes Negativos Cadastro de Operações CSV </h2>\n";
+            Html += "<table>\n";
+            Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
+
+            foreach (var teste in resultadosTestesNegativos)
+            {
+                Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
+            }
+
+            Html += "</table>\n";
 
             //tabela com os erros 
 

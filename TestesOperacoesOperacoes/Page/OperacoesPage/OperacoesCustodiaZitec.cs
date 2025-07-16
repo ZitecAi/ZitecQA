@@ -1,9 +1,12 @@
-﻿using Microsoft.Playwright;
+﻿using Azure;
+using Microsoft.Playwright;
 using TesteOperacoesOperacoes.Model;
+using TesteOperacoesOperacoes.Repositories;
 //using System.Windows.Controls;
 using TesteOperacoesOperacoes.Util;
-using TesteOperacoesOperacoes.Repositories;
 using static TesteOperacoesOperacoes.Model.Usuario;
+using static Microsoft.Playwright.Assertions;
+
 
 namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 {
@@ -30,7 +33,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                     Console.Write("Operações Zitec : ");
                     pagina.Nome = "Operações Zitec - Interno";
                     pagina.StatusCode = OperacoesZitec.Status;
-                    
+
                     pagina.Acentos = await Acentos.ValidarAcentos(Page) ?? "❌";
                     if (pagina.Acentos == "❌") errosTotais++;
 
@@ -89,18 +92,151 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             }
 
                             #region Deve consultar arquivo CNAB enviado, pelo histórico
-                            await Page.PauseAsync();
 
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Histórico" }).ClickAsync();
+                            await Page.Locator("#tabelaHistorico_filter").GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
+                            await Page.Locator("#tabelaHistorico_filter").GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(operacoes.NovoNomeArquivo2);
+                            //await Page.Locator("#tabelaHistorico_wrapper div").Filter(new() { HasText = "Nome ArquivoStatusData" }).Nth(1).ClickAsync();
+                            try
+                            {
+                                await Task.Delay(7000);
+                                await Expect(Page.Locator("#listaHistorico", new()
+                                {
+                                    HasTextString = operacoes.NovoNomeArquivo2
+                                })).ToBeVisibleAsync();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Não foi possivel consultar arquivo CNAB pelo histórico, Motivo: {ex}");
+                            }
+                            // Validar Downloads de Arquivo remessa e                             
+                            #endregion
+                            #region Deve Validar Download Validação Movimento
+                            await Page.Locator("//tbody[@id='listaHistorico']//td[@class='dtr-control']").ClickAsync();
+                            try
+                            {
+                                var downloadValMovimento = await Page.RunAndWaitForDownloadAsync(async () =>
+                                {
+                                    await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                                });
+                                await TesteOperacoesOperacoes.Util.Excel.ValidarDownloadAsync(downloadValMovimento, "Download Validação Movimento");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Não foi possivel fazer Download da validação movimento: Motivo {ex.Message}");
+                            }
+                            #endregion
+
+                            #region Deve Validar Download Validação Layout
+                            try
+                            {
+                                var downloadValLayout = await Page.RunAndWaitForDownloadAsync(async () =>
+                            {
+                                await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                            });
+                                await TesteOperacoesOperacoes.Util.Excel.ValidarDownloadAsync(downloadValLayout, "Download Validação Layout");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Não foi possivel fazer Download da validação Layout: Motivo {ex.Message}");
+                            }
+                            #endregion
+                            await Page.ReloadAsync();
+                            //await Page.PauseAsync();
+
+
+
+                            #region Reprovar Lote
+                            //Alterar status antes de reprovar para habilitar checkbox
+                            try
+                            {
+                                await Page.GetByLabel("Pesquisar").ClickAsync();
+                                await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo2);
+                                var primeiroItem = Page.Locator("#listaCedentes").First;
+                                //var primeiroTd2 = primeiroTr2.Locator("[class='OperacaoSelecionado']").First;
+                                var primeiroItemTd2 = primeiroItem.Locator("(//tbody[@id='listaCedentes']//tr//td[@class='dtr-control'])[1]");
+                                await primeiroItemTd2.ClickAsync();
+                                await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                                await Page.Locator("#statusPosOp").SelectOptionAsync(new[] { "PG" });
+                                await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
+                                await Task.Delay(20000);
+                                await Page.ReloadAsync();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Não foi possivel Reprovar lote: Motivo {ex.Message}");
+                            }
+
+
+
+
+                            #region Deve Validar Redirecionamento para download relatorio cessão e validar atraves da URL
+                            try
+                            {
+                                await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
+                                await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(operacoes.NovoNomeArquivo2);
+                                await Page.Locator("(//input[@type='checkbox'])[1]").ClickAsync();
+                                var page1 = await Page.RunAndWaitForPopupAsync(async () =>
+                                {
+                                    await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                                });
+                                await TesteOperacoesOperacoes.Util.Excel.ValidarAberturaDeNovaAbaAsync(page1);
+                                Console.WriteLine("Download Relatorio cessão baixado e validado com sucesso!");
+                                pagina.BaixarExcel = "✅";
+                                await page1.CloseAsync();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Não foi possivel baixar relatorio cessão  motivo: {ex.Message}");
+                            }
+
+                            #endregion
+                            #region Deve validar Download de arquivo remessa
+                            try
+                            {
+                                var page2 = await Page.RunAndWaitForPopupAsync(async () =>
+                                {
+                                    var download = await Page.RunAndWaitForDownloadAsync(async () =>
+                                    {
+                                        await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                                    });
+
+                                    await TesteOperacoesOperacoes.Util.Excel.ValidarDownloadAsync(download, "Download Arquivo remessa");
+                                    Console.WriteLine("Download arquivo remessa baixado e validado com sucesso!");
+                                    pagina.BaixarExcel = "✅";
+                                });
+                                await page2.CloseAsync();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Não foi possivel baixar arquivo Remessa motivo: {ex.Message}");
+                            }
 
                             #endregion
 
-                            //Reprovar Lote
+                            #region Deve validar histórico de eventos
                             //await Page.PauseAsync();
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                            await Page.GetByText("Histórico de Eventos × Timeline Arquivo InseridoUpload de Operaçãoqazitec01@").ClickAsync();
+                            await Page.GetByRole(AriaRole.Heading, new() { Name = "Histórico de Eventos" }).ClickAsync();
+                            try
+                            {
+                                await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Histórico de Eventos" })).ToBeVisibleAsync();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Não foi possivel Encontrar histórico de eventos motivo: {ex.Message}");
+                            }
+                            #endregion
+                            //Reprovar Lote
+                            await Page.ReloadAsync();
+
                             await Page.GetByLabel("Pesquisar").ClickAsync();
-                            await Page.GetByLabel("Pesquisar").FillAsync("teste");
+                            await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo2);
                             var primeiroTr2 = Page.Locator("#listaCedentes").First;
                             var primeiroTd2 = primeiroTr2.Locator("[class='OperacaoSelecionado']").First;
-                            await primeiroTd2.ClickAsync();                            
+                            //var primeiroTd2 = primeiroTr2.Locator("(//tbody[@id='listaCedentes']//tr//td[@class='dtr-control'])[1]");
+                            await primeiroTd2.ClickAsync();
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Reprovar Lote" }).ClickAsync();
                             await Page.Locator("#MotivoLote").ClickAsync();
                             await Page.Locator("#MotivoLote").FillAsync("teste reprovação");
@@ -112,11 +248,12 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             {
                                 pagina.Reprovar = "✅";
                             }
+                            #endregion
 
-
+                            #region Excluir operação
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                            await Page.GetByLabel("Pesquisar").FillAsync("CEDENTE TESTE");
+                            await Page.GetByLabel("Pesquisar").FillAsync(operacoes.NovoNomeArquivo2);
                             await Task.Delay(600);
                             var primeiroTr = Page.Locator("#listaCedentes tr").First;
                             var primeiroTd = primeiroTr.Locator("td").First;
@@ -124,15 +261,19 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             var cnpj = "54638076000176";
 
                             //var button = Page.Locator($"button[onclick=\"ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}')\"]").First.ClickAsync();
-                            await Page.EvaluateAsync($"""ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}');""");
+                            //await Page.PauseAsync();
+                            //await Page.EvaluateAsync($"""ModalExcluirArquivo('{idArquivo}','{idOperacaoRecebivel}','{operacoes.NovoNomeArquivo2}','{cnpj}');""");
+                            //await Page.Locator("#motivoExcluirArquivo").ClickAsync();
+                            //await Task.Delay(200);
+                            //await Page.Locator("#motivoExcluirArquivo").FillAsync("teste de exclus");
+                            //await Task.Delay(200);
+                            //await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
                             await Page.Locator("#motivoExcluirArquivo").ClickAsync();
-                            await Task.Delay(200);
-                            await Page.Locator("#motivoExcluirArquivo").FillAsync("teste de exclus");
-                            await Task.Delay(200);
+                            await Page.Locator("#motivoExcluirArquivo").FillAsync("Teste Exclus");
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                             Console.WriteLine("Botão de apagar operação encontrado.");
-
-                            var apagarOperacao = await Page.GetByText("Arquivo excluído com sucesso!").ElementHandleAsync();
+                            var apagarOperacao = await Page.GetByText("Solicitação recebida com sucesso!").ElementHandleAsync();
 
                             if (apagarOperacao != null)
                             {
@@ -175,6 +316,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                                     operacoes.ListaErros2.Add("Não foi possível excluir operação nas tabelas: TB_STG_REMESSA e dbo.TB_TED");
                                 }
                             }
+                            #endregion
                         }
                     }
                     else
@@ -315,12 +457,12 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             var cnpj = "54638076000176";
 
                             var statusTrocado = Repositories.OperacoesZitec.OperacoesZitecRepository.VerificarStatus(operacoes.NovoNomeArquivo2);
-                            if (statusTrocado == "PG") 
+                            if (statusTrocado == "PG")
                             {
                                 operacoes.StatusTrocados2 = "✅";
                                 operacoes.AprovacoesRealizadas2 = "✅";
                             }
-                            else 
+                            else
                             {
                                 operacoes.StatusTrocados2 = "❌";
                                 operacoes.AprovacoesRealizadas2 = "❌";
@@ -441,8 +583,8 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 
                     if (processamentoFundo)
                     {
-                        
-                      operacoes.TipoOperacao2 = "Nova Operação - Gestora";
+
+                        operacoes.TipoOperacao2 = "Nova Operação - Gestora";
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CNAB" }).ClickAsync();
                         await Page.Locator("#selectFundo").SelectOptionAsync(new[] { "54638076000176" });
 

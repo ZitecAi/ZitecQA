@@ -1,10 +1,10 @@
 ﻿using Azure;
 using Microsoft.Playwright;
-using static Microsoft.Playwright.Assertions;
-
 using TesteOperacoesOperacoes.Model;
 using TesteOperacoesOperacoes.Util;
+using static Microsoft.Playwright.Assertions;
 using static TesteOperacoesOperacoes.Model.Usuario;
+using static TesteOperacoesOperacoes.Util.RegistroTestesPositivos;
 
 
 namespace TesteOperacoesOperacoes.Pages.OperacoesPage
@@ -36,7 +36,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 
                     Console.Write("Operações Zitec csv: ");
                     pagina.Nome = "Operações Zitec csv";
-                    pagina.StatusCode = OperacoesZitec.Status;                    
+                    pagina.StatusCode = OperacoesZitec.Status;
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌") errosTotais++;
                     pagina.Listagem = TesteOperacoesOperacoes.Util.Listagem.VerificarListagem(Page, seletorTabela).Result;
@@ -99,63 +99,78 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 
 
                             #region Deve Consultar Operação CSV pela Tabela
+                            await Task.Delay(2000);
                             await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(nomeArquivoModificado);
-                            bool arquivopresentenatabela = true;
-                            if (arquivopresentenatabela)
+
+
+                            try
                             {
-                                var linhas = await Page.Locator("#divTabelaCedentes").AllAsync();
-                                bool textoEncontrado = false;
-
-                                foreach (var linha in linhas)
+                                bool arquivopresentenatabela = true;
+                                if (arquivopresentenatabela)
                                 {
-                                    string textolinha = await linha.InnerTextAsync();
+                                    var linhas = await Page.Locator("#divTabelaCedentes").AllAsync();
+                                    bool textoEncontrado = false;
 
-                                    if (textolinha.Contains("CEDENTE TESTE"))
+                                    foreach (var linha in linhas)
                                     {
-                                        textoEncontrado = true;
-                                        Console.WriteLine($"texto encontrado: {textolinha} na tabela, Filtragem Funcionando corretamente");
-                                        //adicionar errosnegativos++
-                                        break;
+                                        string textolinha = await linha.InnerTextAsync();
+
+                                        if (textolinha.Contains("CEDENTE TESTE"))
+                                        {
+
+                                            textoEncontrado = true;
+                                            Console.WriteLine($"texto encontrado: {textolinha} na tabela, Filtragem Funcionando corretamente");
+                                            break;
+
+
+                                        }
+
                                     }
-                                    else
-                                    {
-                                        Console.WriteLine("Não foi possivel encontrar o Arquivo na tabela");
-                                    }
+                                    RegistroTestesPositivos.Registrar("CTP-01 Deve Consultar Operação CSV pela Tabela", textoEncontrado);
+
                                 }
                             }
+                            catch
+                            {
+                                RegistroTestesPositivos.Registrar("CTP-01 Deve Consultar Operação CSV pela Tabela", false);
+                            }
+
                             #endregion
 
                             #region Deve Baixar Arquivo Remessa
-                            
+                            await Task.Delay(2000);
                             await Page.ReloadAsync();
                             await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
-                            await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync("CEDENTE TESTE");
-                            await Page.Locator("#listaCedentes input[type='checkbox']").First.CheckAsync(); 
-                            
+                            await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(nomeArquivoModificado);
+                            await Page.Locator("#listaCedentes input[type='checkbox']").First.CheckAsync();
+
 
                             var page1 = await Page.RunAndWaitForPopupAsync(async () =>
                             {
                                 var download = await Page.RunAndWaitForDownloadAsync(async () =>
                                 {
                                     await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
-                                    
+
                                 });
                                 try
                                 {
                                     await Util.Excel.ValidarDownloadAsync(download, "Arquivo Remessa CSV CEDENTE TESTE");
                                     Console.WriteLine("Arquivo Remessa Baixado com Sucesso.");
+                                    RegistroTestesPositivos.Registrar("CTP-02 Deve Baixar Arquivo Remessa", true);
                                 }
                                 catch
                                 {
-                                    throw new Exception("Não foi possivel baixar Arquivo Remessa.");
+                                    //throw new Exception("Não foi possivel baixar Arquivo Remessa.");
+                                    RegistroTestesPositivos.Registrar("CTP-02 Deve Baixar Arquivo Remessa", false);
                                 }
-                                
-                                
+
+
                             });
 
                             #region Deve Alterar Status da Operação
                             #region Reprovado pelo custodiante
+                            await Task.Delay(2000);
                             await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
                             await Page.Locator("#statusPosOp").SelectOptionAsync(new[] { "RI" });
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
@@ -163,12 +178,12 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             await Page.ReloadAsync();
                             await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(nomeArquivoModificado);
-                            await Page.Locator(".dtr-control").First.ClickAsync();                            
+                            await Page.Locator(".dtr-control").First.ClickAsync();
                             try
                             {
                                 string textoProcurado = "Reprovado pelo custodiante";
                                 // Espera a tabela aparecer
-                                await  Page.Locator(seletorTabela).WaitForAsync();
+                                await Page.Locator(seletorTabela).WaitForAsync();
 
                                 // Captura todas as linhas da tabela
                                 var linhas = await Page.Locator($"{seletorTabela} tr").AllAsync();
@@ -182,25 +197,29 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                                     {
                                         textoEncontrado = true;
                                         Console.WriteLine("Texto Reprovado pelo custodiante Presente na tabela como esperado.");
-                                        break;
+                                         break;
                                     }
+
                                 }
 
-                                
+                                RegistroTestesPositivos.Registrar("CTP-03 Deve Alterar Status da Operação para Reprovado pelo custodiante", textoEncontrado);
+
 
                             }
                             catch
                             {
-                                throw new Exception();
+                                //throw new Exception();
                                 Console.WriteLine("Nâo foi possivel encontrar o Texto comprovando alteração de status da operação para Reprovado pelo custodiante.");
+                                RegistroTestesPositivos.Registrar("CTP-03 Deve Alterar Status da Operação para Reprovado pelo custodiante", false);
                             }
                             #endregion
 
                             #region Pago pelo Banco Cobrador
+                            await Task.Delay(2000);
                             await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
                             await Page.Locator("#statusPosOp").SelectOptionAsync(new[] { "PB" });
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
-                            await Task.Delay(15000);
+                            await Task.Delay(18000);
                             await Page.ReloadAsync();
                             await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(nomeArquivoModificado);
@@ -221,19 +240,22 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                                     string textoLinha = await linha.InnerTextAsync();
                                     if (textoLinha.Contains(textoProcurado))
                                     {
+
                                         textoEncontrado = true;
                                         Console.WriteLine("Texto Pago pelo Banco Cobrador Presente na tabela como esperado.");
                                         break;
                                     }
                                 }
+                                RegistroTestesPositivos.Registrar("CTP-04 Deve Alterar Status da Operação para Pago pelo Banco Cobrador", textoEncontrado);
 
 
 
                             }
                             catch
                             {
-                                throw new Exception();
-                                Console.WriteLine("Nâo foi possivel encontrar o Texto comprovando alteração de status da operação para Pago pelo Banco Cobrador.");
+                                //throw new Exception("Nâo foi possivel encontrar o Texto comprovando alteração de status da operação para Pago pelo Banco Cobrador.");
+                                Console.WriteLine("Texto Pago pelo Banco Cobrador NÃO encontrado na tabela.");
+                                RegistroTestesPositivos.Registrar("CTP-04 Deve Alterar Status da Operação para Pago pelo Banco Cobrador", false);
                             }
                             #endregion
 

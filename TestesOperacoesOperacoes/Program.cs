@@ -43,6 +43,7 @@ namespace TestesOperacoesOperacoes
 
             var resultados = await Task.WhenAll(tasks);
             Console.WriteLine("Todos os testes foram executados.");
+            var resultadosTestesPositivos = TesteOperacoesOperacoes.Util.RegistroTestesPositivos.Resultados;
 
             var listaPagina = resultados.SelectMany(r => r.Item1).ToList();
             var listaFluxos = resultados.SelectMany(r => r.Item2).ToList();
@@ -54,7 +55,8 @@ namespace TestesOperacoesOperacoes
                 var emailPadrao = new EmailPadrao(
                             "al@zitec.ai",
                             "Segue relatório com as páginas mais importantes do portal IDSF testadas.",
-                            TesteOperacoesOperacoes.Util.EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, resultadosTestesNegativos)
+                            TesteOperacoesOperacoes.Util.EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, resultadosTestesNegativos, resultadosTestesPositivos)
+
                         );
                 EnviarEmail.SendMailWithAttachment(emailPadrao);
                 Console.WriteLine("Email enviado");
@@ -87,28 +89,28 @@ namespace TestesOperacoesOperacoes
                         //(pagina, var fluxo) = await OperacoesAtivos.Ativos(page, usuario.Nivel);
                         //listaPagina.Add(pagina); listaFluxos.Add(fluxo);
 
-                        (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecInterno(page, usuario.Nivel, operacoes);
-                        listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
-
-                        //operacoes = new Operacoes();
-                        //(pagina, operacoes, var testesNegativos) = await TesteOperacoesOperacoes.Pages.OperacoesPage.CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
-                        //resultadosTestesNegativos.AddRange(testesNegativos);
+                        //(pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecInterno(page, usuario.Nivel, operacoes);
                         //listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
 
-                    //    operacoes = new Operacoes();
-                    //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
-                    //    break;
+                        operacoes = new Operacoes();
+                        (pagina, operacoes, var testesNegativos) = await TesteOperacoesOperacoes.Pages.OperacoesPage.CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
+                        resultadosTestesNegativos.AddRange(testesNegativos);
+                        listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
 
-                    //case Usuario.NivelEnum.Consultoria:
-                    //    (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecConsultoria(page, usuario.Nivel, operacoes);
-                    //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
+                        operacoes = new Operacoes();
+                        listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
+                        break;
 
-                    //    break;
+                        //case Usuario.NivelEnum.Consultoria:
+                        //    (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecConsultoria(page, usuario.Nivel, operacoes);
+                        //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
 
-                    //case Usuario.NivelEnum.Gestora:
-                    //    (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZiteGestora(page, usuario.Nivel, operacoes);
-                    //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
-                    //    operacoes = new Operacoes();
+                        //    break;
+
+                        //case Usuario.NivelEnum.Gestora:
+                        //    (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZiteGestora(page, usuario.Nivel, operacoes);
+                        //    listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
+                        //    operacoes = new Operacoes();
                         //(pagina, operacoes, var testesNegativos2) = await TesteOperacoesOperacoes.Pages.OperacoesPage.CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);
                         //resultadosTestesNegativos.AddRange(testesNegativos2);
                         //listaPagina.Add(pagina);
