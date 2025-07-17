@@ -27,7 +27,6 @@ namespace TesteCedente.Pages.CedentesPage
                     Console.Write("Cedentes PJ: ");
                     pagina.Nome = "Cedentes PJ";
                     pagina.StatusCode = BoletagemCedentes.Status;
-                    pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌")
                     {
@@ -287,6 +286,26 @@ namespace TesteCedente.Pages.CedentesPage
                                 {
                                     cedente.FluxoRepresentanteAssIso = "✅";
                                     Console.WriteLine("Todos os e-mails estão cadastrados.");
+                                    await Page.Locator(".buttonParecer.btn.btn-danger").First.ClickAsync();
+                                    await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
+                                    await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste de reprovação");
+                                    await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                                    await Task.Delay(500);
+                                    var cedenteReprovado = Repository.Cedentes.CedentesRepository.CedenteReprovado("36614123000160", "19890232000190");
+
+                                    if (cedenteReprovado)
+                                    {
+                                        cedente.ReprovarCedente = "✅";
+                                        pagina.Reprovar = "✅";
+                                        cedente.BtnReprovarCedente = "✅";
+                                    }
+                                    else
+                                    {
+                                        cedente.ReprovarCedente = "❌";
+                                        pagina.Reprovar = "❌";
+                                        cedente.BtnReprovarCedente = "❌";
+
+                                    }
                                     var apagarRepresentantes = Repository.Cedentes.CedentesRepository.ExcluirRepresentantesPorEmail(emails);
                                     var apagarCedente4 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "19890232000190");
                                     var apagarCedenteZCustodia4 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("19890232000190");
@@ -349,7 +368,6 @@ namespace TesteCedente.Pages.CedentesPage
                     Console.Write("Cedentes PF: ");
                     pagina.Nome = "Cedentes PF";
                     pagina.StatusCode = BoletagemCedentes.Status;
-                    pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌")
                     {
@@ -410,7 +428,7 @@ namespace TesteCedente.Pages.CedentesPage
                         if (statusFormalizacao)
                         {
                             cedente.AprovacaoDasAreas = "✅";
-                            await Page.Locator("#36614123000160_71011834090").ClickAsync();
+                            await Page.Locator(".buttonParecer.btn.btn-success").First.ClickAsync();
                             await Page.Locator("#fileAtivaCedente").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("Teste de ativaç");
@@ -467,7 +485,8 @@ namespace TesteCedente.Pages.CedentesPage
                                     {
                                         cedente.BtnHistoricoEventos = "❌";
                                     }
-                                    //cedente n está liberado a opção
+                                    //cedente n está liberado a opção no portal
+                                    cedente.BtnContratoMaeEFormalizacao = "❓";
                                     //var baixarArquivoContratoMae = await BaixarArquivoContratoMae(Page, "36614123000160_71011834090");
                                     //if (baixarArquivoContratoMae)
                                     //{
@@ -481,7 +500,7 @@ namespace TesteCedente.Pages.CedentesPage
                                     //}
 
                                     //atualização de kit
-                                   
+
                                     await Page.GetByRole(AriaRole.Row, new() { Name = "FUNDO QA FIDC Teste de" }).Locator("[id=\"0\"]").ClickAsync();
                                     await Page.Locator("#fileAtualizarKit").SetInputFilesAsync(new[] { AppSettings.Config["Paths:Arquivo"] + "36614123000160_71011834090_A.zip" });
                                     var cedenteAtualizado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
@@ -505,7 +524,7 @@ namespace TesteCedente.Pages.CedentesPage
                                         cedente.BtnAtualizarKit = "✅";
                                         var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "71011834090");
                                         var apagarCedenteZCustodia2 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("71011834090");
-                                        var emails = new List<string> { "jt@zitec.ai"};
+                                        var emails = new List<string> { "jt@zitec.ai" };
                                         var apagarRepresentantes = Repository.Cedentes.CedentesRepository.ExcluirRepresentantesPorEmail(emails);
 
                                         if (apagarCedente && apagarCedenteZCustodia2)
@@ -612,9 +631,33 @@ namespace TesteCedente.Pages.CedentesPage
                                 {
                                     cedente.FluxoRepresentanteAssIso = "✅";
                                     Console.WriteLine("Todos os e-mails estão cadastrados.");
+
+                                    //fluxo de reprovação clicando no botão e vendo se o status trocou no banco de dados
+                                    await Page.Locator(".buttonParecer.btn.btn-danger").First.ClickAsync();
+                                    await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
+                                    await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste de reprovação");
+                                    await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
+                                    await Task.Delay(500);
+
+                                    var cedenteReprovado = Repository.Cedentes.CedentesRepository.CedenteReprovado("36614123000160", "19890232000190");
+
+                                    if (cedenteReprovado)
+                                    {
+                                        cedente.ReprovarCedente = "✅";
+                                        pagina.Reprovar = "✅";
+                                        cedente.BtnReprovarCedente = "✅";
+                                    }
+                                    else
+                                    {
+                                        cedente.ReprovarCedente = "❌";
+                                        pagina.Reprovar = "❌";
+                                        cedente.BtnReprovarCedente = "❌";
+                                    }
                                     var apagarRepresentantes = Repository.Cedentes.CedentesRepository.ExcluirRepresentantesPorEmail(emails);
                                     var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "71011834090");
                                     var apagarCedenteZCustodia2 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("71011834090");
+                                    var apagarCedente4 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "19890232000190");
+                                    var apagarCedenteZCustodia4 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("19890232000190");
                                 }
                                 else
                                 {
@@ -638,7 +681,7 @@ namespace TesteCedente.Pages.CedentesPage
                     await Page.GotoAsync("https://portal.idsf.com.br/Home.aspx");
                 }
             }
-            catch (TimeoutException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
                 Console.WriteLine($"Exceção: {ex.Message}");
@@ -727,7 +770,7 @@ namespace TesteCedente.Pages.CedentesPage
                 await popup2.CloseAsync();
                 await page.Locator("#btnFecharModalDownloadContraoMae").ClickAsync();
                 return existe1 && urlValida;
-               
+
             }
             catch (Exception ex)
             {
@@ -782,7 +825,7 @@ namespace TesteCedente.Pages.CedentesPage
         {
             try
             {
-        
+
                 await page.Locator($"button[id='{idBotao}'][title='Contrato Mãe']").ClickAsync();
 
                 var linkDownload = page.Locator("a#linkContratoMae");
@@ -805,14 +848,14 @@ namespace TesteCedente.Pages.CedentesPage
             }
             catch (Exception ex)
             {
-           
+
                 try
                 {
                     await page.Locator("#btnFecharParecerContratoMae").ClickAsync();
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"{e.Message}"); 
+                    Console.WriteLine($"{e.Message}");
                 }
 
                 Console.WriteLine($"❌ Erro ao baixar contrato mãe: {ex.Message}");

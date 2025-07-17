@@ -145,6 +145,7 @@ namespace TesteCedente.Utils
                     "<th>Insert ZCustodia</th>" +
                     "<th>Fluxo Atualização de Kit</th>" +
                     "<th>Fluxo Representante Ass Iso</th>" +
+                    "<th>Fluxo Reprovação</th>" +
                     "</tr>";
 
             foreach (var cedente in listaCedente)
@@ -157,6 +158,7 @@ namespace TesteCedente.Utils
                 Html += $"<td>{cedente.InsertZCustodia}</td>";
                 Html += $"<td>{cedente.FluxoAtualizacaoDeKit}</td>";
                 Html += $"<td>{cedente.FluxoRepresentanteAssIso}</td>";
+                Html += $"<td>{cedente.ReprovarCedente}</td>";
                 Html += "</tr>";
             }
             Html += "</table>";
@@ -167,7 +169,8 @@ namespace TesteCedente.Utils
                 !string.IsNullOrWhiteSpace(c.BtnBaixarKit) ||
                 !string.IsNullOrWhiteSpace(c.BtnContratoMaeEFormalizacao) ||
                 !string.IsNullOrWhiteSpace(c.BtnHistoricoEventos) ||
-                !string.IsNullOrWhiteSpace(c.BtnBaixarContratoMae)
+                !string.IsNullOrWhiteSpace(c.BtnBaixarContratoMae) ||
+                !string.IsNullOrWhiteSpace(c.BtnReprovarCedente)
             ).ToList();
 
             // Só gera a tabela se houver dados
@@ -181,6 +184,7 @@ namespace TesteCedente.Utils
                         "<th>Btn Contrato Mãe e Formalização</th>" +
                         "<th>Btn Histórico Eventos</th>" +
                         "<th>Btn Baixar Contrato Mãe</th>" +
+                        "<th>Btn Reprovar Cedente</th>" +
                         "</tr>";
 
                 foreach (var cedente in cedentesComBotoes)
@@ -191,6 +195,7 @@ namespace TesteCedente.Utils
                     Html += $"<td>{cedente.BtnContratoMaeEFormalizacao}</td>";
                     Html += $"<td>{cedente.BtnHistoricoEventos}</td>";
                     Html += $"<td>{cedente.BtnBaixarContratoMae}</td>";
+                    Html += $"<td>{cedente.ReprovarCedente}</td>";
                     Html += "</tr>";
                 }
 

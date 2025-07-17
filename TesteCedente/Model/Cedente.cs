@@ -19,11 +19,14 @@ namespace TesteCedente.Model
 
         public string BtnBaixarKit {  get; set; }
 
+        public string ReprovarCedente { get; set; }
+
         public string BtnContratoMaeEFormalizacao { get; set; }
 
         public string BtnHistoricoEventos { get; set; }
 
         public string BtnBaixarContratoMae {  get; set; }
+        public string BtnReprovarCedente { get; set; }
         public string BtnAtualizarKit { get; set; }
 
         public string FluxoAtualizacaoDeKit { get; set; }

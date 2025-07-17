@@ -271,7 +271,16 @@ namespace TesteCedente.Repository.Cedentes
                         cmdDelEntidade.Parameters.AddWithValue("@idCedente", idCedente);
                         cmdDelEntidade.ExecuteNonQuery();
                     }
+                    //Excluir da tb avalista
+                    string queryDeleteAvalistas = @"
+                DELETE FROM TB_AVALISTA
+                WHERE ID_CEDENTE = @idCedente";
 
+                    using (SqlCommand cmdDelAvalista = new SqlCommand(queryDeleteAvalistas, myConnection))
+                    {
+                        cmdDelAvalista.Parameters.AddWithValue("@idCedente", idCedente);
+                        cmdDelAvalista.ExecuteNonQuery();
+                    }
                     // 5. Excluir da tabela TB_FUNDO_CEDENTE
                     string queryDeleteCedente = @"
                 DELETE FROM TB_FUNDO_CEDENTE
@@ -488,6 +497,46 @@ namespace TesteCedente.Repository.Cedentes
             }
 
             return excluido;
+        }
+        public static bool CedenteReprovado(string fundoCnpj, string cedenteCnpj)
+        {
+            bool reprovado = false;
+
+            try
+            {
+                var con = AppSettings.GetConnectionString("myConnectionString");
+
+                using (SqlConnection myConnection = new SqlConnection(con))
+                {
+                    myConnection.Open();
+
+                    string query = @"
+        SELECT CedenteStatus 
+        FROM Cedentes 
+        WHERE FundoCNPJ = @fundoCnpj AND CedenteCNPJ = @cedenteCnpj";
+
+                    using (SqlCommand oCmd = new SqlCommand(query, myConnection))
+                    {
+                        oCmd.Parameters.AddWithValue("@fundoCnpj", fundoCnpj);
+                        oCmd.Parameters.AddWithValue("@cedenteCnpj", cedenteCnpj);
+
+                        using (SqlDataReader oReader = oCmd.ExecuteReader())
+                        {
+                            if (oReader.Read())
+                            {
+                                var status = oReader["CedenteStatus"]?.ToString();
+                                reprovado = status != null && status.Equals("REPROVADO", StringComparison.OrdinalIgnoreCase);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Erro ao verificar status do cedente: {e.Message}");
+            }
+
+            return reprovado;
         }
 
     }
