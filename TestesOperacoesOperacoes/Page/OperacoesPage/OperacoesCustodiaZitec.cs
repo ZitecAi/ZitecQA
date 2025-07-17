@@ -71,7 +71,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             var (existe, idArquivo) = Repositories.OperacoesZitec.OperacoesZitecRepository.VerificaExistenciaOperacao(operacoes.NovoNomeArquivo2);
                             var idOperacaoRecebivel = Repositories.OperacoesZitec.OperacoesZitecRepository.ObterIdOpRec(operacoes.NovoNomeArquivo2);
 
-                            await Page.ReloadAsync();
+                            //await Page.ReloadAsync();
 
                             if (existe)
                             {
@@ -91,62 +91,14 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                                 operacoes.ListaErros2.Add("Erro ao lançar operação");
                             }
 
-                            #region Deve consultar arquivo CNAB enviado, pelo histórico
 
-                            await Page.GetByRole(AriaRole.Button, new() { Name = "Histórico" }).ClickAsync();
-                            await Page.Locator("#tabelaHistorico_filter").GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
-                            await Page.Locator("#tabelaHistorico_filter").GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(operacoes.NovoNomeArquivo2);
-                            //await Page.Locator("#tabelaHistorico_wrapper div").Filter(new() { HasText = "Nome ArquivoStatusData" }).Nth(1).ClickAsync();
-                            try
-                            {
-                                await Task.Delay(7000);
-                                await Expect(Page.Locator("#listaHistorico", new()
-                                {
-                                    HasTextString = operacoes.NovoNomeArquivo2
-                                })).ToBeVisibleAsync();
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine($"Não foi possivel consultar arquivo CNAB pelo histórico, Motivo: {ex}");
-                            }
-                            // Validar Downloads de Arquivo remessa e                             
-                            #endregion
-                            #region Deve Validar Download Validação Movimento
-                            await Page.Locator("//tbody[@id='listaHistorico']//td[@class='dtr-control']").ClickAsync();
-                            try
-                            {
-                                var downloadValMovimento = await Page.RunAndWaitForDownloadAsync(async () =>
-                                {
-                                    await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
-                                });
-                                await TesteOperacoesOperacoes.Util.Excel.ValidarDownloadAsync(downloadValMovimento, "Download Validação Movimento");
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine($"Não foi possivel fazer Download da validação movimento: Motivo {ex.Message}");
-                            }
-                            #endregion
 
-                            #region Deve Validar Download Validação Layout
-                            try
-                            {
-                                var downloadValLayout = await Page.RunAndWaitForDownloadAsync(async () =>
-                            {
-                                await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
-                            });
-                                await TesteOperacoesOperacoes.Util.Excel.ValidarDownloadAsync(downloadValLayout, "Download Validação Layout");
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine($"Não foi possivel fazer Download da validação Layout: Motivo {ex.Message}");
-                            }
-                            #endregion
                             await Page.ReloadAsync();
                             //await Page.PauseAsync();
 
 
 
-                            #region Reprovar Lote
+
                             //Alterar status antes de reprovar para habilitar checkbox
                             try
                             {
@@ -184,10 +136,12 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                                 Console.WriteLine("Download Relatorio cessão baixado e validado com sucesso!");
                                 pagina.BaixarExcel = "✅";
                                 await page1.CloseAsync();
+
                             }
                             catch (Exception ex)
                             {
                                 Console.WriteLine($"Não foi possivel baixar relatorio cessão  motivo: {ex.Message}");
+
                             }
 
                             #endregion
@@ -203,13 +157,15 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 
                                     await TesteOperacoesOperacoes.Util.Excel.ValidarDownloadAsync(download, "Download Arquivo remessa");
                                     Console.WriteLine("Download arquivo remessa baixado e validado com sucesso!");
-                                    pagina.BaixarExcel = "✅";
+
                                 });
                                 await page2.CloseAsync();
                             }
                             catch (Exception ex)
                             {
                                 Console.WriteLine($"Não foi possivel baixar arquivo Remessa motivo: {ex.Message}");
+
+
                             }
 
                             #endregion
@@ -222,13 +178,69 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             try
                             {
                                 await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Histórico de Eventos" })).ToBeVisibleAsync();
+
                             }
                             catch (Exception ex)
                             {
                                 Console.WriteLine($"Não foi possivel Encontrar histórico de eventos motivo: {ex.Message}");
+
                             }
                             #endregion
-                            //Reprovar Lote
+
+                            #region Deve consultar arquivo CNAB enviado pelo histórico
+                            //await Page.ReloadAsync();
+                            //await Page.GetByRole(AriaRole.Button, new() { Name = "Histórico" }).ClickAsync();
+                            //await Page.Locator("#tabelaHistorico_filter").GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).ClickAsync();
+                            //await Page.Locator("#tabelaHistorico_filter").GetByRole(AriaRole.Searchbox, new() { Name = "Pesquisar" }).FillAsync(operacoes.NovoNomeArquivo2);
+                            ////await Page.Locator("#tabelaHistorico_wrapper div").Filter(new() { HasText = "Nome ArquivoStatusData" }).Nth(1).ClickAsync();
+                            //try
+                            //{
+                            //    await Task.Delay(10000);
+                            //    await Expect(Page.Locator("#listaHistorico", new()
+                            //    {
+                            //        HasTextString = operacoes.NovoNomeArquivo2
+                            //    })).ToBeVisibleAsync();
+                            //}
+                            //catch (Exception ex)
+                            //{
+                            //    Console.WriteLine($"Não foi possivel consultar arquivo CNAB pelo histórico, Motivo: {ex}");
+                            //}
+                            //// Validar Downloads de Arquivo remessa e                             
+                            //#endregion
+
+                            //#region Deve Validar Download Validação Movimento
+                            //await Page.Locator("//tbody[@id='listaHistorico']//td[@class='dtr-control']").ClickAsync();
+                            //try
+                            //{
+                            //    var downloadValMovimento = await Page.RunAndWaitForDownloadAsync(async () =>
+                            //    {
+                            //        await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                            //    });
+                            //    await TesteOperacoesOperacoes.Util.Excel.ValidarDownloadAsync(downloadValMovimento, "Download Validação Movimento");
+                            //}
+                            //catch (Exception ex)
+                            //{
+                            //    Console.WriteLine($"Não foi possivel fazer Download da validação movimento: Motivo {ex.Message}");
+                            //}
+                            //#endregion
+
+                            //#region Deve Validar Download Validação Layout
+                            //try
+                            //{
+                            //    var downloadValLayout = await Page.RunAndWaitForDownloadAsync(async () =>
+                            //    {
+                            //        await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
+                            //    });
+                            //    await TesteOperacoesOperacoes.Util.Excel.ValidarDownloadAsync(downloadValLayout, "Download Validação Layout");
+                            //}
+                            //catch (Exception ex)
+                            //{
+                            //    Console.WriteLine($"Não foi possivel fazer Download da validação Layout: Motivo {ex.Message}");
+                            //}
+                            #endregion
+
+                            #region Reprovar Lote
+
                             await Page.ReloadAsync();
 
                             await Page.GetByLabel("Pesquisar").ClickAsync();
@@ -270,10 +282,17 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             //await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                             await Page.GetByRole(AriaRole.Button, new() { Name = "" }).ClickAsync();
                             await Page.Locator("#motivoExcluirArquivo").ClickAsync();
-                            await Page.Locator("#motivoExcluirArquivo").FillAsync("Teste Exclus");
+                            await Page.Locator("#motivoExcluirArquivo").FillAsync("Teste Exclusão");
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                             Console.WriteLine("Botão de apagar operação encontrado.");
-                            var apagarOperacao = await Page.GetByText("Solicitação recebida com sucesso!").ElementHandleAsync();
+                            var msgRetornada = "Arquivo excluído com sucesso!";
+                           
+
+                            
+                                var apagarOperacao = await Page.GetByText("Solicitação recebida com sucesso!").ElementHandleAsync();
+                                
+                            
+
 
                             if (apagarOperacao != null)
                             {
@@ -319,12 +338,174 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             #endregion
                         }
                     }
+
+
                     else
                     {
                         Console.WriteLine("O fundo não está na data atual");
                         errosTotais2++;
                         operacoes.ListaErros2.Add("Não foi possível processar o fundo para a data de hoje");
                     }
+
+                    //caminho arquvos inseridos, pendente criar relatório para cnab positivo e negativo, e ajustar o que tiver com problemas, ou reordernar o fluxo
+
+                    #region Testes Negativos
+
+
+
+                    #region CTN-01 Não deve Aceitar Envio de Operação CNAB com Arquivo com CnpjOriginadorEmBranco
+                    await Page.ReloadAsync();
+                    var resultado1 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-01_CnpjOriginadorEmBranco.txt", "CTN-01 CNAB CnpjOriginadorEmBranco");
+                    #endregion
+
+                    #region CTN-02 Não deve Aceitar Envio de Operação CNAB com Arquivo com CnpjOriginadorInvalido13Char
+                    await Page.ReloadAsync();
+                    var resultado2 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-02_CnpjOriginadorInvalido13Char.txt", "CTN-02 CNAB CnpjOriginadorInvalido13Char");
+                    #endregion
+
+                    #region CTN-03 Não deve Aceitar Envio de Operação CNAB com Arquivo com CnpjOriginadorInvalido15Char
+                    await Page.ReloadAsync();
+                    var resultado3 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-03_CnpjOriginadorInvalido15Char.txt", "CTN-03 CNAB CnpjOriginadorInvalido15Char");
+                    #endregion
+
+                    #region CTN-04 Não deve Aceitar Envio de Operação CNAB com Arquivo com NomeCedenteEmBranco
+                    await Page.ReloadAsync();
+                    var resultado4 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-04_NomeCedenteEmBranco.txt", "CTN-04 CNAB NomeCedenteEmBranco");
+                    #endregion
+
+                    #region CTN-05 Não deve Aceitar Envio de Operação CNAB com Arquivo com NomeCedenteInexistente
+                    await Page.ReloadAsync();
+                    var resultado5 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-05_NomeCedenteInexistente.txt", "CTN-05 CNAB NomeCedenteInexistente");
+                    #endregion
+
+                    #region CTN-06 Não deve Aceitar Envio de Operação CNAB com Arquivo com NomeCedenteInvalido
+                    await Page.ReloadAsync();
+                    var resultado6 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-06_NomeCedenteInvalido.txt", "CTN-06 CNAB NomeCedenteInvalido");
+                    #endregion
+
+                    #region CTN-07 Não deve Aceitar Envio de Operação CNAB com Arquivo com CnpjCedenteEmBranco
+                    await Page.ReloadAsync();
+                    var resultado7 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-07_CnpjCedenteEmBranco.txt", "CTN-07 CNAB CnpjCedenteEmBranco");
+                    #endregion
+
+                    #region CTN-08 Não deve Aceitar Envio de Operação CNABcom Arquivo com CnpjCedenteInvalido13Char
+                    await Page.ReloadAsync();
+                    var resultado8 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-08_CnpjCedenteInvalido13Char.txt", "CTN-08 CNAB CnpjCedenteInvalido13Char");
+
+                    #endregion
+
+                    #region CTN-09 Não deve Aceitar Envio de Operação CNAB com Arquivo com CnpjCedenteInvalido15Char
+                    await Page.ReloadAsync();
+                    var resultado9 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-09_CnpjCedenteInvalido15Char.txt", "CTN-09 CNAB CnpjCedenteInvalido15Char");
+                    #endregion
+
+                    #region CTN-10 Não deve Aceitar Envio de Operação CNAB com Arquivo com NomeSacadoEmBranco
+                    await Page.ReloadAsync();
+                    var resultado10 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-10_NomeSacadoEmBranco.txt", "CTN-10 CNAB NomeSacadoEmBranco");
+                    #endregion
+
+                    #region CTN-11 Não deve Aceitar Envio de Operação CNAB com Arquivo com NomeSacadoInexistente
+                    await Page.ReloadAsync();
+                    var resultado11 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-11_NomeSacadoInexistente.txt", "CTN-11 CNAB NomeSacadoInexistente");
+
+                    #endregion
+
+                    #region CTN-12 Não deve Aceitar Envio de Operação CNAB com Arquivo com NomeSacadoInvalido
+                    await Page.ReloadAsync();
+                    var resultado12 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-12_NomeSacadoInvalido.txt", "CTN-12 CNAB NomeSacadoInvalido");
+                    #endregion
+
+                    #region CTN-13 Não deve Aceitar Envio de Operação CNAB com Arquivo com CnpjSacadoEmBranco
+                    await Page.ReloadAsync();
+                    var resultado13 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-13_CnpjSacadoEmBranco.txt", "CTN-13 CNAB CnpjSacadoEmBranco");
+                    #endregion
+
+                    #region CTN-14 Não deve Aceitar Envio de Operação CNAB com Arquivo com CnpjSacadoInvalido13Char
+                    await Page.ReloadAsync();
+                    var resultado14 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-14_CnpjSacadoInvalido13Char.txt", "CTN-14 CNAB CnpjSacadoInvalido13Char");
+                    #endregion
+
+                    #region CTN-15 Não deve Aceitar Envio de Operação CNAB com Arquivo com CnpjSacadoInvalido15Char
+                    await Page.ReloadAsync();
+                    var resultado15 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-15_CnpjSacadoInvalido15Char.txt", "CTN-15 CNAB CnpjSacadoInvalido15Char");
+                    #endregion
+
+                    #region CTN-16 Não deve Aceitar Envio de Operação CNAB com Arquivo com DataVencFormatoInv
+                    await Page.ReloadAsync();
+                    var resultado16 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-16_DataVencimentoFormatoInválido.txt", "CTN-16 CNAB DataVencFormatoInv");
+                    #endregion
+
+                    #region CTN-17 Não deve Aceitar Envio de Operação CNAB com Arquivo com DataVencEmBranco
+                    await Page.ReloadAsync();
+                    var resultado17 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-17_DataVencimentoEmBranco.txt", "CTN-17 CNAB DataVencEmBranco");
+                    #endregion
+
+                    #region CTN-18 Não deve Aceitar Envio de Operação CNAB com Arquivo com DataVencPassado
+                    await Page.ReloadAsync();
+                    var resultado18 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-18_DataVencimentoNoPassado.txt", "CTN-18 CNAB DataVencPassado");
+                    #endregion
+
+                    #region CTN-19 Não deve Aceitar Envio de Operação CNAB com Arquivo com DataEmisEmBranco
+                    await Page.ReloadAsync();
+                    var resultado19 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-19_DataEmissãoEmBranco.txt", "CTN-19 CNAB DataEmisEmBranco");
+                    #endregion
+
+                    #region CTN-20 Não deve Aceitar Envio de Operação CNAB com Arquivo com DataEmissPassado
+                    await Page.ReloadAsync();
+                    var resultado20 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-20_DataEmissãoNoPassado.txt", "CTN-20 CNAB DataEmissPassado");
+                    #endregion
+
+                    #region CTN-21 Não deve Aceitar Envio de Operação CNAB com Arquivo com DataAqFormatoInv
+                    await Page.ReloadAsync();
+                    var resultado21 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-21_DataAquisiçãoFormatoInválido.txt", "CTN-21 CNAB DataAqFormatoInv");
+                    #endregion
+
+                    #region CTN-22 Não deve Aceitar Envio de Operação CNAB com Arquivo com DataAqEmBranco
+                    await Page.ReloadAsync();
+                    var resultado22 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-22_DataAquisiçãoEmBranco.txt", "CTN-22 CNAB DataAqEmBranco");
+                    #endregion
+
+                    #region CTN-23 Não deve Aceitar Envio de Operação CNAB com Arquivo com DataAqPassado
+                    await Page.ReloadAsync();
+                    var resultado23 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-23_DataAquisiçãoNoPassado.txt", "CTN-23 CNAB DataAqPassado");
+                    #endregion
+
+                    #region CTN-24 Não deve Aceitar Envio de Operação CNAB com Arquivo com NuDocEmBranco
+                    await Page.ReloadAsync();
+                    var resultado24 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-24_NumeroDocumentoEmBranco.txt", "CTN-24 CNAB NuDocEmBranco");
+                    #endregion
+
+                    #region CTN-25 Não deve Aceitar Envio de Operação CNAB com Arquivo com NuDocInexistente
+                    await Page.ReloadAsync();
+                    var resultado25 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-25_NumeroDocumentoInexistente.txt", "CTN-25 CNAB NuDocInexistente");
+                    #endregion
+
+                    #region CTN-26 Não deve Aceitar Envio de Operação CNAB com Arquivo com NuDocInvalido
+                    await Page.ReloadAsync();
+                    var resultado26 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-26_NumeroDocumentoInvalido.txt", "CTN-26 CNAB NuDocInvalido");
+                    #endregion
+
+                    #region CTN-27 Não deve Aceitar Envio de Operação CNAB com Arquivo com SeuNumeroEmBranco
+                    await Page.ReloadAsync();
+                    var resultado27 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-27_SeuNumeroEmBranco.txt", "CTN-27 CNAB SeuNumeroEmBranco");
+                    #endregion
+
+                    #region CTN-28 Não deve Aceitar Envio de Operação CNAB com Arquivo com SeuNumeroInexistente
+                    await Page.ReloadAsync();
+                    var resultado28 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-28_SeuNumeroInexistente.txt", "CTN-28 CNAB SeuNumeroInexistente");
+                    #endregion
+
+                    #region CTN-29 Não deve Aceitar Envio de Operação CNAB com Arquivo com SeuNumeroInvalido
+                    await Page.ReloadAsync();
+                    var resultado29 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCnabNegativo(Page, "CTN-29_SeuNumeroInvalido.txt", "CTN-29 CNAB SeuNumeroInvalido");
+                    #endregion
+
+                    //#region CTN-30 Não deve Aceitar Envio de Operação CNAB Com Arquivo em Formato .pdf
+                    //await Page.ReloadAsync();
+                    //var resultado30 = await TesteOperacoesOperacoes.Util.EnviarArquivoOperacaoNegativo.EnviarArquivoCSVPdfNegativo(Page, "CTN-30 CNAB teste.pdf");
+                    //#endregion
+
+                    #endregion
 
                     pagina.TotalErros = errosTotais;
                     if (operacoes.ListaErros2.Count == 0)

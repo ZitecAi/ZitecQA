@@ -283,7 +283,7 @@ namespace TesteOperacoesOperacoes.Util
             //Html += "<hr class=\"solid\">";
 
 
-            // validações positivas
+            // validações positivas csv
             Html += "<h2>Relatório de Testes Positivos Cadastro de Operações CSV </h2>\n";
             Html += "<table>\n";
             Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
@@ -298,7 +298,7 @@ namespace TesteOperacoesOperacoes.Util
             Html += "<hr class=\"solid\">\n";
 
 
-            //validações negativas
+            //validações negativas csv
             Html += "</table>";
             Html += "<br>";
             Html += "<hr class=\"solid\">";
@@ -313,6 +313,38 @@ namespace TesteOperacoesOperacoes.Util
             }
 
             Html += "</table>\n";
+
+            //// validações positivas cnab
+            //Html += "<h2>Relatório de Testes Positivos Cadastro de Operações CNAB </h2>\n";
+            //Html += "<table>\n";
+            //Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
+
+            //foreach (var teste in resultadosTestesPositivos)
+            //{
+            //    Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
+            //}
+
+            //Html += "</table>\n";
+            //Html += "<br>\n";
+            //Html += "<hr class=\"solid\">\n";
+
+
+            ////validações negativas cnab
+            //Html += "</table>";
+            //Html += "<br>";
+            //Html += "<hr class=\"solid\">";
+
+            //Html += "<h2>Relatório de Testes Negativos Cadastro de Operações CNAB </h2>\n";
+            //Html += "<table>\n";
+            //Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
+
+            //foreach (var teste in resultadosTestesNegativos)
+            //{
+            //    Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
+            //}
+
+            //Html += "</table>\n";
+
 
             //tabela com os erros 
 
