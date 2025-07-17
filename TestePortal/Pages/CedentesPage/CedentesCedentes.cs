@@ -52,10 +52,10 @@ namespace TestePortal.Pages.CedentesPage
                         errosTotais++;
                     }
 
-                    var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "53300608000106");
+                    var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "26038995000173");
 
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
-                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_53300608000106_N.zip" });
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_26038995000173_N.zip" });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
 
                     {
@@ -66,8 +66,8 @@ namespace TestePortal.Pages.CedentesPage
 
                     if (cedenteCadastrado != null)
                     {
-                        var cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "53300608000106");
-                        var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "53300608000106");
+                        var cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "26038995000173");
+                        var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "26038995000173");
 
                         if (cedenteExiste)
                         {
@@ -168,7 +168,7 @@ namespace TestePortal.Pages.CedentesPage
                         errosTotais++;
                     }
 
-                    var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "49624866830");
+                    var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "71011834090");
 
                     //await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                     //await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "36614123000160_49624866830_N.zip" });
@@ -186,7 +186,7 @@ namespace TestePortal.Pages.CedentesPage
 
                     // Obtém o caminho base do arquivo a partir do App.config
                     string basePath = TestePortalIDSF.Program.Config["Paths:Arquivo"];
-                    string fileName = "36614123000160_49624866830_N.zip";
+                    string fileName = "36614123000160_71011834090_N.zip";
                     string filePath = Path.Combine(basePath, fileName);
                     Console.WriteLine(filePath);
 
@@ -199,18 +199,18 @@ namespace TestePortal.Pages.CedentesPage
                         throw new FileNotFoundException("Arquivo não encontrado para upload", filePath);
                     }
 
-                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_49624866830_N.zip" });
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_71011834090_N.zip" });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
                     {
                         Timeout = 90000
                     });
                     if (cedenteCadastrado != null)
                     {
-                        var cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "49624866830");
+                        var cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "71011834090");
 
                         if (cedenteExiste)
                         {
-                            var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "49624866830");
+                            var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "71011834090");
                             Console.WriteLine("Cedente adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
 
@@ -242,12 +242,7 @@ namespace TestePortal.Pages.CedentesPage
                         errosTotais += 2;
                     }
 
-                    //pf
-
-
                 }
-
-
                 else
                 {
                     Console.Write("Erro ao carregar a página de Cedentes no tópico Cedentes ");
