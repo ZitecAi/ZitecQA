@@ -176,7 +176,7 @@ namespace TesteCedente.Utils
             // Só gera a tabela se houver dados
             if (cedentesComBotoes.Any())
             {
-                Html += "<h2>Relatório: Verificações dos Botões</h2>";
+                Html += "<h2>Relatório: Verificações dos Botões e Filtros</h2>";
                 Html += "<table border='1' cellpadding='5' cellspacing='0'>";
                 Html += "<tr>" +
                         "<th>Tipo Cedente</th>" +
@@ -185,6 +185,10 @@ namespace TesteCedente.Utils
                         "<th>Btn Histórico Eventos</th>" +
                         "<th>Btn Baixar Contrato Mãe</th>" +
                         "<th>Btn Reprovar Cedente</th>" +
+                        "<th>Filtro Status</th>" +
+                        "<th>Filtro Cadastro</th>" +
+                        "<th>Filtro Gestora</th>" +
+                        "<th>Filtro Compliance</th>" +
                         "</tr>";
 
                 foreach (var cedente in cedentesComBotoes)
@@ -196,6 +200,10 @@ namespace TesteCedente.Utils
                     Html += $"<td>{cedente.BtnHistoricoEventos}</td>";
                     Html += $"<td>{cedente.BtnBaixarContratoMae}</td>";
                     Html += $"<td>{cedente.ReprovarCedente}</td>";
+                    Html += $"<td>{cedente.FiltroStatus}</td>";
+                    Html += $"<td>{cedente.FiltroCadastro}</td>";
+                    Html += $"<td>{cedente.FiltroGestora}</td>";
+                    Html += $"<td>{cedente.FiltroCompliance}</td>";
                     Html += "</tr>";
                 }
 

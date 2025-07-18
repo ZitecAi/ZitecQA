@@ -41,7 +41,7 @@ namespace TesteCedente
             try
             {
                 var emailPadrao = new EmailPadrao(
-                    "jt@zitec.ai",
+                    "todos@zitec.ai",
                     "Segue relatório da página de cedentes do portal IDSF.",
                     EnviarEmail.GerarHtml(listaPagina, listaCedente)
                 );

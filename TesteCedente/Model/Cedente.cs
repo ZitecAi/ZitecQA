@@ -32,5 +32,12 @@ namespace TesteCedente.Model
         public string FluxoAtualizacaoDeKit { get; set; }
 
         public string FluxoRepresentanteAssIso { get; set; }
+
+        public string FiltroStatus { get; set; }
+        public string FiltroGestora { get; set; }
+        public string FiltroCadastro { get; set; }
+        public string FiltroCompliance { get; set; }
+
+
     }
 }

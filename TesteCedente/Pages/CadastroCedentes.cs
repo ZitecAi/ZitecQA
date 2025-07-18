@@ -309,7 +309,10 @@ namespace TesteCedente.Pages.CedentesPage
                                     var apagarRepresentantes = Repository.Cedentes.CedentesRepository.ExcluirRepresentantesPorEmail(emails);
                                     var apagarCedente4 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "19890232000190");
                                     var apagarCedenteZCustodia4 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("19890232000190");
-
+                                    cedente.FiltroStatus = "❓";
+                                    cedente.FiltroGestora = "❓";
+                                    cedente.FiltroCadastro = "❓";
+                                    cedente.FiltroCompliance = "❓";
                                 }
                                 else
                                 {
@@ -658,6 +661,12 @@ namespace TesteCedente.Pages.CedentesPage
                                     var apagarCedenteZCustodia2 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("71011834090");
                                     var apagarCedente4 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "19890232000190");
                                     var apagarCedenteZCustodia4 = Repository.Cedentes.CedentesRepository.ExcluirCedenteZCustodia("19890232000190");
+
+                                    cedente.FiltroStatus = await VerificarFiltroComValorAsync(Page, "#filtroStatus", "Status", "Análise") ? "✅" : "❌";
+                                    cedente.FiltroGestora = await VerificarFiltroComValorAsync(Page, "#filtroGestora", "Gestora", "Aprovado") ? "✅" : "❌";
+                                    cedente.FiltroCadastro = await VerificarFiltroComValorAsync(Page, "#filtroCadastro", "Cadastro", "Em espera") ? "✅" : "❌";
+                                    cedente.FiltroCompliance = await VerificarFiltroComValorAsync(Page, "#filtroCompliance", "Compliance", "Aprovado") ? "✅" : "❌";
+
                                 }
                                 else
                                 {
@@ -859,6 +868,52 @@ namespace TesteCedente.Pages.CedentesPage
                 }
 
                 Console.WriteLine($"❌ Erro ao baixar contrato mãe: {ex.Message}");
+                return false;
+            }
+        }
+
+        public static async Task<bool> VerificarFiltroComValorAsync(IPage page, string seletorFiltro, string nomeColunaTabela, string valorFiltro)
+        {
+            try
+            {
+                // Aguarda o filtro ficar visível
+                await page.Locator(seletorFiltro).WaitForAsync();
+
+                // Seleciona o valor desejado no filtro
+                await page.SelectOptionAsync(seletorFiltro, new[] { valorFiltro });
+
+                // Aguarda carregar os dados da tabela após aplicar o filtro
+                await page.WaitForTimeoutAsync(1500);
+
+                // Encontra a posição da coluna na tabela
+                var colunas = (await page.Locator("#tabelaCedentes thead tr th").AllInnerTextsAsync()).ToList();
+                int indexColuna = colunas.FindIndex(c => c.Trim().Equals(nomeColunaTabela, StringComparison.OrdinalIgnoreCase));
+
+                if (indexColuna == -1)
+                    return false;
+
+                // Obtém todas as linhas da tabela
+                var linhas = await page.Locator("#tabelaCedentes tbody tr").AllAsync();
+
+                if (linhas.Count == 0)
+                    return false;
+
+                // Verifica se cada linha tem o valor do filtro aplicado na coluna correta
+                foreach (var linha in linhas)
+                {
+                    var celulas = await linha.Locator("td").AllAsync();
+                    if (indexColuna >= celulas.Count)
+                        return false;
+
+                    var textoCelula = (await celulas[indexColuna].InnerTextAsync()).Trim();
+                    if (!textoCelula.Contains(valorFiltro, StringComparison.OrdinalIgnoreCase))
+                        return false;
+                }
+
+                return true;
+            }
+            catch
+            {
                 return false;
             }
         }
