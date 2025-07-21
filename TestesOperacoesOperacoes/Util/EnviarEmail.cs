@@ -79,7 +79,13 @@ namespace TesteOperacoesOperacoes.Util
 
         }
 
-        public static string GerarHtml(List<Pagina> listaPagina, List<FluxosDeCadastros> listaFluxos, List<Operacoes> operacoes, List<TesteNegativoResultado> resultadosTestesNegativos, List<TestePositivoResultado> resultadosTestesPositivos)
+        public static string GerarHtml(List<Pagina> listaPagina,
+                                        List<FluxosDeCadastros> listaFluxos,
+                                        List<Operacoes> operacoes,
+                                        List<TesteNegativoResultado> resultadosTestesNegativos,
+                                        List<TestePositivoResultado> resultadosTestesPositivos, 
+                                        List<TestePositivoResultado> testesPositivosCnab,
+                                        List<TesteNegativoResultado> testesNegativosCnab)
 
         {
 
@@ -92,6 +98,12 @@ namespace TesteOperacoesOperacoes.Util
             var listaDenver = listaPagina.Where(p => p.Perfil == "Denver").ToList();
 
             var listaErros = listaPagina.Where(p => p.TotalErros > 0 || p.Listagem == "❌" || p.Acentos == "❌" || p.InserirDados == "❌" || p.Excluir == "❌").ToList();
+            //var positivosCnab = resultadosTestesPositivos.Where(x => x.IdDoTeste.StartsWith("CTPC-")).ToList();
+            //var negativosCnab = resultadosTestesNegativos.Where(x => x.IdDoTeste.StartsWith("CTNC-")).ToList();
+            var positivosCnab = testesPositivosCnab;
+            var negativosCnab = testesNegativosCnab;
+
+
 
             string Html = "<html>" +
            "<head>" +
@@ -288,7 +300,8 @@ namespace TesteOperacoesOperacoes.Util
             Html += "<table>\n";
             Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
 
-            foreach (var teste in resultadosTestesPositivos)
+            foreach (var teste in resultadosTestesPositivos.Where(x => x.IdDoTeste.StartsWith("CTP-") && !x.IdDoTeste.StartsWith("CTPC-")))
+
             {
                 Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
             }
@@ -298,52 +311,52 @@ namespace TesteOperacoesOperacoes.Util
             Html += "<hr class=\"solid\">\n";
 
 
-            //validações negativas csv
-            Html += "</table>";
-            Html += "<br>";
-            Html += "<hr class=\"solid\">";
+            ////validações negativas csv
+            //Html += "</table>";
+            //Html += "<br>";
+            //Html += "<hr class=\"solid\">";
 
             Html += "<h2>Relatório de Testes Negativos Cadastro de Operações CSV </h2>\n";
             Html += "<table>\n";
             Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
 
-            foreach (var teste in resultadosTestesNegativos)
+            foreach (var teste in resultadosTestesNegativos.Where(x => x.IdDoTeste.StartsWith("CTN-") && !x.IdDoTeste.StartsWith("CTNC-")))
             {
                 Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
             }
 
             Html += "</table>\n";
 
-            //// validações positivas cnab
-            //Html += "<h2>Relatório de Testes Positivos Cadastro de Operações CNAB </h2>\n";
-            //Html += "<table>\n";
-            //Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
+            // validações positivas cnab
+            Html += "<h2>Relatório de Testes Positivos Cadastro de Operações CNAB </h2>\n";
+            Html += "<table>\n";
+            Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
 
-            //foreach (var teste in resultadosTestesPositivos)
-            //{
-            //    Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
-            //}
+            foreach (var teste in positivosCnab)
+            {
+                Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
+            }
 
-            //Html += "</table>\n";
-            //Html += "<br>\n";
-            //Html += "<hr class=\"solid\">\n";
+            Html += "</table>\n";
+            Html += "<br>\n";
+            Html += "<hr class=\"solid\">\n";
 
 
-            ////validações negativas cnab
-            //Html += "</table>";
-            //Html += "<br>";
-            //Html += "<hr class=\"solid\">";
+            //validações negativas cnab
+            Html += "</table>";
+            Html += "<br>";
+            Html += "<hr class=\"solid\">";
 
-            //Html += "<h2>Relatório de Testes Negativos Cadastro de Operações CNAB </h2>\n";
-            //Html += "<table>\n";
-            //Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
+            Html += "<h2>Relatório de Testes Negativos Cadastro de Operações CNAB </h2>\n";
+            Html += "<table>\n";
+            Html += "<tr><th>ID do Teste</th><th>Resultado</th></tr>\n";
 
-            //foreach (var teste in resultadosTestesNegativos)
-            //{
-            //    Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
-            //}
+            foreach (var teste in negativosCnab)
+            {
+                Html += $"<tr><td>{teste.IdDoTeste}</td><td>{teste.Resultado}</td></tr>\n";
+            }
 
-            //Html += "</table>\n";
+            Html += "</table>\n";
 
 
             //tabela com os erros 
@@ -376,6 +389,8 @@ namespace TesteOperacoesOperacoes.Util
             Html += "<hr class=\"solid\">";
 
             //Legenda
+
+
 
             Html += "<h2>Legenda</h2>";
             Html += "<table>";
