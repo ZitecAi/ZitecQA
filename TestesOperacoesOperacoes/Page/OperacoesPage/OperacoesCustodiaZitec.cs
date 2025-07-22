@@ -309,7 +309,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                                 try
                                 {
                                     var locator = Page.GetByText(mensagem);
-                                    var elemento = await locator.ElementHandleAsync();
+                                    var elemento = Expect(locator).ToBeVisibleAsync();
 
                                     if (elemento != null)
                                     {
