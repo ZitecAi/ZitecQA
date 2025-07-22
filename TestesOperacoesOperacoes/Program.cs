@@ -64,7 +64,7 @@ namespace TestesOperacoesOperacoes
             {
                 var emailPadrao = new EmailPadrao(
                             "al@zitec.ai",
-                            "Segue relatório com as páginas mais importantes do portal IDSF testadas.",
+                            "Segue relatório de teste E2E página Operações do portal IDSF testada.",
                             TesteOperacoesOperacoes.Util.EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, resultadosTestesNegativos, resultadosTestesPositivos,
         positivosCnab,
         negativosCnab)

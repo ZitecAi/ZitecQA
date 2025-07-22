@@ -306,13 +306,20 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
 
                             foreach (var mensagem in mensagens)
                             {
-                                var locator = Page.GetByText(mensagem);
-                                var elemento = await locator.ElementHandleAsync(); // espera no máximo 1s
-
-                                if (elemento != null)
+                                try
                                 {
-                                    mensagemEncontrada = true;
-                                    break; // encontrou um, ignora o resto
+                                    var locator = Page.GetByText(mensagem);
+                                    var elemento = await locator.ElementHandleAsync();
+
+                                    if (elemento != null)
+                                    {
+                                        mensagemEncontrada = true;
+                                        break;
+                                    }
+                                }
+                                catch
+                                {
+
                                 }
                             }
 
@@ -883,6 +890,11 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             await Page.Locator("span.dtr-title:has-text('Ações') >> xpath=.. >> button[title='Aprovação Consultoria']").ClickAsync();
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar" }).ClickAsync();
                             await Task.Delay(3000);
+                            ILocator btnFecharModalAProvacao = Page.Locator("#btnFecharAprovarConsultoria");
+                            if (await btnFecharModalAProvacao.IsVisibleAsync())
+                            {
+                                await btnFecharModalAProvacao.ClickAsync();
+                            }                            
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
                             await Page.GetByLabel("Pesquisar").FillAsync("CEDENTE TESTE");
