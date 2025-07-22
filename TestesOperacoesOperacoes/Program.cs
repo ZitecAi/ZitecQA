@@ -43,17 +43,22 @@ namespace TestesOperacoesOperacoes
 
             var resultados = await Task.WhenAll(tasks);
             Console.WriteLine("Todos os testes foram executados.");
-            var resultadosTestesPositivos = TesteOperacoesOperacoes.Util.RegistroTestesPositivos.Resultados;
 
             var listaPagina = resultados.SelectMany(r => r.Item1).ToList();
             var listaFluxos = resultados.SelectMany(r => r.Item2).ToList();
             var listaOperacoes = resultados.SelectMany(r => r.Item3).ToList();
-            var resultadosTestesNegativos = resultados.SelectMany(r => r.Item4).ToList();
             var resultadosTestesNegativosCsv = resultados.SelectMany(r => r.Item4).Where(x => x.IdDoTeste.StartsWith("CTN-")).ToList();
 
+            var resultadosTestesNegativos = RegistroTestesNegativos.Resultados;
+            var negativosCnab = resultadosTestesNegativos.Where(x => x.IdDoTeste.StartsWith("CTNC-")).ToList();
+            var resultadosTestesPositivos = RegistroTestesPositivos.Resultados;
             var positivosCnab = resultadosTestesPositivos.Where(x => x.IdDoTeste.StartsWith("CTPC-")).ToList();
 
-            var negativosCnab = resultadosTestesNegativos.Where(x => x.IdDoTeste.StartsWith("CTNC-")).ToList();
+
+            //var resultadosTestesPositivos = TesteOperacoesOperacoes.Util.RegistroTestesPositivos.Resultados;
+            //var positivosCnab = resultadosTestesPositivos.Where(x => x.IdDoTeste.StartsWith("CTPC-")).ToList();
+            //var resultadosTestesNegativos = resultados.SelectMany(r => r.Item4).ToList();
+            //var negativosCnab = resultadosTestesNegativos.Where(x => x.IdDoTeste.StartsWith("CTNC-")).ToList();
 
             try
             {
@@ -61,7 +66,7 @@ namespace TestesOperacoesOperacoes
                             "al@zitec.ai",
                             "Segue relatório com as páginas mais importantes do portal IDSF testadas.",
                             TesteOperacoesOperacoes.Util.EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, resultadosTestesNegativos, resultadosTestesPositivos,
-        positivosCnab, 
+        positivosCnab,
         negativosCnab)
 
                         );
@@ -92,12 +97,12 @@ namespace TestesOperacoesOperacoes
                 switch (usuario.Nivel)
                 {
                     case TesteOperacoesOperacoes.Model.Usuario.NivelEnum.Master:
-                        //esperar bloker
-                        //(pagina, var fluxo) = await OperacoesAtivos.Ativos(page, usuario.Nivel);
-                        //listaPagina.Add(pagina); listaFluxos.Add(fluxo);
+                        //    //esperar bloker
+                        //    //(pagina, var fluxo) = await OperacoesAtivos.Ativos(page, usuario.Nivel);
+                        //    //listaPagina.Add(pagina); listaFluxos.Add(fluxo);
 
-                        //(pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecInterno(page, usuario.Nivel, operacoes);
-                        //listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
+                        (pagina, operacoes) = await TesteOperacoesOperacoes.Pages.OperacoesPage.OperacoesCustodiaZitec.OperacoesZitecInterno(page, usuario.Nivel, operacoes);
+                        listaPagina.Add(pagina); listaOperacoes.Add(operacoes);
 
                         operacoes = new Operacoes();
                         (pagina, operacoes, var testesNegativos) = await TesteOperacoesOperacoes.Pages.OperacoesPage.CadastroOperacoesZitecCsv.OperacoesZitecCsv(page, usuario.Nivel, operacoesGestora);

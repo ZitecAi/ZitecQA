@@ -15,7 +15,7 @@ namespace TesteOperacoesOperacoes.Util
 
             usuarios.Add(new TesteOperacoesOperacoes.Model.Usuario("qazitec01@gmail.com", "Testeqa01?!", TesteOperacoesOperacoes.Model.Usuario.NivelEnum.Master));
             usuarios.Add(new TesteOperacoesOperacoes.Model.Usuario("jessica.tavares@aluno.ifsp.edu.br", "Jehtavares?123", TesteOperacoesOperacoes.Model.Usuario.NivelEnum.Consultoria));
-            usuarios.Add(new TesteOperacoesOperacoes.Model.Usuario("jt@zitec.ai", "Jehtavares?123", TesteOperacoesOperacoes.Model.Usuario.NivelEnum.Gestora));
+            usuarios.Add(new TesteOperacoesOperacoes.Model.Usuario("caiooliweira@gmail.com", "id2021", TesteOperacoesOperacoes.Model.Usuario.NivelEnum.Gestora));
             usuarios.Add(new TesteOperacoesOperacoes.Model.Usuario("jessica.vitoria.tavares044@gmail.com", "Jehtavares?123", TesteOperacoesOperacoes.Model.Usuario.NivelEnum.Denver));
             return usuarios;
         }

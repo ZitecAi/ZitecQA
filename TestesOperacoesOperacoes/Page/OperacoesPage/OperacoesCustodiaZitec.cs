@@ -319,7 +319,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             if (mensagemEncontrada)
                             {
                                 operacoes.OpApagadaBtn = "✅";
-                                pagina.Excluir = "✅";
+                                pagina.Excluir = "✅";                                
                             }
                             else
                             {
@@ -882,6 +882,7 @@ namespace TesteOperacoesOperacoes.Pages.OperacoesPage
                             await primeiroTd.ClickAsync();
                             await Page.Locator("span.dtr-title:has-text('Ações') >> xpath=.. >> button[title='Aprovação Consultoria']").ClickAsync();
                             await Page.GetByRole(AriaRole.Button, new() { Name = "Aprovar" }).ClickAsync();
+                            await Task.Delay(3000);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
                             await Page.GetByLabel("Pesquisar").FillAsync("CEDENTE TESTE");
