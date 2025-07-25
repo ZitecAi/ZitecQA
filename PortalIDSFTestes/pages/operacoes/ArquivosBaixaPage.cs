@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.pages
+namespace PortalIDSFTestes.pages.operacoes
 {
     public class ArquivosBaixaPage
     {

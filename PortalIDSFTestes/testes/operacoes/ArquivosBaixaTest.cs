@@ -1,6 +1,6 @@
 ﻿using Microsoft.Playwright;
-using PortaIDSFTestes.pages.login;
-using PortaIDSFTestes.pages.operacoes;
+using PortalIDSFTestes.pages.login;
+using PortalIDSFTestes.pages.operacoes;
 using PortalIDSFTestes.runner;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes
+namespace PortalIDSFTestes.testes.operacoes
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]

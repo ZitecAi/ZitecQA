@@ -1,9 +1,9 @@
 using NUnit.Framework;
-using PortaIDSFTestes.pages.login;
+using PortalIDSFTestes.pages.login;
 using Microsoft.Playwright;
 using PortalIDSFTestes.runner;
 
-namespace PortalIDSFTestes.testes
+namespace PortalIDSFTestes.testes.login
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]

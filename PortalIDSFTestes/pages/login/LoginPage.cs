@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.elementos.login;
 
-namespace PortalIDSFTestes.pages
+namespace PortalIDSFTestes.pages.login
 { 
     public class LoginPage
     {
