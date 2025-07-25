@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestePortalExecutavel", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteOperacoesOperacoes", "TestesOperacoesOperacoes\TesteOperacoesOperacoes.csproj", "{0CA7EF94-69C2-49AC-8A6D-9C28AD954C0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortaIDSFTestes", "..\..\source\repos\PortaIDSFlTestes\PortaIDSFlTestes\PortaIDSFTestes.csproj", "{BEF1A40B-BA95-0608-29BC-B208F821D7C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,12 @@ Global
 		{0CA7EF94-69C2-49AC-8A6D-9C28AD954C0E}.Debug2|Any CPU.Build.0 = Debug|Any CPU
 		{0CA7EF94-69C2-49AC-8A6D-9C28AD954C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CA7EF94-69C2-49AC-8A6D-9C28AD954C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEF1A40B-BA95-0608-29BC-B208F821D7C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF1A40B-BA95-0608-29BC-B208F821D7C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF1A40B-BA95-0608-29BC-B208F821D7C0}.Debug2|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF1A40B-BA95-0608-29BC-B208F821D7C0}.Debug2|Any CPU.Build.0 = Debug|Any CPU
+		{BEF1A40B-BA95-0608-29BC-B208F821D7C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF1A40B-BA95-0608-29BC-B208F821D7C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
