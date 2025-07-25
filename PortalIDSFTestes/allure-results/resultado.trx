@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="193d7cbb-e77f-4802-b1c6-c34864fa9e06" name="LeviAlves@ZITEC0029 2025-07-25 16:45:28" runUser="AzureAD\LeviAlves" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-07-25T16:45:28.4985793-03:00" queuing="2025-07-25T16:45:28.4985799-03:00" start="2025-07-25T16:44:59.0271753-03:00" finish="2025-07-25T16:45:55.0772046-03:00" />
+  <TestSettings name="default" id="270f46cb-d4ca-475a-9d6c-c73284bfcfb7">
+    <Deployment runDeploymentRoot="LeviAlves_ZITEC0029_2025-07-25_16_45_28" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="7f5bc78b-6279-49fd-b33c-282b63b37ac9" testId="6b387292-9c23-8147-ffc4-2f5c7f11535d" testName="naoDeveRealizarLoginComSenhaInvalidaNivelGestora" computerName="ZITEC0029" duration="00:00:03.4930750" startTime="2025-07-25T16:45:41.8698501-03:00" endTime="2025-07-25T16:45:45.3629249-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7f5bc78b-6279-49fd-b33c-282b63b37ac9" />
+    <UnitTestResult executionId="8cdd263b-bc9b-48aa-aa79-1510d3a58e6b" testId="18804268-1f0d-999f-fc34-38a3a3195d74" testName="deveRealizarLoginComSucessoNivelGestora" computerName="ZITEC0029" duration="00:00:03.3304680" startTime="2025-07-25T16:45:38.5393508-03:00" endTime="2025-07-25T16:45:41.8698187-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8cdd263b-bc9b-48aa-aa79-1510d3a58e6b" />
+    <UnitTestResult executionId="c60d6cde-c886-4271-b855-a734189c6a14" testId="623420a3-27e4-d350-c56f-8ae62bbad798" testName="naoDeveConterAcentosQuebrados" computerName="ZITEC0029" duration="00:00:09.0342250" startTime="2025-07-25T16:45:19.4979100-03:00" endTime="2025-07-25T16:45:28.5321347-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c60d6cde-c886-4271-b855-a734189c6a14" />
+    <UnitTestResult executionId="c0d1f300-efd4-4482-bb66-8ef851212f6c" testId="41e689cf-b25d-5121-5e78-25f3dc672610" testName="naoDeveRealizarLoginComSenhaInvalidaNivelConsultoria" computerName="ZITEC0029" duration="00:00:03.3366690" startTime="2025-07-25T16:45:35.2026483-03:00" endTime="2025-07-25T16:45:38.5393163-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c0d1f300-efd4-4482-bb66-8ef851212f6c" />
+    <UnitTestResult executionId="573497b8-0960-4921-b185-b2beef76e1b5" testId="d89b770f-ccea-ab8e-4aa0-be6592079692" testName="naoDeveRealizarLoginComSenhaInvalidaNivelInterno" computerName="ZITEC0029" duration="00:00:03.5090020" startTime="2025-07-25T16:45:28.4574181-03:00" endTime="2025-07-25T16:45:31.9664193-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="573497b8-0960-4921-b185-b2beef76e1b5" />
+    <UnitTestResult executionId="caacf6c9-4bee-4e0e-bf47-b087018c2e06" testId="1aeecc5b-fb9d-07f3-9d2c-fd25ae40d93d" testName="deveRealizarLoginComSucessoNivelConsultoria" computerName="ZITEC0029" duration="00:00:03.2361650" startTime="2025-07-25T16:45:31.9664517-03:00" endTime="2025-07-25T16:45:35.2026164-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="caacf6c9-4bee-4e0e-bf47-b087018c2e06" />
+    <UnitTestResult executionId="3509ce8b-8dde-4004-97e6-8c3c1865007e" testId="c0e2edda-ac5b-ed3a-02cb-51b5953bd4e0" testName="naoDeveRealizarLoginComSenhaInvalidaNivelDenver" computerName="ZITEC0029" duration="00:00:03.5639880" startTime="2025-07-25T16:45:48.7283765-03:00" endTime="2025-07-25T16:45:52.2923637-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3509ce8b-8dde-4004-97e6-8c3c1865007e" />
+    <UnitTestResult executionId="d87db4ea-8b1a-4fd3-896f-a602cd4bde24" testId="7c03647b-0981-794e-241d-60163f467bb5" testName="deveEnviarArquivoBaixa" computerName="ZITEC0029" duration="00:00:06.7965610" startTime="2025-07-25T16:45:28.5321771-03:00" endTime="2025-07-25T16:45:35.3287377-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d87db4ea-8b1a-4fd3-896f-a602cd4bde24" />
+    <UnitTestResult executionId="7ab9bd2a-6cc3-4669-a78f-7f952ea8de75" testId="17e1a3cf-48db-be55-414f-e40adf35a020" testName="deveRealizarLoginComSucessoNivelDenver" computerName="ZITEC0029" duration="00:00:03.3653790" startTime="2025-07-25T16:45:45.3629599-03:00" endTime="2025-07-25T16:45:48.7283383-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7ab9bd2a-6cc3-4669-a78f-7f952ea8de75" />
+    <UnitTestResult executionId="a6bf0252-e5d5-4291-ad24-511e524ad08c" testId="d25a4398-dae2-c5dc-6ee4-80e32fa0edea" testName="deveRealizarLoginComSucessoNivelInterno" computerName="ZITEC0029" duration="00:00:08.9583310" startTime="2025-07-25T16:45:19.4979107-03:00" endTime="2025-07-25T16:45:28.4561846-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a6bf0252-e5d5-4291-ad24-511e524ad08c" />
+    <UnitTestResult executionId="1ae80765-d53e-4cab-9d51-3255407ee4fa" testId="5d6919dd-8d46-b435-e45b-f064a297b06e" testName="naoDeveConterAcentosQuebrados" computerName="ZITEC0029" duration="00:00:02.7385940" startTime="2025-07-25T16:45:52.2923951-03:00" endTime="2025-07-25T16:45:55.0309884-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1ae80765-d53e-4cab-9d51-3255407ee4fa" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="naoDeveConterAcentosQuebrados" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="5d6919dd-8d46-b435-e45b-f064a297b06e">
+      <Execution id="1ae80765-d53e-4cab-9d51-3255407ee4fa" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="naoDeveConterAcentosQuebrados" />
+    </UnitTest>
+    <UnitTest name="naoDeveRealizarLoginComSenhaInvalidaNivelDenver" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="c0e2edda-ac5b-ed3a-02cb-51b5953bd4e0">
+      <Execution id="3509ce8b-8dde-4004-97e6-8c3c1865007e" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="naoDeveRealizarLoginComSenhaInvalidaNivelDenver" />
+    </UnitTest>
+    <UnitTest name="naoDeveConterAcentosQuebrados" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="623420a3-27e4-d350-c56f-8ae62bbad798">
+      <Execution id="c60d6cde-c886-4271-b855-a734189c6a14" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="naoDeveConterAcentosQuebrados" />
+    </UnitTest>
+    <UnitTest name="deveRealizarLoginComSucessoNivelGestora" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="18804268-1f0d-999f-fc34-38a3a3195d74">
+      <Execution id="8cdd263b-bc9b-48aa-aa79-1510d3a58e6b" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="deveRealizarLoginComSucessoNivelGestora" />
+    </UnitTest>
+    <UnitTest name="deveRealizarLoginComSucessoNivelConsultoria" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="1aeecc5b-fb9d-07f3-9d2c-fd25ae40d93d">
+      <Execution id="caacf6c9-4bee-4e0e-bf47-b087018c2e06" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="deveRealizarLoginComSucessoNivelConsultoria" />
+    </UnitTest>
+    <UnitTest name="deveEnviarArquivoBaixa" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="7c03647b-0981-794e-241d-60163f467bb5">
+      <Execution id="d87db4ea-8b1a-4fd3-896f-a602cd4bde24" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="deveEnviarArquivoBaixa" />
+    </UnitTest>
+    <UnitTest name="deveRealizarLoginComSucessoNivelDenver" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="17e1a3cf-48db-be55-414f-e40adf35a020">
+      <Execution id="7ab9bd2a-6cc3-4669-a78f-7f952ea8de75" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="deveRealizarLoginComSucessoNivelDenver" />
+    </UnitTest>
+    <UnitTest name="naoDeveRealizarLoginComSenhaInvalidaNivelGestora" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="6b387292-9c23-8147-ffc4-2f5c7f11535d">
+      <Execution id="7f5bc78b-6279-49fd-b33c-282b63b37ac9" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="naoDeveRealizarLoginComSenhaInvalidaNivelGestora" />
+    </UnitTest>
+    <UnitTest name="naoDeveRealizarLoginComSenhaInvalidaNivelConsultoria" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="41e689cf-b25d-5121-5e78-25f3dc672610">
+      <Execution id="c0d1f300-efd4-4482-bb66-8ef851212f6c" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="naoDeveRealizarLoginComSenhaInvalidaNivelConsultoria" />
+    </UnitTest>
+    <UnitTest name="naoDeveRealizarLoginComSenhaInvalidaNivelInterno" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="d89b770f-ccea-ab8e-4aa0-be6592079692">
+      <Execution id="573497b8-0960-4921-b185-b2beef76e1b5" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="naoDeveRealizarLoginComSenhaInvalidaNivelInterno" />
+    </UnitTest>
+    <UnitTest name="deveRealizarLoginComSucessoNivelInterno" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="d25a4398-dae2-c5dc-6ee4-80e32fa0edea">
+      <Execution id="a6bf0252-e5d5-4291-ad24-511e524ad08c" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="deveRealizarLoginComSucessoNivelInterno" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="6b387292-9c23-8147-ffc4-2f5c7f11535d" executionId="7f5bc78b-6279-49fd-b33c-282b63b37ac9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="18804268-1f0d-999f-fc34-38a3a3195d74" executionId="8cdd263b-bc9b-48aa-aa79-1510d3a58e6b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="623420a3-27e4-d350-c56f-8ae62bbad798" executionId="c60d6cde-c886-4271-b855-a734189c6a14" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="41e689cf-b25d-5121-5e78-25f3dc672610" executionId="c0d1f300-efd4-4482-bb66-8ef851212f6c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d89b770f-ccea-ab8e-4aa0-be6592079692" executionId="573497b8-0960-4921-b185-b2beef76e1b5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1aeecc5b-fb9d-07f3-9d2c-fd25ae40d93d" executionId="caacf6c9-4bee-4e0e-bf47-b087018c2e06" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c0e2edda-ac5b-ed3a-02cb-51b5953bd4e0" executionId="3509ce8b-8dde-4004-97e6-8c3c1865007e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c03647b-0981-794e-241d-60163f467bb5" executionId="d87db4ea-8b1a-4fd3-896f-a602cd4bde24" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="17e1a3cf-48db-be55-414f-e40adf35a020" executionId="7ab9bd2a-6cc3-4669-a78f-7f952ea8de75" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d25a4398-dae2-c5dc-6ee4-80e32fa0edea" executionId="a6bf0252-e5d5-4291-ad24-511e524ad08c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5d6919dd-8d46-b435-e45b-f064a297b06e" executionId="1ae80765-d53e-4cab-9d51-3255407ee4fa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Resultados que não estão em uma lista" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Todos os resultados carregados" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="11" executed="11" passed="11" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>NUnit Adapter 4.5.0.0: Test execution started&#xD;
+Running all tests in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll&#xD;
+   NUnit3TestExecutor discovered 11 of 11 NUnit test cases using Current Discovery mode, Non-Explicit run&#xD;
+NUnit Adapter 4.5.0.0: Test execution complete&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
