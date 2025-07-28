@@ -44,7 +44,7 @@ namespace PortalIDSFTestes.metodos
 
 
         }
-        public async Task ClicarNoSeletorFundo(string locator,string cpf, string passo)
+        public async Task ClicarNoSeletorFundo(string locator, string cpf, string passo)
         {
             try
             {
@@ -208,8 +208,41 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-       
-        
+
+        public async Task ValidarDownloadAsync(IDownload download, string nomeEsperado, string passo)
+        {
+            string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+            string filePath = Path.Combine(downloadPath, nomeEsperado);
+
+            try
+            {
+                // Remove arquivo antigo, se existir
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
+
+                // Salva o download no caminho esperado
+                await download.SaveAsAsync(filePath);
+
+                // Valida com NUnit
+                Assert.IsTrue(File.Exists(filePath), $"❌ O arquivo esperado '{nomeEsperado}' não foi salvo corretamente.");
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("✅ Arquivo foi baixado e validado com sucesso.");
+                Console.ResetColor();
+
+                // Exclusão opcional
+                File.Delete(filePath);
+                Console.WriteLine("🗑️ Arquivo excluído após validação.");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"❌ Erro ao validar o download do arquivo '{nomeEsperado}': {ex.Message}");
+            }
+        }
+
+
+
+
 
     }
 }

@@ -7,7 +7,9 @@ namespace PortalIDSFTestes.testes.login
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("LoginTest")]
+    [Category("Suíte: Login")]
+    [Category("Critícidade: Crítica")]
+    [Category("Regressivos")]
     public class LoginTest : Executa
     {
         private IPage page;

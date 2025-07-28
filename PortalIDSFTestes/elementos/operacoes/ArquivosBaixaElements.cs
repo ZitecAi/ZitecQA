@@ -16,7 +16,7 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string enviarBaixas { get; } = "#fileEnviarBaixas";
         public string btnFecharModal { get; } = "#btnFecharNovoOperacao";
         public string tabelaBaixas { get; } = "#tabelaBaixas";
-
+        public string primeiroTd { get; } = "(//td)[1]";
 
     }
 }
