@@ -5,7 +5,7 @@ using PortalIDSFTestes.runner;
 
 namespace PortalIDSFTestes.testes.login
 {
-    [Parallelizable(ParallelScope.Self)]
+    [Parallelizable(ParallelScope.All)]
     [TestFixture]
     [Category("Suíte: Login")]
     [Category("Critícidade: Crítica")]

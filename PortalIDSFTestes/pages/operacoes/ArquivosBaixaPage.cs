@@ -32,13 +32,16 @@ namespace PortalIDSFTestes.pages.operacoes
             
             await metodo.Clicar(el.importarBaixaBtn, "Clicar no Botão para importar Baixa");
             await metodo.ClicarNoSeletorFundo(el.selectFundoZitec, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            //await metodo.AtualizarEEnviarArquivo(caminhoArquivo, el.enviarBaixas, "Enviar arquivo Baixa com data atualizado");
-            //criar metodo genérico que consome o arquivo depois de atualizar a data e envia no setinputfilesasync
+            var arquivoAtualizado = await metodo.AtualizarDataArquivo(caminhoArquivo, "Atualizar Data Arquivo");
+            await metodo.EnviarArquivo(el.enviarBaixas, caminhoArquivo, "Enviar Arquivo Baixa");
+            await metodo.validarMsgRetornada(el.msgArquivoRecebido, "Validação mensagem arquivo recebido mas aguardando validação");
         }
 
         public async Task baixarRelatorioDeTitulos()
         {
             await Task.Delay(1000);
+            await metodo.Clicar(el.barraDePesquisa,"Clicar na barra de pesquisa");
+            await metodo.Escrever(el.barraDePesquisa,"QA","Escrever na barra de pesquisa");
             await metodo.Clicar(el.primeiroTd,"Clicar no primeiro TD");
             var download = await page.RunAndWaitForDownloadAsync(async () =>
             {

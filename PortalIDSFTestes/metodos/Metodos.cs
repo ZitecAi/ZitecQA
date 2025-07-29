@@ -80,7 +80,7 @@ namespace PortalIDSFTestes.metodos
             }
             catch
             {
-                throw new PlaywrightException("Não foi possivel Encontrar a Url: " + locator + " Para Validar no passo: " + passo);
+                throw new PlaywrightException("Não foi possivel Encontrar o Elemento: " + locator + " Para Validar no passo: " + passo);
             }
 
 
@@ -159,54 +159,69 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-        public async Task AtualizarEEnviarArquivo(string caminhoTemplate, string locator, string passo)
+        public async Task<string> AtualizarDataArquivo(string caminhoTemplate, string passo)
         {
             try
             {
-                // Verifica se o arquivo existe
                 Assert.IsTrue(File.Exists(caminhoTemplate), $"❌ Arquivo de template não encontrado: {caminhoTemplate}");
 
-                // Lê o conteúdo do arquivo
-                var linhas = File.ReadAllLines(caminhoTemplate);
-                string dataAtual = DateTime.Now.ToString("ddMMyy");
-                bool marcadorSubstituido = false;
+                var linhas = await File.ReadAllLinesAsync(caminhoTemplate);
+                string dataHoje = DateTime.Now.ToString("ddMMyy");
+                bool dataSubstituida = false;
 
-                // Substitui o marcador #DATA#
+                var padraoData = new Regex(@"\b\d{6}\b");
+
                 for (int i = 0; i < linhas.Length; i++)
                 {
-                    if (linhas[i].Contains("#DATA#"))
+                    var matches = padraoData.Matches(linhas[i]);
+
+                    foreach (Match match in matches)
                     {
-                        linhas[i] = linhas[i].Replace("#DATA#", dataAtual);
-                        marcadorSubstituido = true;
+                        if (DateTime.TryParseExact(match.Value, "ddMMyy", null, System.Globalization.DateTimeStyles.None, out _))
+                        {
+                            linhas[i] = linhas[i].Replace(match.Value, dataHoje);
+                            dataSubstituida = true;
+                        }
                     }
                 }
 
-                Assert.IsTrue(marcadorSubstituido, "❌ Nenhum marcador '#DATA#' encontrado no arquivo de template.");
+                Assert.IsTrue(dataSubstituida, "❌ Nenhuma data no padrão 'ddMMyy' encontrada para substituir.");
 
-                // Cria novo nome de arquivo
-                string dataArquivo = DateTime.Now.ToString("yyyyMMdd");
-                string idUnico = Guid.NewGuid().ToString().Split('-')[0];
-                string novoNomeArquivo = $"FundoQA_{dataArquivo}_{idUnico}.txt";
-                string novoCaminho = Path.Combine(Path.GetDirectoryName(caminhoTemplate), novoNomeArquivo);
+                string nomeArquivo = $"FundoQA_{DateTime.Now:yyyyMMdd}_{Guid.NewGuid().ToString().Split('-')[0]}.txt";
+                string novoCaminho = Path.Combine(Path.GetDirectoryName(caminhoTemplate), nomeArquivo);
 
-                // Salva novo arquivo
-                File.WriteAllLines(novoCaminho, linhas);
+                await File.WriteAllLinesAsync(novoCaminho, linhas);
                 Assert.IsTrue(File.Exists(novoCaminho), $"❌ O novo arquivo não foi salvo corretamente: {novoCaminho}");
 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"✅ Arquivo atualizado salvo como: {novoCaminho}");
                 Console.ResetColor();
 
-                // Envia o arquivo via Playwright
-                await page.Locator(locator).SetInputFilesAsync(novoCaminho);
-                Console.WriteLine("✅ Arquivo enviado com sucesso");
-
+                return novoCaminho;
             }
             catch (Exception ex)
             {
-                throw new Exception($"❌ Erro ao atualizar/enviar arquivo no passo '{passo}': {ex.Message}", ex);
+                throw new Exception($"❌ Erro ao atualizar o arquivo no passo '{passo}': {ex.Message}", ex);
             }
         }
+
+        public async Task EnviarArquivo(string locator, string caminhoArquivo, string passo)
+        {
+            try
+            {
+                Assert.IsTrue(File.Exists(caminhoArquivo), $"❌ Arquivo para envio não encontrado: {caminhoArquivo}");
+
+                await page.Locator(locator).SetInputFilesAsync(caminhoArquivo);
+                Console.WriteLine("✅ Arquivo enviado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"❌ Erro ao enviar o arquivo no passo '{passo}': {ex.Message}", ex);
+            }
+        }
+
+
+
 
 
         public async Task ValidarDownloadAsync(IDownload download, string nomeEsperado, string passo)

@@ -17,6 +17,9 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string btnFecharModal { get; } = "#btnFecharNovoOperacao";
         public string tabelaBaixas { get; } = "#tabelaBaixas";
         public string primeiroTd { get; } = "(//td)[1]";
+        public string msgArquivoRecebido { get; } = "//div[text()='Arquivo recebido com sucesso! Aguarde a Validação']";
+
+        public string barraDePesquisa { get; } = "//input[@aria-controls='tabelaBaixas']";
 
     }
 }
