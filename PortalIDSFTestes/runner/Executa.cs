@@ -25,7 +25,6 @@ namespace PortalIDSFTestes.runner
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             var linkPortal = config["Links:Portal"];
             await page.GotoAsync(linkPortal);
-
             return page;
         }
 

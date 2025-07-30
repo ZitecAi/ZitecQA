@@ -48,7 +48,7 @@ namespace TestePortalIDSF
             IBrowser browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 Channel = "chrome",
-                Headless = false,
+                Headless = true,
                 SlowMo = 50,
                 Timeout = 0,
                 Args = new List<string>

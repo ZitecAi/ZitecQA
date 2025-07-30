@@ -30,8 +30,8 @@ namespace PortalIDSFTestes.testes.operacoes
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LoginSucessoInterno();
-            await metodo.Clicar(el.menuOperaoes, "Clicar em operações menu hamburguer");
-            await metodo.Clicar(el.paginaBaixas, "Clicar arquivos baixas 2.0 para acesasr a pagina");
+            await metodo.Clicar(el.menuOperacoes, "Clicar em operações menu hamburguer");
+            await metodo.Clicar(el.paginaBaixas, "Clicar arquivos baixas 2.0 para acessar a pagina");
         }
 
         [TearDown]
@@ -55,13 +55,21 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(3)]
+        public async Task deveConsultarArquivoBaixa()
+        {
+            var baixa = new ArquivosBaixaPage(page);
+            await baixa.consultarArquivoBaixa();
+        }
+
+        [Test, Order(4)]
+        [Ignore("Esse teste está em manutenção.")]
         public async Task deveFazerDownloadRelatorioTitulos()
         {
             var baixa = new ArquivosBaixaPage(page);
             await baixa.baixarRelatorioDeTitulos();
         }
 
-        [Test, Order(4)]
+        [Test, Order(5)]
         public async Task deveFazerDownloadRelatorioMovimentos()
         {
             var baixa = new ArquivosBaixaPage(page);

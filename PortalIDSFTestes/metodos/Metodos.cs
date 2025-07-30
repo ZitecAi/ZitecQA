@@ -21,7 +21,9 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
-                await page.Locator(locator).FillAsync(texto);
+                var elemento = page.Locator(locator);
+                await elemento.WaitForAsync();
+                await elemento.FillAsync(texto);
             }
             catch
             {
@@ -35,7 +37,9 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
-                await page.Locator(locator).ClickAsync();
+                var elemento = page.Locator(locator);
+                await elemento.WaitForAsync();
+                await elemento.ClickAsync();
             }
             catch
             {
@@ -58,33 +62,58 @@ namespace PortalIDSFTestes.metodos
 
         }
 
-        public async Task validarUrl(string urlEsperada, string passo)
+        public async Task ValidarUrl(string urlEsperada, string passo)
         {
             try
             {
+                await page.WaitForURLAsync(urlEsperada);
                 await Expect(page).ToHaveURLAsync(urlEsperada);
             }
-            catch
+            catch (Exception ex)
             {
-                throw new PlaywrightException("Não foi possivel Encontrar a Url: " + urlEsperada + " Para Validar no passo: " + passo);
+                throw new PlaywrightException($"❌ Não foi possível validar a URL esperada '{urlEsperada}' no passo: '{passo}'. Detalhes: {ex.Message}");
             }
-
-
         }
 
-        public async Task validarMsgRetornada(string locator, string passo)
+
+        public async Task ValidarMsgRetornada(string locator, string passo)
         {
             try
             {
+                await page.WaitForSelectorAsync(locator, new PageWaitForSelectorOptions
+                {
+                    State = WaitForSelectorState.Visible
+                });
                 await Expect(page.Locator(locator)).ToBeVisibleAsync();
             }
-            catch
+            catch (Exception ex)
             {
-                throw new PlaywrightException("Não foi possivel Encontrar o Elemento: " + locator + " Para Validar no passo: " + passo);
+                throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{locator}' no passo: '{passo}'. Detalhes: {ex.Message}");
+            }
+        }
+
+
+        public async Task VerificarElementoPresenteNaTabela(IPage page, string tabela, string textoEsperado)
+        {
+            var locator = page.Locator(tabela);
+            int count = await locator.CountAsync();
+
+            bool textoEncontrado = false;
+
+            for (int i = 0; i < count; i++)
+            {
+                var texto = await locator.Nth(i).InnerTextAsync();
+                if (texto.Contains(textoEsperado, StringComparison.OrdinalIgnoreCase))
+                {
+                    textoEncontrado = true;
+                    Console.WriteLine($"✅ Texto encontrado: {texto}");
+                    break;
+                }
             }
 
-
+            Assert.IsTrue(textoEncontrado, $"❌ O texto '{textoEsperado}' não foi encontrado no(s) elemento(s) com seletor: {tabela}");
         }
+
 
         public async Task ValidarAcentosAsync(IPage page, string passo)
         {
@@ -205,6 +234,7 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
+
         public async Task EnviarArquivo(string locator, string caminhoArquivo, string passo)
         {
             try
@@ -253,6 +283,55 @@ namespace PortalIDSFTestes.metodos
             {
                 Assert.Fail($"❌ Erro ao validar o download do arquivo '{nomeEsperado}': {ex.Message}");
             }
+        }
+
+        public async Task<string> AtualizarDataEEnviarArquivo(IPage page, string caminhoArquivo)
+        {
+            var linhas = File.ReadAllLines(caminhoArquivo);
+
+            // Atualizando data
+            string dataAtual = DateTime.Now.ToString("ddMMyy");
+            string DataArquivoTemplate = linhas[0].Substring(94, 6);
+            string AnteriorData = linhas[0].Substring(0, 94);
+            string PosData = linhas[0].Substring(101);
+            linhas[0] = linhas[0].Replace("#DATA#", dataAtual);
+
+            // Atualizando num consultoria
+            Random random = new Random();
+            for (int i = 1; i <= 7; i++)
+            {
+                string randomNumber = "";
+                for (int j = 0; j < 25; j++)
+                {
+                    randomNumber += random.Next(0, 10).ToString();
+                }
+
+                linhas[i] = linhas[i].Replace("#DOC_NUMERO_CONSULTORIA_#", randomNumber);
+
+                string randomNumberNumDoc = "";
+                for (int j = 0; j < 10; j++)
+                {
+                    randomNumberNumDoc += random.Next(0, 10).ToString();
+                }
+
+                linhas[i] = linhas[i].Replace("#NUM_DOCU#", randomNumberNumDoc);
+            }
+
+            string dataFormatada = DateTime.Now.ToString("yyyyMMdd");
+
+            // Usar GUID para garantir que o nome do arquivo seja único
+            string uniqueIdentifier = Guid.NewGuid().ToString().Split('-')[0]; // Pega apenas a primeira parte do GUID
+            string novoNomeArquivo = $"FundoQA_{dataFormatada}_{uniqueIdentifier}.txt";
+            string novoCaminhoArquivo = Path.Combine(Path.GetDirectoryName(caminhoArquivo), novoNomeArquivo);
+
+
+            File.WriteAllLines(novoCaminhoArquivo, linhas);
+
+            await page.Locator("#fileEnviarOperacoes").SetInputFilesAsync(new[] { novoCaminhoArquivo });
+
+            Console.WriteLine($"Arquivo {novoNomeArquivo} enviado com sucesso.");
+
+            return novoNomeArquivo;
         }
 
 

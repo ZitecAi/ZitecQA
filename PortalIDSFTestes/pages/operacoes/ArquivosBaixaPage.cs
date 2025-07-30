@@ -34,14 +34,22 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.ClicarNoSeletorFundo(el.selectFundoZitec, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
             var arquivoAtualizado = await metodo.AtualizarDataArquivo(caminhoArquivo, "Atualizar Data Arquivo");
             await metodo.EnviarArquivo(el.enviarBaixas, caminhoArquivo, "Enviar Arquivo Baixa");
-            await metodo.validarMsgRetornada(el.msgArquivoRecebido, "Validação mensagem arquivo recebido mas aguardando validação");
+            await metodo.ValidarMsgRetornada(el.msgArquivoRecebido, "Validação mensagem arquivo recebido mas aguardando validação");
+        }
+
+        public async Task consultarArquivoBaixa()
+        {
+            await Task.Delay(1000);
+            await metodo.Clicar(el.barraDePesquisa, "Clicar na barra de pesquisa");
+            await metodo.Escrever(el.barraDePesquisa, "template.txt", "Escrever na barra de pesquisa");
+            await metodo.VerificarElementoPresenteNaTabela(page,el.tabelaBaixas,"template.txt");
         }
 
         public async Task baixarRelatorioDeTitulos()
         {
             await Task.Delay(1000);
-            await metodo.Clicar(el.barraDePesquisa,"Clicar na barra de pesquisa");
-            await metodo.Escrever(el.barraDePesquisa,"QA","Escrever na barra de pesquisa");
+            //await metodo.Clicar(el.barraDePesquisa,"Clicar na barra de pesquisa");
+            //await metodo.Escrever(el.barraDePesquisa,"QA","Escrever na barra de pesquisa");
             await metodo.Clicar(el.primeiroTd,"Clicar no primeiro TD");
             var download = await page.RunAndWaitForDownloadAsync(async () =>
             {
@@ -53,6 +61,8 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task baixarRelatorioDeMovimentos()
         {
             await Task.Delay(1000);
+            await metodo.Clicar(el.barraDePesquisa, "Clicar na barra de pesquisa");
+            await metodo.Escrever(el.barraDePesquisa, "QA", "Escrever na barra de pesquisa");
             await metodo.Clicar(el.primeiroTd, "Clicar no primeiro TD");
             var download = await page.RunAndWaitForDownloadAsync(async () =>
             {
@@ -65,6 +75,8 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task gerarArquivoCnab()
         {
             await Task.Delay(1000);
+            await metodo.Clicar(el.barraDePesquisa, "Clicar na barra de pesquisa");
+            await metodo.Escrever(el.barraDePesquisa, "QA", "Escrever na barra de pesquisa");
             await metodo.Clicar(el.primeiroTd, "Clicar no primeiro TD");
             var download = await page.RunAndWaitForDownloadAsync(async () =>
             {

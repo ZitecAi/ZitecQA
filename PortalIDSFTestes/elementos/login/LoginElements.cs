@@ -12,10 +12,7 @@ namespace PortalIDSFTestes.elementos.login
         public string campoEmail { get;  } = "#email";
         public string campoSenha { get; } = "#password";
         public string loginBtn { get; } = "//button[text()='Entrar']";
-
         public string errorMessage { get; } = "#erroraccess";
-
-
 
 
     }

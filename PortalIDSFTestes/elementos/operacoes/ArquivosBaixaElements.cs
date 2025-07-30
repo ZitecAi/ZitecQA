@@ -9,7 +9,7 @@ namespace PortalIDSFTestes.elementos.operacoes
     public class ArquivosBaixaElements
     {
 
-        public string menuOperaoes{ get; } = "(//p[text()='Operações'])[2]";
+        public string menuOperacoes{ get; } = "(//p[text()='Operações'])[2]";
         public string paginaBaixas { get; } = "//a[@href='/Operacoes/ArquivosBaixa.aspx']";
         public string importarBaixaBtn { get; } = "//button[text()='Importar Baixa']";
         public string selectFundoZitec { get; } = "#select_fundo";
@@ -18,7 +18,6 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string tabelaBaixas { get; } = "#tabelaBaixas";
         public string primeiroTd { get; } = "(//td)[1]";
         public string msgArquivoRecebido { get; } = "//div[text()='Arquivo recebido com sucesso! Aguarde a Validação']";
-
         public string barraDePesquisa { get; } = "//input[@aria-controls='tabelaBaixas']";
 
     }

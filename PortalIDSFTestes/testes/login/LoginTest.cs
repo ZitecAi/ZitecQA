@@ -5,7 +5,7 @@ using PortalIDSFTestes.runner;
 
 namespace PortalIDSFTestes.testes.login
 {
-    [Parallelizable(ParallelScope.All)]
+    [Parallelizable(ParallelScope.Self)]
     [TestFixture]
     [Category("Suíte: Login")]
     [Category("Critícidade: Crítica")]
@@ -18,6 +18,7 @@ namespace PortalIDSFTestes.testes.login
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
+            await Task.Delay(500);
         }
 
         [TearDown]

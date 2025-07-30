@@ -30,7 +30,7 @@ namespace PortalIDSFTestes.pages.login
             await metodo.Escrever(el.campoEmail, "qazitec01@gmail.com", "Inserir Email para Login");
             await metodo.Escrever(el.campoSenha, "Testeqa01?!", "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-            await metodo.validarUrl("https://portal.idsf.com.br/Home.aspx", "Validar Url Logada na Página Home");
+            await metodo.ValidarUrl("https://portal.idsf.com.br/Home.aspx", "Validar Url Logada na Página Home");
         }
 
         public async Task LoginNegativoInterno(string email, string senha)
@@ -38,7 +38,7 @@ namespace PortalIDSFTestes.pages.login
             await metodo.Escrever(el.campoEmail, email, "Inserir Email para Login");
             await metodo.Escrever(el.campoSenha, senha, "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-            await metodo.validarMsgRetornada(el.errorMessage, "Validar mensagem de erro Ao Tentar Realizar login Negativo");
+            await metodo.ValidarMsgRetornada(el.errorMessage, "Validar mensagem de erro Ao Tentar Realizar login Negativo");
         }
 
 
@@ -47,14 +47,14 @@ namespace PortalIDSFTestes.pages.login
             await metodo.Escrever(el.campoEmail, "jessica.tavares@aluno.ifsp.edu.br", "Inserir Email para Login");
             await metodo.Escrever(el.campoSenha, "Jehtavares?123", "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-            await metodo.validarUrl("https://portal.idsf.com.br/Investidor/SaldosAplicacoes.aspx", "Validar Url Logada na Página Home");
+            await metodo.ValidarUrl("https://portal.idsf.com.br/Investidor/SaldosAplicacoes.aspx", "Validar Url Logada na Página Home");
         }
         public async Task LoginNegativoConsultoria(string email, string senha)
         {
             await metodo.Escrever(el.campoEmail, email, "Inserir Email para Login");
             await metodo.Escrever(el.campoSenha, senha, "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-            await metodo.validarMsgRetornada(el.errorMessage, "Validar mensagem de erro Ao Tentar Realizar login Negativo");
+            await metodo.ValidarMsgRetornada(el.errorMessage, "Validar mensagem de erro Ao Tentar Realizar login Negativo");
         }
 
         public async Task LoginSucessoGestora()
@@ -62,7 +62,7 @@ namespace PortalIDSFTestes.pages.login
             await metodo.Escrever(el.campoEmail, "caiooliweira@gmail.com", "Inserir Email para Login");
             await metodo.Escrever(el.campoSenha, "id2021", "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-            await metodo.validarUrl("https://portal.idsf.com.br/Home.aspx", "Validar Url Logada na Página Home");
+            await metodo.ValidarUrl("https://portal.idsf.com.br/Home.aspx", "Validar Url Logada na Página Home");
         }
 
         public async Task LoginNegativoGestora(string email, string senha)
@@ -70,7 +70,7 @@ namespace PortalIDSFTestes.pages.login
             await metodo.Escrever(el.campoEmail, email, "Inserir Email para Login");
             await metodo.Escrever(el.campoSenha, senha, "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-            await metodo.validarMsgRetornada(el.errorMessage, "Validar mensagem de erro Ao Tentar Realizar login Negativo");
+            await metodo.ValidarMsgRetornada(el.errorMessage, "Validar mensagem de erro Ao Tentar Realizar login Negativo");
         }
 
 
@@ -79,7 +79,7 @@ namespace PortalIDSFTestes.pages.login
             await metodo.Escrever(el.campoEmail, "jessica.vitoria.tavares044@gmail.com", "Inserir Email para Login");
             await metodo.Escrever(el.campoSenha, "Jehtavares?123", "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-            await metodo.validarUrl("https://portal.idsf.com.br/Home.aspx", "Validar Url Logada na Página Home");
+            await metodo.ValidarUrl("https://portal.idsf.com.br/Home.aspx", "Validar Url Logada na Página Home");
         }
 
         public async Task LoginNegativoDenver(string email, string senha)
@@ -87,7 +87,7 @@ namespace PortalIDSFTestes.pages.login
             await metodo.Escrever(el.campoEmail, email, "Inserir Email para Login");
             await metodo.Escrever(el.campoSenha, senha, "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-            await metodo.validarMsgRetornada(el.errorMessage, "Validar mensagem de erro Ao Tentar Realizar login Negativo");
+            await metodo.ValidarMsgRetornada(el.errorMessage, "Validar mensagem de erro Ao Tentar Realizar login Negativo");
         }
 
        
