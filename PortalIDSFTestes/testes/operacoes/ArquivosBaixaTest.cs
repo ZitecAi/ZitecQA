@@ -44,21 +44,21 @@ namespace PortalIDSFTestes.testes.operacoes
         public async Task naoDeveConterAcentosQuebrados()
         {
             var baixa = new ArquivosBaixaPage(page);
-            await baixa.validarAcentosArquivosBaixaPage();
+            await baixa.ValidarAcentosArquivosBaixaPage();
         }
 
         [Test, Order(2)]
         public async Task deveEnviarArquivoBaixa()
         {
             var baixa = new ArquivosBaixaPage(page);
-            await baixa.enviarArquivoBaixa();
+            await baixa.EnviarArquivoBaixa();
         }
 
         [Test, Order(3)]
         public async Task deveConsultarArquivoBaixa()
         {
             var baixa = new ArquivosBaixaPage(page);
-            await baixa.consultarArquivoBaixa();
+            await baixa.ConsultarArquivoBaixa();
         }
 
         [Test, Order(4)]
@@ -66,21 +66,21 @@ namespace PortalIDSFTestes.testes.operacoes
         public async Task deveFazerDownloadRelatorioTitulos()
         {
             var baixa = new ArquivosBaixaPage(page);
-            await baixa.baixarRelatorioDeTitulos();
+            await baixa.BaixarRelatorioDeTitulos();
         }
 
         [Test, Order(5)]
         public async Task deveFazerDownloadRelatorioMovimentos()
         {
             var baixa = new ArquivosBaixaPage(page);
-            await baixa.baixarRelatorioDeMovimentos();
+            await baixa.BaixarRelatorioDeMovimentos();
         }
 
         [Test, Order(6)]
         public async Task deveFazerDownloadArquivoCNAB()
         {
             var baixa = new ArquivosBaixaPage(page);
-            await baixa.gerarArquivoCnab();
+            await baixa.GerarArquivoCnab();
         }
 
 

@@ -93,26 +93,44 @@ namespace PortalIDSFTestes.metodos
         }
 
 
-        public async Task VerificarElementoPresenteNaTabela(IPage page, string tabela, string textoEsperado)
+        public async Task VerificarElementoPresenteNaTabela(IPage page, string seletorTabela, string textoEsperado, string passo)
         {
-            var locator = page.Locator(tabela);
-            int count = await locator.CountAsync();
-
-            bool textoEncontrado = false;
-
-            for (int i = 0; i < count; i++)
+            try
             {
-                var texto = await locator.Nth(i).InnerTextAsync();
-                if (texto.Contains(textoEsperado, StringComparison.OrdinalIgnoreCase))
+                await page.WaitForSelectorAsync(seletorTabela, new PageWaitForSelectorOptions
                 {
-                    textoEncontrado = true;
-                    Console.WriteLine($"✅ Texto encontrado: {texto}");
-                    break;
-                }
-            }
+                    State = WaitForSelectorState.Visible
+                });
 
-            Assert.IsTrue(textoEncontrado, $"❌ O texto '{textoEsperado}' não foi encontrado no(s) elemento(s) com seletor: {tabela}");
+                var locator = page.Locator(seletorTabela);
+                int count = await locator.CountAsync();
+
+                bool textoEncontrado = false;
+
+                for (int i = 0; i < count; i++)
+                {
+                    var texto = await locator.Nth(i).InnerTextAsync();
+
+                    if (!string.IsNullOrWhiteSpace(texto) && texto.Contains(textoEsperado, StringComparison.OrdinalIgnoreCase))
+                    {
+                        textoEncontrado = true;
+                        Console.WriteLine($"✅ Texto encontrado: {texto}");
+                        break;
+                    }
+                }
+
+                Assert.IsTrue(textoEncontrado, $"❌ O texto '{textoEsperado}' não foi encontrado no(s) elemento(s) com seletor: {seletorTabela}");
+            }
+            catch (TimeoutException)
+            {
+                throw new Exception($"⏰ Tempo esgotado ao aguardar a tabela aparecer no passo: {passo}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"❌ Erro ao verificar o texto '{textoEsperado}' na tabela no passo: {passo}.\nDetalhes: {ex.Message}");
+            }
         }
+
 
 
         public async Task ValidarAcentosAsync(IPage page, string passo)
