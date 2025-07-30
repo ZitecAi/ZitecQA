@@ -19,6 +19,9 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string primeiroTd { get; } = "(//td)[1]";
         public string msgArquivoRecebido { get; } = "//div[text()='Arquivo recebido com sucesso! Aguarde a Validação']";
         public string barraDePesquisa { get; } = "//input[@aria-controls='tabelaBaixas']";
+        public string btnDownloadRelatorioTitulos { get; } = "(//button[@title='Relatório de Títulos'])[2]";
+        public string btnDownloadRelatorioMovimentos { get; } = "(//button[@title='Relatório de Movimentos'])[2]";
+        public string btnDownloadArquivoCNAB { get; } = "(//button[@title='Relatório de Movimentos'])[2]";
 
     }
 }

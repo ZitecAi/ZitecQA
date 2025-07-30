@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.testes.operacoes
 {
-    public class OperacoesTest :Executa
+    public class OperacoesTest : Executa
     {
         private IPage page;
         Metodos metodo;
@@ -36,18 +36,42 @@ namespace PortalIDSFTestes.testes.operacoes
             await FecharBrowserAsync();
         }
 
-        [Test]
-        public async Task naoDeveConterAcentosQuebrados()
+        [Test, Order(1)]
+        public async Task NaoDeveConterAcentosQuebrados()
         {
             var operacoes = new OperacoesPage(page);
-            await operacoes.validarAcentosOperacoesPage();
+            await operacoes.ValidarAcentosOperacoesPage();
         }
 
-        [Test]
-        public async Task deveEnviarUmaOperacaoCNAB()
+        [Test, Order(2)]
+        public async Task DeveEnviarUmaOperacaoCNAB()
         {
             var operacoes = new OperacoesPage(page);
-            await operacoes.enviarOperacaoCNAB();
+            await operacoes.EnviarOperacaoCNAB();
+        }
+        [Test, Order(3)]
+        public async Task DeveConsultarUmaOperacaoCNABPeloHistoricoImportacoes()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.ConsultarCNABPeloHistoricoImportacoes();
+        }
+        [Test, Order(4)]
+        public async Task DeveFazerDownloadRelatorioMovimento()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.DownloadValidacaoMovimento();
+        }
+        [Test, Order(5)]
+        public async Task DeveFazerDownloadRelatorioLayout()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.DownloadAvalidacaoLayout();
+        }
+        [Test, Order(6)]
+        public async Task DeveFazerDownloadExcel()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.DownloadExcel();
         }
 
 

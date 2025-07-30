@@ -15,6 +15,13 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string selectFundo { get; } = "#selectFundo";
         public string enviarOperacaoInput { get; } = "#fileEnviarOperacoes";
         public string msgSucessoRetornada { get; } = "//div[@class='toast toast-success']";
+        public string btnHistoricoImportacoes { get; } = "//button[@class='btn btn-secondary btn-Historico']";
+        public string barraPesquisaHistorico { get; } = "//input[@aria-controls='tabelaHistorico']";
+        public string tabelaHistoricoImportacoes { get; } = "#tabelaHistorico";
+        public string btnDownloadValidacaoMovimento { get; } = "//button[@title='Validação Movimento']";
+        public string btnDownloadValidacaoLayout { get; } = "//button[@title='Validação Layout']";
+
+
 
 
     }
