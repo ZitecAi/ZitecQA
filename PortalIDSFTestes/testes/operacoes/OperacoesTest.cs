@@ -1,4 +1,4 @@
-﻿using Microsoft.Playwright;
+using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
@@ -53,6 +53,30 @@ namespace PortalIDSFTestes.testes.operacoes
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.EnviarOperacaoCNAB();
+        }
+        [Test, Order(3)]
+        public async Task DeveConsultarUmaOperacaoCNABPeloHistoricoImportacoes()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.ConsultarCNABPeloHistoricoImportacoes();
+        }
+        [Test, Order(4)]
+        public async Task DeveFazerDownloadRelatorioMovimento()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.DownloadValidacaoMovimento();
+        }
+        [Test, Order(5)]
+        public async Task DeveFazerDownloadRelatorioLayout()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.DownloadAvalidacaoLayout();
+        }
+        [Test, Order(6)]
+        public async Task DeveFazerDownloadExcel()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.DownloadExcel();
         }
 
         [Test, Order(3)]

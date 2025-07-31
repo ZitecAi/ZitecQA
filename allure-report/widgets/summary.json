@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"reportName":"Allure Report","testRuns":[],"statistic":{"failed":2,"broken":0,"skipped":1,"passed":17,"unknown":0,"total":20},"time":{"start":1753973144843,"stop":1753973222274,"duration":77431,"minDuration":1,"maxDuration":36723,"sumDuration":184496}}
+=======
+{"reportName":"Allure Report","testRuns":[],"statistic":{"failed":1,"broken":0,"skipped":1,"passed":19,"unknown":0,"total":21},"time":{"start":1753899797465,"stop":1753899983970,"duration":186505,"minDuration":0,"maxDuration":43613,"sumDuration":220715}}
+>>>>>>> Fix/7980

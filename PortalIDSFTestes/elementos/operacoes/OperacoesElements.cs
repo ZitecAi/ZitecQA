@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,8 @@ namespace PortalIDSFTestes.elementos.operacoes
     {
         public string MenuOperacoes { get; } = "(//p[text()='Operações'])[2]";
         public string PaginaOperacoes { get; } = "//a[@href='/Operacoes/Operacoes2.0.aspx']";
-
+        
+        //Feat 7982
         public string BtnNovaOperacaoCNAB { get; } = "//span[text()='Nova Operação - CNAB']";
         public string BtnNovaOperacaoCSV { get; } = "//button//span[text()='Nova Operação - CSV']";
         public string SelectFundo { get; } = "#selectFundo";
@@ -28,6 +29,17 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string BtnDownloadValidacaoLayout { get; } = "//span//button[@title='Validação Layout']";
         public string BtnDownloadExcel { get; } = "#BtnBaixarExcel";
         public string PrimeiroTdHistorico { get; } = "(//tbody[@id='listaHistorico']//td[@class='dtr-control'])[1]";
+
+        //Feat 7980
+        public string btnNovaOperacaoCNAB { get; } = "//span[text()='Nova Operação - CNAB']";
+        public string selectFundo { get; } = "#selectFundo";
+        public string enviarOperacaoInput { get; } = "#fileEnviarOperacoes";
+        public string msgSucessoRetornada { get; } = "//div[@class='toast toast-success']";
+        public string btnHistoricoImportacoes { get; } = "//button[@class='btn btn-secondary btn-Historico']";
+        public string barraPesquisaHistorico { get; } = "//input[@aria-controls='tabelaHistorico']";
+        public string tabelaHistoricoImportacoes { get; } = "#tabelaHistorico";
+        public string btnDownloadValidacaoMovimento { get; } = "//button[@title='Validação Movimento']";
+        public string btnDownloadValidacaoLayout { get; } = "//button[@title='Validação Layout']";
 
 
 

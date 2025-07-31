@@ -174,6 +174,7 @@ namespace PortalIDSFTestes.metodos
 
 
 
+
         public async Task ValidarAcentosAsync(IPage page, string passo)
         {
             try
