@@ -93,26 +93,85 @@ namespace PortalIDSFTestes.metodos
         }
 
 
-        public async Task VerificarElementoPresenteNaTabela(IPage page, string tabela, string textoEsperado)
+        public async Task VerificarElementoPresenteNaTabela(IPage page, string seletorTabela, string textoEsperado, string passo)
         {
-            var locator = page.Locator(tabela);
-            int count = await locator.CountAsync();
-
-            bool textoEncontrado = false;
-
-            for (int i = 0; i < count; i++)
+            try
             {
-                var texto = await locator.Nth(i).InnerTextAsync();
-                if (texto.Contains(textoEsperado, StringComparison.OrdinalIgnoreCase))
+                await page.WaitForSelectorAsync(seletorTabela, new PageWaitForSelectorOptions
                 {
-                    textoEncontrado = true;
-                    Console.WriteLine($"✅ Texto encontrado: {texto}");
-                    break;
-                }
-            }
+                    State = WaitForSelectorState.Visible
+                });
 
-            Assert.IsTrue(textoEncontrado, $"❌ O texto '{textoEsperado}' não foi encontrado no(s) elemento(s) com seletor: {tabela}");
+                var locator = page.Locator(seletorTabela);
+                int count = await locator.CountAsync();
+
+                bool textoEncontrado = false;
+
+                for (int i = 0; i < count; i++)
+                {
+                    var texto = await locator.Nth(i).InnerTextAsync();
+
+                    if (!string.IsNullOrWhiteSpace(texto) && texto.Contains(textoEsperado, StringComparison.OrdinalIgnoreCase))
+                    {
+                        textoEncontrado = true;
+                        Console.WriteLine($"✅ Texto encontrado: {texto}");
+                        break;
+                    }
+                }
+
+                Assert.IsTrue(textoEncontrado, $"❌ O texto '{textoEsperado}' não foi encontrado no(s) elemento(s) com seletor: {seletorTabela}");
+            }
+            catch (TimeoutException)
+            {
+                throw new Exception($"⏰ Tempo esgotado ao aguardar a tabela aparecer no passo: {passo}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"❌ Erro ao verificar o texto '{textoEsperado}' na tabela no passo: {passo}.\nDetalhes: {ex.Message}");
+            }
         }
+
+        public async Task VerificarTextoAusenteNaTabela(IPage page, string seletorTabela, string textoIndesejado, string passo)
+        {
+            try
+            {
+                // Aguarda a tabela estar visível
+                await page.WaitForSelectorAsync(seletorTabela, new PageWaitForSelectorOptions
+                {
+                    State = WaitForSelectorState.Visible
+                });
+
+                var locator = page.Locator(seletorTabela);
+                int count = await locator.CountAsync();
+
+                bool textoEncontrado = false;
+
+                for (int i = 0; i < count; i++)
+                {
+                    var texto = await locator.Nth(i).InnerTextAsync();
+
+                    if (!string.IsNullOrWhiteSpace(texto) && texto.Contains(textoIndesejado, StringComparison.OrdinalIgnoreCase))
+                    {
+                        textoEncontrado = true;
+                        Console.WriteLine($"❌ Texto indesejado encontrado: {texto}");
+                        break;
+                    }
+                }
+
+                Assert.IsFalse(textoEncontrado, $"❌ O texto indesejado '{textoIndesejado}' foi encontrado no(s) elemento(s) com seletor: {seletorTabela}");
+                Console.WriteLine($"✅ O texto '{textoIndesejado}' não está presente na tabela.");
+            }
+            catch (TimeoutException)
+            {
+                throw new Exception($"⏰ Tempo esgotado ao aguardar a tabela aparecer no passo: {passo}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"❌ Erro ao verificar ausência do texto '{textoIndesejado}' na tabela no passo: {passo}.\nDetalhes: {ex.Message}");
+            }
+        }
+
+
 
 
         public async Task ValidarAcentosAsync(IPage page, string passo)
@@ -124,7 +183,7 @@ namespace PortalIDSFTestes.metodos
 
                 foreach (var texto in textosInvalidos)
                 {
-                    var locator = page.Locator($"xpath=//*[normalize-space(text()) = '{texto}']");
+                    var locator = page.Locator($"xpath=//*[contains(normalize-space(text()), '{texto}')]");
                     int count = await locator.CountAsync();
 
                     if (count > 0)
@@ -138,11 +197,12 @@ namespace PortalIDSFTestes.metodos
                     Assert.Fail("Erros de acentuação encontrados:\n" + string.Join("\n", errosEncontrados));
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw new PlaywrightException("Não foi possivel validar acentuação da Pagina no Passo: " + passo);
+                throw new PlaywrightException("Não foi possível validar acentuação da página no passo: " + passo + "\n" + ex.Message);
             }
         }
+
 
         public async Task BaixarExcelPorIdAsync(IPage page, string passo)
         {
@@ -157,7 +217,7 @@ namespace PortalIDSFTestes.metodos
                 {
                     var botaoExcel = page.Locator("#BtnBaixarExcel");
                     await Expect(botaoExcel).ToBeVisibleAsync();
-                    await botaoExcel.ClickAsync(new LocatorClickOptions { Timeout = 3000 });
+                    await botaoExcel.ClickAsync();
                 });
 
                 // Exclui se já existir o arquivo antigo
@@ -254,6 +314,7 @@ namespace PortalIDSFTestes.metodos
 
 
 
+
         public async Task ValidarDownloadAsync(IDownload download, string nomeEsperado, string passo)
         {
             string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
@@ -332,6 +393,72 @@ namespace PortalIDSFTestes.metodos
             Console.WriteLine($"Arquivo {novoNomeArquivo} enviado com sucesso.");
 
             return novoNomeArquivo;
+        }
+
+        private static readonly Random random = new();
+
+        public string ModificarCsv(string caminhoEntrada, string pastaSaida)
+        {
+            try
+            {
+                if (!File.Exists(caminhoEntrada))
+                {
+                    Console.WriteLine("Arquivo CSV não encontrado.");
+                    return string.Empty;
+                }
+
+                var linhas = File.ReadAllLines(caminhoEntrada);
+
+                if (linhas.Length < 2)
+                {
+                    Console.WriteLine("Arquivo CSV não contém dados suficientes.");
+                    return string.Empty;
+                }
+
+                // Gera valores aleatórios para os campos
+                string novoNumero = GerarNumeroAleatorio();
+                string novoDocumento = GerarNumeroAleatorio();
+
+                // Substitui os placeholders pelos valores gerados
+                linhas[1] = linhas[1].Replace("#nudocumento#", novoNumero)
+                                     .Replace("#seunumero#", novoDocumento);
+
+                var colunas = linhas[1].Split(';');
+
+                Console.WriteLine($"Linha original: {linhas[1]}");
+                Console.WriteLine($"Colunas encontradas: {colunas.Length}");
+
+                if (colunas.Length < 14)
+                {
+                    Console.WriteLine("A linha não tem colunas suficientes.");
+                    return string.Empty;
+                }
+
+                // Gera um nome único para o arquivo
+                string nomeUnico = $"arquivo_modificado_{random.Next(1000, 9999)}.csv";
+                string caminhoCompleto = Path.Combine(pastaSaida, nomeUnico);
+
+                // Salva o arquivo modificado
+                File.WriteAllLines(caminhoCompleto, linhas);
+
+                return caminhoCompleto;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro ao modificar o CSV: " + ex.Message);
+                return string.Empty;
+            }
+        }
+
+        private static string GerarNumeroAleatorio()
+        {
+            int parte1 = random.Next(5000000, 5999999);
+            int parte2 = random.Next(10, 99);
+            int parte3 = random.Next(2020, 2025);
+            int parte4 = random.Next(1, 30);
+            int parte5 = random.Next(1000, 9999);
+
+            return $"{parte1}-{parte2}.{parte3}.{parte4}.{parte5}";
         }
 
 
