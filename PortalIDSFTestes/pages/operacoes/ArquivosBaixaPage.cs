@@ -76,7 +76,7 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await Task.Delay(1000);
             await metodo.Clicar(el.barraDePesquisa, "Clicar na barra de pesquisa");
-            await metodo.Escrever(el.barraDePesquisa, "QA", "Escrever na barra de pesquisa");
+            await metodo.Escrever(el.barraDePesquisa, ".rem", "Escrever na barra de pesquisa");
             await metodo.Clicar(el.primeiroTd, "Clicar no primeiro TD");
             var download = await page.RunAndWaitForDownloadAsync(async () =>
             {

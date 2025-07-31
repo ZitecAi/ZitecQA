@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.testes.operacoes
 {
+    [Parallelizable(ParallelScope.Self)]
+    [TestFixture]
+    [Category("Suíte: Operações")]
+    [Category("Criticidade: Crítica")]
+    [Category("Regressivos")]
     public class OperacoesTest : Executa
     {
         private IPage page;
@@ -25,8 +30,8 @@ namespace PortalIDSFTestes.testes.operacoes
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LoginSucessoInterno();
-            await metodo.Clicar(el.menuOperacoes, "Clicar em operações menu hamburguer");
-            await metodo.Clicar(el.paginaOperacoes, "Clicar em Operações para acessar a página");
+            await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
+            await metodo.Clicar(el.PaginaOperacoes, "Clicar em Operações para acessar a página");
             await Task.Delay(500);
         }
 
@@ -49,24 +54,28 @@ namespace PortalIDSFTestes.testes.operacoes
             var operacoes = new OperacoesPage(page);
             await operacoes.EnviarOperacaoCNAB();
         }
+
         [Test, Order(3)]
+        public async Task DeveEnviarUmaOperacaoCSV()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.EnviarOperacaoCSV();
+        }
+        
+
+        [Test, Order(4)]
         public async Task DeveConsultarUmaOperacaoCNABPeloHistoricoImportacoes()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.ConsultarCNABPeloHistoricoImportacoes();
         }
-        [Test, Order(4)]
-        public async Task DeveFazerDownloadRelatorioMovimento()
-        {
-            var operacoes = new OperacoesPage(page);
-            await operacoes.DownloadValidacaoMovimento();
-        }
         [Test, Order(5)]
-        public async Task DeveFazerDownloadRelatorioLayout()
+        public async Task DeveFazerDownloadRelatorioMovimento_Layout()
         {
             var operacoes = new OperacoesPage(page);
-            await operacoes.DownloadAvalidacaoLayout();
+            await operacoes.DownloadValidacaoMovimento_Layout();
         }
+        
         [Test, Order(6)]
         public async Task DeveFazerDownloadExcel()
         {
