@@ -61,52 +61,33 @@ namespace PortalIDSFTestes.testes.operacoes
             await operacoes.ConsultarCNABPeloHistoricoImportacoes();
         }
         [Test, Order(4)]
-        public async Task DeveFazerDownloadRelatorioMovimento()
-        {
-            var operacoes = new OperacoesPage(page);
-            await operacoes.DownloadValidacaoMovimento();
-        }
-        [Test, Order(5)]
-        public async Task DeveFazerDownloadRelatorioLayout()
-        {
-            var operacoes = new OperacoesPage(page);
-            await operacoes.DownloadAvalidacaoLayout();
-        }
-        [Test, Order(6)]
-        public async Task DeveFazerDownloadExcel()
-        {
-            var operacoes = new OperacoesPage(page);
-            await operacoes.DownloadExcel();
-        }
-
-        [Test, Order(3)]
-        public async Task DeveEnviarUmaOperacaoCSV()
-        {
-            var operacoes = new OperacoesPage(page);
-            await operacoes.EnviarOperacaoCSV();
-        }
-        
-
-        [Test, Order(4)]
-        public async Task DeveConsultarUmaOperacaoCNABPeloHistoricoImportacoes()
-        {
-            var operacoes = new OperacoesPage(page);
-            await operacoes.ConsultarCNABPeloHistoricoImportacoes();
-        }
-        [Test, Order(5)]
         public async Task DeveFazerDownloadRelatorioMovimento_Layout()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.DownloadValidacaoMovimento_Layout();
         }
         
-        [Test, Order(6)]
+        [Test, Order(5)]
         public async Task DeveFazerDownloadExcel()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.DownloadExcel();
         }
 
+        [Test, Order(6)]
+        public async Task DeveEnviarUmaOperacaoCSV()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.EnviarOperacaoCSV();
+        }            
+        [Test, Order(7)]
+        public async Task DeveExcluirUmaOperacao()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.ExcluirArquivo();
+        }
+
+        // Corrigir por que teste de exclusão não está clicando no primeiro TD da tabela e depois Adicionar validação de Alteração de Status 
 
     }
 }
