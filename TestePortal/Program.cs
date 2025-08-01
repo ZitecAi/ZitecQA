@@ -159,7 +159,7 @@ namespace TestePortalIDSF
                         //listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         //listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         //listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
-                        //listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
+                        //istaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         //await Task.Delay(500);
                         //listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         //(pagina, operacoes) = await ArquivosBaixa.Baixas(Page, usuario.Nivel, operacoes);
