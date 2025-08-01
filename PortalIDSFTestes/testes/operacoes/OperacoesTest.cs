@@ -81,13 +81,14 @@ namespace PortalIDSFTestes.testes.operacoes
             await operacoes.EnviarOperacaoCSV();
         }            
         [Test, Order(7)]
+        [Ignore("Esse teste está em manutenção.")]
         public async Task DeveExcluirUmaOperacao()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.ExcluirArquivo();
-        }
-
-        // Corrigir por que teste de exclusão não está clicando no primeiro TD da tabela e depois Adicionar validação de Alteração de Status 
+        }            
+     
+        // esperar Correção na paginação para arquivo teste. arquivo enviado não aparece na tabela
 
     }
 }

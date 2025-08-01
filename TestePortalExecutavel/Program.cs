@@ -50,13 +50,13 @@ namespace TestePortalExecutavel
 
             try
             {
-                //var emailPadrao = new EmailPadrao(
-                //    "todos@zitec.ai",
-                //    "Segue relatório com as páginas mais importantes do portal IDSF testadas.",
-                //    EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes)
-                //);
-                //EnviarEmail.SendMailWithAttachment(emailPadrao);
-                //Console.WriteLine("Email enviado");
+                var emailPadrao = new EmailPadrao(
+                    "al@zitec.ai",
+                    "Segue relatório com as páginas mais importantes do portal IDSF testadas.",
+                    EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes)
+                );
+                EnviarEmail.SendMailWithAttachment(emailPadrao);
+                Console.WriteLine("Email enviado");
             }
             catch (Exception e)
             {

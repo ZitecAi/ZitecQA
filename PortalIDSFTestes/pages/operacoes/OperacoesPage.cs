@@ -98,13 +98,12 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task ExcluirArquivo()
         {
             await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na Barra de pesquisa da tabela");
-            await metodo.Escrever(el.BarraPesquisaTabela,"CEDENTE TESTE", "Escrever na Barra de pesquisa da tabela");
-            await metodo.Clicar(el.PrimeiroTdTabela, "Clicar np primeiro TD da tabela");
+            await metodo.Escrever(el.BarraPesquisaTabela, "FundoQA", "Escrever na Barra de pesquisa da tabela");
+            await metodo.Clicar(el.PrimeiroTdTabela, "Clicar no primeiro TD da tabela");
             await metodo.Clicar(el.BtnLixeira, "Clicar na Lixeira da tabela");
             await metodo.Escrever(el.CampoMotivoExcluirArquivo, "CEDENTE TESTE", "Escrever motivo da exclusão do arquivo");
             await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão para confirmar excluisão do arquivo");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar se mensagem de arquivo excluido com sucesso está visivel!");
-
         }
 
     }

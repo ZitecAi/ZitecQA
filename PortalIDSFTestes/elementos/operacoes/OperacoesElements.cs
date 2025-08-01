@@ -31,7 +31,7 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string BtnDownloadValidacaoLayout { get; } = "//span//button[@title='Validação Layout']";
         public string BtnDownloadExcel { get; } = "#BtnBaixarExcel";
         public string PrimeiroTdHistorico { get; } = "(//tbody[@id='listaHistorico']//td[@class='dtr-control'])[1]";
-        public string PrimeiroTdTabela { get; } = "(//tr[@class='odd parent']//td)[1]";
+        public string PrimeiroTdTabela { get; } = "//td[@class='dtr-control']";
         public string BtnLixeira { get; } = "//span[@class='dtr-data']//button[@title='Excluir Arquivo']";
         public string CampoMotivoExcluirArquivo { get; } = "#motivoExcluirArquivo";
         public string BtnConfirmarExclusao { get; } = "//div[@id='footerModalExcluirArquivo']//button[text()='Confirmar']";
