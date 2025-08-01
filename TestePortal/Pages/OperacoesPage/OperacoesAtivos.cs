@@ -11,7 +11,6 @@ using System.Windows.Controls;
 using TestePortal.Repository.Correntistas;
 using TestePortal.Utils;
 using static TestePortal.Model.Usuario;
-using static TestePortal.Model.Usuario;
 
 namespace TestePortal.Pages.OperacoesPage
 {
@@ -117,7 +116,7 @@ namespace TestePortal.Pages.OperacoesPage
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste ");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
 
-                        await Task.Delay(40000);
+                        //await Task.Delay(40000);
 
                         var idAtivo = Repository.Ativos.AtivosRepository.RetornaIdAtivo("24426716000113", "teste robo");
 
