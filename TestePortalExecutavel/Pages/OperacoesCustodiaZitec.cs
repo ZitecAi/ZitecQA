@@ -30,13 +30,16 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                     Console.Write("Operações Zitec : ");
                     pagina.Nome = "Operações Zitec - Interno";
                     pagina.StatusCode = OperacoesZitec.Status;
-                    pagina.BaixarExcel = "❓";
+                    
                     pagina.Acentos = await Acentos.ValidarAcentos(Page) ?? "❌";
                     if (pagina.Acentos == "❌") errosTotais++;
 
                     pagina.Listagem = await Listagem.VerificarListagem(Page, seletorTabela) ?? "❌";
                     if (pagina.Listagem == "❌") errosTotais++;
-
+                    if (pagina.BaixarExcel == "❌")
+                    {
+                        errosTotais++;
+                    }
 
                     var processamentoFundo = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaProcessamentoFundo(9991);
 
@@ -83,6 +86,25 @@ namespace TestePortalExecutavel.Pages.OperacoesPage
                                 errosTotais += 2;
                                 operacoes.ListaErros2.Add("Erro ao lançar operação");
                             }
+                            //Reprovar Lote
+                            //await Page.PauseAsync();
+                            await Page.GetByLabel("Pesquisar").ClickAsync();
+                            await Page.GetByLabel("Pesquisar").FillAsync("teste");
+                            var primeiroTr2 = Page.Locator("#listaCedentes").First;
+                            var primeiroTd2 = primeiroTr2.Locator("[class='OperacaoSelecionado']").First;
+                            await primeiroTd2.ClickAsync();                            
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Reprovar Lote" }).ClickAsync();
+                            await Page.Locator("#MotivoLote").ClickAsync();
+                            await Page.Locator("#MotivoLote").FillAsync("teste reprovação");
+                            await Page.GetByRole(AriaRole.Button, new() { Name = "Reprovar em Lote" }).ClickAsync();
+                            await Page.GetByText("Operação reprovada com").ClickAsync();
+                            var reprovarOperacao = await Page.GetByText("Operação reprovada com sucesso!").ElementHandleAsync();
+
+                            if (reprovarOperacao != null)
+                            {
+                                pagina.Reprovar = "✅";
+                            }
+
 
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);

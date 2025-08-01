@@ -51,7 +51,7 @@ namespace TestePortalExecutavel
             try
             {
                 var emailPadrao = new EmailPadrao(
-                    "todos@zitec.ai",
+                    "al@zitec.ai",
                     "Segue relatório com as páginas mais importantes do portal IDSF testadas.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes)
                 );
@@ -82,9 +82,9 @@ namespace TestePortalExecutavel
                 switch (usuario.Nivel)
                 {
                     case Usuario.NivelEnum.Master:
-                        listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
-                        listaPagina.Add(await CedentesCedentes.CedentesPf(page));
-                        listaPagina.Add(await NotaComercial.NotasComerciais(page, usuario.Nivel));
+                        //listaPagina.Add(await CedentesCedentes.CedentesPJ(page));
+                        //listaPagina.Add(await CedentesCedentes.CedentesPf(page));
+                        //listaPagina.Add(await NotaComercial.NotasComerciais(page, usuario.Nivel));
 
                         //esperar bloker
                         //(pagina, var fluxo) = await OperacoesAtivos.Ativos(page, usuario.Nivel);

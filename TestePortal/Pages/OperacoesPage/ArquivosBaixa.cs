@@ -41,7 +41,7 @@ namespace TestePortal.Pages.OperacoesPage
                     pagina.Listagem = Listagem.VerificarListagem(Page, seletorTabela).Result;
                     if (pagina.Listagem == "❌") errosTotais++;
 
-                    pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
+                    //pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
 
                     if (nivelLogado == NivelEnum.Master)
                     {

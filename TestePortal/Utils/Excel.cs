@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -72,7 +72,7 @@ namespace TestePortal.Utils
            
             return baixarExcel;
         }
-        public static async Task<string> BaixarExcelRendimentoPorId(IPage Page)
+        public static async Task<string> BaixarExcelPorId(IPage Page)
         {
             string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
             string fileName = "PortalIDSF.xlsx";
@@ -84,7 +84,7 @@ namespace TestePortal.Utils
             {
                 var download = await Page.RunAndWaitForDownloadAsync(async () =>
                 {
-                    await Page.Locator("#exportarRendimentoBtn").ClickAsync(new LocatorClickOptions
+                    await Page.Locator("#BtnBaixarExcel").ClickAsync(new LocatorClickOptions
                     {
                         Timeout = 1500
                     });
