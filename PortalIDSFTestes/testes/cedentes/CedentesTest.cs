@@ -50,7 +50,7 @@ namespace PortalIDSFTestes.testes.cedentes
         }
 
         [Test, Order(2)]
-        public async Task DeveValidarExcel()
+        public async Task DeveFazerDownloadExcel()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.DownloadExcel();

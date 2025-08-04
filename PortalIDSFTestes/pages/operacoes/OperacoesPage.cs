@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task EnviarOperacaoCNAB()
         {
             await metodo.Clicar(el.BtnNovaOperacaoCNAB,"Clicar no botão para enviar uma Nova Operação CNAB");
-            await metodo.ClicarNoSeletorFundo(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
+            await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
             var enviarArquivo = await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCNAB);
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar Mensagem de Sucesso retornada");
             
@@ -45,7 +45,7 @@ namespace PortalIDSFTestes.pages.operacoes
             string caminhoArquivoCSVparaModificar = @"C:\TempQA\Arquivos";
 
             await metodo.Clicar(el.BtnNovaOperacaoCSV, "Clicar no botão para enviar uma Nova Operação CSV");
-            await metodo.ClicarNoSeletorFundo(el.SelectFundoCSV, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
+            await metodo.ClicarNoSeletor(el.SelectFundoCSV, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
             var arquivoComNomeModificado = metodo.ModificarCsv(caminhoArquivoCSV, caminhoArquivoCSVparaModificar);
             await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, arquivoComNomeModificado, "Enviar Arquivo CSV no Input");
             var caminhoLastro = @"C:\TempQA\Arquivos\Arquivo teste.zip";

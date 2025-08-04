@@ -12,11 +12,12 @@ namespace PortalIDSFTestes.elementos.notaComercial
         public string PaginaNotaComercial { get; } = "//a[@href='/Operacoes/NotaComercial.aspx']";
 
         public string BtnNovoNotaComercial { get; } = "//span[text()='+ Novo']";
-
+        public string BtnExcel { get; } = "//span[text()='Excel']";
         public string SelectFundoCessionario { get; } = "#Fundos";
         public string SelectProduto { get; } = "#Produtos";
         public string SelectTipoLiquidacao { get; } = "#tipo";
-        public string SelectTomador { get; } = "#searchInput";
+        public string CampoTomador { get; } = "#searchInput";
+        public string BtnLupaTomador { get; } = "(//i[@class='fas fa-search'])[4]";
         public string SelectConta { get; } = "#contaLiquidacao";
         public string CampoObservacaoInfo { get; } = "#mensagemObservacao";
 

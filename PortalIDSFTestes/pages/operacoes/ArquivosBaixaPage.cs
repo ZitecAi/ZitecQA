@@ -31,7 +31,7 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             
             await metodo.Clicar(el.importarBaixaBtn, "Clicar no Botão para importar Baixa");
-            await metodo.ClicarNoSeletorFundo(el.selectFundoZitec, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
+            await metodo.ClicarNoSeletor(el.selectFundoZitec, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
             var arquivoAtualizado = await metodo.AtualizarDataArquivo(caminhoArquivo, "Atualizar Data Arquivo");
             await metodo.EnviarArquivo(el.enviarBaixas, caminhoArquivo, "Enviar Arquivo Baixa");
             await metodo.ValidarMsgRetornada(el.msgArquivoRecebido, "Validação mensagem arquivo recebido mas aguardando validação");

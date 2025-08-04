@@ -48,11 +48,11 @@ namespace PortalIDSFTestes.metodos
 
 
         }
-        public async Task ClicarNoSeletorFundo(string locator, string cpf, string passo)
+        public async Task ClicarNoSeletor(string locator, string option, string passo)
         {
             try
             {
-                await page.Locator(locator).SelectOptionAsync(new[] { cpf });
+                await page.Locator(locator).SelectOptionAsync(new[] { option });
             }
             catch
             {
