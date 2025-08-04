@@ -14,6 +14,13 @@ namespace PortalIDSFTestes.elementos.cedentes
         public string InputNovoCedente { get; } = "#fileNovoCedente";
         public string MsgAcaoSucesso { get; } = "Ação Executada com Sucesso";
         public string BtnDownloadExcel { get; } = "#btnExportaExcel";
+        public string BarraPesquisaCedentes { get; } = "//label[text()='Pesquisar']";
+        public string TabelaCedentes { get; } = "#tabelaCedentes";
+        public string BtnLixeiraCedentes { get; } = "//button[@class='buttonExcluirCedente btn btn-danger']";
+        public string CampoObservacaoExcluir { get; } = "#TextAreaExclusao";
+        public string BtnConfirmarExcluir { get; } = "#submitButtonExcluirCedente";
+        public string MsgSucessoRetornada { get; } = "//div[@class='toast toast-success']";
+
 
 
     }
