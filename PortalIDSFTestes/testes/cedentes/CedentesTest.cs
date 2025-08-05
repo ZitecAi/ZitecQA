@@ -4,7 +4,6 @@ using PortalIDSFTestes.runner;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.operacoes;
-using PortalIDSFTestes.runner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,28 +42,44 @@ namespace PortalIDSFTestes.testes.cedentes
             await FecharBrowserAsync();
         }
 
-        [Test]
-        public async Task NaoDeveConterAcentosQuebrados()
+        [Test, Order(1)]
+        public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.ValidarAcentosCedentesPage();
         }
 
-        [Test]
-        public async Task DeveValidarExcel()
+        [Test, Order(2)]
+        public async Task Deve_Fazer_Download_Excel()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.DownloadExcel();
         }
 
-
-
-        [Test]
-        public async Task DeveCadastrarCedente()
+        [Test, Order(3)]
+        public async Task Deve_Cadastrar_Cedente()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.CadastrarCedente();
         }
+
+        [Test, Order(4)]
+        public async Task Deve_Consultar_Cedente_Na_Tabela()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.ConsultarCedente();
+        }
+
+        [Test, Order(5)]
+        public async Task Deve_Excluir_Cedente()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.ExcluirCedente();
+        }
+
+        
+
+
 
     }
 }

@@ -14,7 +14,7 @@ namespace PortalIDSFTestes.pages.cedentes
         private IPage page;
         Metodos metodo;
         CedentesElements el = new CedentesElements();
-        string caminhoArquivo = @"C:\TempQA\Arquivos\";
+        string caminhoArquivo = @"C:\TempQA\Arquivos\36614123000160_49624866830_N.zip";
 
         public CedentesPage(IPage page) 
         {
@@ -43,7 +43,26 @@ namespace PortalIDSFTestes.pages.cedentes
         {
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
             await metodo.EnviarArquivo(el.InputNovoCedente, caminhoArquivo,"Enviar arquivo no input para cadastrar novo cedente");
-            await metodo.ValidarMsgRetornada(el.MsgAcaoSucesso,"Validar mensagem Ação realizada com sucesso presente na tela");
+            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
+        }
+
+        public async Task ExcluirCedente()
+        {
+            await metodo.Clicar(el.BarraPesquisaCedentes,"Clicar na Barra de pesquisa para inserir CPF cedente a ser excluído");
+            await metodo.Escrever(el.BarraPesquisaCedentes, "496.248.668-30", "Escrever CPF do cedente a ser excluido");
+            await Task.Delay(500);
+            await metodo.Clicar(el.BtnLixeiraCedentes, "Clicar na lixeira para excluir cedente selecionado");
+            await metodo.Clicar(el.CampoObservacaoExcluir, "Clicar na lixeira para excluir cedente selecionado");
+            await metodo.Escrever(el.CampoObservacaoExcluir,"Teste Excluir Cedente", "Escrever Observação no modal excluir cedente");
+            await metodo.Clicar(el.BtnConfirmarExcluir, "Clicar na Botão para confirmar exclusão cedente selecionado");
+            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem presente na tela");
+        }
+
+        public async Task ConsultarCedente()
+        {
+            await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar na Barra de pesquisa para inserir CPF cedente a ser excluído");
+            await metodo.Escrever(el.BarraPesquisaCedentes, "496.248.668-30", "Escrever CPF do cedente a ser excluido");
+            await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentes, "496.248.668-30","Pesquisar CPF Cedente presente na tabela");
         }
 
 

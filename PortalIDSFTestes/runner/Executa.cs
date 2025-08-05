@@ -15,7 +15,7 @@ namespace PortalIDSFTestes.runner
             playwright = await Playwright.CreateAsync();
             browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = false
+                Headless = true
             });
 
             context = await browser.NewContextAsync();

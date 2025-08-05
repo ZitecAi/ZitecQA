@@ -48,7 +48,7 @@ namespace TestePortalIDSF
             IBrowser browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 Channel = "chrome",
-                Headless = false,
+                Headless = true,
                 SlowMo = 50,
                 Timeout = 0,
                 Args = new List<string>
@@ -147,7 +147,7 @@ namespace TestePortalIDSF
                         listaPagina.Add(await CadastroGestoras.Gestoras(Page));
                         await Task.Delay(500);
                         (pagina, fluxoDeCadastros) = await CadastroGestorasInternas.GestorasInternas(Page, context, usuario.Nivel);
-                        //listaPagina.Add(pagina);
+                        listaPagina.Add(pagina);
                         listaFluxos.Add(fluxoDeCadastros);
                         await Task.Delay(500);
                         listaPagina.Add(await CadastroPrestServico.PrestServico(Page));
@@ -367,7 +367,7 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "al@zitec.ai",
+                    "todos@zitec.ai",
                     "Relatório das páginas do portal. Validação do deploy no repositório de QA.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
                   
