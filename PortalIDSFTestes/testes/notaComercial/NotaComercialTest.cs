@@ -75,7 +75,7 @@ namespace PortalIDSFTestes.testes.notaComercial
             await notaComercial.CancelarNotaComercialNaTabela();
         }
 
-        [Test,Order(6)]
+        [Test, Order(6)]
         public async Task Deve_Fazer_Download_Minuta()
         {
             var notaComercial = new NotaComercialPage(page);
