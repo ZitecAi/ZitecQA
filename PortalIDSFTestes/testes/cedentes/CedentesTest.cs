@@ -43,35 +43,35 @@ namespace PortalIDSFTestes.testes.cedentes
         }
 
         [Test, Order(1)]
-        public async Task NaoDeveConterAcentosQuebrados()
+        public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.ValidarAcentosCedentesPage();
         }
 
         [Test, Order(2)]
-        public async Task DeveFazerDownloadExcel()
+        public async Task Deve_Fazer_Download_Excel()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.DownloadExcel();
         }
 
         [Test, Order(3)]
-        public async Task DeveCadastrarCedente()
+        public async Task Deve_Cadastrar_Cedente()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.CadastrarCedente();
         }
 
         [Test, Order(4)]
-        public async Task DeveConsultarCedenteNaTabela()
+        public async Task Deve_Consultar_Cedente_Na_Tabela()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.ConsultarCedente();
         }
 
         [Test, Order(5)]
-        public async Task DeveExcluirCedente()
+        public async Task Deve_Excluir_Cedente()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.ExcluirCedente();

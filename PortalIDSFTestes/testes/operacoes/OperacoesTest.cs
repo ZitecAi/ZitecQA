@@ -42,47 +42,47 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(1)]
-        public async Task NaoDeveConterAcentosQuebrados()
+        public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.ValidarAcentosOperacoesPage();
         }
 
         [Test, Order(2)]
-        public async Task DeveEnviarUmaOperacaoCNAB()
+        public async Task Deve_Enviar_Uma_Operacao_CNAB()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.EnviarOperacaoCNAB();
         }
         [Test, Order(3)]
-        public async Task DeveConsultarUmaOperacaoCNABPeloHistoricoImportacoes()
+        public async Task Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.ConsultarCNABPeloHistoricoImportacoes();
         }
         [Test, Order(4)]
-        public async Task DeveFazerDownloadRelatorioMovimento_Layout()
+        public async Task Deve_Fazer_Download_Relatorio_Movimento_Layout()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.DownloadValidacaoMovimento_Layout();
         }
         
         [Test, Order(5)]
-        public async Task DeveFazerDownloadExcel()
+        public async Task Deve_Fazer_Download_Excel()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.DownloadExcel();
         }
 
         [Test, Order(6)]
-        public async Task DeveEnviarUmaOperacaoCSV()
+        public async Task Deve_Enviar_Uma_Operacao_CSV()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.EnviarOperacaoCSV();
         }            
         [Test, Order(7)]
         [Ignore("Esse teste está em manutenção.")]
-        public async Task DeveExcluirUmaOperacao()
+        public async Task Deve_Excluir_Uma_Operacao()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.ExcluirArquivo();

@@ -41,21 +41,21 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(1)]
-        public async Task naoDeveConterAcentosQuebrados()
+        public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var baixa = new ArquivosBaixaPage(page);
             await baixa.ValidarAcentosArquivosBaixaPage();
         }
 
         [Test, Order(2)]
-        public async Task deveEnviarArquivoBaixa()
+        public async Task Deve_Enviar_Arquivo_Baixa()
         {
             var baixa = new ArquivosBaixaPage(page);
             await baixa.EnviarArquivoBaixa();
         }
 
         [Test, Order(3)]
-        public async Task deveConsultarArquivoBaixa()
+        public async Task Deve_Consultar_Arquivo_Baixa()
         {
             var baixa = new ArquivosBaixaPage(page);
             await baixa.ConsultarArquivoBaixa();
@@ -63,21 +63,21 @@ namespace PortalIDSFTestes.testes.operacoes
 
         [Test, Order(4)]
         [Ignore("Esse teste está em manutenção.")]
-        public async Task deveFazerDownloadRelatorioTitulos()
+        public async Task Deve_Fazer_Download_Relatorio_Titulos()
         {
             var baixa = new ArquivosBaixaPage(page);
             await baixa.BaixarRelatorioDeTitulos();
         }
 
         [Test, Order(5)]
-        public async Task deveFazerDownloadRelatorioMovimentos()
+        public async Task Deve_Fazer_Download_Relatorio_Movimentos()
         {
             var baixa = new ArquivosBaixaPage(page);
             await baixa.BaixarRelatorioDeMovimentos();
         }
 
         [Test, Order(6)]
-        public async Task deveFazerDownloadArquivoCNAB()
+        public async Task Deve_Fazer_Download_Arquivo_CNAB()
         {
             var baixa = new ArquivosBaixaPage(page);
             await baixa.GerarArquivoCnab();

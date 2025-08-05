@@ -41,23 +41,45 @@ namespace PortalIDSFTestes.testes.notaComercial
         }
 
         [Test, Order(1)]
-        public async Task NaoDeveConterAcentosQuebrados()
+        public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var notaComercial = new NotaComercialPage(page);
             await notaComercial.ValidarAcentosNotaComercialPage();
         }
 
         [Test, Order(2)]
-        public async Task DeveFazerDownloadExcel()
+        public async Task Deve_Fazer_Download_Excel()
         {
             var notaComercial = new NotaComercialPage(page);
             await notaComercial.DownloadExcel();
         }
+
         [Test, Order(3)]
-        public async Task DeveCadastrarNovaNotaComercial()
+        public async Task Deve_Cadastrar_Nova_Nota_Comercial()
         {
             var notaComercial = new NotaComercialPage(page);
             await notaComercial.CadastrarNotaComercial();
+        }
+
+        [Test, Order(4)]
+        public async Task Deve_Consultar_Nota_Comercial_Pela_Tabela()
+        {
+            var notaComercial = new NotaComercialPage(page);
+            await notaComercial.ConsultarNotaComercialNaTabela();
+        }
+
+        [Test, Order(5)]
+        public async Task Deve_Cancelar_Nota_Comercial()
+        {
+            var notaComercial = new NotaComercialPage(page);
+            await notaComercial.CancelarNotaComercialNaTabela();
+        }
+
+        [Test,Order(6)]
+        public async Task Deve_Fazer_Download_Minuta()
+        {
+            var notaComercial = new NotaComercialPage(page);
+            await notaComercial.DownloadMinuta();
         }
 
 
