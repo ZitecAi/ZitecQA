@@ -67,7 +67,28 @@ namespace PortalIDSFTestes.pages.operacoes
         }
 
 
+        public async Task DownloadArquivo()
+        {
+            await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
+            await metodo.Escrever(el.BarraPesquisa, "Teste NUnit", "Clicar na Barra de Pesquisa");
+            await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
+            var download = await page.RunAndWaitForDownloadAsync(async () =>
+            {
+                await metodo.Clicar(el.BtnBaixarArquivo, "Clicar no botão para baixar Arquivo");
+            });
+            await metodo.ValidarDownloadAsync(download,"Baixar Arquivo", "Validar se Download do arquivo foi feito");       
+        }
 
+        public async Task AprovarGestor()
+        {
+            await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
+            await metodo.Escrever(el.BarraPesquisa, "Teste NUnit", "Clicar na Barra de Pesquisa");
+            await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
+            await metodo.Clicar(el.BtnSituacaoGestor, "Clicar no botão para abrir modal de situação do gestor");
+            await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo gestor");
+            await metodo.Escrever(el.CampoObservacaoParecer,"Teste Aprovação", "Digitar Observação");
+            await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo gestor");
+        }
 
     }
 }

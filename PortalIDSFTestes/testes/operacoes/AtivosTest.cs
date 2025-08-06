@@ -48,23 +48,41 @@ namespace PortalIDSFTestes.testes.operacoes
             await ativos.ValidarAcentosAtivosPage();
         }
 
+
         [Test, Order(2)]
         public async Task Deve_Fazer_Download_Excel()
         {
             var ativos = new AtivosPage(page);
             await ativos.DownloadExcel();
         }
+
         [Test, Order(3)]
         public async Task Deve_Cadastrar_Um_Ativo()
         {
             var ativos = new AtivosPage(page);
             await ativos.CadastrarAtivo();
         }
+
         [Test, Order(4)]
         public async Task Deve_Consultar_Um_Ativo()
         {
             var ativos = new AtivosPage(page);
             await ativos.ConsultarAtivo();
+        }
+
+        [Test, Order(5)]
+        [Ignore("Esse teste está em manutenção.")]
+        public async Task Deve_Aprovar_Gestor()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.AprovarGestor();
+        }
+
+        [Test, Order(6)]
+        public async Task Deve_Fazer_Download_Arquivo()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.DownloadArquivo();
         }
 
     }
