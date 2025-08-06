@@ -22,9 +22,13 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string CampoValor{ get; } = "#valorAtivos";
         public string CampoResumoOperacao{ get; } = "#mensagemObservacao";
         public string BtnAnexos{ get; } = "#submitButton";
-        public string InputAnexos{ get; } = "#filePagamentosNotas";
+        public string InputAnexos{ get; } = "//form[@id='FormAnexo0']//input[@id='filePagamentosNotas']";
         public string BtnVoltar{ get; } = "#salvar";
         public string CheckBoxTermo{ get; } = "#termoRespCheck";
-
+        public string BtnSalvar{ get; } = "#salvarAnexos";
+        public string MsgSucessoRetornada { get; } = "//div[@class='toast toast-success']//div[@class='toast-message']";
+        public string BtnExcel { get; } = "//span[text()='Excel']";
+        public string BarraPesquisa { get; } = "//label[text()='Pesquisar']";
+        public string TabelaAtivos { get; } = "#tabelaContratos";
     }
 }
