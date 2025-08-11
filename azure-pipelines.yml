@@ -17,7 +17,7 @@ variables:
   TestResultsDir: '$(System.DefaultWorkingDirectory)\TestResults'
   TestProject: 'PortalIDSFTestes\PortalIDSFTestes.csproj'
   EmailTo: 'al@zitec.ai'
-  EmailFrom: '$(SmtpUser)'          # <-- usa o mesmo que autentica
+  EmailFrom: 'no-reply@zitec.ai'          # <-- usa o mesmo que autentica
   SmtpHost: 'smtp.office365.com'
   SmtpPort: '587'
 
