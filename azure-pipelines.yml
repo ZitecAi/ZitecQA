@@ -1,4 +1,4 @@
-# azure-pipelines.yml  (pipeline de TESTES E2E)
+# azure-pipelines.yml  (TESTES E2E pós-deploy)
 name: E2E-Apos-Deploy-$(Date:yyyyMMdd)$(Rev:.r)
 
 trigger: none
@@ -11,13 +11,13 @@ resources:
       trigger: true
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   BuildConfiguration: 'Release'
-  TestResultsDir: '$(System.DefaultWorkingDirectory)/TestResults'
-  EmailTo: 'devs@empresa.com'
-  EmailFrom: 'qa-bot@empresa.com'
+  TestResultsDir: '$(System.DefaultWorkingDirectory)\TestResults'
+  EmailTo: 'al@zitec.ai'
+  EmailFrom: 'no-reply@zitec.ai'
   SmtpHost: 'smtp.office365.com'
   SmtpPort: '587'
 
@@ -46,19 +46,20 @@ stages:
     - script: dotnet build --configuration $(BuildConfiguration) --no-restore
       displayName: 'Build'
 
-    # 3) Instalar Playwright CLI e browsers (depois do build)
-    - script: |
+    # 3) Instalar Playwright CLI e browsers (Windows / PowerShell)
+    - powershell: |
         dotnet tool install --global Microsoft.Playwright.CLI
-        export PATH="$PATH:$HOME/.dotnet/tools"
-        playwright install --with-deps
-      displayName: 'Instalar Playwright browsers'
+        Write-Host "Prepend PATH to include dotnet tools..."
+        Write-Host "##vso[task.prependpath]$env:USERPROFILE\.dotnet\tools"
+        playwright install
+      displayName: 'Instalar Playwright browsers (Windows)'
 
-    # 4) Testes
+    # 4) Testes (cmd.exe por padrão em 'script')
     - script: |
-        mkdir -p "$(TestResultsDir)"
-        dotnet test --configuration $(BuildConfiguration) \
-          --logger "trx;LogFileName=e2e.trx" \
-          --results-directory "$(TestResultsDir)" \
+        mkdir "$(TestResultsDir)" 2>nul || exit /b 0
+        dotnet test --configuration $(BuildConfiguration) ^
+          --logger "trx;LogFileName=e2e.trx" ^
+          --results-directory "$(TestResultsDir)" ^
           --no-build
       displayName: 'Executar testes E2E (NUnit + Playwright)'
 
@@ -67,11 +68,11 @@ stages:
       displayName: 'Publicar Test Results (TRX)'
       inputs:
         testResultsFormat: 'VSTest'
-        testResultsFiles: '$(TestResultsDir)/**/*.trx'
+        testResultsFiles: '$(TestResultsDir)\**\*.trx'
         failTaskOnFailedTests: true
         testRunTitle: 'E2E após deploy'
 
-    # Artefatos (TRX, traces, etc.)
+    # Artefatos (TRX, traces etc.)
     - task: PublishBuildArtifacts@1
       displayName: 'Publicar artefatos (TRX, traces)'
       inputs:
@@ -79,7 +80,7 @@ stages:
         ArtifactName: 'e2e-artifacts'
         publishLocation: 'Container'
 
-    # E-mail com links
+    # E-mail com links (PowerShell)
     - task: PowerShell@2
       displayName: 'Enviar e-mail com links do job'
       inputs:
