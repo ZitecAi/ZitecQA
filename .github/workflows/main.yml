@@ -29,6 +29,7 @@ jobs:
       APP_URL: ${{ github.event.inputs.app_url || github.event.client_payload.app_url || 'https://portal.idsf.com.br/' }}
       ENVIRONMENT: ${{ github.event.inputs.env || github.event.client_payload.env || 'prod' }}
       PLAYWRIGHT_BROWSERS_PATH: C:\playwright-browsers
+      TRX_DIR: ${{ github.workspace }}\TestResults
 
     steps:
       - name: Checkout
@@ -38,7 +39,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "8.0.x"
-          cache: 'nuget'
+          cache: true
           cache-dependency-path: |
             **/*.csproj
             **/packages.lock.json
@@ -49,29 +50,33 @@ jobs:
           path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/playwright.ps1') }}
 
-      - name: Restore (só o projeto de testes)
+      - name: Restore (só projeto de testes)
         run: dotnet restore $env:TEST_PROJECT
 
-      - name: Build (só o projeto de testes)
+      - name: Build (só projeto de testes)
         run: dotnet build $env:TEST_PROJECT -c Release --no-restore
 
       - name: Install Playwright browsers
         shell: pwsh
         run: |
           $pw = Get-ChildItem -Recurse -Filter "playwright.ps1" | Select-Object -First 1
-          if (-not $pw) { Write-Error "playwright.ps1 não encontrado (verifique Microsoft.Playwright no projeto)"; exit 1 }
+          if (-not $pw) { Write-Error "playwright.ps1 não encontrado"; exit 1 }
           pwsh $pw.FullName install --with-deps
 
-      - name: Run tests (gera allure-results)
+      - name: Run tests (gera allure-results + TRX em pasta fixa)
         shell: pwsh
         run: |
+          New-Item -ItemType Directory -Force -Path "$env:TRX_DIR" | Out-Null
           $env:APP_URL="${{ env.APP_URL }}"
-          dotnet test $env:TEST_PROJECT -c Release --no-build --logger "trx;LogFileName=test-results.trx"
-          # tenta localizar a pasta allure-results em qualquer lugar do repo
+          dotnet test $env:TEST_PROJECT -c Release --no-build `
+            --logger "trx;LogFileName=test-results.trx" `
+            --results-directory "$env:TRX_DIR"
+          # localizar allure-results em qualquer subpasta
           $dir = Get-ChildItem -Path $PWD -Recurse -Directory -Filter "allure-results" | Select-Object -First 1
-          if (-not $dir) { Write-Error "allure-results não encontrado. Confira Allure.NUnit + allureConfig.json."; exit 1 }
+          if (-not $dir) { Write-Error "allure-results não encontrado. Confira Allure.NUnit + allureConfig.json + [AllureNUnit]."; exit 1 }
           "ALLURE_RESULTS_DIR=$($dir.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           Write-Host "Allure results em: $($dir.FullName)"
+          Write-Host "TRX em: $env:TRX_DIR"
 
       - name: Generate Allure Report (HTML)
         uses: simple-elf/allure-report-action@v1.8
@@ -98,4 +103,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results-trx
-          path: "**/test-results.trx"
+          path: |
+            ${{ env.TRX_DIR }}\**\*.trx
+            **/TestResults/**/*.trx
