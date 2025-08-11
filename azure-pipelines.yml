@@ -17,7 +17,7 @@ variables:
   TestResultsDir: '$(System.DefaultWorkingDirectory)\TestResults'
   TestProject: 'PortalIDSFTestes\PortalIDSFTestes.csproj'
   EmailTo: 'al@zitec.ai'
-  EmailFrom: 'no-reply@zitec.ai'
+  EmailFrom: '$(SmtpUser)'          # <-- usa o mesmo que autentica
   SmtpHost: 'smtp.office365.com'
   SmtpPort: '587'
 
@@ -38,23 +38,18 @@ stages:
         packageType: 'sdk'
         version: '8.x'
 
-    # Restore somente PortalIDSFTestes
     - script: dotnet restore "$(TestProject)"
       displayName: 'Restore (somente PortalIDSFTestes)'
 
-    # Build somente PortalIDSFTestes
     - script: dotnet build "$(TestProject)" --configuration $(BuildConfiguration) --no-restore
       displayName: 'Build (somente PortalIDSFTestes)'
 
-    # Instalar Playwright CLI e browsers (Windows)
     - powershell: |
-        # garante a CLI do Playwright
         dotnet tool update --global Microsoft.Playwright.CLI 2>$null; if ($LASTEXITCODE -ne 0) { dotnet tool install --global Microsoft.Playwright.CLI }
         Write-Host "##vso[task.prependpath]$env:USERPROFILE\.dotnet\tools"
         playwright install
       displayName: 'Instalar Playwright browsers (Windows)'
 
-    # Executar testes somente no PortalIDSFTestes
     - script: |
         mkdir "$(TestResultsDir)" 2>nul || exit /b 0
         dotnet test "$(TestProject)" --configuration $(BuildConfiguration) ^
@@ -63,7 +58,6 @@ stages:
           --no-build
       displayName: 'Executar testes E2E (PortalIDSFTestes)'
 
-    # Publicar TRX na aba Tests (sempre, mesmo com falha)
     - task: PublishTestResults@2
       condition: always()
       displayName: 'Publicar Test Results (TRX)'
@@ -74,7 +68,6 @@ stages:
         failTaskOnFailedTests: true
         testRunTitle: 'E2E após deploy'
 
-    # Artefatos (sempre)
     - task: PublishBuildArtifacts@1
       condition: always()
       displayName: 'Publicar artefatos (TRX, traces)'
@@ -83,7 +76,6 @@ stages:
         ArtifactName: 'e2e-artifacts'
         publishLocation: 'Container'
 
-    # E-mail com links (sempre)
     - task: PowerShell@2
       condition: always()
       displayName: 'Enviar e-mail com links do job'
@@ -105,4 +97,4 @@ stages:
           "@
           $secure = ConvertTo-SecureString "$(SmtpPass)" -AsPlainText -Force
           $cred = New-Object System.Management.Automation.PSCredential("$(SmtpUser)", $secure)
-          Send-MailMessage -From '$(EmailFrom)' -To '$(EmailTo)' -Subject $subject -Body $body -BodyAsHtml -SmtpServer '$(SmtpHost)' -Port $(SmtpPort) -UseSsl -Credential $cred
+          Send-MailMessage -From '$(SmtpUser)' -To '$(EmailTo)' -Subject $subject -Body $body -BodyAsHtml -SmtpServer '$(SmtpHost)' -Port $(SmtpPort) -UseSsl -Credential $cred
