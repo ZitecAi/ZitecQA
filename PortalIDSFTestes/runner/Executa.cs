@@ -1,16 +1,14 @@
-﻿using Allure.NUnit;
+﻿using Microsoft.Playwright;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Playwright;
 using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.runner
 {
-    [AllureNUnit]
     public abstract class Executa
     {
-        private IPlaywright playwright;
-        private IBrowser browser;
-        private IBrowserContext context;
+        private IPlaywright? playwright;
+        private IBrowser? browser;
+        private IBrowserContext? context;
 
         protected async Task<IPage> AbrirBrowserAsync()
         {
