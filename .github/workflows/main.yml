@@ -6,11 +6,11 @@ on:
       app_url:
         description: "URL da aplicação alvo"
         required: false
-        default: "https://sua-url-de-homolog-ou-local"
+        default: "https://portal.idsf.com.br/"
       env:
         description: "Ambiente (homolog/prod/local)"
         required: false
-        default: "homolog"
+        default: "prod"
   push:
     branches: ["main"]
   # quando o repositório da aplicação disparar após o deploy
