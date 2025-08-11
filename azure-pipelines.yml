@@ -48,7 +48,8 @@ stages:
 
     # Instalar Playwright CLI e browsers (Windows)
     - powershell: |
-        dotnet tool install --global Microsoft.Playwright.CLI
+        # garante a CLI do Playwright
+        dotnet tool update --global Microsoft.Playwright.CLI 2>$null; if ($LASTEXITCODE -ne 0) { dotnet tool install --global Microsoft.Playwright.CLI }
         Write-Host "##vso[task.prependpath]$env:USERPROFILE\.dotnet\tools"
         playwright install
       displayName: 'Instalar Playwright browsers (Windows)'
@@ -62,25 +63,29 @@ stages:
           --no-build
       displayName: 'Executar testes E2E (PortalIDSFTestes)'
 
-    # Publicar TRX na aba Tests
+    # Publicar TRX na aba Tests (sempre, mesmo com falha)
     - task: PublishTestResults@2
+      condition: always()
       displayName: 'Publicar Test Results (TRX)'
       inputs:
         testResultsFormat: 'VSTest'
         testResultsFiles: '$(TestResultsDir)\**\*.trx'
+        mergeTestResults: true
         failTaskOnFailedTests: true
         testRunTitle: 'E2E após deploy'
 
-    # Artefatos
+    # Artefatos (sempre)
     - task: PublishBuildArtifacts@1
+      condition: always()
       displayName: 'Publicar artefatos (TRX, traces)'
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)'
         ArtifactName: 'e2e-artifacts'
         publishLocation: 'Container'
 
-    # E-mail com links
+    # E-mail com links (sempre)
     - task: PowerShell@2
+      condition: always()
       displayName: 'Enviar e-mail com links do job'
       inputs:
         targetType: 'inline'
