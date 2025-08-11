@@ -36,5 +36,7 @@ namespace PortalIDSFTestes.runner
                 await browser.CloseAsync();
             playwright?.Dispose();
         }
+
+
     }
 }

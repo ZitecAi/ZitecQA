@@ -54,12 +54,14 @@ namespace PortalIDSFTestes.testes.operacoes
             var operacoes = new OperacoesPage(page);
             await operacoes.EnviarOperacaoCNAB();
         }
+
         [Test, Order(3)]
         public async Task Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.ConsultarCNABPeloHistoricoImportacoes();
         }
+
         [Test, Order(4)]
         public async Task Deve_Fazer_Download_Relatorio_Movimento_Layout()
         {
@@ -80,6 +82,7 @@ namespace PortalIDSFTestes.testes.operacoes
             var operacoes = new OperacoesPage(page);
             await operacoes.EnviarOperacaoCSV();
         }            
+
         [Test, Order(7)]
         [Ignore("Esse teste está em manutenção.")]
         public async Task Deve_Excluir_Uma_Operacao()

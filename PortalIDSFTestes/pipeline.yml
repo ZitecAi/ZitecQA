@@ -1,0 +1,73 @@
+# azure-pipelines-e2e.yml
+# Este pipeline é disparado quando o Pipeline A (deploy) conclui.
+# Não tem gatilho por branch, apenas por conclusão do pipeline de deploy.
+
+resources:
+  pipelines:
+  - pipeline: appdeploy                 # alias interno (use como quiser)
+    source: _Dev - Portal         # << troque para o NOME do seu pipeline de deploy
+    # project: MeuProjeto               # descomente se o deploy estiver em outro projeto
+    trigger:
+      branches:
+        include: [ main ]               # rode E2E só para deploys da main (ajuste se quiser)
+
+variables:
+  dotnetVersion: '8.x'
+  buildConfiguration: 'Release'
+  testsProject: 'C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\PortalIDSFTestes.csproj'   # << troque para o caminho do seu .csproj
+  resultsDir: '$(Agent.TempDirectory)/TestResults'
+  # Metadados do pipeline que acionou
+  DEPLOY_RUN_ID: $[ resources.pipeline.appdeploy.runID ]
+  DEPLOY_RUN_NAME: $[ resources.pipeline.appdeploy.runName ]
+  DEPLOY_BRANCH: $[ resources.pipeline.appdeploy.sourceBranch ]
+
+pool:
+  vmImage: 'windows-latest'   # pode usar ubuntu-latest também (veja nota abaixo)
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET SDK $(dotnetVersion)'
+  inputs:
+    version: '$(dotnetVersion)'
+
+- script: dotnet restore $(testsProject)
+  displayName: 'restore tests'
+
+- script: dotnet build $(testsProject) -c $(buildConfiguration)
+  displayName: 'build tests'
+
+# Instala os browsers do Playwright (.NET) no agente
+- powershell: |
+    $projPath = "$(Build.SourcesDirectory)\$(testsProject)".Replace('/', '\')
+    $projDir = Split-Path $projPath -Parent
+    $tfm = "net8.0"   # seu TargetFramework
+    $script = Join-Path $projDir "bin\$(buildConfiguration)\$tfm\playwright.ps1"
+    Write-Host "Installing Playwright browsers with: $script"
+    pwsh $script install --with-deps
+  displayName: 'Playwright browsers install'
+  errorActionPreference: stop
+
+# Executa NUnit + Playwright e gera TRX (consumido pela aba Tests do Azure)
+- script: >
+    dotnet test $(testsProject)
+    -c $(buildConfiguration)
+    --logger "trx;LogFileName=test-results.trx"
+    --results-directory "$(resultsDir)"
+  displayName: 'dotnet test (TRX)'
+
+# Publica o relatório nativo (aba Tests)
+- task: PublishTestResults@2
+  displayName: 'Publish test results (TRX)'
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '$(resultsDir)/*.trx'
+    testRunTitle: 'E2E Playwright (triggered by $(DEPLOY_RUN_NAME) on $(DEPLOY_BRANCH))'
+    mergeTestResults: true
+
+# Constrói o link direto para a aba Tests deste run (útil para e-mail/Slack)
+- powershell: |
+    $url = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)&view=ms.vss-test-web.build-test-results-tab"
+    Write-Host "Tests URL: $url"
+    Write-Host "##vso[task.setvariable variable=TestsUrl;isOutput=true]$url"
+  name: buildLink
+  displayName: 'Build Tests URL'
