@@ -1,21 +1,21 @@
-# azure-pipelines.yml  (TESTES E2E pós-deploy)
+# azure-pipelines.yml  (TESTES E2E pós-deploy - somente projeto PortalIDSFTestes)
 name: E2E-Apos-Deploy-$(Date:yyyyMMdd)$(Rev:.r)
-
 trigger: none
 
 resources:
   pipelines:
     - pipeline: appDeploy
-      source: 'ZIDSF - PORTAL - DEV'   # nome EXATO do pipeline de deploy
+      source: 'ZIDSF - PORTAL - DEV'
       branch: 'Dev'
       trigger: true
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'windows-latest'   # ou 'windows-2022' para fixar
 
 variables:
   BuildConfiguration: 'Release'
   TestResultsDir: '$(System.DefaultWorkingDirectory)\TestResults'
+  TestProject: 'ZitecQA\PortalIDSFTestes\PortalIDSFTestes.csproj'
   EmailTo: 'al@zitec.ai'
   EmailFrom: 'no-reply@zitec.ai'
   SmtpHost: 'smtp.office365.com'
@@ -23,11 +23,11 @@ variables:
 
 stages:
 - stage: e2e_tests
-  displayName: 'E2E após Deploy (ZIDSF - PORTAL - DEV)'
+  displayName: 'E2E após Deploy'
   condition: succeeded()
   jobs:
   - job: run_e2e
-    displayName: 'Rodar NUnit + Playwright e publicar resultados'
+    displayName: 'Rodar NUnit + Playwright (somente PortalIDSFTestes)'
     steps:
     - checkout: self
       fetchDepth: 0
@@ -38,30 +38,29 @@ stages:
         packageType: 'sdk'
         version: '8.x'
 
-    # 1) Restore
-    - script: dotnet restore
-      displayName: 'Restore'
+    # Restore somente PortalIDSFTestes
+    - script: dotnet restore "$(TestProject)"
+      displayName: 'Restore (somente PortalIDSFTestes)'
 
-    # 2) Build
-    - script: dotnet build --configuration $(BuildConfiguration) --no-restore
-      displayName: 'Build'
+    # Build somente PortalIDSFTestes
+    - script: dotnet build "$(TestProject)" --configuration $(BuildConfiguration) --no-restore
+      displayName: 'Build (somente PortalIDSFTestes)'
 
-    # 3) Instalar Playwright CLI e browsers (Windows / PowerShell)
+    # Instalar Playwright CLI e browsers (Windows)
     - powershell: |
         dotnet tool install --global Microsoft.Playwright.CLI
-        Write-Host "Prepend PATH to include dotnet tools..."
         Write-Host "##vso[task.prependpath]$env:USERPROFILE\.dotnet\tools"
         playwright install
       displayName: 'Instalar Playwright browsers (Windows)'
 
-    # 4) Testes (cmd.exe por padrão em 'script')
+    # Executar testes somente no PortalIDSFTestes
     - script: |
         mkdir "$(TestResultsDir)" 2>nul || exit /b 0
-        dotnet test --configuration $(BuildConfiguration) ^
+        dotnet test "$(TestProject)" --configuration $(BuildConfiguration) ^
           --logger "trx;LogFileName=e2e.trx" ^
           --results-directory "$(TestResultsDir)" ^
           --no-build
-      displayName: 'Executar testes E2E (NUnit + Playwright)'
+      displayName: 'Executar testes E2E (PortalIDSFTestes)'
 
     # Publicar TRX na aba Tests
     - task: PublishTestResults@2
@@ -72,7 +71,7 @@ stages:
         failTaskOnFailedTests: true
         testRunTitle: 'E2E após deploy'
 
-    # Artefatos (TRX, traces etc.)
+    # Artefatos
     - task: PublishBuildArtifacts@1
       displayName: 'Publicar artefatos (TRX, traces)'
       inputs:
@@ -80,7 +79,7 @@ stages:
         ArtifactName: 'e2e-artifacts'
         publishLocation: 'Container'
 
-    # E-mail com links (PowerShell)
+    # E-mail com links
     - task: PowerShell@2
       displayName: 'Enviar e-mail com links do job'
       inputs:
@@ -89,7 +88,6 @@ stages:
           $buildUrl = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
           $testsTab = "$buildUrl&_a=summary"
           $subject = "[E2E] Pós-deploy - $(Build.SourceBranchName) #$(Build.BuildId) - $(Agent.JobStatus)"
-
           $body = @"
           <div style='font-family:Segoe UI,Arial,sans-serif'>
             <h2>Automação E2E executada após deploy</h2>
@@ -98,20 +96,8 @@ stages:
               <li><b>Resumo/Tests:</b> <a href='$testsTab'>$testsTab</a></li>
               <li><b>Job completo:</b> <a href='$buildUrl'>$buildUrl</a></li>
             </ul>
-            <p>Artefatos (TRX, traces) disponíveis neste job.</p>
           </div>
           "@
-
           $secure = ConvertTo-SecureString "$(SmtpPass)" -AsPlainText -Force
           $cred = New-Object System.Management.Automation.PSCredential("$(SmtpUser)", $secure)
-
-          Send-MailMessage `
-            -From '$(EmailFrom)' `
-            -To '$(EmailTo)' `
-            -Subject $subject `
-            -Body $body `
-            -BodyAsHtml `
-            -SmtpServer '$(SmtpHost)' `
-            -Port $(SmtpPort) `
-            -UseSsl `
-            -Credential $cred
+          Send-MailMessage -From '$(EmailFrom)' -To '$(EmailTo)' -Subject $subject -Body $body -BodyAsHtml -SmtpServer '$(SmtpHost)' -Port $(SmtpPort) -UseSsl -Credential $cred
