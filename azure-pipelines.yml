@@ -1,0 +1,44 @@
+# azure-pipelines.yml
+name: E2E-Apos-Deploy-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger: none  # NÃO dispara por commit; só quando o deploy concluir
+
+resources:
+  pipelines:
+    - pipeline: appDeploy               # alias local (pode manter)
+      source: ZIDSF - PORTAL - DEV
+      branch: Dev
+      trigger: true                     # dispara quando esse pipeline finalizar OK
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  BuildConfiguration: 'Release'
+  TestResultsDir: '$(System.DefaultWorkingDirectory)/TestResults'
+  EmailTo: 'al@zitec.ai'
+  EmailFrom: 'no-reply@zitec.ai'
+  SmtpHost: 'smtp.office365.com'
+  SmtpPort: '587'
+
+stages:
+- stage: e2e_tests
+  displayName: "E2E após Deploy"
+  condition: succeeded()
+  jobs:
+  - job: run_e2e
+    displayName: "Rodar NUnit + Playwright e publicar resultados"
+    steps:
+    - checkout: self
+      fetchDepth: 0
+
+    - task: UseDotNet@2
+      displayName: "Instalar .NET SDK 8.x"
+      inputs:
+        packageType: 'sdk'
+        version: '8.x'
+
+    - script: |
+        dotnet tool install --global Microsoft.Playwright.CLI
+        playwright install --with-deps
+      displayName: "Instalar Playwright CLI e br
