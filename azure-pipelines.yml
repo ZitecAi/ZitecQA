@@ -6,7 +6,7 @@ trigger: none
 resources:
   pipelines:
     - pipeline: appDeploy
-      source: 'ZIDSF - PORTAL - DEV'   # <<< nome do pipeline de deploy, COM ASPAS
+      source: 'ZIDSF - PORTAL - DEV'   # nome EXATO do pipeline de deploy
       branch: 'Dev'
       trigger: true
 
@@ -16,8 +16,8 @@ pool:
 variables:
   BuildConfiguration: 'Release'
   TestResultsDir: '$(System.DefaultWorkingDirectory)/TestResults'
-  EmailTo: 'al@zitec.ai'
-  EmailFrom: 'no-reply@zitec.ai'
+  EmailTo: 'devs@empresa.com'
+  EmailFrom: 'qa-bot@empresa.com'
   SmtpHost: 'smtp.office365.com'
   SmtpPort: '587'
 
@@ -38,18 +38,22 @@ stages:
         packageType: 'sdk'
         version: '8.x'
 
+    # 1) Restore
+    - script: dotnet restore
+      displayName: 'Restore'
+
+    # 2) Build
+    - script: dotnet build --configuration $(BuildConfiguration) --no-restore
+      displayName: 'Build'
+
+    # 3) Instalar Playwright CLI e browsers (depois do build)
     - script: |
         dotnet tool install --global Microsoft.Playwright.CLI
         export PATH="$PATH:$HOME/.dotnet/tools"
         playwright install --with-deps
-      displayName: 'Instalar Playwright CLI e browsers'
+      displayName: 'Instalar Playwright browsers'
 
-    - script: dotnet restore
-      displayName: 'Restore'
-
-    - script: dotnet build --configuration $(BuildConfiguration) --no-restore
-      displayName: 'Build'
-
+    # 4) Testes
     - script: |
         mkdir -p "$(TestResultsDir)"
         dotnet test --configuration $(BuildConfiguration) \
@@ -58,6 +62,7 @@ stages:
           --no-build
       displayName: 'Executar testes E2E (NUnit + Playwright)'
 
+    # Publicar TRX na aba Tests
     - task: PublishTestResults@2
       displayName: 'Publicar Test Results (TRX)'
       inputs:
@@ -66,6 +71,7 @@ stages:
         failTaskOnFailedTests: true
         testRunTitle: 'E2E após deploy'
 
+    # Artefatos (TRX, traces, etc.)
     - task: PublishBuildArtifacts@1
       displayName: 'Publicar artefatos (TRX, traces)'
       inputs:
@@ -73,6 +79,7 @@ stages:
         ArtifactName: 'e2e-artifacts'
         publishLocation: 'Container'
 
+    # E-mail com links
     - task: PowerShell@2
       displayName: 'Enviar e-mail com links do job'
       inputs:
