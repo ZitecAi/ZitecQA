@@ -15,7 +15,7 @@ pool:
 variables:
   BuildConfiguration: 'Release'
   TestResultsDir: '$(System.DefaultWorkingDirectory)\TestResults'
-  TestProject: 'ZitecQA\PortalIDSFTestes\PortalIDSFTestes.csproj'
+  TestProject: 'PortalIDSFTestes\PortalIDSFTestes.csproj'
   EmailTo: 'al@zitec.ai'
   EmailFrom: 'no-reply@zitec.ai'
   SmtpHost: 'smtp.office365.com'
