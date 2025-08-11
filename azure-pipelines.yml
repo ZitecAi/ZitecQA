@@ -1,14 +1,14 @@
-# azure-pipelines.yml
+# azure-pipelines.yml  (pipeline de TESTES E2E)
 name: E2E-Apos-Deploy-$(Date:yyyyMMdd)$(Rev:.r)
 
-trigger: none  # NÃO dispara por commit; só quando o deploy concluir
+trigger: none
 
 resources:
   pipelines:
-    - pipeline: appDeploy               # alias local (pode manter)
-      source: ZIDSF - PORTAL - DEV
-      branch: Dev
-      trigger: true                     # dispara quando esse pipeline finalizar OK
+    - pipeline: appDeploy
+      source: 'ZIDSF - PORTAL - DEV'   # <<< nome do pipeline de deploy, COM ASPAS
+      branch: 'Dev'
+      trigger: true
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -23,22 +23,87 @@ variables:
 
 stages:
 - stage: e2e_tests
-  displayName: "E2E após Deploy"
+  displayName: 'E2E após Deploy (ZIDSF - PORTAL - DEV)'
   condition: succeeded()
   jobs:
   - job: run_e2e
-    displayName: "Rodar NUnit + Playwright e publicar resultados"
+    displayName: 'Rodar NUnit + Playwright e publicar resultados'
     steps:
     - checkout: self
       fetchDepth: 0
 
     - task: UseDotNet@2
-      displayName: "Instalar .NET SDK 8.x"
+      displayName: 'Instalar .NET SDK 8.x'
       inputs:
         packageType: 'sdk'
         version: '8.x'
 
     - script: |
         dotnet tool install --global Microsoft.Playwright.CLI
+        export PATH="$PATH:$HOME/.dotnet/tools"
         playwright install --with-deps
-      displayName: "Instalar Playwright CLI e br
+      displayName: 'Instalar Playwright CLI e browsers'
+
+    - script: dotnet restore
+      displayName: 'Restore'
+
+    - script: dotnet build --configuration $(BuildConfiguration) --no-restore
+      displayName: 'Build'
+
+    - script: |
+        mkdir -p "$(TestResultsDir)"
+        dotnet test --configuration $(BuildConfiguration) \
+          --logger "trx;LogFileName=e2e.trx" \
+          --results-directory "$(TestResultsDir)" \
+          --no-build
+      displayName: 'Executar testes E2E (NUnit + Playwright)'
+
+    - task: PublishTestResults@2
+      displayName: 'Publicar Test Results (TRX)'
+      inputs:
+        testResultsFormat: 'VSTest'
+        testResultsFiles: '$(TestResultsDir)/**/*.trx'
+        failTaskOnFailedTests: true
+        testRunTitle: 'E2E após deploy'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publicar artefatos (TRX, traces)'
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)'
+        ArtifactName: 'e2e-artifacts'
+        publishLocation: 'Container'
+
+    - task: PowerShell@2
+      displayName: 'Enviar e-mail com links do job'
+      inputs:
+        targetType: 'inline'
+        script: |
+          $buildUrl = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
+          $testsTab = "$buildUrl&_a=summary"
+          $subject = "[E2E] Pós-deploy - $(Build.SourceBranchName) #$(Build.BuildId) - $(Agent.JobStatus)"
+
+          $body = @"
+          <div style='font-family:Segoe UI,Arial,sans-serif'>
+            <h2>Automação E2E executada após deploy</h2>
+            <p><b>Status do job:</b> $(Agent.JobStatus)</p>
+            <ul>
+              <li><b>Resumo/Tests:</b> <a href='$testsTab'>$testsTab</a></li>
+              <li><b>Job completo:</b> <a href='$buildUrl'>$buildUrl</a></li>
+            </ul>
+            <p>Artefatos (TRX, traces) disponíveis neste job.</p>
+          </div>
+          "@
+
+          $secure = ConvertTo-SecureString "$(SmtpPass)" -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential("$(SmtpUser)", $secure)
+
+          Send-MailMessage `
+            -From '$(EmailFrom)' `
+            -To '$(EmailTo)' `
+            -Subject $subject `
+            -Body $body `
+            -BodyAsHtml `
+            -SmtpServer '$(SmtpHost)' `
+            -Port $(SmtpPort) `
+            -UseSsl `
+            -Credential $cred
