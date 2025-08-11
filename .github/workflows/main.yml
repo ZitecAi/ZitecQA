@@ -1,0 +1,83 @@
+name: E2E - Playwright + NUnit (Windows)
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_url:
+        description: "URL da aplicação alvo"
+        required: false
+        default: "https://sua-url-de-homolog-ou-local"
+      env:
+        description: "Ambiente (homolog/prod/local)"
+        required: false
+        default: "homolog"
+  push:
+    branches: ["main"]
+  # quando o repositório da aplicação disparar após o deploy
+  repository_dispatch:
+    types: [deployed]
+
+jobs:
+  e2e:
+    runs-on: windows-latest
+
+    env:
+      APP_URL: ${{ github.event.inputs.app_url || github.event.client_payload.app_url || 'https://sua-url-de-homolog-ou-local' }}
+      ENVIRONMENT: ${{ github.event.inputs.env || github.event.client_payload.env || 'homolog' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release --no-restore
+
+      - name: Install Playwright browsers
+        shell: pwsh
+        run: |
+          $pw = Get-ChildItem -Recurse -Filter "playwright.ps1" | Select-Object -First 1
+          if (-not $pw) { Write-Error "playwright.ps1 não encontrado (verifique Microsoft.Playwright no projeto)"; exit 1 }
+          pwsh $pw.FullName install --with-deps
+
+      - name: Run tests (gera allure-results)
+        shell: pwsh
+        run: |
+          $env:APP_URL="${{ env.APP_URL }}"   # seu código pode ler via Environment.GetEnvironmentVariable("APP_URL")
+          dotnet test -c Release --logger "trx;LogFileName=test-results.trx"
+          if (-not (Test-Path "./allure-results")) { Write-Error "allure-results não encontrado. Confira Allure.NUnit + allureConfig.json."; exit 1 }
+
+      # Gera o relatório HTML do Allure (no runner) e publica como artefato
+      - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@v1.8
+        with:
+          results_dir: allure-results
+          report_dir: allure-report
+        continue-on-error: true
+
+      - name: Upload Allure Report (HTML)
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+
+      - name: Upload Allure Results (raw)
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Upload TRX
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-trx
+          path: "**/test-results.trx"
