@@ -17,9 +17,10 @@ variables:
   TestResultsDir: '$(System.DefaultWorkingDirectory)\TestResults'
   TestProject: 'PortalIDSFTestes\PortalIDSFTestes.csproj'
   EmailTo: 'al@zitec.ai'
-  EmailFrom: 'no-reply@zitec.ai'          # <-- usa o mesmo que autentica
+  EmailFrom: 'no-reply@zitec.ai'     # remetente desejado (mailbox/alias com Send As concedido)
   SmtpHost: 'smtp.office365.com'
   SmtpPort: '587'
+  # SmtpUser e SmtpPass devem ser definidos como variáveis secretas no pipeline (ex.: qa-bot@zitec.ai)
 
 stages:
 - stage: e2e_tests
@@ -82,6 +83,11 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
+          $from = '$(EmailFrom)'   # no-reply@zitec.ai
+          $user = '$(SmtpUser)'    # ex.: qa-bot@zitec.ai (com Send As sobre no-reply)
+          if ($from -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') { throw "EmailFrom inválido: '$from'" }
+          if ($user -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') { throw "SmtpUser inválido (precisa ser e-mail)." }
+
           $buildUrl = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
           $testsTab = "$buildUrl&_a=summary"
           $subject = "[E2E] Pós-deploy - $(Build.SourceBranchName) #$(Build.BuildId) - $(Agent.JobStatus)"
@@ -95,6 +101,17 @@ stages:
             </ul>
           </div>
           "@
+
           $secure = ConvertTo-SecureString "$(SmtpPass)" -AsPlainText -Force
-          $cred = New-Object System.Management.Automation.PSCredential("$(SmtpUser)", $secure)
-          Send-MailMessage -From '$(SmtpUser)' -To '$(EmailTo)' -Subject $subject -Body $body -BodyAsHtml -SmtpServer '$(SmtpHost)' -Port $(SmtpPort) -UseSsl -Credential $cred
+          $cred = New-Object System.Management.Automation.PSCredential($user, $secure)
+
+          Send-MailMessage `
+            -From $from `
+            -To '$(EmailTo)' `
+            -Subject $subject `
+            -Body $body `
+            -BodyAsHtml `
+            -SmtpServer '$(SmtpHost)' `
+            -Port $(SmtpPort) `
+            -UseSsl `
+            -Credential $cred
