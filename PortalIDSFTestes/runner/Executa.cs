@@ -6,9 +6,9 @@ namespace PortalIDSFTestes.runner
 {
     public abstract class Executa
     {
-        private IPlaywright playwright;
-        private IBrowser browser;
-        private IBrowserContext context;
+        private IPlaywright? playwright;
+        private IBrowser? browser;
+        private IBrowserContext? context;
 
         protected async Task<IPage> AbrirBrowserAsync()
         {
@@ -36,5 +36,7 @@ namespace PortalIDSFTestes.runner
                 await browser.CloseAsync();
             playwright?.Dispose();
         }
+
+
     }
 }
