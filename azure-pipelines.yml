@@ -17,9 +17,10 @@ variables:
   TestResultsDir: '$(System.DefaultWorkingDirectory)\TestResults'
   TestProject: 'PortalIDSFTestes\PortalIDSFTestes.csproj'
   EmailTo: 'al@zitec.ai'
-  EmailFrom: 'no-reply@zitec.ai'          # <-- usa o mesmo que autentica
+  EmailFrom: 'no-reply@zitec.ai'     # remetente visível
   SmtpHost: 'smtp.office365.com'
   SmtpPort: '587'
+  # ATENÇÃO: crie MailUser e MailPass como variáveis secretas no pipeline (ver instruções abaixo)
 
 stages:
 - stage: e2e_tests
@@ -82,6 +83,11 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
+          $from = '$(EmailFrom)'     # no-reply@zitec.ai (precisa de Send As)
+          $user = '$(MailUser)'      # ex.: qa-bot@zitec.ai (quem autentica)
+          if ($from -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') { throw "EmailFrom inválido: '$from'" }
+          if ($user -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') { throw "MailUser inválido (precisa ser e-mail)." }
+
           $buildUrl = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
           $testsTab = "$buildUrl&_a=summary"
           $subject = "[E2E] Pós-deploy - $(Build.SourceBranchName) #$(Build.BuildId) - $(Agent.JobStatus)"
@@ -95,6 +101,17 @@ stages:
             </ul>
           </div>
           "@
-          $secure = ConvertTo-SecureString "$(SmtpPass)" -AsPlainText -Force
-          $cred = New-Object System.Management.Automation.PSCredential("$(SmtpUser)", $secure)
-          Send-MailMessage -From '$(SmtpUser)' -To '$(EmailTo)' -Subject $subject -Body $body -BodyAsHtml -SmtpServer '$(SmtpHost)' -Port $(SmtpPort) -UseSsl -Credential $cred
+
+          $secure = ConvertTo-SecureString "$(MailPass)" -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential($user, $secure)
+
+          Send-MailMessage `
+            -From $from `
+            -To '$(EmailTo)' `
+            -Subject $subject `
+            -Body $body `
+            -BodyAsHtml `
+            -SmtpServer '$(SmtpHost)' `
+            -Port $(SmtpPort) `
+            -UseSsl `
+            -Credential $cred
