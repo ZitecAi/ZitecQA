@@ -105,9 +105,44 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na barra de pesquisa");
             await metodo.Escrever(el.BarraPesquisaTabela, nomeCsvNegativo, "Digitar o nome do arquivo na pesquisa");
             await metodo.VerificarTextoAusenteNaTabela(page, el.TabelaOperacoes, nomeCsvNegativo, "Validar que o Arquivo " + nomeCsvNegativo + " não foi aceito na Tabela");
-
-
         }
+
+        public async Task EnviarOperacoesCSVNegativo(params string[] nomesCsvNegativos)
+        {
+            foreach (var nomeCsv in nomesCsvNegativos)
+            {
+                await metodo.Clicar(el.BtnNovaOperacaoCSV, "Clicar no botão para enviar uma Nova Operação CSV");
+                await metodo.ClicarNoSeletor(el.SelectFundoCSV, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
+
+                await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, caminhoArquivoCSVNegativo + nomeCsv, "Enviar Arquivo CSV no Input");
+
+                var caminhoLastro = @"C:\TempQA\Arquivos\Arquivo teste.zip";
+                await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
+
+                await metodo.Escrever(el.CampoObservacao, "Teste de Arquivo CSV Negativo", "Escrever no campo observação ao enviar arquivo CSV");
+                await metodo.Clicar(el.BtnEnviarOperacaoCSV, "Clicar no botão para Confirmar Envio uma Nova Operação CSV");
+                await metodo.Clicar(el.BtnFecharModalOperacaoCsv, "Fechar modal csv");
+
+
+                // Pesquisa e valida ausência
+                await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na barra de pesquisa");
+                // (opcional) limpa caso tenha texto anterior
+                await page.FillAsync(el.BarraPesquisaTabela, "");
+                await metodo.Escrever(el.BarraPesquisaTabela, nomeCsv, "Digitar o nome do arquivo na pesquisa");
+
+                await metodo.VerificarTextoAusenteNaTabela(
+                    page,
+                    el.TabelaOperacoes,
+                    nomeCsv,
+                    "Validar que o Arquivo " + nomeCsv + " não foi aceito na Tabela"
+                );
+
+                // Volta ao início para o próximo arquivo
+                await page.ReloadAsync(new() { WaitUntil = WaitUntilState.NetworkIdle });
+                await page.WaitForSelectorAsync(el.BtnNovaOperacaoCSV, new() { State = WaitForSelectorState.Visible, Timeout = 15000 });
+            }
+        }
+
 
 
         public async Task ConsultarCNABPeloHistoricoImportacoes()
@@ -159,6 +194,17 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão para confirmar excluisão do arquivo");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar se mensagem de arquivo excluido com sucesso está visivel!");
         }
+
+
+        public async Task AlterarStatus()
+        {
+
+        }
+
+
+
+
+
 
     }
 }

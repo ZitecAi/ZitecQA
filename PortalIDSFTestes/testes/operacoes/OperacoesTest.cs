@@ -127,7 +127,42 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
 
-        
+        [Test, Order(9)]
+        public async Task Nao_Deve_Aceitar_Uma_Operacao_CSV_Negativo()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.EnviarOperacoesCSVNegativo("TesteNegativoCnpjCedenteEmBranco.csv",
+                                                        "TesteNegativoCnpjCedenteInvalido13Char.csv",
+                                                        "TesteNegativoCnpjCedenteInvalido15Char.csv",
+                                                        "TesteNegativoCnpjOriginadorEmBranco - Copia.csv",
+                                                        "TesteNegativoCnpjOriginadorInvalido13Char.csv",
+                                                        "TesteNegativoCnpjOriginadorInvalido15Char.csv",
+                                                        "TesteNegativoCnpjSacadoEmBranco.csv",
+                                                        "TesteNegativoCnpjSacadoInvalido13Char.csv",
+                                                        "TesteNegativoCnpjSacadoInvalido15Char.csv",
+                                                        "TesteNegativoDataAqEmBranco.csv",
+                                                        "TesteNegativoDataAqFormatoInv.csv",
+                                                        "TesteNegativoDataAqPassado.csv",
+                                                        "TesteNegativoDataEmisEmBranco.csv",
+                                                        "TesteNegativoDataEmissPassado.csv",
+                                                        "TesteNegativoDataVencEmBranco.csv",
+                                                        "TesteNegativoDataVencFormatoInv.csv",
+                                                        "TesteNegativoDataVencPassado.csv",
+                                                        "TesteNegativoNomeCedenteEmBranco.csv",
+                                                        "TesteNegativoNomeCedenteInexistente.csv",
+                                                        "TesteNegativoNomeCedenteInvalido.csv",
+                                                        "TesteNegativoNomeSacadoEmBranco.csv",
+                                                        "TesteNegativoNomeSacadoInexistente.csv",
+                                                        "TesteNegativoNomeSacadoInvalido.csv",
+                                                        "TesteNegativoNuDocEmBranco.csv",
+                                                        "TesteNegativoNuDocInexistente.csv",
+                                                        "TesteNegativoNuDocInvalido.csv",
+                                                        "TesteNegativoSeuNumeroEmBranco.csv",
+                                                        "TesteNegativoSeuNumeroInexistente.csv",
+                                                        "TesteNegativoSeuNumeroInvalido.csv");
+        }
+
+
 
 
 
