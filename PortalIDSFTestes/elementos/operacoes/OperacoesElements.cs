@@ -35,6 +35,8 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string BtnLixeira { get; } = "//span[@class='dtr-data']//button[@title='Excluir Arquivo']";
         public string CampoMotivoExcluirArquivo { get; } = "#motivoExcluirArquivo";
         public string BtnConfirmarExclusao { get; } = "//div[@id='footerModalExcluirArquivo']//button[text()='Confirmar']";
+        public string BtnFecharModalOperacaoCnab { get; } = "#btnFecharNovoOperacao";
+        public string TabelaOperacoes { get; } = "#divTabelaCedentes";
 
         //Feat 7980
         //public string btnNovaOperacaoCNAB { get; } = "//span[text()='Nova Operação - CNAB']";

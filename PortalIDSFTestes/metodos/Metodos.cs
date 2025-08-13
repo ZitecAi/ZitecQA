@@ -146,7 +146,7 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-        public async Task VerificarTextoAusenteNaTabela(IPage page, string seletorTabela, string textoIndesejado, string passo)
+        public async Task VerificarTextoAusenteNaTabela(IPage page, string seletorTabela, string textoDesejado, string passo)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace PortalIDSFTestes.metodos
                 {
                     var texto = await locator.Nth(i).InnerTextAsync();
 
-                    if (!string.IsNullOrWhiteSpace(texto) && texto.Contains(textoIndesejado, StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(texto) && texto.Contains(textoDesejado, StringComparison.OrdinalIgnoreCase))
                     {
                         textoEncontrado = true;
                         Console.WriteLine($"❌ Texto indesejado encontrado: {texto}");
@@ -173,8 +173,8 @@ namespace PortalIDSFTestes.metodos
                     }
                 }
 
-                Assert.IsFalse(textoEncontrado, $"❌ O texto indesejado '{textoIndesejado}' foi encontrado no(s) elemento(s) com seletor: {seletorTabela}");
-                Console.WriteLine($"✅ O texto '{textoIndesejado}' não está presente na tabela.");
+                Assert.IsFalse(textoEncontrado, $"❌ O texto indesejado '{textoDesejado}' foi encontrado no(s) elemento(s) com seletor: {seletorTabela}");
+                Console.WriteLine($"✅ O texto '{textoDesejado}' não está presente na tabela.");
             }
             catch (TimeoutException)
             {
@@ -182,7 +182,7 @@ namespace PortalIDSFTestes.metodos
             }
             catch (Exception ex)
             {
-                throw new Exception($"❌ Erro ao verificar ausência do texto '{textoIndesejado}' na tabela no passo: {passo}.\nDetalhes: {ex.Message}");
+                throw new Exception($"❌ Erro ao verificar ausência do texto '{textoDesejado}' na tabela no passo: {passo}.\nDetalhes: {ex.Message}");
             }
         }
 
@@ -362,53 +362,60 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-        public async Task<string> AtualizarDataEEnviarArquivo(IPage page, string caminhoArquivo)
+        public async Task<string> AtualizarDataEEnviarArquivo(IPage page, string caminhoArquivo, string passo)
         {
-            var linhas = File.ReadAllLines(caminhoArquivo);
-
-            // Atualizando data
-            string dataAtual = DateTime.Now.ToString("ddMMyy");
-            string DataArquivoTemplate = linhas[0].Substring(94, 6);
-            string AnteriorData = linhas[0].Substring(0, 94);
-            string PosData = linhas[0].Substring(101);
-            linhas[0] = linhas[0].Replace("#DATA#", dataAtual);
-
-            // Atualizando num consultoria
-            Random random = new Random();
-            for (int i = 1; i <= 7; i++)
+            try
             {
-                string randomNumber = "";
-                for (int j = 0; j < 25; j++)
+                var linhas = File.ReadAllLines(caminhoArquivo);
+
+                // Atualizando data
+                string dataAtual = DateTime.Now.ToString("ddMMyy");
+                string DataArquivoTemplate = linhas[0].Substring(94, 6);
+                string AnteriorData = linhas[0].Substring(0, 94);
+                string PosData = linhas[0].Substring(101);
+                linhas[0] = linhas[0].Replace("#DATA#", dataAtual);
+
+                // Atualizando num consultoria
+                Random random = new Random();
+                for (int i = 1; i <= 7; i++)
                 {
-                    randomNumber += random.Next(0, 10).ToString();
+                    string randomNumber = "";
+                    for (int j = 0; j < 25; j++)
+                    {
+                        randomNumber += random.Next(0, 10).ToString();
+                    }
+
+                    linhas[i] = linhas[i].Replace("#DOC_NUMERO_CONSULTORIA_#", randomNumber);
+
+                    string randomNumberNumDoc = "";
+                    for (int j = 0; j < 10; j++)
+                    {
+                        randomNumberNumDoc += random.Next(0, 10).ToString();
+                    }
+
+                    linhas[i] = linhas[i].Replace("#NUM_DOCU#", randomNumberNumDoc);
                 }
 
-                linhas[i] = linhas[i].Replace("#DOC_NUMERO_CONSULTORIA_#", randomNumber);
+                string dataFormatada = DateTime.Now.ToString("yyyyMMdd");
 
-                string randomNumberNumDoc = "";
-                for (int j = 0; j < 10; j++)
-                {
-                    randomNumberNumDoc += random.Next(0, 10).ToString();
-                }
+                // Usar GUID para garantir que o nome do arquivo seja único
+                string uniqueIdentifier = Guid.NewGuid().ToString().Split('-')[0]; // Pega apenas a primeira parte do GUID
+                string novoNomeArquivo = $"FundoQA_{dataFormatada}_{uniqueIdentifier}.txt";
+                string novoCaminhoArquivo = Path.Combine(Path.GetDirectoryName(caminhoArquivo), novoNomeArquivo);
 
-                linhas[i] = linhas[i].Replace("#NUM_DOCU#", randomNumberNumDoc);
+
+                File.WriteAllLines(novoCaminhoArquivo, linhas);
+
+                await page.Locator("#fileEnviarOperacoes").SetInputFilesAsync(new[] { novoCaminhoArquivo });
+
+                Console.WriteLine($"Arquivo {novoNomeArquivo} enviado com sucesso.");
+
+                return novoNomeArquivo;
             }
-
-            string dataFormatada = DateTime.Now.ToString("yyyyMMdd");
-
-            // Usar GUID para garantir que o nome do arquivo seja único
-            string uniqueIdentifier = Guid.NewGuid().ToString().Split('-')[0]; // Pega apenas a primeira parte do GUID
-            string novoNomeArquivo = $"FundoQA_{dataFormatada}_{uniqueIdentifier}.txt";
-            string novoCaminhoArquivo = Path.Combine(Path.GetDirectoryName(caminhoArquivo), novoNomeArquivo);
-
-
-            File.WriteAllLines(novoCaminhoArquivo, linhas);
-
-            await page.Locator("#fileEnviarOperacoes").SetInputFilesAsync(new[] { novoCaminhoArquivo });
-
-            Console.WriteLine($"Arquivo {novoNomeArquivo} enviado com sucesso.");
-
-            return novoNomeArquivo;
+            catch
+            {
+                throw new Exception("Não foi possivel Encontrar Arquivo " + caminhoArquivo + " No passo: " + passo);
+            }
         }
 
         private static readonly Random random = new();

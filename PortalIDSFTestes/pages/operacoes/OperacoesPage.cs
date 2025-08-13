@@ -17,8 +17,8 @@ namespace PortalIDSFTestes.pages.operacoes
 
         string caminhoArquivoCNAB = @"C:\TempQA\Arquivos\CNABz - Copia.txt";
         string caminhoArquivoCSV = @"C:\TempQA\Arquivos\arquivoteste_operacoescsv_qa.csv";
-
-
+        string caminhoArquivoCnabNegativo = @"C:\TempQA\Arquivos\";
+        string caminhoArquivoCSVNegativo = @"C:\TempQA\Arquivos\";
 
         public OperacoesPage(IPage page)
         {
@@ -35,10 +35,47 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await metodo.Clicar(el.BtnNovaOperacaoCNAB,"Clicar no botão para enviar uma Nova Operação CNAB");
             await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            var enviarArquivo = await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCNAB);
+            await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCNAB,"Enviar Arquivo CNAB para teste positivo");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar Mensagem de Sucesso retornada");
             
         }
+        public async Task EnviarOperacaoCNABNegativo(string nomeCnabNegativo)
+        {
+            await metodo.Clicar(el.BtnNovaOperacaoCNAB,"Clicar no botão para enviar uma Nova Operação CNAB");
+            await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
+            await metodo.EnviarArquivo(el.EnviarOperacaoInput, caminhoArquivoCnabNegativo + nomeCnabNegativo, "Enviar Arquivo CNAB negativo");
+            //await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCnabNegativo + nomeCnabNegativo,"Enviar Arquivo CNAB para teste negativo");
+            await metodo.Clicar(el.BtnFecharModalOperacaoCnab, "Clicar no 'X' para fechar modal de nova operacao cnab");
+            await metodo.Clicar(el.TabelaOperacoes, "Clicar na barra de pesquisa");
+            await metodo.Escrever(el.TabelaOperacoes,nomeCnabNegativo, "Clicar na barra de pesquisa");
+            await metodo.VerificarTextoAusenteNaTabela(page,el.TabelaOperacoes,nomeCnabNegativo,"Validar que o Arquivo " + nomeCnabNegativo +" não foi aceito na Tabela");
+        }
+
+        public async Task EnviarOperacoesCNABNegativo(params string[] nomesCnabNegativo)
+        {
+            foreach (var nomeCnabNegativo in nomesCnabNegativo)
+            {
+                await metodo.Clicar(el.BtnNovaOperacaoCNAB, "Clicar no botão para enviar uma Nova Operação CNAB");
+                await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
+                await metodo.EnviarArquivo(el.EnviarOperacaoInput, caminhoArquivoCnabNegativo + nomeCnabNegativo, "Enviar Arquivo CNAB negativo");
+                //await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCnabNegativo + nomeCnabNegativo,"Enviar Arquivo CNAB para teste negativo");
+                await metodo.Clicar(el.BtnFecharModalOperacaoCnab, "Clicar no 'X' para fechar modal de nova operacao cnab");
+
+                await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na barra de pesquisa");
+
+                // opcional: limpe a busca, caso o app preserve o texto após reloads
+                // await metodo.Limpar(el.TabelaOperacoes);
+
+                await metodo.Escrever(el.BarraPesquisaTabela, nomeCnabNegativo, "Digitar o nome do arquivo na pesquisa");
+                await metodo.VerificarTextoAusenteNaTabela(page, el.TabelaOperacoes, nomeCnabNegativo, "Validar que o Arquivo " + nomeCnabNegativo + " não foi aceito na Tabela");
+
+                // volta ao início para o próximo arquivo
+                await page.ReloadAsync(new() { WaitUntil = WaitUntilState.NetworkIdle });
+                await page.WaitForSelectorAsync(el.BtnNovaOperacaoCNAB, new() { State = WaitForSelectorState.Visible, Timeout = 15000 });
+            }
+        }
+
+
 
         public async Task EnviarOperacaoCSV()
         {
@@ -55,6 +92,23 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar Mensagem de Sucesso retornada");
 
         }
+
+        public async Task EnviarOperacaoCSVNegativo(string nomeCsvNegativo)
+        {
+            await metodo.Clicar(el.BtnNovaOperacaoCSV, "Clicar no botão para enviar uma Nova Operação CSV");
+            await metodo.ClicarNoSeletor(el.SelectFundoCSV, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
+            await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, caminhoArquivoCSVNegativo + nomeCsvNegativo, "Enviar Arquivo CSV no Input");
+            var caminhoLastro = @"C:\TempQA\Arquivos\Arquivo teste.zip";
+            await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
+            await metodo.Escrever(el.CampoObservacao, "Teste de Arquivo CSV Negativo", "Escrever no campo observação ao enviar arquivo CSV");
+            await metodo.Clicar(el.BtnEnviarOperacaoCSV, "Clicar no botão para Confirmar Envio uma Nova Operação CSV");
+            await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na barra de pesquisa");
+            await metodo.Escrever(el.BarraPesquisaTabela, nomeCsvNegativo, "Digitar o nome do arquivo na pesquisa");
+            await metodo.VerificarTextoAusenteNaTabela(page, el.TabelaOperacoes, nomeCsvNegativo, "Validar que o Arquivo " + nomeCsvNegativo + " não foi aceito na Tabela");
+
+
+        }
+
 
         public async Task ConsultarCNABPeloHistoricoImportacoes()
         {

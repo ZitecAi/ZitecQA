@@ -89,9 +89,47 @@ namespace PortalIDSFTestes.testes.operacoes
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.ExcluirArquivo();
-        }            
-     
-        // esperar Correção na paginação para arquivo teste. arquivo enviado não aparece na tabela
+        }
+
+        [Test, Order(8)]
+        public async Task Nao_Deve_Aceitar_Uma_Operacao_CNAB_Negativo()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.EnviarOperacoesCNABNegativo("CTN-01_CnpjOriginadorEmBranco.txt",
+                                                        "CTN-02_CnpjOriginadorInvalido13Char.txt",
+                                                        "CTN-03_CnpjOriginadorInvalido15Char.txt",
+                                                        "CTN-04_NomeCedenteEmBranco.txt",
+                                                        "CTN-05_NomeCedenteInexistente.txt",
+                                                        "CTN-06_NomeCedenteInvalido.txt",
+                                                        "CTN-07_CnpjCedenteEmBranco.txt",
+                                                        "CTN-08_CnpjCedenteInvalido13Char.txt",
+                                                        "CTN-09_CnpjCedenteInvalido15Char.txt",
+                                                        "CTN-10_NomeSacadoEmBranco.txt",
+                                                        "CTN-11_NomeSacadoInexistente.txt",
+                                                        "CTN-12_NomeSacadoInvalido.txt",
+                                                        "CTN-13_CnpjSacadoEmBranco.txt",
+                                                        "CTN-14_CnpjSacadoInvalido13Char.txt",
+                                                        "CTN-15_CnpjSacadoInvalido15Char.txt",
+                                                        "CTN-16_DataVencimentoFormatoInválido.txt",
+                                                        "CTN-17_DataVencimentoEmBranco.txt",
+                                                        "CTN-18_DataVencimentoNoPassado.txt",
+                                                        "CTN-19_DataEmissãoEmBranco.txt",
+                                                        "CTN-20_DataEmissãoNoPassado.txt",
+                                                        "CTN-21_DataAquisiçãoFormatoInválido.txt",
+                                                        "CTN-22_DataAquisiçãoEmBranco.txt",
+                                                        "CTN-23_DataAquisiçãoNoPassado.txt",
+                                                        "CTN-24_NumeroDocumentoEmBranco.txt",
+                                                        "CTN-25_NumeroDocumentoInexistente.txt",
+                                                        "CTN-26_NumeroDocumentoInvalido.txt",
+                                                        "CTN-27_SeuNumeroEmBranco.txt",
+                                                        "CTN-28_SeuNumeroInexistente.txt",
+                                                        "CTN-29_SeuNumeroInvalido.txt");
+        }
+
+
+        
+
+
 
     }
 }
