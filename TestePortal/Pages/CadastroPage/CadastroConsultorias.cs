@@ -41,6 +41,7 @@ namespace TestePortal.Pages.CadastroPage
                     pagina.StatusCode = CadastroConsultorias.Status;
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Acentos == "❌")
                     {

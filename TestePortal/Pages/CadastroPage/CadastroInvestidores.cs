@@ -46,6 +46,7 @@ namespace TestePortal.Pages.CadastroPage
                     pagina.BaixarExcel = "❓";
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Acentos == "❌")
                     {
@@ -1708,6 +1709,7 @@ namespace TestePortal.Pages.CadastroPage
                     pagina.BaixarExcel = "❓";
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Acentos == "❌")
                     {

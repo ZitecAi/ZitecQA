@@ -34,7 +34,7 @@ namespace TestePortal.Pages.AdministrativoPage
                     pagina.StatusCode = PaginaAdministrativoToken.Status;
 
 
-
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌") errosTotais++;
                     pagina.Listagem = "❓";

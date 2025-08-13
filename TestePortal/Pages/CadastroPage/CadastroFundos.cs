@@ -40,6 +40,7 @@ namespace TestePortal.Pages.CadastroPage
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
                     pagina.Listagem = Listagem.VerificarListagem(Page, seletorTabela).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Listagem == "❌")
                     {

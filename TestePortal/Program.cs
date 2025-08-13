@@ -32,6 +32,7 @@ namespace TestePortalIDSF
     {
         public static IPage Page { get; set; }
         public static List<Usuario> Usuarios { get; set; }
+        public static Usuario UsuarioAtual { get; set; }
 
         public static Operacoes operacoes = new Operacoes();
         public static IConfigurationRoot Config { get; set; }
@@ -94,13 +95,13 @@ namespace TestePortalIDSF
 
             {
                 foreach (var usuario in Usuarios)
-
-
                 {
+                    UsuarioAtual = usuario;
                     listaPagina.Add(await TestePortal.Pages.LoginPage.LoginGeral.Login(Page, usuario));
 
                     if (usuario.Nivel == Usuario.NivelEnum.Master)
                     {
+                        
                         listaPagina.Add(await AdministrativoGrupos.Grupos(Page));
                         listaPagina.Add(await AdministrativoUsuarios.Usuarios(Page));
                         await Task.Delay(500);

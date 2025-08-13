@@ -33,6 +33,7 @@ namespace TestePortal.Pages.BancoIdPage
                     pagina.Nome = "BancoID/Rendimento";
                     listErros.Add("0");
                     pagina.BaixarExcel = Utils.Excel.BaixarExcelRendimentoPorId(Page).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     if (pagina.BaixarExcel == "❌")
                     {
                         errosTotais++;
