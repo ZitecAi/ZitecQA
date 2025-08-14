@@ -35,6 +35,7 @@ namespace TestePortal.Pages.BoletagemPage
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
                     pagina.InserirDados = "❓";
                     pagina.Excluir = "❓";
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Acentos == "❌")
                     {

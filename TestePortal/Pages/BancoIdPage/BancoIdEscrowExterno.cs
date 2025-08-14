@@ -35,6 +35,8 @@ namespace TestePortal.Pages.BancoIdPage
                     listErros.Add("0");
                     pagina.BaixarExcel = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
                     if (pagina.Acentos == "❌")
                     {
                         errosTotais++;

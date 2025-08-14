@@ -33,6 +33,7 @@ namespace TestePortal.Pages.CadastroPage
                     pagina.Excluir = "❓";
                     pagina.Reprovar = "❓";
                     pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     if (pagina.Listagem == "❌")
                     { 
                     errosTotais++;

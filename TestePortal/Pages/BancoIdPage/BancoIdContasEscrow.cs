@@ -36,6 +36,8 @@ namespace TestePortal.Pages.BancoIdPage
                     pagina.Excluir = "❌";
                     pagina.InserirDados = "❌";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
 
                     if (pagina.Acentos == "❌")
                     {

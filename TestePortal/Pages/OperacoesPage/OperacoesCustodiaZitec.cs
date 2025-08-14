@@ -44,11 +44,12 @@ namespace TestePortal.Pages.OperacoesPage
                     pagina.StatusCode = OperacoesZitec.Status;
                     pagina.BaixarExcel = "❓";
                     pagina.Acentos = await Acentos.ValidarAcentos(Page) ?? "❌";
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
                     if (pagina.Acentos == "❌") errosTotais++;
 
                     pagina.Listagem = await Listagem.VerificarListagem(Page, seletorTabela) ?? "❌";
                     if (pagina.Listagem == "❌") errosTotais++;
-
 
                     var processamentoFundo = Repository.OperacoesZitec.OperacoesZitecRepository.VerificaProcessamentoFundo(9991);
 
