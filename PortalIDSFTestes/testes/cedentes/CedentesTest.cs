@@ -40,7 +40,6 @@ namespace PortalIDSFTestes.testes.cedentes
         public async Task TearDown()
         {
             await FecharBrowserAsync();
-
         }
 
         [Test, Order(1)]
