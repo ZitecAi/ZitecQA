@@ -39,6 +39,7 @@ namespace TestePortal.Pages.BoletagemPage
                     errosTotais++;
                     }
                     pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Listagem == "❌")
                     {

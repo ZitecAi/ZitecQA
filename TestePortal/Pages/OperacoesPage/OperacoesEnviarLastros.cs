@@ -38,6 +38,8 @@ namespace TestePortal.Pages.OperacoesPage
                         await Task.Delay(500);
                         pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
                         pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+                        pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
 
                         if (pagina.Listagem == "❌")
                         {

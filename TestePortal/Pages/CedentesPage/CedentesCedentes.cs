@@ -35,6 +35,7 @@ namespace TestePortal.Pages.CedentesPage
                     pagina.StatusCode = BoletagemCedentes.Status;
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     if (pagina.Acentos == "❌")
                     {
                         errosTotais++;
@@ -151,6 +152,7 @@ namespace TestePortal.Pages.CedentesPage
                     pagina.StatusCode = BoletagemCedentes.Status;
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     if (pagina.Acentos == "❌")
                     {
                         errosTotais++;

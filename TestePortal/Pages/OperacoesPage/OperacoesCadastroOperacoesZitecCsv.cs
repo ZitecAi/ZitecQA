@@ -49,8 +49,9 @@ namespace TestePortal.Pages.OperacoesPage
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌") errosTotais++;
                     pagina.Listagem = Listagem.VerificarListagem(Page, seletorTabela).Result;
-                    if (pagina.Listagem == "❌") errosTotais++;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
+                    if (pagina.Listagem == "❌") errosTotais++;
                     if (nivelLogado == NivelEnum.Master)
                     {
 

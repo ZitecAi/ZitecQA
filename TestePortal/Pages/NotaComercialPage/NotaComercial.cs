@@ -34,6 +34,7 @@ namespace TestePortal.Pages.NotaComercialPage
                         pagina.StatusCode = NotaComercial.Status;
                         pagina.Nome = "Notas Comerciais";
                         pagina.Reprovar = "❓";
+                        pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                         if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                         {

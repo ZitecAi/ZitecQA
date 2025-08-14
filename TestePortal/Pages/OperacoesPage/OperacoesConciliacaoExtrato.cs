@@ -42,6 +42,8 @@ namespace TestePortal.Pages.OperacoesPage
                     pagina.Excluir = "❓";
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
 
                     if (pagina.Acentos == "❌")
                     {
@@ -60,7 +62,6 @@ namespace TestePortal.Pages.OperacoesPage
                     {
                         errosTotais++;
                     }
-
 
                     if (nivelLogado == NivelEnum.Master)
                     {
