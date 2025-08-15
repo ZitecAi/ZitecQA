@@ -15,6 +15,7 @@ namespace PortalIDSFTestes.pages.operacoes
         Metodos metodo;
         ArquivosBaixaElements el = new ArquivosBaixaElements();
         string caminhoArquivo = @"C:\TempQA\Arquivos\template.txt";
+        string caminhoArquivoNegativo = @"C:\TempQA\Arquivos\";
 
         public ArquivosBaixaPage(IPage page) 
         {
@@ -30,19 +31,35 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task EnviarArquivoBaixa()
         {
             
-            await metodo.Clicar(el.importarBaixaBtn, "Clicar no Botão para importar Baixa");
-            await metodo.ClicarNoSeletor(el.selectFundoZitec, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
+            await metodo.Clicar(el.ImportarBaixaBtn, "Clicar no Botão para importar Baixa");
+            await metodo.ClicarNoSeletor(el.SelectFundoZitec, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
             var arquivoAtualizado = await metodo.AtualizarDataArquivo(caminhoArquivo, "Atualizar Data Arquivo");
-            await metodo.EnviarArquivo(el.enviarBaixas, caminhoArquivo, "Enviar Arquivo Baixa");
-            await metodo.ValidarMsgRetornada(el.msgArquivoRecebido, "Validação mensagem arquivo recebido mas aguardando validação");
+            await metodo.EnviarArquivo(el.EnviarBaixas, caminhoArquivo, "Enviar Arquivo Baixa");
+            await metodo.ValidarMsgRetornada(el.MsgArquivoRecebido, "Validação mensagem arquivo recebido mas aguardando validação");
         }
+
+        public async Task EnviarArquivoBaixaNegativo(string nomeArquivoBaixaNegativo, string validacao)
+        {
+            await metodo.Clicar(el.ImportarBaixaBtn, "Clicar no Botão para importar Baixa");
+            await metodo.ClicarNoSeletor(el.SelectFundoZitec, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
+            //var arquivoAtualizado = await metodo.AtualizarDataArquivo(caminhoArquivoNegativo + nomeArquivoBaixaNegativo, "Atualizar Data Arquivo");
+            await metodo.EnviarArquivo(el.EnviarBaixas, caminhoArquivoNegativo + nomeArquivoBaixaNegativo, "Enviar Arquivo Baixa Negativo");
+            await metodo.Clicar(el.BtnFecharModal, "Clicar no Botão para fechar modal");
+            await metodo.Clicar(el.BarraDePesquisa, "CLicar na barra de pesquisa");
+            await metodo.Escrever(el.BarraDePesquisa, nomeArquivoBaixaNegativo, "CLicar na barra de pesquisa");
+            await metodo.ValidarTextoDoElemento(el.QtdTitulos,"0","Validar que a quantidade de Titulos é zerada");
+            //await metodo.ValidarTextoDoElemento(el.QtdOcorrencias,"0","Validar que a quantidade de Ocorrências é zerada");
+            
+        }
+
+
 
         public async Task ConsultarArquivoBaixa()
         {
             await Task.Delay(1000);
-            await metodo.Clicar(el.barraDePesquisa, "Clicar na barra de pesquisa");
-            await metodo.Escrever(el.barraDePesquisa, "template.txt", "Escrever na barra de pesquisa");
-            await metodo.VerificarElementoPresenteNaTabela(page,el.tabelaBaixas,"template.txt", "Verificar se arquivo Baixa esta presente na tabela.");
+            await metodo.Clicar(el.BarraDePesquisa, "Clicar na barra de pesquisa");
+            await metodo.Escrever(el.BarraDePesquisa, "template.txt", "Escrever na barra de pesquisa");
+            await metodo.VerificarElementoPresenteNaTabela(page,el.TabelaBaixas,"template.txt", "Verificar se arquivo Baixa esta presente na tabela.");
         }
 
         public async Task BaixarRelatorioDeTitulos()
@@ -50,10 +67,10 @@ namespace PortalIDSFTestes.pages.operacoes
             await Task.Delay(1000);
             //await metodo.Clicar(el.barraDePesquisa,"Clicar na barra de pesquisa");
             //await metodo.Escrever(el.barraDePesquisa,"QA","Escrever na barra de pesquisa");
-            await metodo.Clicar(el.primeiroTd,"Clicar no primeiro TD");
+            await metodo.Clicar(el.PrimeiroTd,"Clicar no primeiro TD");
             var download = await page.RunAndWaitForDownloadAsync(async () =>
             {
-                await page.Locator(el.btnDownloadRelatorioTitulos).ClickAsync();
+                await page.Locator(el.BtnDownloadRelatorioTitulos).ClickAsync();
             });
 
             await metodo.ValidarDownloadAsync(download, "RelatorioDeTitulos", "Baixar Relatório Titulos");
@@ -61,12 +78,12 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task BaixarRelatorioDeMovimentos()
         {
             await Task.Delay(1000);
-            await metodo.Clicar(el.barraDePesquisa, "Clicar na barra de pesquisa");
-            await metodo.Escrever(el.barraDePesquisa, "QA", "Escrever na barra de pesquisa");
-            await metodo.Clicar(el.primeiroTd, "Clicar no primeiro TD");
+            await metodo.Clicar(el.BarraDePesquisa, "Clicar na barra de pesquisa");
+            await metodo.Escrever(el.BarraDePesquisa, "QA", "Escrever na barra de pesquisa");
+            await metodo.Clicar(el.PrimeiroTd, "Clicar no primeiro TD");
             var download = await page.RunAndWaitForDownloadAsync(async () =>
             {
-                await page.Locator(el.btnDownloadRelatorioMovimentos).ClickAsync();
+                await page.Locator(el.BtnDownloadRelatorioMovimentos).ClickAsync();
             });
 
             await metodo.ValidarDownloadAsync(download, "RelatorioDeMovimentos", "Baixar Relatorio De Movimentos");
@@ -75,12 +92,12 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task GerarArquivoCnab()
         {
             await Task.Delay(1000);
-            await metodo.Clicar(el.barraDePesquisa, "Clicar na barra de pesquisa");
-            await metodo.Escrever(el.barraDePesquisa, ".rem", "Escrever na barra de pesquisa");
-            await metodo.Clicar(el.primeiroTd, "Clicar no primeiro TD");
+            await metodo.Clicar(el.BarraDePesquisa, "Clicar na barra de pesquisa");
+            await metodo.Escrever(el.BarraDePesquisa, ".rem", "Escrever na barra de pesquisa");
+            await metodo.Clicar(el.PrimeiroTd, "Clicar no primeiro TD");
             var download = await page.RunAndWaitForDownloadAsync(async () =>
             {
-                await page.Locator(el.btnDownloadArquivoCNAB).ClickAsync();
+                await page.Locator(el.BtnDownloadArquivoCNAB).ClickAsync();
             });
 
             await metodo.ValidarDownloadAsync(download, "RelatorioDeMovimentos", "Baixar Relatorio De Movimentos");
