@@ -106,6 +106,21 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: {ex.Message}");
             }
         }
+        public async Task EsperarTextoPresente(string textoEsperado, string passo)
+        {
+            try
+            {
+                await page.GetByText(textoEsperado)
+                  .WaitForAsync(new LocatorWaitForOptions
+                  {
+                      State = WaitForSelectorState.Visible
+                  });
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: {ex.Message}");
+            }
+        }
         public async Task ValidarTextoDoElemento(string locator, string textoEsperado, string passo)
         {
             try
@@ -340,6 +355,52 @@ namespace PortalIDSFTestes.metodos
                 throw new Exception($"❌ Erro ao enviar o arquivo no passo '{passo}': {ex.Message}", ex);
             }
         }
+        public async Task<string> EnviarArquivoNomeAtualizado(string locator, string caminhoArquivo, string passo)
+        {
+            try
+            {
+                Assert.IsTrue(File.Exists(caminhoArquivo),
+                    $"❌ Arquivo para envio não encontrado: {caminhoArquivo}");
+
+                var dir = Path.GetDirectoryName(caminhoArquivo) ?? Directory.GetCurrentDirectory();
+                var baseName = Path.GetFileNameWithoutExtension(caminhoArquivo);
+                var ext = Path.GetExtension(caminhoArquivo) ?? string.Empty;
+
+                // Sanitiza o nome base (remove chars inválidos para nomes de arquivo)
+                var invalid = Path.GetInvalidFileNameChars();
+                var safeBase = new string(baseName.Where(c => !invalid.Contains(c)).ToArray());
+                if (string.IsNullOrWhiteSpace(safeBase)) safeBase = "arquivo";
+
+                // Sufixo aleatório: timestamp + 6 chars do GUID
+                string NovoNome()
+                {
+                    var guid6 = Guid.NewGuid().ToString("N").Substring(0, 6); // <- aqui está a correção
+                    return $"{safeBase}_{DateTime.UtcNow:yyyyMMdd_HHmmssfff}_{guid6}{ext}";
+                }
+
+                // Gera nome único
+                string novoNome, novoCaminho;
+                do
+                {
+                    novoNome = NovoNome();
+                    novoCaminho = Path.Combine(dir, novoNome);
+                } while (File.Exists(novoCaminho));
+
+                // Cria o novo arquivo com o mesmo conteúdo
+                File.Copy(caminhoArquivo, novoCaminho, overwrite: false);
+
+                // Envia o novo arquivo
+                await page.Locator(locator).SetInputFilesAsync(novoCaminho);
+
+                Console.WriteLine($"✅ Arquivo '{novoNome}' enviado com sucesso ({passo}).");
+                return novoNome; // retorna apenas o nome, como você pediu
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"❌ Erro ao enviar o arquivo no passo '{passo}': {ex.Message}", ex);
+            }
+        }
+
 
 
 

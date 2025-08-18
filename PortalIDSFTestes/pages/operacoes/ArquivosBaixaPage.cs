@@ -43,10 +43,12 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.ImportarBaixaBtn, "Clicar no Botão para importar Baixa");
             await metodo.ClicarNoSeletor(el.SelectFundoZitec, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
             //var arquivoAtualizado = await metodo.AtualizarDataArquivo(caminhoArquivoNegativo + nomeArquivoBaixaNegativo, "Atualizar Data Arquivo");
-            await metodo.EnviarArquivo(el.EnviarBaixas, caminhoArquivoNegativo + nomeArquivoBaixaNegativo, "Enviar Arquivo Baixa Negativo");
-            await metodo.Clicar(el.BtnFecharModal, "Clicar no Botão para fechar modal");
+            var nomeNovoArquivo = await metodo.EnviarArquivoNomeAtualizado(el.EnviarBaixas, caminhoArquivoNegativo + nomeArquivoBaixaNegativo, "Enviar Arquivo Baixa Negativo");
+            await metodo.Clicar(el.BtnFecharModal, "Clicar no Botão para fechar modal");            
+            await metodo.EsperarTextoPresente("Arquivo processado com sucesso!", "Esperar mensagem aparecer para prosseguir o fluxo");
             await metodo.Clicar(el.BarraDePesquisa, "CLicar na barra de pesquisa");
-            await metodo.Escrever(el.BarraDePesquisa, nomeArquivoBaixaNegativo, "CLicar na barra de pesquisa");
+            await metodo.Escrever(el.BarraDePesquisa, nomeNovoArquivo, "Clicar na barra de pesquisa");
+
             await metodo.ValidarTextoDoElemento(el.QtdTitulos,"0","Validar que a quantidade de Titulos é zerada");
             //await metodo.ValidarTextoDoElemento(el.QtdOcorrencias,"0","Validar que a quantidade de Ocorrências é zerada");
             
@@ -58,8 +60,8 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await Task.Delay(1000);
             await metodo.Clicar(el.BarraDePesquisa, "Clicar na barra de pesquisa");
-            await metodo.Escrever(el.BarraDePesquisa, "template.txt", "Escrever na barra de pesquisa");
-            await metodo.VerificarElementoPresenteNaTabela(page,el.TabelaBaixas,"template.txt", "Verificar se arquivo Baixa esta presente na tabela.");
+            await metodo.Escrever(el.BarraDePesquisa, "cnab", "Escrever na barra de pesquisa");
+            await metodo.VerificarElementoPresenteNaTabela(page,el.TabelaBaixas, "cnab", "Verificar se arquivo Baixa esta presente na tabela.");
         }
 
         public async Task BaixarRelatorioDeTitulos()
