@@ -92,6 +92,8 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(8)]
+        //[Ignore("Esse teste está em manutenção.")]
+
         public async Task Nao_Deve_Aceitar_Uma_Operacao_CNAB_Negativo()
         {
             var operacoes = new OperacoesPage(page);
@@ -128,6 +130,8 @@ namespace PortalIDSFTestes.testes.operacoes
 
 
         [Test, Order(9)]
+        //[Ignore("Esse teste está em manutenção.")]
+
         public async Task Nao_Deve_Aceitar_Uma_Operacao_CSV_Negativo()
         {
             var operacoes = new OperacoesPage(page);
