@@ -84,7 +84,7 @@ stages:
         targetType: 'inline'
         script: |
           $from = '$(EmailFrom)'     # no-reply@zitec.ai (precisa de Send As)
-          $user = '$(MailUser)'      # ex.: qa-bot@zitec.ai (quem autentica)
+          $user = 'AKIA2CUNLQNRSSGO6QFX'      # ex.: qa-bot@zitec.ai (quem autentica)
           if ($from -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') { throw "EmailFrom inválido: '$from'" }
           if ($user -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') { throw "MailUser inválido (precisa ser e-mail)." }
 
@@ -102,7 +102,7 @@ stages:
           </div>
           "@
 
-          $secure = ConvertTo-SecureString "$(MailPass)" -AsPlainText -Force
+          $secure = ConvertTo-SecureString "BE0cHhRloF8n8A3hqHLFE3QWAQuZ4g5NSHW5ThRqHuse" -AsPlainText -Force
           $cred = New-Object System.Management.Automation.PSCredential($user, $secure)
 
           Send-MailMessage `
