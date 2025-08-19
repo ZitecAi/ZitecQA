@@ -61,7 +61,7 @@ namespace TestePortal.Pages.CedentesPage
 
                     {
 
-                        Timeout = 90000
+                        Timeout = 25000
 
                     });
 

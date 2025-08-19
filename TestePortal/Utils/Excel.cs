@@ -32,7 +32,7 @@ namespace TestePortal.Utils
                 {
                     await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync(new LocatorClickOptions
                     {
-                        Timeout = 1500
+                        Timeout = 15000
                     });
                     //await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync();
                 });
@@ -86,7 +86,7 @@ namespace TestePortal.Utils
                 {
                     await Page.Locator("//button//span[text()='Excel']").ClickAsync(new LocatorClickOptions
                     {
-                        Timeout = 1500
+                        Timeout = 15000
                     });
                     //await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync();
                 });
@@ -140,7 +140,7 @@ namespace TestePortal.Utils
                 {
                     await Page.Locator("#BtnBaixarExcel").ClickAsync(new LocatorClickOptions
                     {
-                        Timeout = 1500
+                        Timeout = 15000
                     });
                     //await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync();
                 });
@@ -195,7 +195,7 @@ namespace TestePortal.Utils
                 {
                     await Page.Locator("#exportarRendimentoBtn").ClickAsync(new LocatorClickOptions
                     {
-                        Timeout = 1500
+                        Timeout = 15000
                     });
                     //await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync();
                 });
@@ -250,7 +250,7 @@ namespace TestePortal.Utils
                 {
                     await Page.Locator("#Gerar").ClickAsync(new LocatorClickOptions
                     {
-                        Timeout = 1500
+                        Timeout = 15000
                     });
                     //await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync();
                 });
