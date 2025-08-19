@@ -1,4 +1,7 @@
-﻿using Microsoft.Playwright;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
+using static Microsoft.Playwright.Assertions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using static TestePortal.Model.Usuario;
-using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages.BoletagemPage
 {
@@ -54,49 +56,35 @@ namespace TestePortal.Pages.BoletagemPage
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
-                        var apagarBoletagemAporte2 = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("Jessica Tavares", "cota");
-                        await Page.Locator("#tableButton").ClickAsync();
+                        var apagarBoletagemAporte2 = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("Jessica Tavares", "COTAFIXA");
+                        await Page.Locator("//button[text()='Novo +']").ClickAsync();
                         await Task.Delay(200);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).ClickAsync();
-                        await Task.Delay(200);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).FillAsync("30/08/2024");
-                        await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "0000,00" }).ClickAsync();
-                        await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "0000,00" }).FillAsync("R$10");
-                        await Task.Delay(200);
+                        await Page.Locator("#ValorAporte").ClickAsync();
+                        await Page.Locator("#ValorAporte").FillAsync("R$10");
                         await Page.Locator("#CPFCotista").ClickAsync();
-                        await Task.Delay(200);
                         await Page.Locator("#CPFCotista").FillAsync("49624866830");
-                        await Task.Delay(200);
                         await Page.Locator("#NomeCotista").ClickAsync();
-                        await Task.Delay(200);
                         await Page.Locator("#NomeCotista").FillAsync("Jessica Tavares");
-                        await Task.Delay(200);
-                        await Page.GetByPlaceholder("Tipo de Cota").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.GetByPlaceholder("Tipo de Cota").FillAsync("cota");
-                        await Task.Delay(200);
-                        await Page.GetByText("Escolha o fundo:* Escolha o").ClickAsync();
-                        await Task.Delay(200);
-                        await Page.Locator("#Fundos").SelectOptionAsync(new[] { "54638076000176" });
-                        await Task.Delay(200);
+                        await Page.Locator("#tipoCota").SelectOptionAsync("COTAFIXA");
+                        await Page.Locator("#valorCota").FillAsync("100");
+                        await Page.Locator("#Fundos").SelectOptionAsync("54638076000176");
                         await Page.Locator("#fileBoleta").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "documentosteste.zip" });
-                        await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
-                        await Task.Delay(200);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("Observaç");
-                        await Task.Delay(200);
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(500);
+                        var msgPresente = Expect(Page.GetByText("Boleta recebida com sucesso!")).ToBeVisibleAsync();
+                        
 
-                        var BoletagemAporteExiste = Repository.BoletagemAporte.BoletagemAporteRepository.VerificaExistenciaBoletagemAporte("Jessica Tavares", "cota");
+                        
 
-                        if (BoletagemAporteExiste)
+                        var BoletagemAporteExiste = Repository.BoletagemAporte.BoletagemAporteRepository.VerificaExistenciaBoletagemAporte("Jessica Tavares", "COTAFIXA");
+
+                        if (BoletagemAporteExiste && msgPresente != null)
                         {
                             Console.WriteLine("Boleta adicionada com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarBoletagemAporte = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("Jessica Tavares", "cota");
+                            var apagarBoletagemAporte = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("Jessica Tavares", "COTAFIXA");
 
                             if (apagarBoletagemAporte)
                             {

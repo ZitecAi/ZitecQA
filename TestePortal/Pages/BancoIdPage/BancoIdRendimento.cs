@@ -49,6 +49,7 @@ namespace TestePortal.Pages.BancoIdPage
                     {
                         errosTotais++;
                     }
+                    pagina.InserirDados = "❓";
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
                         //await Page.PauseAsync();

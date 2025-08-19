@@ -43,7 +43,7 @@ namespace TestePortal.Pages.CadastroPage
                     {
                         errosTotais++;
                     }
-                    pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
+                    pagina.BaixarExcel = Utils.Excel.BaixarExcelPorTexto(Page).Result;
                     if (pagina.BaixarExcel == "❌")
                     {
                         errosTotais++;

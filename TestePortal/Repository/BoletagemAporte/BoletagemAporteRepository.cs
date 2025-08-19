@@ -19,7 +19,7 @@ namespace TestePortal.Repository.BoletagemAporte
                 {
                     myConnection.Open();
 
-                    string query = "SELECT 1 FROM Boleta WHERE NomeCotista = @nomeCotista AND TipoCota = @tipoCota";
+                    string query = "SELECT * FROM Boleta WHERE NomeCotista = @nomeCotista AND TipoCota = @tipoCota";
                     using (SqlCommand oCmd = new SqlCommand(query, myConnection))
                     {
                         oCmd.Parameters.AddWithValue("@nomeCotista", nomeCotista);

@@ -38,6 +38,7 @@ namespace TestePortal.Pages.AdministrativoPage
                     string seletorTabela = "#tabelaCedentes";
 
                     pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
+                    pagina.InserirDados = "❓";
 
                     if (pagina.Listagem == "❌")
                     {
