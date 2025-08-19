@@ -1,7 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
-using static Microsoft.Playwright.Assertions;
+using Segment.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,13 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using static Microsoft.Playwright.Assertions;
 using static TestePortal.Model.Usuario;
 
 namespace TestePortal.Pages.BoletagemPage
 {
     public class BoletagemAporte
     {
-        public static async Task<Model.Pagina> Aporte (IPage Page, NivelEnum nivelLogado)
+        public static async Task<Model.Pagina> Aporte(IPage Page, NivelEnum nivelLogado)
         {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
@@ -37,8 +38,8 @@ namespace TestePortal.Pages.BoletagemPage
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌")
-                    { 
-                    errosTotais++;
+                    {
+                        errosTotais++;
                     }
                     pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
                     pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
@@ -47,12 +48,12 @@ namespace TestePortal.Pages.BoletagemPage
                     {
                         errosTotais++;
                     }
-                    pagina.BaixarExcel = "❌";
+                    pagina.BaixarExcel = await Utils.Excel.BaixarExcel(Page);
 
                     if (pagina.BaixarExcel == "❌")
                     {
                         errosTotais++;
-                    }// botão duplicado na página.  //exportarButton
+                    }
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
@@ -74,9 +75,9 @@ namespace TestePortal.Pages.BoletagemPage
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(500);
                         var msgPresente = Expect(Page.GetByText("Boleta recebida com sucesso!")).ToBeVisibleAsync();
-                        
 
-                        
+
+
 
                         var BoletagemAporteExiste = Repository.BoletagemAporte.BoletagemAporteRepository.VerificaExistenciaBoletagemAporte("Jessica Tavares", "COTAFIXA");
 
@@ -84,18 +85,59 @@ namespace TestePortal.Pages.BoletagemPage
                         {
                             Console.WriteLine("Boleta adicionada com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarBoletagemAporte = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("Jessica Tavares", "COTAFIXA");
 
-                            if (apagarBoletagemAporte)
+                            await Page.Locator("#tabelaBoletas_filter").ClickAsync();
+
+                            await Page.Locator("//div[@id='tabelaBoletas_filter']//input").FillAsync("Zitec Tecnologia");
+                            await Page.Locator("//button[@title='Remover Boleta']").ClickAsync();
+                            await Page.Locator("//button[text()='Excluir']").ClickAsync();
+                            var apagarBtn = Expect(Page.GetByText("Boleta excluída com sucesso.")).ToBeVisibleAsync();
+                            await Page.Locator("//div[@id='tabelaBoletas_filter']//input").FillAsync("Zitec Tecnologia");
+
+                            string tabela = "#tabelaBoletas";
+
+                            await Page.WaitForSelectorAsync(tabela, new PageWaitForSelectorOptions
                             {
-                                Console.WriteLine("Boleta apagado com sucesso");
+                                State = WaitForSelectorState.Visible
+                            });
+
+                            var locator = Page.Locator(tabela);
+                            int count = await locator.CountAsync();
+
+                            bool textoEncontrado;
+
+                            for (int i = 0; i < count; i++)
+                            {
+                                var texto = await locator.Nth(i).InnerTextAsync();
+
+                                if (!string.IsNullOrWhiteSpace(texto) && texto.Contains("Zitec Tecnologia", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    textoEncontrado = true;
+                                    Console.WriteLine($"❌ Texto indesejado encontrado: {texto}");
+                                    pagina.Excluir = "❌";
+                                    break;
+                                }
+                            }
+
+                            if (apagarBtn != null)
+                            {
                                 pagina.Excluir = "✅";
                             }
                             else
                             {
-                                Console.WriteLine("Não foi possível apagar Boleta");
-                                pagina.Excluir = "❌";
-                                errosTotais++;
+                                try
+                                {
+
+                                    var apagarBoletagemAporte = Repository.BoletagemAporte.BoletagemAporteRepository.ApagarBoletagemAporte("Jessica Tavares", "COTAFIXA");
+                                    Console.WriteLine("Boleta apagado pelo banco");
+                                    pagina.Excluir = "❌";
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("Não foi possível apagar Boleta");
+                                    pagina.Excluir = "❌";
+                                    errosTotais++;
+                                }
                             }
 
                         }
