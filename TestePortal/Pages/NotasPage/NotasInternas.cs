@@ -49,6 +49,8 @@ namespace TestePortal.Pages.NotasPage
                     {
                         errosTotais++;
                     }
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
 
                 }
                 else

@@ -45,6 +45,8 @@ namespace TestePortal.Pages.OperacoesPage
                         {
                             errosTotais++;
                         }
+                        pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
                         var dataAtual = DateTime.Now.ToString("yyyy-MM-dd");
 
                         var apagarLastro2 = Repository.Lastros.LastrosRepository.ApagarLastros("36614123000160", "teste jessica");

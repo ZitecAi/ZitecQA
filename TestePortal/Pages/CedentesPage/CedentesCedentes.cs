@@ -33,9 +33,10 @@ namespace TestePortal.Pages.CedentesPage
                     Console.Write("Cedentes PJ: ");
                     pagina.Nome = "Cedentes PJ";
                     pagina.StatusCode = BoletagemCedentes.Status;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+                    
                     if (pagina.Acentos == "❌")
                     {
                         errosTotais++;
@@ -150,9 +151,9 @@ namespace TestePortal.Pages.CedentesPage
                     Console.Write("Cedentes PF: ");
                     pagina.Nome = "Cedentes PF";
                     pagina.StatusCode = BoletagemCedentes.Status;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     if (pagina.Acentos == "❌")
                     {
                         errosTotais++;
