@@ -622,6 +622,7 @@ namespace TestePortal.Pages
             int errosTotais2 = 0;
             int formularioOk = 0;
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
             try
             {
@@ -631,19 +632,15 @@ namespace TestePortal.Pages
                     var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
                     var PaginaBancoIdCorrentista = await Page.GotoAsync(portalLink + "/Correntistas.aspx");
                     fluxoDeCadastros.Fluxo = "Correntista - Escrow";
+                   
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo Correntista" }).ClickAsync();
+                    await Task.Delay(300);
                     await Page.Locator("#cpfcnpj").ClickAsync();
-                    await Task.Delay(300);
                     await Page.Locator("#cpfcnpj").FillAsync("16695922000109");
-                    await Task.Delay(300);
-                    await Page.Locator("#tipoContaCorrentista").SelectOptionAsync(new[] { "ESCROW" });
-                    await Task.Delay(300);
+                    await Page.Locator("#tipoContaCorrentista").SelectOptionAsync(new[] { "ESCROW" });                    
                     await Page.Locator("#btnValidarCorrentista").ClickAsync();
-                    await Task.Delay(300);
                     await Page.Locator("#paginaModalPJ #emailEmpresa").ClickAsync();
-                    await Task.Delay(300);
                     await Page.Locator("#paginaModalPJ #emailEmpresa").FillAsync("robo@zitec.ai");
-                    await Task.Delay(300);
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                     await Task.Delay(400);
 
@@ -1027,7 +1024,7 @@ namespace TestePortal.Pages
             int formularioOk = 0;
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
             var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
-
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
             try
             {
                 var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
@@ -1986,7 +1983,7 @@ namespace TestePortal.Pages
             int formularioOk = 0;
             var fluxoDeCadastros = new Model.FluxosDeCadastros();
             var apagarCorrentista2 = Repository.Correntistas.CorrentistaRepository.ApagarCorrentista("robo@zitec.ai", "16695922000109");
-
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
             if (nivelLogado == NivelEnum.Master)
             {
                 var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];

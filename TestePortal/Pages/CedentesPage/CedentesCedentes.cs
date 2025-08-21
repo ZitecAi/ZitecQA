@@ -20,6 +20,8 @@ namespace TestePortal.Pages.CedentesPage
             var listErros = new List<string>();
             int errosTotais = 0;
             await Page.WaitForLoadStateAsync();
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
 
             try
             {
@@ -33,7 +35,6 @@ namespace TestePortal.Pages.CedentesPage
                     Console.Write("Cedentes PJ: ");
                     pagina.Nome = "Cedentes PJ";
                     pagina.StatusCode = BoletagemCedentes.Status;
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
                     
@@ -138,6 +139,7 @@ namespace TestePortal.Pages.CedentesPage
             var listErros = new List<string>();
             int errosTotais = 0;
             await Page.WaitForLoadStateAsync();
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
             try
             {
@@ -151,7 +153,6 @@ namespace TestePortal.Pages.CedentesPage
                     Console.Write("Cedentes PF: ");
                     pagina.Nome = "Cedentes PF";
                     pagina.StatusCode = BoletagemCedentes.Status;
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌")

@@ -21,6 +21,8 @@ namespace TestePortal.Pages.BoletagemPage
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
             try
             {
                 var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
@@ -42,7 +44,6 @@ namespace TestePortal.Pages.BoletagemPage
                         errosTotais++;
                     }
                     pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Listagem == "❌")
                     {

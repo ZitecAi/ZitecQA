@@ -16,6 +16,8 @@ namespace TestePortal.Pages.BoletagemPage
             var listErros = new List<string>();
             int errosTotais = 0;
             await Task.Delay(500);
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
 
             try
             {
@@ -32,7 +34,6 @@ namespace TestePortal.Pages.BoletagemPage
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
                     pagina.BaixarExcel = "❓";
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Acentos == "❌")
                     {
