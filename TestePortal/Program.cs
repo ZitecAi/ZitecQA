@@ -152,23 +152,25 @@ namespace TestePortalIDSF
                         listaFluxos.Add(fluxoDeCadastros);
                         await Task.Delay(500);
                         listaPagina.Add(await CadastroPrestServico.PrestServico(Page));
-                        listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await CadastroOfertas.Ofertas(Page));
-                        listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel));
-                        listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel));
-                        listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await BoletagemAmortizacao.Amortizacao(Page));
-                        listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         //listaPagina.Add(await ContaOrdem.ContaEOrdem(Page));
-                        listaPagina.Add(pagina);
                         listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
                         listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         listaPagina.Add(pagina);
                         await Task.Delay(500);
@@ -179,12 +181,16 @@ namespace TestePortalIDSF
                         (pagina, fluxoDeCadastros) = await OperacoesAtivos.Ativos(Page, usuario.Nivel);
                         listaFluxos.Add(fluxoDeCadastros);
                         listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await BoletagemControleCapital.ControleCapital(Page));
                         listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await OperacoesBaixaEmLote.BaixaLote(Page));
                         listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await OperacoesEnviarLastros.EnviarLastros(Page));
                         listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await OperacoesLastros2.EnviarLastros2(Page));
                         listaPagina.Add(pagina);
                         await Task.Delay(500);
@@ -192,8 +198,10 @@ namespace TestePortalIDSF
                         listaFluxos.Add(fluxoDeCadastros);
                         listaPagina.Add(await BancoIdContasEscrow.ContasEscrow(Page, usuario.Nivel));
                         listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await BancoIdEscrowExterno.EscrowExterno(Page, usuario.Nivel));
                         listaPagina.Add(pagina);
+                        await Task.Delay(500);
                         listaPagina.Add(await BancoIdControleEscrow.ControleEscrowExterno(Page, usuario.Nivel));
                         listaPagina.Add(pagina);
                         await Task.Delay(600);
@@ -395,7 +403,7 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "todos@zitec.ai",
+                    "al@zitec.ai",
                     "Relatório das páginas do portal. Validação do deploy no repositório de QA.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
 

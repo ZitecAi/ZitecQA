@@ -177,17 +177,6 @@ namespace TestePortal.Pages.CedentesPage
 
                     var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "49624866830");
 
-                    //await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
-                    //await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "36614123000160_49624866830_N.zip" });
-                    //var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
-
-
-
-                    //{
-
-                    //    Timeout = 90000
-
-                    //});
 
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
 
@@ -206,7 +195,7 @@ namespace TestePortal.Pages.CedentesPage
                         throw new FileNotFoundException("Arquivo não encontrado para upload", filePath);
                     }
 
-                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_49624866830_N.zip" });
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { basePath + fileName });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
                     {
                         Timeout = 90000
