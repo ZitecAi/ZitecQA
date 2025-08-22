@@ -56,54 +56,57 @@ namespace TestePortal.Pages.CedentesPage
                     }
 
                     var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "53300608000106");
-
-                    await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
-                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_53300608000106_N.zip" });
-                    var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
-
+                    try
                     {
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                        await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_49624866830_N.zip" });
+                        var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
 
-                        Timeout = 25000
-
-                    });
-
-                    if (cedenteCadastrado != null)
-                    {
-                        var cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "53300608000106");
-                        var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "53300608000106");
-
-                        if (cedenteExiste)
                         {
-                            Console.WriteLine("Cedente adicionado com sucesso na tabela.");
-                            pagina.InserirDados = "✅";
 
-                            if (apagarCedente)
+                            Timeout = 15000
+
+                        });
+                        if (cedenteCadastrado != null)
+                        {
+                            var cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "53300608000106");
+                            var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "53300608000106");
+
+                            if (cedenteExiste)
                             {
-                                Console.WriteLine("Cedente apagado com sucesso");
-                                pagina.Excluir = "✅";
+                                Console.WriteLine("Cedente adicionado com sucesso na tabela.");
+                                pagina.InserirDados = "✅";
+
+                                if (apagarCedente)
+                                {
+                                    Console.WriteLine("Cedente apagado com sucesso");
+                                    pagina.Excluir = "✅";
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Não foi possível apagar cedente");
+                                    pagina.Excluir = "❌";
+                                    errosTotais++;
+                                }
+
                             }
                             else
                             {
-                                Console.WriteLine("Não foi possível apagar cedente");
+                                Console.WriteLine("Não foi possível inserir cedente");
+                                pagina.InserirDados = "❌";
                                 pagina.Excluir = "❌";
-                                errosTotais++;
+                                errosTotais += 2;
                             }
+                        }
 
-                        }
-                        else
-                        {
-                            Console.WriteLine("Não foi possível inserir cedente");
-                            pagina.InserirDados = "❌";
-                            pagina.Excluir = "❌";
-                            errosTotais += 2;
-                        }
                     }
-                    else
+                    catch(Exception)
                     {
                         pagina.InserirDados = "❌";
                         pagina.Excluir = "❌";
                         errosTotais += 2;
-                    }
+                    }                   
+                    
 
 
                 }

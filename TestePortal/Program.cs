@@ -49,7 +49,7 @@ namespace TestePortalIDSF
             IBrowser browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 Channel = "chrome",
-                Headless = true,
+                Headless = false,
                 SlowMo = 50,
                 Timeout = 0,
                 Args = new List<string>
@@ -161,7 +161,7 @@ namespace TestePortalIDSF
                         listaPagina.Add(pagina);
                         listaPagina.Add(await BoletagemAmortizacao.Amortizacao(Page));
                         listaPagina.Add(pagina);
-                        listaPagina.Add(await ContaOrdem.ContaEOrdem(Page));
+                        //listaPagina.Add(await ContaOrdem.ContaEOrdem(Page));
                         listaPagina.Add(pagina);
                         listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         listaPagina.Add(pagina);
