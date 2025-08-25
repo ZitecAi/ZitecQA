@@ -19,6 +19,10 @@ namespace TestePortal.Model
             Denver = 4
         }
 
+        public Usuario()
+        {            
+        }
+
         public Usuario(string email, string senha, NivelEnum nivel)
         {
             Email = email;Senha= senha;Nivel=nivel;

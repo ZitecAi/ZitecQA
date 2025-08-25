@@ -35,6 +35,8 @@ namespace TestePortalIDSF
 
         public static Operacoes operacoes = new Operacoes();
         public static IConfigurationRoot Config { get; set; }
+        public static Usuario UsuarioAtual { get; set; }
+
 
         public static async Task Main(string[] args)
         {
@@ -94,8 +96,6 @@ namespace TestePortalIDSF
 
             {
                 foreach (var usuario in Usuarios)
-
-
                 {
                     listaPagina.Add(await TestePortal.Pages.LoginPage.LoginGeral.Login(Page, usuario));
 
@@ -155,12 +155,12 @@ namespace TestePortalIDSF
                         listaPagina.Add(await BoletagemAporte.Aporte(Page, usuario.Nivel));
                         listaPagina.Add(await BoletagemResgate.Resgate(Page, usuario.Nivel));
                         listaPagina.Add(await BoletagemAmortizacao.Amortizacao(Page));
-                        listaPagina.Add(await ContaOrdem.ContaEOrdem(Page));
+                        //listaPagina.Add(await ContaOrdem.ContaEOrdem(Page));
                         listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
-                        await Task.Delay(500);
+                        //await Task.Delay(500);
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         (pagina, operacoes) = await ArquivosBaixa.Baixas(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);
@@ -367,7 +367,7 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "todos@zitec.ai",
+                    "al@zitec.ai",
                     "Relatório das páginas do portal. Validação do deploy no repositório de QA.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
 

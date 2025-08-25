@@ -35,6 +35,7 @@ namespace TestePortal.Pages.AdministrativoPage
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
 
+
                     if (pagina.Acentos == "❌")
                     {
                         errosTotais++;

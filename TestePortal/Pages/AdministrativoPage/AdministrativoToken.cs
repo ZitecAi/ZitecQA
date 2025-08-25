@@ -46,8 +46,9 @@ namespace TestePortal.Pages.AdministrativoPage
                     pagina.BaixarExcel = "❓";
                     pagina.Reprovar = "❓";
                     pagina.Excluir = "❓";
+                    //pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
-                    
+
                 }
             }
             catch (TimeoutException ex)

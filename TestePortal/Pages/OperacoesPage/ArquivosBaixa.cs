@@ -37,7 +37,11 @@ namespace TestePortal.Pages.OperacoesPage
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌") errosTotais++;
-
+                    pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
+                    if(pagina.BaixarExcel == "❌")
+                    {
+                        pagina.BaixarExcel = "❌";
+                    }
                     pagina.Listagem = Listagem.VerificarListagem(Page, seletorTabela).Result;
                     if (pagina.Listagem == "❌") errosTotais++;
 

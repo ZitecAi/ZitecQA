@@ -14,6 +14,8 @@ namespace TestePortal.Pages.CedentesPage
 {
     public class CedentesCedentes
     {
+        bool inserirDados;
+
         public static async Task<Model.Pagina> CedentesPJ(IPage Page)
         {
             var pagina = new Model.Pagina();
@@ -35,6 +37,7 @@ namespace TestePortal.Pages.CedentesPage
                     pagina.StatusCode = BoletagemCedentes.Status;
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+
                     if (pagina.Acentos == "❌")
                     {
                         errosTotais++;
@@ -55,52 +58,45 @@ namespace TestePortal.Pages.CedentesPage
                     var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "53300608000106");
 
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
-                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_53300608000106_N.zip" });
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_49624866830_N.zip" });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
-
                     {
-
-                        Timeout = 90000
-
+                        Timeout = 10000
                     });
+                    bool cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "49624866830");
 
-                    if (cedenteCadastrado != null)
+
+                    if (cedenteCadastrado != null && cedenteExiste == true)
                     {
-                        var cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "53300608000106");
-                        var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "53300608000106");
-
-                        if (cedenteExiste)
+                        Console.WriteLine("Cedente adicionado com sucesso na tabela.");
+                        pagina.InserirDados = "✅";
+                        var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "49624866830");
+                        if (apagarCedente)
                         {
-                            Console.WriteLine("Cedente adicionado com sucesso na tabela.");
-                            pagina.InserirDados = "✅";
-
-                            if (apagarCedente)
-                            {
-                                Console.WriteLine("Cedente apagado com sucesso");
-                                pagina.Excluir = "✅";
-                            }
-                            else
-                            {
-                                Console.WriteLine("Não foi possível apagar cedente");
-                                pagina.Excluir = "❌";
-                                errosTotais++;
-                            }
-
+                            Console.WriteLine("Cedente apagado com sucesso");
+                            pagina.Excluir = "✅";
                         }
                         else
                         {
-                            Console.WriteLine("Não foi possível inserir cedente");
-                            pagina.InserirDados = "❌";
+                            Console.WriteLine("Não foi possível apagar cedente");
                             pagina.Excluir = "❌";
-                            errosTotais += 2;
+                            errosTotais++;
                         }
                     }
                     else
                     {
+                        Console.WriteLine("Não foi possível inserir cedente");
                         pagina.InserirDados = "❌";
                         pagina.Excluir = "❌";
                         errosTotais += 2;
                     }
+
+
+
+
+
+
+
 
 
                 }
@@ -115,7 +111,7 @@ namespace TestePortal.Pages.CedentesPage
                     await Page.GotoAsync("https://portal.idsf.com.br/Home.aspx");
                 }
             }
-            catch (TimeoutException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
                 Console.WriteLine($"Exceção: {ex.Message}");
@@ -202,50 +198,42 @@ namespace TestePortal.Pages.CedentesPage
                     await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_49624866830_N.zip" });
                     var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
                     {
-                        Timeout = 90000
+                        Timeout = 10000
                     });
-                    if (cedenteCadastrado != null)
+                    bool cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "49624866830");
+
+
+                    if (cedenteCadastrado != null && cedenteExiste == true)
                     {
-                        var cedenteExiste = Repository.Cedentes.CedentesRepository.VerificaExistenciaCedente("36614123000160", "49624866830");
-
-                        if (cedenteExiste)
+                        Console.WriteLine("Cedente adicionado com sucesso na tabela.");
+                        pagina.InserirDados = "✅";
+                        var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "49624866830");
+                        if (apagarCedente)
                         {
-                            var apagarCedente = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "49624866830");
-                            Console.WriteLine("Cedente adicionado com sucesso na tabela.");
-                            pagina.InserirDados = "✅";
-
-                            if (apagarCedente)
-                            {
-                                Console.WriteLine("Cedente apagado com sucesso");
-                                pagina.Excluir = "✅";
-                            }
-                            else
-                            {
-                                Console.WriteLine("Não foi possível apagar cedente");
-                                pagina.Excluir = "❌";
-                                errosTotais++;
-                            }
-
+                            Console.WriteLine("Cedente apagado com sucesso");
+                            pagina.Excluir = "✅";
                         }
                         else
                         {
-                            Console.WriteLine("Não foi possível inserir cedente");
-                            pagina.InserirDados = "❌";
+                            Console.WriteLine("Não foi possível apagar cedente");
                             pagina.Excluir = "❌";
-                            errosTotais += 2;
+                            errosTotais++;
                         }
                     }
                     else
                     {
+                        Console.WriteLine("Não foi possível inserir cedente");
                         pagina.InserirDados = "❌";
                         pagina.Excluir = "❌";
                         errosTotais += 2;
                     }
 
-                    //pf
-
 
                 }
+
+
+
+
 
 
                 else
@@ -257,7 +245,7 @@ namespace TestePortal.Pages.CedentesPage
                     await Page.GotoAsync("https://portal.idsf.com.br/Home.aspx");
                 }
             }
-            catch (TimeoutException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
                 Console.WriteLine($"Exceção: {ex.Message}");
