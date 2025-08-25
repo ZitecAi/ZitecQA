@@ -19,6 +19,7 @@ namespace TestePortal.Pages.BancoIdPage
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
             try
             {
@@ -34,7 +35,6 @@ namespace TestePortal.Pages.BancoIdPage
                     pagina.BaixarExcel = "❓";
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Acentos == "❌")
                     {

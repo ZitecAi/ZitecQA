@@ -46,6 +46,13 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
         }
 
+        public async Task CadastraCedenteNegativo()
+        {
+            await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
+            await metodo.EnviarArquivo(el.InputNovoCedente, caminhoArquivo, "Enviar arquivo no input para cadastrar novo cedente");
+            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
+        }
+
         public async Task ExcluirCedente()
         {
             await metodo.Clicar(el.BarraPesquisaCedentes,"Clicar na Barra de pesquisa para inserir CPF cedente a ser excluído");

@@ -21,6 +21,8 @@ namespace TestePortal.Pages.BoletagemPage
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
             try
             {
                 var portalLink = TestePortalIDSF.Program.Config["Links:Portal"];
@@ -42,7 +44,6 @@ namespace TestePortal.Pages.BoletagemPage
                         errosTotais++;
                     }
                     pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Listagem == "❌")
                     {
@@ -89,7 +90,7 @@ namespace TestePortal.Pages.BoletagemPage
                             await Page.Locator("#tabelaBoletas_filter").ClickAsync();
 
                             await Page.Locator("//div[@id='tabelaBoletas_filter']//input").FillAsync("Zitec Tecnologia");
-                            await Page.Locator("//button[@title='Remover Boleta']").ClickAsync();
+                            await Page.Locator("//button[@id='9454_ERASE']").ClickAsync();
                             await Page.Locator("//button[text()='Excluir']").ClickAsync();
                             var apagarBtn = Expect(Page.GetByText("Boleta excluída com sucesso.")).ToBeVisibleAsync();
                             await Page.Locator("//div[@id='tabelaBoletas_filter']//input").FillAsync("Zitec Tecnologia");

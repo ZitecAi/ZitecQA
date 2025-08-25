@@ -18,6 +18,8 @@ namespace TestePortal.Pages
             int errosTotais = 0;
             await Page.WaitForLoadStateAsync();
             await Page.WaitForTimeoutAsync(1000);
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
 
             try
             {
@@ -35,7 +37,6 @@ namespace TestePortal.Pages
                     pagina.Excluir = "❓";
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     if (pagina.Acentos == "❌")
                     { 
                     errosTotais++;

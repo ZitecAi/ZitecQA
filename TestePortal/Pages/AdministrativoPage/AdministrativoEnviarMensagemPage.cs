@@ -11,7 +11,7 @@ using TestePortal.Utils;
 
 namespace TestePortal.Pages.AdministrativoPage
 {
-    internal class EnviarMensagemPage
+    internal class AdministrativoEnviarMensagemPage
     {
 
         public static async Task<Pagina> EnviarMensagem(IPage Page, NivelEnum nivelLogado)
@@ -34,8 +34,9 @@ namespace TestePortal.Pages.AdministrativoPage
                     pagina.StatusCode = PaginaAdministrativoToken.Status;
 
 
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     pagina.Acentos = Acentos.ValidarAcentos(Page).Result;
+                    await Task.Delay(100);
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
                     if (pagina.Acentos == "❌") errosTotais++;
                     pagina.Listagem = "❓";
                     pagina.BaixarExcel = "❓";

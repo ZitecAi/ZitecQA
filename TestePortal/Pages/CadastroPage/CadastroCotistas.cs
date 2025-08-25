@@ -18,6 +18,7 @@ namespace TestePortal.Pages
             var listErros = new List<string>();
             int errosTotais = 0;
             string seletorTabela = "#tabelaUsuarios";
+            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
             try
             {
@@ -37,8 +38,7 @@ namespace TestePortal.Pages
                     pagina.InserirDados = "❓";
                     pagina.Excluir = "❓";
                     pagina.Reprovar = "❓";
-                    pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
-                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+                    pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;;
 
 
                     if (pagina.Listagem == "❌")

@@ -67,19 +67,13 @@ namespace TestePortal.Pages.CadastroPage
                         fluxoDeCadastros.EmailRecebido = "❓";
                         var apagarGestoraInterna2 = GestoraInternaRepository.ApagarGestoraInterna("16695922000109", "robo@zitec.ai");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
-                        await Task.Delay(300);
-                        await Page.Locator("#CnpjGestoraInterno").ClickAsync();
-                        await Task.Delay(300);
-                        await Page.Locator("#CnpjGestoraInterno").FillAsync("16695922000109");
-                        await Task.Delay(300);
-                        await Page.Locator("#btnAvancarCadastroGestora").ClickAsync();
-                        await Task.Delay(300);
-                        await Page.Locator("#emailGestora").ClickAsync();
-                        await Task.Delay(300);
-                        await Page.Locator("#emailGestora").FillAsync("robo@zitec.ai");
-                        await Task.Delay(300);
-                        await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
                         await Task.Delay(500);
+                        await Page.Locator("#CnpjGestoraInterno").ClickAsync();
+                        await Page.Locator("#CnpjGestoraInterno").FillAsync("16695922000109");
+                        await Page.Locator("#btnAvancarCadastroGestora").ClickAsync();
+                        await Page.Locator("#emailGestora").ClickAsync();
+                        await Page.Locator("#emailGestora").FillAsync("robo@zitec.ai");
+                        await Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" }).ClickAsync();
 
                         await Page.ReloadAsync();
                         await Page.GetByLabel("Pesquisar").ClickAsync();
