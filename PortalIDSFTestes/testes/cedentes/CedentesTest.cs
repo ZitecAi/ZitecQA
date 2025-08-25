@@ -30,7 +30,7 @@ namespace PortalIDSFTestes.testes.cedentes
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
             metodo = new Metodos(page);
-            await login.LoginSucessoInterno();
+            await login.LogarInterno();
             await metodo.Clicar(el.MenuCedentes, "Clicar na seção cedentes no menú hamburguer");
             await metodo.Clicar(el.PaginaCedentes, "Clicar na página cedentes");
             await Task.Delay(500);
@@ -76,6 +76,56 @@ namespace PortalIDSFTestes.testes.cedentes
             var cedentes = new CedentesPage(page);
             await cedentes.ExcluirCedente();
         }
+
+        [Test, Order(6)]
+        public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.CadastraCedenteNegativo("CnpjFundoInvalido_49624866830_N.zip");
+        }
+        [Test, Order(7)]
+        public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido_Template()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.CadastraCedenteNegativo("36614123000160_49624866830_N.zip");
+        }
+        [Test, Order(8)]
+        public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.CadastraCedenteNegativo("36614123000160_CnpjCedenteInvalido_N.zip");
+        }
+        [Test, Order(9)]
+        public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Em_Branco()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.CadastraCedenteNegativo("_49624866830_N.zip");
+        }
+        [Test, Order(10)]
+        public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Inexistente()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.CadastraCedenteNegativo("52221175000190_49624866830_N.zip");
+        }
+        [Test, Order(11)]
+        public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Em_Branco()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.CadastraCedenteNegativo("36614123000160__N.zip");
+        }
+        [Test, Order(11)]
+        public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido_Template()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.CadastraCedenteNegativo("50963249000170_33786902000154_N.zip");
+        }
+        [Test, Order(12)]
+        public async Task Nao_Deve_Cadastrar_Cedente_ComCnpj_Cedente_Inexistente()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.CadastraCedenteNegativo("36614123000160_52221175000191_N.zip");
+        }
+
 
         
 

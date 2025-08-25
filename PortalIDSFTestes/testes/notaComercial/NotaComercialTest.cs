@@ -29,7 +29,7 @@ namespace PortalIDSFTestes.testes.notaComercial
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
             metodo = new Metodos(page);
-            await login.LoginSucessoInterno();
+            await login.LogarInterno();
             await metodo.Clicar(el.MenuNotaComercial, "Clicar em Nota Comercial no Menu hambúrguer");
             await metodo.Clicar(el.PaginaNotaComercial, "Clicar em Nota Comercial para acessar a página");
             await Task.Delay(500);

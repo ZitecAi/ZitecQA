@@ -67,7 +67,15 @@ namespace PortalIDSFTestes.metodos
             try
             {
                 await page.WaitForURLAsync(urlEsperada);
+                if(urlEsperada == "https://portal.idsf.com.br/home.aspx#") { 
                 await Expect(page).ToHaveURLAsync(urlEsperada);
+                }
+                if(urlEsperada == "https://portal-staging.idsf.com.br/Home.aspx") { 
+                await Expect(page).ToHaveURLAsync(urlEsperada);
+                }
+                if(urlEsperada == "https://portal-dev.idsf.com.br/Home.aspx") { 
+                await Expect(page).ToHaveURLAsync(urlEsperada);
+                }
             }
             catch (Exception ex)
             {

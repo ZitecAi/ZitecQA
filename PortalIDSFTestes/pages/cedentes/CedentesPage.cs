@@ -15,6 +15,7 @@ namespace PortalIDSFTestes.pages.cedentes
         Metodos metodo;
         CedentesElements el = new CedentesElements();
         string caminhoArquivo = @"C:\TempQA\Arquivos\36614123000160_49624866830_N.zip";
+        string caminhoCedenteNegativo = @"C:\TempQA\Arquivos\CedentesNegativos\";
 
         public CedentesPage(IPage page) 
         {
@@ -44,6 +45,13 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
             await metodo.EnviarArquivo(el.InputNovoCedente, caminhoArquivo,"Enviar arquivo no input para cadastrar novo cedente");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
+        }
+
+        public async Task CadastraCedenteNegativo(string nomeArquivoNegativo)
+        {
+            await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
+            await metodo.EnviarArquivo(el.InputNovoCedente, caminhoCedenteNegativo + nomeArquivoNegativo, "Enviar arquivo no input para cadastrar novo cedente");
+            await metodo.ValidarMsgRetornada(el.MsgErroRetornada, "Validar mensagem Erro ao cadastrar Cedente presente na tela");
         }
 
         public async Task ExcluirCedente()
