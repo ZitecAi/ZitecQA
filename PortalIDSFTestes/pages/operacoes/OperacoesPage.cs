@@ -15,7 +15,7 @@ namespace PortalIDSFTestes.pages.operacoes
         Metodos metodo;
         OperacoesElements el = new OperacoesElements();
 
-        string caminhoArquivoCNAB = @"C:\TempQA\Arquivos\CNABz - Copia.txt";
+        string caminhoArquivoCNAB = @"C:\TempQA\Arquivos\";
         string caminhoArquivoCSV = @"C:\TempQA\Arquivos\arquivoteste_operacoescsv_qa.csv";
         string caminhoArquivoCnabNegativo = @"C:\TempQA\Arquivos\";
         string caminhoArquivoCSVNegativo = @"C:\TempQA\Arquivos\";
@@ -31,11 +31,11 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.ValidarAcentosAsync(page, "Validar Acentos na Pagina de Operações");
         }
 
-        public async Task EnviarOperacaoCNAB()
+        public async Task EnviarOperacaoCNAB(string nomeArquivo)
         {
             await metodo.Clicar(el.BtnNovaOperacaoCNAB,"Clicar no botão para enviar uma Nova Operação CNAB");
             await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCNAB,"Enviar Arquivo CNAB para teste positivo");
+            await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCNAB + nomeArquivo,"Enviar Arquivo CNAB para teste positivo");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar Mensagem de Sucesso retornada");
             
         }

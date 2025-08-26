@@ -66,7 +66,7 @@ namespace TestePortal.Pages.OperacoesPage
                             await Page.Locator("#fileEnviarBaixas").SetInputFilesAsync(new[] { caminhoCompleto });
                             await Page.Locator("#btnFecharNovoOperacao").ClickAsync();
 
-                            await Task.Delay(35000); // simulação do processamento
+                            await Task.Delay(15000); // simulação do processamento
                             var idRecebivel = 14893646;
 
                             var (existe, idMovimento) = ArquivoBaixas.VerificaMovimento(idRecebivel, 48, 9991);

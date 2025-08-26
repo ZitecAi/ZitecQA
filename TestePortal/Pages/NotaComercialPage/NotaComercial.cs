@@ -56,7 +56,7 @@ namespace TestePortal.Pages.NotaComercialPage
                             }
                             var apagarNotaComercial2 = Repository.NotaComercial.NotaComercialRepository.ApagarNotaComercial("54638076000176", "teste nota comercial");
                             var dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
-                            try
+                             try
                             {
                                 await Page.GetByRole(AriaRole.Button, new() { Name = "+ Novo" }).ClickAsync();
                                 await Task.Delay(200);
@@ -73,7 +73,7 @@ namespace TestePortal.Pages.NotaComercialPage
                                 await Page.GetByRole(AriaRole.Tab, new() { Name = "Envolvidos" }).ClickAsync();
                                 await Page.GetByRole(AriaRole.Button, new() { Name = "   Adicionar envolvido" }).ClickAsync();
                                 await Page.Locator("#relacionado").SelectOptionAsync(new[] { "1" });
-                                await Page.Locator("#envolvido").SelectOptionAsync(new[] { "Vitor Kenzo" });
+                                await Page.Locator("#envolvido").SelectOptionAsync(new[] { "TESTE FROMTIS" });
                                 await Page.Locator("#tipoRelacao").SelectOptionAsync(new[] { "empregador" });
                                 await Page.Locator("#formaEnvio").SelectOptionAsync(new[] { "email" });
                                 await Page.Locator("#formaValidacao").SelectOptionAsync(new[] { "assinaturaSelfie" });

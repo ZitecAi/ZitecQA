@@ -81,51 +81,56 @@ namespace PortalIDSFTestes.testes.cedentes
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastraCedenteNegativo("CnpjFundoInvalido_49624866830_N.zip");
+            await cedentes.CadastrarCedenteNegativo("CnpjFundoInvalido_49624866830_N.zip");
         }
         [Test, Order(7)]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido_Template()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastraCedenteNegativo("36614123000160_49624866830_N.zip");
+            await cedentes.CadastrarCedenteNegativo("36614123000160_49624866830_N.zip");
         }
         [Test, Order(8)]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastraCedenteNegativo("36614123000160_CnpjCedenteInvalido_N.zip");
+            await cedentes.CadastrarCedenteNegativo("36614123000160_CnpjCedenteInvalido_N.zip");
         }
         [Test, Order(9)]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Em_Branco()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastraCedenteNegativo("_49624866830_N.zip");
+            await cedentes.CadastrarCedenteNegativo("_49624866830_N.zip");
         }
         [Test, Order(10)]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Inexistente()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastraCedenteNegativo("52221175000190_49624866830_N.zip");
+            await cedentes.CadastrarCedenteNegativo("52221175000190_49624866830_N.zip");
         }
         [Test, Order(11)]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Em_Branco()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastraCedenteNegativo("36614123000160__N.zip");
+            await cedentes.CadastrarCedenteNegativo("36614123000160__N.zip");
         }
         [Test, Order(11)]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido_Template()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastraCedenteNegativo("50963249000170_33786902000154_N.zip");
+            await cedentes.CadastrarCedenteNegativo("50963249000170_33786902000154_N.zip");
         }
         [Test, Order(12)]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpj_Cedente_Inexistente()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastraCedenteNegativo("36614123000160_52221175000191_N.zip");
+            await cedentes.CadastrarCedenteNegativo("36614123000160_52221175000191_N.zip");
         }
-
+        [Test, Order(13)]
+        public async Task Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Cedente_Invalido_Na_Conta_Template()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.CadastrarCedenteNegativo("50963249000170_33786902000154_N.zip");
+        }
 
         
 

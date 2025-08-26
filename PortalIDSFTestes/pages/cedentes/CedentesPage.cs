@@ -47,7 +47,7 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
         }
 
-        public async Task CadastraCedenteNegativo(string nomeArquivoNegativo)
+        public async Task CadastrarCedenteNegativo(string nomeArquivoNegativo)
         {
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
             await metodo.EnviarArquivo(el.InputNovoCedente, caminhoCedenteNegativo + nomeArquivoNegativo, "Enviar arquivo no input para cadastrar novo cedente");

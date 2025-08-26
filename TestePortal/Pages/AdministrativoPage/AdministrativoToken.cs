@@ -43,7 +43,14 @@ namespace TestePortal.Pages.AdministrativoPage
                     {
                         errosTotais++;
                     }
-                    pagina.BaixarExcel = "❓";
+
+                    await Page.Locator("//button[text()='Criar Token']").ClickAsync();
+                    await Page.Locator("#usuario").SelectOptionAsync("FUNDO QA");
+                    await Page.Locator("#fundo").SelectOptionAsync("Zitec Tecnologia LTDA");
+                    await Page.Locator("//div[@class='modal-footer']//input[@value='Salvar']").ClickAsync();
+
+
+                    pagina.BaixarExcel = "❓";                    
                     pagina.Reprovar = "❓";
                     pagina.Excluir = "❓";
                     //pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();

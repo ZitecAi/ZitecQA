@@ -57,9 +57,9 @@ namespace TestePortal.Pages.NotasPage
                         await Task.Delay(300);
                         await Page.Locator("#agendamentoFiltro").FillAsync("2024-09-02");
                         await Task.Delay(300);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).ClickAsync();
+                        await Page.Locator("#agendamentoFiltro").ClickAsync();
                         await Task.Delay(300);
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).FillAsync("02/12/2024");
+                        await Page.Locator("#agendamentoFiltro").FillAsync("02/12/2024");
                         await Task.Delay(300);
                         await Page.Locator("#tipoNota").SelectOptionAsync(new[] { "ASSEMBLEIA" });
                         await Task.Delay(300);
@@ -69,7 +69,7 @@ namespace TestePortal.Pages.NotasPage
                         await Task.Delay(300);
                         await Page.Locator("#Fundos").SelectOptionAsync(new[] { "36614123000160" });
                         await Task.Delay(300);
-                        await Page.Locator("#Prestadores").SelectOptionAsync(new SelectOptionValue { Label = "teste qa" });
+                        await Page.Locator("#Prestadores").SelectOptionAsync(new SelectOptionValue { Label = "ZIELO TECNOLOGIA LTDA" });
                         await Task.Delay(300);
                         await Page.Locator("#filePagamentosNotas").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "21321321321.pdf" });
                         await Task.Delay(300);
@@ -130,10 +130,10 @@ namespace TestePortal.Pages.NotasPage
 
 
             }
-            catch (TimeoutException ex)
+            catch
             {
-                Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
-                Console.WriteLine($"Exceção: {ex.Message}");
+                throw new Exception();
+                Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");               
                 pagina.InserirDados = "❌";
                 pagina.Excluir = "❌";
                 errosTotais += 2;
