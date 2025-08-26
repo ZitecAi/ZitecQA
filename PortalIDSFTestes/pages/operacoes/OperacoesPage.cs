@@ -35,8 +35,15 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await metodo.Clicar(el.BtnNovaOperacaoCNAB,"Clicar no botão para enviar uma Nova Operação CNAB");
             await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCNAB,"Enviar Arquivo CNAB para teste positivo");
-            await metodo.ValidarMensagemPorTextoAsync(el.MsgSucessoRetornada, "Arquivo processado com sucesso", "Validar Mensagem de Sucesso retornada");
+            string nomeNovoArquivo = await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCNAB,"Enviar Arquivo CNAB para teste positivo");
+            await metodo.ValidarMensagemPorTextoAsync(el.MsgSucessoRetornada, "Arquivo processado com sucesso", "Validar Mensagem de Sucesso retornada")
+                .ContinueWith(async t =>
+                {
+                    await page.ReloadAsync();
+                    await metodo.Clicar(el.CampoPesquisaTabela, "Clicar no campo pesquisar para inserir nome do arquivo CNAB a ser consultado");
+                    await metodo.Escrever(el.CampoPesquisaTabela, nomeNovoArquivo, "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
+                    await metodo.VerificarTextoAusenteNaTabela(page, el.TabelaOperacoes, "Copia.txt", "Verificar se CNAB está presente no histórico de importações ");
+                }).Unwrap();
             
         }
         public async Task EnviarOperacaoCNABNegativo(string nomeCnabNegativo)
@@ -196,10 +203,6 @@ namespace PortalIDSFTestes.pages.operacoes
         }
 
 
-        public async Task AlterarStatus()
-        {
-
-        }
 
 
 

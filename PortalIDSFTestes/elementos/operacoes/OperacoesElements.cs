@@ -26,6 +26,7 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string BtnHistoricoImportacoes { get; } = "//button[@class='btn btn-secondary btn-Historico']";
         public string BarraPesquisaHistorico { get; } = "//input[@aria-controls='tabelaHistorico']";
         public string BarraPesquisaTabela { get; } = "//div[@id='divTabelaCedentes_filter']//input";
+        public string CampoPesquisaTabela { get; } = "//label[text()='Pesquisar']";
         public string TabelaHistoricoImportacoes { get; } = "#tabelaHistorico";
         public string BtnDownloadValidacaoMovimento { get; } = "//span//button[@title='Validação Movimento']";
         public string BtnDownloadValidacaoLayout { get; } = "//span//button[@title='Validação Layout']";
