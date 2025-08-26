@@ -21,6 +21,7 @@ namespace PortalIDSFTestes.elementos.cedentes
         public string BtnConfirmarExcluir { get; } = "#submitButtonExcluirCedente";
         public string MsgSucessoRetornada { get; } = "//div[@class='toast toast-success']";
         public string MsgErroRetornada { get; } = "//div[@class='toast toast-warning']";
+        public string BtnFecharModal { get; } = "#btnFecharNovoCedente";
 
 
     }

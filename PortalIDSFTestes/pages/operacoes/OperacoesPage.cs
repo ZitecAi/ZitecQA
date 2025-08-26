@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BtnNovaOperacaoCNAB,"Clicar no botão para enviar uma Nova Operação CNAB");
             await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
             await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCNAB + nomeArquivo,"Enviar Arquivo CNAB para teste positivo");
-            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar Mensagem de Sucesso retornada");
+            await metodo.ValidarMensagemPorTextoAsync(el.MsgSucessoRetornada, "Arquivo processado com sucesso", "Validar Mensagem de Sucesso retornada");
             
         }
         public async Task EnviarOperacaoCNABNegativo(string nomeCnabNegativo)

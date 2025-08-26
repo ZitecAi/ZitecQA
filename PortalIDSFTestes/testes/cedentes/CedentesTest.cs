@@ -60,7 +60,7 @@ namespace PortalIDSFTestes.testes.cedentes
         public async Task Deve_Cadastrar_Cedente()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastrarCedente();
+            await cedentes.CadastrarCedente("FUNDO QA");
         }
 
         [Test, Order(4)]
@@ -84,6 +84,7 @@ namespace PortalIDSFTestes.testes.cedentes
             await cedentes.CadastrarCedenteNegativo("CnpjFundoInvalido_49624866830_N.zip");
         }
         [Test, Order(7)]
+        [Ignore("Esse teste está em manutenção.")]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido_Template()
         {
             var cedentes = new CedentesPage(page);
@@ -113,24 +114,32 @@ namespace PortalIDSFTestes.testes.cedentes
             var cedentes = new CedentesPage(page);
             await cedentes.CadastrarCedenteNegativo("36614123000160__N.zip");
         }
-        [Test, Order(11)]
+        [Test, Order(12)]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido_Template()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.CadastrarCedenteNegativo("50963249000170_33786902000154_N.zip");
         }
-        [Test, Order(12)]
+        [Test, Order(13)]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpj_Cedente_Inexistente()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.CadastrarCedenteNegativo("36614123000160_52221175000191_N.zip");
         }
-        [Test, Order(13)]
+        [Test, Order(14)]
         public async Task Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Cedente_Invalido_Na_Conta_Template()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.CadastrarCedenteNegativo("50963249000170_33786902000154_N.zip");
         }
+        [Test, Order(15)]
+        public async Task Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Fundo_Invalido_Na_Conta_Template()
+        {
+            var cedentes = new CedentesPage(page);
+            await cedentes.CadastrarCedenteNegativo("52115758000179_53572360463_N.zip");
+        }
+
+
 
         
 
