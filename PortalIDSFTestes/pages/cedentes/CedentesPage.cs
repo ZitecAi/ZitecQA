@@ -51,7 +51,7 @@ namespace PortalIDSFTestes.pages.cedentes
                     await page.ReloadAsync();
                     await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar no input da Barra de pesquisa");
                     await metodo.Escrever(el.BarraPesquisaCedentes, nomeFundo, "Pesquisar nome do arquivo para validar cadastro");
-                    await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentes, nomeFundo, "Validar Se o nome do arquivo esta presente na tabela");
+                    await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentesCadastrado, nomeFundo, "Validar Se o nome do arquivo esta presente na tabela");
                 }).Unwrap();
             
         }
