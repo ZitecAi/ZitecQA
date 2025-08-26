@@ -12,13 +12,14 @@ namespace TestePortal.Pages
     public class CedentesKitCedente
     {
         public static async Task<Model.Pagina> KitCedentes(IPage Page)
-        { 
+        {
             var pagina = new Model.Pagina();
             var listErros = new List<string>();
             int errosTotais = 0;
             await Page.WaitForLoadStateAsync();
             await Page.WaitForTimeoutAsync(1000);
             pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
+
 
 
             try
@@ -38,8 +39,8 @@ namespace TestePortal.Pages
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
                     if (pagina.Acentos == "❌")
-                    { 
-                    errosTotais++;
+                    {
+                        errosTotais++;
                     }
                 }
                 else

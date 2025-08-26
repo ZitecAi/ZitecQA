@@ -1,4 +1,4 @@
-﻿using Microsoft.Playwright;
+using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using TestePortal.Utils;
 
 namespace TestePortal.Pages.AdministrativoPage
 {
-    internal class AdministrativoEnviarMensagemPage
+    public class EnviarMensagemPage
     {
 
         public static async Task<Pagina> EnviarMensagem(IPage Page, NivelEnum nivelLogado)
@@ -42,7 +42,7 @@ namespace TestePortal.Pages.AdministrativoPage
                     pagina.BaixarExcel = "❓";
                     pagina.Reprovar = "❓";
                     pagina.Excluir = "❓";
-                    pagina.InserirDados = "❓";                 
+                    pagina.InserirDados = "❓";
 
 
                 }

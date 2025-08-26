@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using System;
 using System.Collections.Generic;
@@ -56,13 +56,18 @@ namespace TestePortal.Pages.NotasPage
                         var apagarNotaPagamento2 = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "teste jessica");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                         await Page.Locator("#agendamentoFiltro").FillAsync("2024-09-02");
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).ClickAsync();
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).FillAsync("02/12/2024");
+                        await Task.Delay(300);
+                        await Page.Locator("#agendamentoFiltro").ClickAsync();
+                        await Task.Delay(300);
+                        await Page.Locator("#agendamentoFiltro").FillAsync("02/12/2024");
+                        await Task.Delay(300);
                         await Page.Locator("#tipoNota").SelectOptionAsync(new[] { "ASSEMBLEIA" });
                         await Page.GetByPlaceholder("0000,00").ClickAsync();
                         await Page.GetByPlaceholder("0000,00").FillAsync("100");
                         await Page.Locator("#Fundos").SelectOptionAsync(new[] { "36614123000160" });
-                        await Page.Locator("#Prestadores").SelectOptionAsync(new SelectOptionValue { Label = "teste qa" });
+                        await Task.Delay(300);
+                        await Page.Locator("#Prestadores").SelectOptionAsync(new SelectOptionValue { Label = "ZIELO TECNOLOGIA LTDA" });
+                        await Task.Delay(300);
                         await Page.Locator("#filePagamentosNotas").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "21321321321.pdf" });
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste jessica");
@@ -119,10 +124,10 @@ namespace TestePortal.Pages.NotasPage
 
 
             }
-            catch (TimeoutException ex)
+            catch
             {
-                Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
-                Console.WriteLine($"Exceção: {ex.Message}");
+                throw new Exception();
+                Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");               
                 pagina.InserirDados = "❌";
                 pagina.Excluir = "❌";
                 errosTotais += 2;

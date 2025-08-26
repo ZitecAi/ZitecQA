@@ -54,7 +54,7 @@ namespace PortalIDSFTestes.pages.notaComercial
             await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
             await Task.Delay(500);
             await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "1", "Selecionar Relacionado A");
-            await metodo.ClicarNoSeletor(el.SelectEnvolvido, "32084289874", "Selecionar Envolvido");
+            await metodo.ClicarNoSeletor(el.SelectEnvolvido, "43112744837", "Selecionar Envolvido");
             await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "empregador", "Selecionar Tipo de relação");
             await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
             await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "assinaturaSelfie", "Selecionar Forma de Validação");

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Playwright;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using PortalIDSFTestes.elementos.cedentes;
 using PortalIDSFTestes.metodos;
 using System;
@@ -15,6 +16,7 @@ namespace PortalIDSFTestes.pages.cedentes
         Metodos metodo;
         CedentesElements el = new CedentesElements();
         string caminhoArquivo = @"C:\TempQA\Arquivos\36614123000160_49624866830_N.zip";
+        string caminhoCedenteNegativo = @"C:\TempQA\Arquivos\CedentesNegativos\";
 
         public CedentesPage(IPage page) 
         {
@@ -39,11 +41,26 @@ namespace PortalIDSFTestes.pages.cedentes
         }
 
 
-        public async Task CadastrarCedente()
+        public async Task CadastrarCedente(string nomeFundo)
         {
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
             await metodo.EnviarArquivo(el.InputNovoCedente, caminhoArquivo,"Enviar arquivo no input para cadastrar novo cedente");
-            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
+            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela")
+                .ContinueWith(async t =>
+                {
+                    await page.ReloadAsync();
+                    await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar no input da Barra de pesquisa");
+                    await metodo.Escrever(el.BarraPesquisaCedentes, nomeFundo, "Pesquisar nome do arquivo para validar cadastro");
+                    await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentesCadastrado, nomeFundo, "Validar Se o nome do arquivo esta presente na tabela");
+                }).Unwrap();
+            
+        }
+
+        public async Task CadastrarCedenteNegativo(string nomeArquivoNegativo)
+        {
+            await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
+            await metodo.EnviarArquivo(el.InputNovoCedente, caminhoCedenteNegativo + nomeArquivoNegativo, "Enviar arquivo no input para cadastrar novo cedente");
+            await metodo.ValidarMsgRetornada(el.MsgErroRetornada, "Validar mensagem Erro ao cadastrar Cedente presente na tela");
         }
 
         public async Task CadastraCedenteNegativo()

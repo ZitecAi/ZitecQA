@@ -29,7 +29,7 @@ namespace PortalIDSFTestes.testes.operacoes
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
             metodo = new Metodos(page);
-            await login.LoginSucessoInterno();
+            await login.LogarInterno();
             await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
             await metodo.Clicar(el.PaginaOperacoes, "Clicar em Operações para acessar a página");
             await Task.Delay(500);

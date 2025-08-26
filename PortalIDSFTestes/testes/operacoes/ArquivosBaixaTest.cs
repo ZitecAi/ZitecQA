@@ -1,4 +1,4 @@
-﻿using Microsoft.Playwright;
+using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
@@ -30,9 +30,9 @@ namespace PortalIDSFTestes.testes.operacoes
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
             metodo = new Metodos(page);
-            await login.LoginSucessoInterno();
-            await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
-            await metodo.Clicar(el.PaginaBaixas, "Clicar arquivos baixas 2.0 para acessar a pagina");
+            await login.LogarInterno();
+            await metodo.Clicar(el.menuOperacoes, "Clicar em operações menu hamburguer");
+            await metodo.Clicar(el.paginaBaixas, "Clicar arquivos baixas 2.0 para acessar a pagina");
         }
 
         [TearDown]

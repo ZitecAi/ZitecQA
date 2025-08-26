@@ -67,7 +67,15 @@ namespace PortalIDSFTestes.metodos
             try
             {
                 await page.WaitForURLAsync(urlEsperada);
+                if(urlEsperada == "https://portal.idsf.com.br/home.aspx#") { 
                 await Expect(page).ToHaveURLAsync(urlEsperada);
+                }
+                if(urlEsperada == "https://portal-staging.idsf.com.br/Home.aspx") { 
+                await Expect(page).ToHaveURLAsync(urlEsperada);
+                }
+                if(urlEsperada == "https://portal-dev.idsf.com.br/Home.aspx") { 
+                await Expect(page).ToHaveURLAsync(urlEsperada);
+                }
             }
             catch (Exception ex)
             {
@@ -91,19 +99,40 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{locator}' no passo: '{passo}'. Detalhes: {ex.Message}");
             }
         }
-        public async Task ValidarTextoPresente(string textoEsperado, string passo)
+        public async Task ValidarMensagemPorTextoAsync(string locator, string textoEsperado, string passo)
         {
             try
             {
-                await page.WaitForSelectorAsync(textoEsperado, new PageWaitForSelectorOptions
+                // filtra pelo texto dentro do próprio locator (resolve conflitos de mesma classe)
+                var alvo = page.Locator(locator).Filter(new LocatorFilterOptions
                 {
-                    State = WaitForSelectorState.Visible
+                    HasTextString = textoEsperado
                 });
-                await Expect(page.GetByText(textoEsperado)).ToBeVisibleAsync();
+
+                // garante que existe exatamente 1 elemento com esse texto
+                await Expect(alvo).ToHaveCountAsync(1);
+
+                // valida que o elemento contém o texto esperado (espera visibilidade por padrão)
+                await Expect(alvo.First).ToContainTextAsync(textoEsperado);
+
+                Console.WriteLine($"✅ '{textoEsperado}' encontrado em '{locator}' (único match).");
             }
             catch (Exception ex)
             {
-                throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: {ex.Message}");
+                // diagnóstico extra: lista o que foi encontrado naquele locator
+                try
+                {
+                    var encontrados = await page.Locator(locator).AllInnerTextsAsync();
+                    var joined = string.Join(" | ", encontrados.Select(t => t.Trim()));
+                    throw new Exception(
+                        $"❌ Conflito/ausência ao validar texto '{textoEsperado}' em '{locator}'. " +
+                        $"Textos encontrados: [{joined}]. Detalhe: {ex.Message}", ex);
+                }
+                catch
+                {
+                    throw new Exception(
+                        $"❌ Erro ao validar texto '{textoEsperado}' em '{locator}', no passo: " + passo);
+                }
             }
         }
         public async Task EsperarTextoPresente(string textoEsperado, string passo)
@@ -493,6 +522,8 @@ namespace PortalIDSFTestes.metodos
                 throw new Exception("Não foi possivel Encontrar Arquivo " + caminhoArquivo + " No passo: " + passo);
             }
         }
+
+
 
         private static readonly Random random = new();
 

@@ -70,13 +70,9 @@ namespace TestePortal.Pages.OperacoesPage
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Nova Operação - CSV" }).ClickAsync();
                         await Task.Delay(200);
                         await Page.Locator("#selectFundoCsv").SelectOptionAsync(new[] { "54638076000176" });
-                        await Task.Delay(200);
                         await Page.Locator("#fileEnviarOperacoesCsv").SetInputFilesAsync(new[] { caminhoModificado });
-                        await Task.Delay(200);
                         await Page.Locator("#fileEnviarLastro").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste.zip" });
-                        await Task.Delay(200);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
-                        await Task.Delay(200);
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste de envio csv");
                         await Task.Delay(200);
                         //while (await Page.Locator("#enviarButton").IsVisibleAsync())

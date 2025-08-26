@@ -16,11 +16,13 @@ namespace PortalIDSFTestes.elementos.cedentes
         public string BtnDownloadExcel { get; } = "#btnExportaExcel";
         public string BarraPesquisaCedentes { get; } = "//label[text()='Pesquisar']";
         public string TabelaCedentes { get; } = "#tabelaCedentes";
+        public string TabelaCedentesCadastrado { get; } = "//table//tbody";
         public string BtnLixeiraCedentes { get; } = "//button[@class='buttonExcluirCedente btn btn-danger']";
         public string CampoObservacaoExcluir { get; } = "#TextAreaExclusao";
         public string BtnConfirmarExcluir { get; } = "#submitButtonExcluirCedente";
         public string MsgSucessoRetornada { get; } = "//div[@class='toast toast-success']";
-
+        public string MsgErroRetornada { get; } = "//div[@class='toast toast-warning']";
+        public string BtnFecharModal { get; } = "#btnFecharNovoCedente";
 
 
     }

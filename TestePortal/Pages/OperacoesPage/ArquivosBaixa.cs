@@ -39,7 +39,11 @@ namespace TestePortal.Pages.OperacoesPage
                     pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Acentos == "❌") errosTotais++;
-
+                    pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
+                    if(pagina.BaixarExcel == "❌")
+                    {
+                        pagina.BaixarExcel = "❌";
+                    }
                     pagina.Listagem = Listagem.VerificarListagem(Page, seletorTabela).Result;
                     if (pagina.Listagem == "❌") errosTotais++;
                     //pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
@@ -63,7 +67,7 @@ namespace TestePortal.Pages.OperacoesPage
                             await Page.Locator("#fileEnviarBaixas").SetInputFilesAsync(new[] { caminhoCompleto });
                             await Page.Locator("#btnFecharNovoOperacao").ClickAsync();
 
-                            await Task.Delay(35000); // simulação do processamento
+                            await Task.Delay(15000); // simulação do processamento
                             var idRecebivel = 14893646;
 
                             var (existe, idMovimento) = ArquivoBaixas.VerificaMovimento(idRecebivel, 48, 9991);
