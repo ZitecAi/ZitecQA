@@ -138,13 +138,13 @@ namespace PortalIDSFTestes.testes.cedentes
             var cedentes = new CedentesPage(page);
             await cedentes.CadastrarCedenteNegativo("52115758000179_53572360463_N.zip");
         }
-        [Test, Order(15)]
+        [Test, Order(16)]
         public async Task Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Em_Branco_Template()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.CadastrarCedenteNegativo("52115758000179_07277165810_N.zip");
         }
-        [Test, Order(15)]
+        [Test, Order(17)]
         public async Task Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Invalidos_Template()
         {
             var cedentes = new CedentesPage(page);

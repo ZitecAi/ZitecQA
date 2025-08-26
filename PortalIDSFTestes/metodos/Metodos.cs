@@ -395,58 +395,58 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
-                var linhas = await File.ReadAllLinesAsync(caminhoArquivo);
+                var linhas = File.ReadAllLines(caminhoArquivo);
 
-                // Datas
-                var hoje_ddMMaa = DateTime.Now.ToString("ddMMyy");
-                var hoje_ddMMyy = hoje_ddMMaa;
+                // Atualizando data
+                string dataAtual = DateTime.Now.ToString("ddMMyy");
+                string DataArquivoTemplate = linhas[0].Substring(94, 6);
+                string AnteriorData = linhas[0].Substring(0, 94);
+                string PosData = linhas[0].Substring(101);
+                linhas[0] = linhas[0].Replace("#DATA#", dataAtual);
 
-                // Geração única
-                var usadosValores = new HashSet<string>();
-                string GerarNumeroUnico(int qtdDigitos)
+                // Atualizando num consultoria
+                Random random = new Random();
+                for (int i = 1; i <= 7; i++)
                 {
-                    string v;
-                    do
+                    string randomNumber = "";
+                    for (int j = 0; j < 25; j++)
                     {
-                        v = string.Concat(Enumerable.Range(0, qtdDigitos)
-                                                    .Select(_ => Random.Shared.Next(0, 10).ToString()));
-                    } while (!usadosValores.Add(v));
-                    return v;
+                        randomNumber += random.Next(0, 10).ToString();
+                    }
+
+                    linhas[i] = linhas[i].Replace("#DOC_NUMERO_CONSULTORIA_#", randomNumber);
+
+                    string randomNumberNumDoc = "";
+                    for (int j = 0; j < 10; j++)
+                    {
+                        randomNumberNumDoc += random.Next(0, 10).ToString();
+                    }
+
+                    linhas[i] = linhas[i].Replace("#NUM_DOCU#", randomNumberNumDoc);
                 }
 
-                string Substituir(string s)
-                {
-                    s = s.Replace("ddMMaa", hoje_ddMMaa);
-                    s = s.Replace("ddMMyy", hoje_ddMMyy);
+                string dataFormatada = DateTime.Now.ToString("yyyyMMdd");
 
-                    s = Regex.Replace(s, @"#{3}", _ => GerarNumeroUnico(25)); // 25 dígitos
-                    s = Regex.Replace(s, @"@{3}", _ => GerarNumeroUnico(10)); // 10 dígitos
+                // Usar GUID para garantir que o nome do arquivo seja único
+                string uniqueIdentifier = Guid.NewGuid().ToString().Split('-')[0]; // Pega apenas a primeira parte do GUID
+                string novoNomeArquivo = $"FundoQA_{dataFormatada}_{uniqueIdentifier}.txt";
+                string novoCaminhoArquivo = Path.Combine(Path.GetDirectoryName(caminhoArquivo), novoNomeArquivo);
 
-                    return s;
-                }
 
-                for (int i = 0; i < linhas.Length; i++)
-                    linhas[i] = Substituir(linhas[i]);
-
-                // Novo nome do arquivo
-                string dataStamp = DateTime.Now.ToString("yyyyMMdd");
-                string uniq = Guid.NewGuid().ToString("N")[..8];
-                string novoNomeArquivo = $"FundoQA_{dataStamp}_{uniq}.txt";
-                string dir = Path.GetDirectoryName(caminhoArquivo) ?? Environment.CurrentDirectory;
-                string novoCaminhoArquivo = Path.Combine(dir, novoNomeArquivo);
-
-                await File.WriteAllLinesAsync(novoCaminhoArquivo, linhas);
+                File.WriteAllLines(novoCaminhoArquivo, linhas);
 
                 await page.Locator("#fileEnviarOperacoes").SetInputFilesAsync(new[] { novoCaminhoArquivo });
 
-                Console.WriteLine($"✅ Arquivo {novoNomeArquivo} gerado e enviado com sucesso.");
+                Console.WriteLine($"Arquivo {novoNomeArquivo} enviado com sucesso.");
+
                 return novoNomeArquivo;
             }
-            catch (Exception ex)
+            catch
             {
-                throw new Exception($"❌ Erro ao processar o arquivo '{caminhoArquivo}' no passo '{passo}': {ex.Message}", ex);
+                throw new Exception("Não foi possivel Encontrar Arquivo " + caminhoArquivo + " No passo: " + passo);
             }
         }
+
 
 
         private static readonly Random random = new();

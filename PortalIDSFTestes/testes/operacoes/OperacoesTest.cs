@@ -52,7 +52,7 @@ namespace PortalIDSFTestes.testes.operacoes
         public async Task Deve_Enviar_Uma_Operacao_CNAB()
         {
             var operacoes = new OperacoesPage(page);
-            await operacoes.EnviarOperacaoCNAB("cnabNovoTesteOP.txt");
+            await operacoes.EnviarOperacaoCNAB();
         }
 
         [Test, Order(3)]
