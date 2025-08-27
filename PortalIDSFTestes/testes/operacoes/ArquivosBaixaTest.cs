@@ -31,8 +31,8 @@ namespace PortalIDSFTestes.testes.operacoes
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.menuOperacoes, "Clicar em operações menu hamburguer");
-            await metodo.Clicar(el.paginaBaixas, "Clicar arquivos baixas 2.0 para acessar a pagina");
+            await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
+            await metodo.Clicar(el.PaginaBaixas, "Clicar arquivos baixas 2.0 para acessar a pagina");
         }
 
         [TearDown]
