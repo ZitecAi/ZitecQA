@@ -170,7 +170,6 @@ DocProject/Help/*.hhk
 DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
-allure-report/widgets
 
 # Click-Once directory
 publish/
@@ -358,5 +357,6 @@ MigrationBackup/
 temp/
 
 src/Idsf.Automatizacoes.ArquivoRetorno.Santander/ /Users/IDMurilloPereira/ID CTVM Dropbox/CUSTODIA/10 - THIAGO/RETORNO/AURI/BOT_COBST_OKBZ_02_281122P_MOV.TXT
+
 allure-report/
 allure-results/
