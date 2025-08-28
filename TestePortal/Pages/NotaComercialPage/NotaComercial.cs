@@ -74,7 +74,7 @@ namespace TestePortal.Pages.NotaComercialPage
                                 await Page.GetByRole(AriaRole.Tab, new() { Name = "Envolvidos" }).ClickAsync();
                                 await Page.GetByRole(AriaRole.Button, new() { Name = "   Adicionar envolvido" }).ClickAsync();
                                 await Page.Locator("#relacionado").SelectOptionAsync(new[] { "1" });
-                                await Page.Locator("#envolvido").SelectOptionAsync(new[] { "TESTE FROMTIS" });
+                                await Page.Locator("#envolvido").SelectOptionAsync(new[] { "Felipe Palage" });
                                 await Page.Locator("#tipoRelacao").SelectOptionAsync(new[] { "empregador" });
                                 await Page.Locator("#formaEnvio").SelectOptionAsync(new[] { "email" });
                                 await Page.Locator("#formaValidacao").SelectOptionAsync(new[] { "assinaturaSelfie" });

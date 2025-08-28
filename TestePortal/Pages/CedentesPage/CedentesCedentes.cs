@@ -1,8 +1,4 @@
-using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
-using static Microsoft.Playwright.Assertions;
-using Segment.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Microsoft.Extensions.Configuration;
 
 namespace TestePortal.Pages.CedentesPage
 {
@@ -25,8 +22,6 @@ namespace TestePortal.Pages.CedentesPage
             var listErros = new List<string>();
             int errosTotais = 0;
             await Page.WaitForLoadStateAsync();
-            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
-
 
             try
             {
@@ -42,6 +37,7 @@ namespace TestePortal.Pages.CedentesPage
                     pagina.StatusCode = BoletagemCedentes.Status;
                     pagina.Reprovar = "❓";
                     pagina.Acentos = Utils.Acentos.ValidarAcentos(Page).Result;
+                    pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
 
                     if (pagina.Acentos == "❌")
                     {
@@ -53,7 +49,7 @@ namespace TestePortal.Pages.CedentesPage
                     {
                         errosTotais++;
                     }
-                    pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
+                    pagina.BaixarExcel = Utils.Excel.BaixarExcelPorId(Page).Result;
 
                     if (pagina.BaixarExcel == "❌")
                     {
@@ -88,14 +84,13 @@ namespace TestePortal.Pages.CedentesPage
                             errosTotais++;
                         }
                     }
-                    catch(Exception)
+                    else
                     {
                         Console.WriteLine("Não foi possível inserir cedente");
                         pagina.InserirDados = "❌";
                         pagina.Excluir = "❌";
                         errosTotais += 2;
-                    }                   
-                    
+                    }
 
 
 
@@ -138,8 +133,6 @@ namespace TestePortal.Pages.CedentesPage
             var listErros = new List<string>();
             int errosTotais = 0;
             await Page.WaitForLoadStateAsync();
-            pagina.Perfil = TestePortalIDSF.Program.UsuarioAtual.Nivel.ToString();
-            bool cedenteCadastrado;
 
             try
             {
@@ -165,7 +158,7 @@ namespace TestePortal.Pages.CedentesPage
                     {
                         errosTotais++;
                     }
-                    pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
+                    pagina.BaixarExcel = Utils.Excel.BaixarExcelPorId(Page).Result;
 
                     if (pagina.BaixarExcel == "❌")
                     {
@@ -174,6 +167,17 @@ namespace TestePortal.Pages.CedentesPage
 
                     var apagarCedente2 = Repository.Cedentes.CedentesRepository.ApagarCedente("36614123000160", "49624866830");
 
+                    //await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
+                    //await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { ConfigurationManager.AppSettings["PATH.ARQUIVO"].ToString() + "36614123000160_49624866830_N.zip" });
+                    //var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
+
+
+
+                    //{
+
+                    //    Timeout = 90000
+
+                    //});
 
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
 
@@ -191,7 +195,9 @@ namespace TestePortal.Pages.CedentesPage
                         Console.WriteLine("ERRO: Arquivo não encontrado!");
                         throw new FileNotFoundException("Arquivo não encontrado para upload", filePath);
                     }
-                    try
+
+                    await Page.Locator("#fileNovoCedente").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "36614123000160_49624866830_N.zip" });
+                    var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Ação Executada com Sucesso", new PageWaitForSelectorOptions
                     {
                         Timeout = 10000
                     });
@@ -242,8 +248,8 @@ namespace TestePortal.Pages.CedentesPage
             }
             catch (Exception ex)
             {
-                throw new Exception("Não foi possivel cadastrar cedente");
                 Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
+                Console.WriteLine($"Exceção: {ex.Message}");
                 pagina.InserirDados = "❌";
                 pagina.Excluir = "❌";
                 errosTotais += 2;

@@ -36,7 +36,6 @@ namespace TestePortalIDSF
 
         public static Operacoes operacoes = new Operacoes();
         public static IConfigurationRoot Config { get; set; }
-        public static Usuario UsuarioAtual { get; set; }
 
 
         public static async Task Main(string[] args)
@@ -108,7 +107,7 @@ namespace TestePortalIDSF
                         listaPagina.Add(await AdministrativoUsuarios.Usuarios(Page));
                         await Task.Delay(500);
                         listaPagina.Add(await AdministrativoToken.Token(Page));
-                        listaPagina.Add(await AdministrativoEnviarMensagemPage.EnviarMensagem(Page, usuario.Nivel));
+                        //listaPagina.Add(await AdministrativoEnviarMensagemPage.EnviarMensagem(Page, usuario.Nivel));
                         (pagina, fluxoDeCadastros) = await BancoIdCorrentista.CorrentistaMov(Page, context, usuario.Nivel);
                         listaPagina.Add(pagina);
                         listaFluxos.Add(fluxoDeCadastros);

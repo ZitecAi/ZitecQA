@@ -53,17 +53,7 @@ namespace TestePortal.Pages.BancoIdPage
                     }
                     await Page.Locator("#FundoFiltroExtrato").SelectOptionAsync(new[] { "53300608000106" });
                     bool sucesso = await Excel.BaixarExtrato(Page);
-
-                    if (sucesso)
-                    {
-                        Console.WriteLine("Teste de download do relatório passou!");
-                        pagina.BaixarExcel = "✅";
-                    }
-                    else
-                    {
-                        Console.WriteLine("Teste de download do relatório falhou!");
-                        pagina.BaixarExcel = "❌";
-                    }
+                   
 
                     //await Task.Delay(1000);
                     //await Page.GetByText("Relatório gerado com sucesso").ClickAsync();

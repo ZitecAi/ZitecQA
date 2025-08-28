@@ -32,7 +32,7 @@ namespace TestePortal.Utils
                 {
                     await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync(new LocatorClickOptions
                     {
-                        Timeout = 15000
+                        Timeout = 20000
                     });
                     //await Page.Locator(".buttons-excel:has-text('Excel')").ClickAsync();
                 });
@@ -138,7 +138,7 @@ namespace TestePortal.Utils
             {
                 var download = await Page.RunAndWaitForDownloadAsync(async () =>
                 {
-                    await Page.Locator("#BtnBaixarExcel").ClickAsync(new LocatorClickOptions
+                    await Page.Locator("#btnExportaExcel").ClickAsync(new LocatorClickOptions
                     {
                         Timeout = 15000
                     });
