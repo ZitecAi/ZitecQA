@@ -164,12 +164,15 @@ namespace TestePortalIDSF
                         //listaPagina.Add(await ContaOrdem.ContaEOrdem(Page));
                         listaPagina.Add(await CedentesCedentes.CedentesPJ(Page));
                         await Task.Delay(500);
+                        //breakpoint aqui
                         listaPagina.Add(await CedentesCedentes.CedentesPf(Page));
                         await Task.Delay(500);
                         listaPagina.Add(await CedentesKitCedente.KitCedentes(Page));
                         await Task.Delay(500);
+                        //breakpoint aqui
                         listaPagina.Add(await NotasPagamentos.Pagamentos(Page, usuario.Nivel));
                         await Task.Delay(500);
+                        //breakpoint aqui
                         listaPagina.Add(await NotaComercial.NotasComerciais(Page, usuario.Nivel));
                         (pagina, operacoes) = await ArquivosBaixa.Baixas(Page, usuario.Nivel, operacoes);
                         listaPagina.Add(pagina);

@@ -63,6 +63,9 @@ namespace PortalIDSFTestes.elementos.notaComercial
         public string BtnDownloadMinuta { get; } = "//span//button[@title='Download Minuta']";
         public string BtnDownloadMinutaPDF { get; } = "//span//button[@title='Download Minuta PDF']";
 
+        //Error Message
+
+        public string MsgErro { get; } = "//div[@class='toast toast-warning']";
 
 
 

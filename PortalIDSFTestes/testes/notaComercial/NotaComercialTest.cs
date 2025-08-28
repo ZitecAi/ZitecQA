@@ -81,7 +81,32 @@ namespace PortalIDSFTestes.testes.notaComercial
             var notaComercial = new NotaComercialPage(page);
             await notaComercial.DownloadMinuta();
         }
-
+        [Test, Order(7)]
+        public async Task Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco()
+        {
+            var notaComercial = new NotaComercialPage(page);
+             
+            await notaComercial.CadastrarNotaComercialNegativa("CamposEmBranco");
+        }
+        [Test, Order(8)]
+        public async Task Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Envolvidos()
+        {
+            var notaComercial = new NotaComercialPage(page);
+            await notaComercial.CadastrarNotaComercialNegativa("CamposEmBrancoEnvolvidos");
+        }
+        [Test, Order(9)]
+        public async Task Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Operacoes()
+        {
+            var notaComercial = new NotaComercialPage(page);
+            await notaComercial.CadastrarNotaComercialNegativa("CamposEmBrancoOperacao");
+        }
+        [Test, Order(10)]
+        [Ignore ("Este Teste Está em Manutenção")]
+        public async Task Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Documentos()
+        {
+            var notaComercial = new NotaComercialPage(page);
+            await notaComercial.CadastrarNotaComercialNegativa("CamposEmBrancoDocumentos");
+        }
 
 
 
