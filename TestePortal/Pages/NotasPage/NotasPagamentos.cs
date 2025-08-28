@@ -53,7 +53,7 @@ namespace TestePortal.Pages.NotasPage
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
-                        var apagarNotaPagamento2 = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "teste jessica");
+                        var apagarNotaPagamento2 = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "Teste");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
                         var data = new DateTime(2024, 8, 28).ToString("yyyy-MM-dd");
                         await Page.Locator("#agendamentoFiltro").FillAsync(data);
@@ -64,18 +64,18 @@ namespace TestePortal.Pages.NotasPage
                         await Page.Locator("#Prestadores").SelectOptionAsync(new SelectOptionValue { Label = "ZIELO TECNOLOGIA LTDA" });
                         await Page.Locator("#filePagamentosNotas").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "21321321321.pdf" });
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste jessica");
+                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("Teste");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(700);
 
 
-                        var notaPagamentoExiste = Repository.NotaPagamento.NotaPagamentoRepository.VerificaExistenciaNotaPagamento("36614123000160", "teste jessica");
+                        var notaPagamentoExiste = Repository.NotaPagamento.NotaPagamentoRepository.VerificaExistenciaNotaPagamento("36614123000160", "Teste");
 
                         if (notaPagamentoExiste)
                         {
                             Console.WriteLine("Notas pagamento adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarNotaPagamento = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "teste jessica");
+                            var apagarNotaPagamento = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "Teste");
 
                             if (apagarNotaPagamento)
                             {

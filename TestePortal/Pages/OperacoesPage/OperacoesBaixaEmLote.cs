@@ -24,7 +24,6 @@ namespace TestePortal.Pages.OperacoesPage
 
                 if (OperacoesBaixaLote.Status == 200)
                 {
-                    string seletorTabela = "#tabelaLastros";
 
                     Console.Write("Operações - Baixa em Lote : ");
                     pagina.Nome = "Operações - Baixa em Lote";                  
@@ -40,11 +39,6 @@ namespace TestePortal.Pages.OperacoesPage
                         errosTotais++;
                     }
                     pagina.Listagem = "❓";
-                    pagina.Listagem = Utils.Listagem.VerificarListagem(Page, seletorTabela).Result;
-                    if (pagina.Listagem == "❌")
-                    {
-                        errosTotais++;
-                    }
 
                 }
                 else

@@ -49,7 +49,7 @@ namespace TestePortal.Pages.BoletagemPage
                     {
                         errosTotais++;
                     }
-                    pagina.BaixarExcel = await Utils.Excel.BaixarExcel(Page);
+                    pagina.BaixarExcel = await Utils.Excel.BaixarExcelPorIdAporte(Page);
 
                     if (pagina.BaixarExcel == "❌")
                     {
@@ -90,7 +90,7 @@ namespace TestePortal.Pages.BoletagemPage
                             await Page.Locator("#tabelaBoletas_filter").ClickAsync();
 
                             await Page.Locator("//div[@id='tabelaBoletas_filter']//input").FillAsync("Zitec Tecnologia");
-                            await Page.Locator("//button[@id='9454_ERASE']").ClickAsync();
+                            await Page.Locator("(//tbody//tr//td)[14]//button[1]").ClickAsync();
                             await Page.Locator("//button[text()='Excluir']").ClickAsync();
                             var apagarBtn = Expect(Page.GetByText("Boleta excluída com sucesso.")).ToBeVisibleAsync();
                             await Page.Locator("//div[@id='tabelaBoletas_filter']//input").FillAsync("Zitec Tecnologia");
