@@ -19,7 +19,7 @@ namespace PortalIDSFTestes.pages.operacoes
         string caminhoArquivoCSV = @"C:\TempQA\Arquivos\arquivoteste_operacoescsv_qa.csv";
         string caminhoArquivoCnabNegativo = @"C:\TempQA\Arquivos\";
         string caminhoArquivoCSVNegativo = @"C:\TempQA\Arquivos\";
-
+        string nomeNovoArquivo { get; set; }
         public OperacoesPage(IPage page)
         {
             this.page = page;
@@ -33,29 +33,36 @@ namespace PortalIDSFTestes.pages.operacoes
 
         public async Task EnviarOperacaoCNAB()
         {
-            await metodo.Clicar(el.BtnNovaOperacaoCNAB,"Clicar no botão para enviar uma Nova Operação CNAB");
+            await metodo.Clicar(el.BtnNovaOperacaoCNAB, "Clicar no botão para enviar uma Nova Operação CNAB");
             await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            string nomeNovoArquivo = await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCNAB,"Enviar Arquivo CNAB para teste positivo");
-            await metodo.ValidarMensagemPorTextoAsync(el.MsgSucessoRetornada, "Arquivo processado com sucesso", "Validar Mensagem de Sucesso retornada")
-                .ContinueWith(async t =>
-                {
-                    await page.ReloadAsync();
-                    await metodo.Clicar(el.CampoPesquisaTabela, "Clicar no campo pesquisar para inserir nome do arquivo CNAB a ser consultado");
-                    await metodo.Escrever(el.CampoPesquisaTabela, nomeNovoArquivo, "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
-                    await metodo.VerificarTextoAusenteNaTabela(page, el.TabelaOperacoes, "Copia.txt", "Verificar se CNAB está presente no histórico de importações ");
-                }).Unwrap();
-            
+            nomeNovoArquivo = await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCNAB, "Enviar Arquivo CNAB para teste positivo");
+            await metodo.ValidarMensagemPorTextoAsync(el.MsgSucessoRetornada, "Arquivo processado com sucesso", "Validar Mensagem de Sucesso retornada");
+            await metodo.EsperarTextoPresente("Arquivo processado com sucesso!","Esperar Arquivo Ser Processado para seguir o fluxo");
+            //Consultar
+            await page.ReloadAsync();
+            await metodo.Clicar(el.CampoPesquisaTabela, "Clicar no campo pesquisar para inserir nome do arquivo CNAB a ser consultado");
+            await metodo.Escrever(el.CampoPesquisaTabela, nomeNovoArquivo, "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
+            await metodo.Clicar(el.PrimeiroTdTabela, "Clicar no primeiro TD da tabela");
+            await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaOperacoes, nomeNovoArquivo, "Verificar se CNAB está presente na Tabela ");
+            //Excluir
+            await metodo.Clicar(el.BtnLixeira, "Clicar na Lixeira da tabela");
+            await metodo.Escrever(el.CampoMotivoExcluirArquivo, "Teste Exclusão", "Escrever motivo da exclusão do arquivo");
+            await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão para confirmar excluisão do arquivo");
+            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar se mensagem de arquivo excluido com sucesso está visivel!");
+
+
+
         }
         public async Task EnviarOperacaoCNABNegativo(string nomeCnabNegativo)
         {
-            await metodo.Clicar(el.BtnNovaOperacaoCNAB,"Clicar no botão para enviar uma Nova Operação CNAB");
+            await metodo.Clicar(el.BtnNovaOperacaoCNAB, "Clicar no botão para enviar uma Nova Operação CNAB");
             await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
             await metodo.EnviarArquivo(el.EnviarOperacaoInput, caminhoArquivoCnabNegativo + nomeCnabNegativo, "Enviar Arquivo CNAB negativo");
             //await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCnabNegativo + nomeCnabNegativo,"Enviar Arquivo CNAB para teste negativo");
             await metodo.Clicar(el.BtnFecharModalOperacaoCnab, "Clicar no 'X' para fechar modal de nova operacao cnab");
-            await metodo.Clicar(el.TabelaOperacoes, "Clicar na barra de pesquisa");
-            await metodo.Escrever(el.TabelaOperacoes,nomeCnabNegativo, "Clicar na barra de pesquisa");
-            await metodo.VerificarTextoAusenteNaTabela(page,el.TabelaOperacoes,nomeCnabNegativo,"Validar que o Arquivo " + nomeCnabNegativo +" não foi aceito na Tabela");
+            await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na barra de pesquisa");
+            await metodo.Escrever(el.BarraPesquisaTabela, nomeCnabNegativo, "Escrever na barra de pesquisa");
+            await metodo.VerificarTextoAusenteNaTabela(page, el.TabelaOperacoes, nomeCnabNegativo, "Validar que o Arquivo " + nomeCnabNegativo + " não foi aceito na Tabela");
         }
 
         public async Task EnviarOperacoesCNABNegativo(params string[] nomesCnabNegativo)
@@ -156,29 +163,30 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await metodo.Clicar(el.BtnHistoricoImportacoes, "Clicar no botão para abrir modal de histórico de importações");
             await metodo.Clicar(el.BarraPesquisaHistorico, "Clicar no campo pesquisar para inserir nome do arquivo CNAB a ser consultado");
-            await metodo.Escrever(el.BarraPesquisaHistorico,".rem", "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
+            await metodo.Escrever(el.BarraPesquisaHistorico, nomeNovoArquivo, "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
             await Task.Delay(10000);
-            await metodo.VerificarTextoAusenteNaTabela(page, el.TabelaHistoricoImportacoes,"Copia.txt", "Verificar se CNAB está presente no histórico de importações ");
+            await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaHistoricoImportacoes, nomeNovoArquivo, "Verificar se CNAB está presente no histórico de importações ");
         }
+
         public async Task DownloadValidacaoMovimento_Layout()
         {
             await metodo.Clicar(el.BtnHistoricoImportacoes, "Clicar no botão para abrir modal de histórico de importações");
             await metodo.Clicar(el.BarraPesquisaHistorico, "Clicar no campo pesquisar para inserir nome do arquivo CNAB a ser consultado");
-            await metodo.Escrever(el.BarraPesquisaHistorico,".rem", "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
+            await metodo.Escrever(el.BarraPesquisaHistorico, ".rem", "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
             await Task.Delay(10000);
             await metodo.Clicar(el.PrimeiroTdHistorico, "Clicar no primeiro TD que estiver presente para baixar arquivo validação movimento");
             var download = await page.RunAndWaitForDownloadAsync(async () =>
             {
                 await metodo.Clicar(el.BtnDownloadValidacaoMovimento, "Click para baixar relatorio movimento atraves do histórico importações");
             });
-            await metodo.ValidarDownloadAsync(download,"Download Validação Movimento", "Validar Download de arquivo validação movimento");
+            await metodo.ValidarDownloadAsync(download, "Download Validação Movimento", "Validar Download de arquivo validação movimento");
             var download1 = await page.RunAndWaitForDownloadAsync(async () =>
             {
                 await metodo.Clicar(el.BtnDownloadValidacaoLayout, "Clicar no botão para baixar validação Layout");
             });
             await metodo.ValidarDownloadAsync(download1, "Download Validação Layout", "Validar Download de arquivo validação Layout");
         }
-        
+
 
         public async Task DownloadExcel()
         {
@@ -194,12 +202,7 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task ExcluirArquivo()
         {
             await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na Barra de pesquisa da tabela");
-            await metodo.Escrever(el.BarraPesquisaTabela, "FundoQA", "Escrever na Barra de pesquisa da tabela");
-            await metodo.Clicar(el.PrimeiroTdTabela, "Clicar no primeiro TD da tabela");
-            await metodo.Clicar(el.BtnLixeira, "Clicar na Lixeira da tabela");
-            await metodo.Escrever(el.CampoMotivoExcluirArquivo, "CEDENTE TESTE", "Escrever motivo da exclusão do arquivo");
-            await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão para confirmar excluisão do arquivo");
-            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar se mensagem de arquivo excluido com sucesso está visivel!");
+            await metodo.Escrever(el.BarraPesquisaTabela, nomeNovoArquivo, "Escrever na Barra de pesquisa da tabela");
         }
 
 
