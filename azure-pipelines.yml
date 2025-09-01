@@ -22,9 +22,6 @@ variables:
     value: 'allure-results'
   - name: ALLURE_REPORT_DIR
     value: 'allure-report'
-  # Mantenha essa versão igual ao PackageReference Microsoft.Playwright do seu .csproj
-  - name: PLAYWRIGHT_VERSION
-    value: '1.46.0'
 
 steps:
   - checkout: self
@@ -49,19 +46,12 @@ steps:
       dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
     displayName: 'Restore + Build'
 
-  # Instala Playwright CLI (versão alinhada) e adiciona ao PATH
-  - script: |
-      set -e
-      dotnet tool install --global Microsoft.Playwright.CLI --version $(PLAYWRIGHT_VERSION)
-      echo "##vso[task.prependpath]$HOME/.dotnet/tools"
-    displayName: 'Install Playwright CLI'
-
-  # Instala browsers DENTRO do diretório do projeto de testes
+  # Instala browsers usando o script GERADO pelo pacote do projeto (compatível com 1.27.1)
   - script: |
       set -e
       cd "$(TEST_DIR)"
-      playwright install --with-deps
-    displayName: 'Playwright browsers install'
+      bash "./bin/Release/net8.0/playwright.sh" install --with-deps
+    displayName: 'Playwright browsers install (project script)'
 
   # Executa testes
   - script: |
@@ -76,7 +66,6 @@ steps:
       npm i -g allure-commandline netlify-cli
 
       # Se os resultados forem gerados dentro do bin, copie para a raiz esperada
-      # Ajuste o caminho abaixo se usa outro framework/target
       RESULTS_FROM=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
       if [ -n "$RESULTS_FROM" ] && [ ! -d "$(ALLURE_RESULTS_DIR)" ]; then
         cp -r "$RESULTS_FROM" "./$(ALLURE_RESULTS_DIR)"
