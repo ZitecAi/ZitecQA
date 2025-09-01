@@ -1,0 +1,111 @@
+# azure-pipelines.yml
+trigger: none
+
+resources:
+  pipelines:
+    - pipeline: AppDeploy
+      project: 'Dev-ops IDSF'
+      source: 'ZIDSF - PORTAL - STAGING'
+      trigger: true
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
+  - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
+  - name: TEST_CSPROJ
+    value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'   # << seu projeto de testes (usar /)
+  - name: ALLURE_RESULTS_DIR
+    value: 'allure-results'
+  - name: ALLURE_REPORT_DIR
+    value: 'allure-report'
+
+steps:
+  - checkout: self
+    displayName: 'Checkout tests repo'
+
+  - task: NodeTool@0
+    displayName: 'Use Node 18'
+    inputs:
+      versionSpec: '18.x'
+
+  # Restore + Playwright (.NET) + navegadores
+  - script: |
+      set -e
+      dotnet --info
+
+      # Restore no projeto de testes correto
+      dotnet restore "$(TEST_CSPROJ)"
+
+      # Playwright .NET CLI + browsers
+      dotnet tool update --global Microsoft.Playwright.CLI
+      echo "##vso[task.prependpath]$HOME/.dotnet/tools"
+      playwright install --with-deps
+    displayName: 'Restore + Playwright (.NET CLI + browsers)'
+
+  # Rodar testes
+  - script: |
+      set -e
+      echo "Rodando testes em: $(TEST_CSPROJ)"
+      dotnet test "$(TEST_CSPROJ)" --configuration Release --logger "trx"
+    displayName: 'Run tests'
+
+  # Gerar Allure estático
+  - script: |
+      set -e
+      npm i -g allure-commandline netlify-cli
+
+      if [ ! -d "$(ALLURE_RESULTS_DIR)" ]; then
+        echo "ERROR: pasta '$(ALLURE_RESULTS_DIR)' não encontrada. Ajuste o output do adapter Allure."
+        exit 1
+      fi
+
+      allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$(ALLURE_RESULTS_DIR)"
+    displayName: 'Generate Allure report'
+
+  # Deploy no Netlify (produção) — sobrescreve mantendo o mesmo link
+  - script: |
+      set -e
+      netlify deploy \
+        --prod \
+        --dir="$(ALLURE_REPORT_DIR)" \
+        --site "$(NETLIFY_SITE_ID)" \
+        --auth "$(NETLIFY_AUTH_TOKEN)" \
+        --json > deploy.json
+
+      echo "======== Netlify Deploy Result ========"
+      cat deploy.json || true
+    displayName: 'Deploy to Netlify (prod)'
+
+  # Enviar e-mail com link fixo
+  - task: PowerShell@2
+    displayName: 'Send email with report link'
+    inputs:
+      targetType: 'inline'
+      script: |
+        $siteUrl   = "$(SITE_URL)"
+        $smtpHost  = "$(SMTP_SERVER)"
+        $smtpPort  = [int]"$(SMTP_PORT)"
+        $smtpUser  = "$(SMTP_USER)"
+        $smtpPass  = "$(SMTP_PASS)"
+        $mailFrom  = "$(MAIL_FROM)"
+        $mailTo    = "$(MAIL_TO)"
+
+        $subject = "Allure - Execução $(Build.BuildNumber)"
+        $body = "Olá, time!`n`nO relatório Allure da execução $(Build.BuildNumber) está disponível em:`n$siteUrl`n`nPipeline: $(Build.DefinitionName)`nExecução: $(Build.BuildId)"
+
+        if ($smtpUser -and $smtpPass) {
+          $sec = ConvertTo-SecureString $smtpPass -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential($smtpUser, $sec)
+          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -UseSsl -Credential $cred
+        } else {
+          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort
+        }
+
+  - task: PublishTestResults@2
+    displayName: 'Publish TRX'
+    inputs:
+      testResultsFormat: 'VSTest'
+      testResultsFiles: '**/*.trx'
+      failTaskOnFailedTests: true
