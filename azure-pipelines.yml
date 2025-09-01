@@ -1,4 +1,3 @@
-
 # azure-pipelines.yml
 trigger: none
 
@@ -16,56 +15,82 @@ variables:
   - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
   - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
   - name: TEST_CSPROJ
-    value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'   # << seu projeto de testes (usar /)
+    value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'
+  - name: TEST_DIR
+    value: 'PortalIDSFTestes'
   - name: ALLURE_RESULTS_DIR
     value: 'allure-results'
   - name: ALLURE_REPORT_DIR
     value: 'allure-report'
+  # Mantenha essa versão igual ao PackageReference Microsoft.Playwright do seu .csproj
+  - name: PLAYWRIGHT_VERSION
+    value: '1.46.0'
 
 steps:
   - checkout: self
     displayName: 'Checkout tests repo'
+
+  - task: UseDotNet@2
+    displayName: 'Use .NET 8 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '8.0.x'
 
   - task: NodeTool@0
     displayName: 'Use Node 18'
     inputs:
       versionSpec: '18.x'
 
-  # Restore + Playwright (.NET) + navegadores
+  # Restore e BUILD antes de instalar browsers
   - script: |
       set -e
       dotnet --info
-
-      # Restore no projeto de testes correto
       dotnet restore "$(TEST_CSPROJ)"
+      dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
+    displayName: 'Restore + Build'
 
-      # Playwright .NET CLI + browsers
-      dotnet tool update --global Microsoft.Playwright.CLI
+  # Instala Playwright CLI (versão alinhada) e adiciona ao PATH
+  - script: |
+      set -e
+      dotnet tool install --global Microsoft.Playwright.CLI --version $(PLAYWRIGHT_VERSION)
       echo "##vso[task.prependpath]$HOME/.dotnet/tools"
-      playwright install --with-deps
-    displayName: 'Restore + Playwright (.NET CLI + browsers)'
+    displayName: 'Install Playwright CLI'
 
-  # Rodar testes
+  # Instala browsers DENTRO do diretório do projeto de testes
+  - script: |
+      set -e
+      cd "$(TEST_DIR)"
+      playwright install --with-deps
+    displayName: 'Playwright browsers install'
+
+  # Executa testes
   - script: |
       set -e
       echo "Rodando testes em: $(TEST_CSPROJ)"
-      dotnet test "$(TEST_CSPROJ)" --configuration Release --logger "trx"
+      dotnet test "$(TEST_CSPROJ)" -c Release --logger "trx"
     displayName: 'Run tests'
 
-  # Gerar Allure estático
+  # Gera Allure (garante que há resultados)
   - script: |
       set -e
       npm i -g allure-commandline netlify-cli
 
+      # Se os resultados forem gerados dentro do bin, copie para a raiz esperada
+      # Ajuste o caminho abaixo se usa outro framework/target
+      RESULTS_FROM=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
+      if [ -n "$RESULTS_FROM" ] && [ ! -d "$(ALLURE_RESULTS_DIR)" ]; then
+        cp -r "$RESULTS_FROM" "./$(ALLURE_RESULTS_DIR)"
+      fi
+
       if [ ! -d "$(ALLURE_RESULTS_DIR)" ]; then
-        echo "ERROR: pasta '$(ALLURE_RESULTS_DIR)' não encontrada. Ajuste o output do adapter Allure."
+        echo "ERROR: pasta '$(ALLURE_RESULTS_DIR)' não encontrada. Configure o adapter Allure para emitir nessa pasta."
         exit 1
       fi
 
       allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$(ALLURE_RESULTS_DIR)"
     displayName: 'Generate Allure report'
 
-  # Deploy no Netlify (produção) — sobrescreve mantendo o mesmo link
+  # Deploy no Netlify (mantém link fixo)
   - script: |
       set -e
       netlify deploy \
@@ -79,7 +104,7 @@ steps:
       cat deploy.json || true
     displayName: 'Deploy to Netlify (prod)'
 
-  # Enviar e-mail com link fixo
+  # Envia e-mail com o link fixo do site
   - task: PowerShell@2
     displayName: 'Send email with report link'
     inputs:
