@@ -201,13 +201,6 @@ namespace PortalIDSFTestes.pages.operacoes
         }
 
 
-        public async Task ExcluirArquivo()
-        {
-            await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na Barra de pesquisa da tabela");
-            await metodo.Escrever(el.BarraPesquisaTabela, nomeNovoArquivo, "Escrever na Barra de pesquisa da tabela");
-        }
-
-
 
 
 

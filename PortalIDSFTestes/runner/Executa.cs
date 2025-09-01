@@ -13,11 +13,18 @@ namespace PortalIDSFTestes.runner
         protected async Task<IPage> AbrirBrowserAsync()
         {
             playwright = await Playwright.CreateAsync();
-            browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-            {
-                Headless = false
-            });
 
+            // Detecta CI (Azure DevOps define TF_BUILD=true)
+            var isCi = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI"))
+                       || string.Equals(Environment.GetEnvironmentVariable("TF_BUILD"), "True", StringComparison.OrdinalIgnoreCase);
+
+            var launchOptions = new BrowserTypeLaunchOptions
+            {
+                Headless = isCi, // Headless no CI, pode ser false local
+                Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
+            };
+
+            browser = await playwright.Chromium.LaunchAsync(launchOptions);
             context = await browser.NewContextAsync();
             var page = await context.NewPageAsync();
 
