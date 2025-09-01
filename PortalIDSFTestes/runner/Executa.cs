@@ -12,6 +12,7 @@ namespace PortalIDSFTestes.runner
 
         protected async Task<IPage> AbrirBrowserAsync()
         {
+
             playwright = await Playwright.CreateAsync();
 
             // Detecta CI (Azure DevOps define TF_BUILD=true)
