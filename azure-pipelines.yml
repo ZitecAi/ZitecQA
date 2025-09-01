@@ -38,7 +38,7 @@ steps:
     inputs:
       versionSpec: '18.x'
 
-  # Restore e BUILD antes de instalar browsers
+  # Restore e BUILD (precisa compilar antes de instalar browsers)
   - script: |
       set -e
       dotnet --info
@@ -46,11 +46,23 @@ steps:
       dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
     displayName: 'Restore + Build'
 
-  # Instala browsers usando o script GERADO pelo pacote do projeto (compatível com 1.27.1)
+  # Instala browsers usando o script GERADO pelo pacote (usa pwsh e localiza o .ps1 automaticamente)
   - script: |
       set -e
       cd "$(TEST_DIR)"
-      bash "./bin/Release/net8.0/playwright.sh" install --with-deps
+
+      # Tenta localizar o playwright.ps1 em Release e Debug
+      SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
+
+      if [ -z "$SCRIPT_PATH" ]; then
+        echo "ERRO: playwright.ps1 não encontrado após o build."
+        echo "Conteúdo de ./bin para debug:"
+        ls -R ./bin || true
+        exit 1
+      fi
+
+      echo "Usando script: $SCRIPT_PATH"
+      pwsh "$SCRIPT_PATH" install --with-deps
     displayName: 'Playwright browsers install (project script)'
 
   # Executa testes
