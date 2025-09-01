@@ -118,8 +118,5 @@ namespace PortalIDSFTestes.testes.notaComercial
             var notaComercial = new NotaComercialPage(page);
             await notaComercial.CadastrarNotaComercialNegativa("CarenciaJurosMaiorQueJurosPrincipal");
         }
-
-
-
     }
 }
