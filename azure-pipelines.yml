@@ -9,7 +9,7 @@ resources:
       trigger: true
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-22.04'  # <- fixa 22.04 para compatibilidade com Playwright 1.27.1
 
 variables:
   - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
@@ -38,7 +38,7 @@ steps:
     inputs:
       versionSpec: '18.x'
 
-  # Restore e BUILD (precisa compilar antes de instalar browsers)
+  # Restore + Build
   - script: |
       set -e
       dotnet --info
@@ -46,38 +46,38 @@ steps:
       dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
     displayName: 'Restore + Build'
 
-  # Instala browsers usando o script GERADO pelo pacote (usa pwsh e localiza o .ps1 automaticamente)
+  # Instala browsers via script do projeto (alinhado à versão do pacote 1.27.1)
   - script: |
       set -e
       cd "$(TEST_DIR)"
 
-      # Tenta localizar o playwright.ps1 em Release e Debug
       SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
-
       if [ -z "$SCRIPT_PATH" ]; then
         echo "ERRO: playwright.ps1 não encontrado após o build."
-        echo "Conteúdo de ./bin para debug:"
         ls -R ./bin || true
         exit 1
       fi
-
       echo "Usando script: $SCRIPT_PATH"
-      pwsh "$SCRIPT_PATH" install --with-deps
+
+      # Tenta com --with-deps (22.04 ok). Se falhar, tenta sem deps.
+      if ! pwsh "$SCRIPT_PATH" install --with-deps; then
+        echo "Aviso: --with-deps falhou. Tentando 'install' sem deps..."
+        pwsh "$SCRIPT_PATH" install
+      fi
     displayName: 'Playwright browsers install (project script)'
 
-  # Executa testes
+  # Testes
   - script: |
       set -e
       echo "Rodando testes em: $(TEST_CSPROJ)"
       dotnet test "$(TEST_CSPROJ)" -c Release --logger "trx"
     displayName: 'Run tests'
 
-  # Gera Allure (garante que há resultados)
+  # Allure
   - script: |
       set -e
       npm i -g allure-commandline netlify-cli
 
-      # Se os resultados forem gerados dentro do bin, copie para a raiz esperada
       RESULTS_FROM=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
       if [ -n "$RESULTS_FROM" ] && [ ! -d "$(ALLURE_RESULTS_DIR)" ]; then
         cp -r "$RESULTS_FROM" "./$(ALLURE_RESULTS_DIR)"
@@ -91,7 +91,7 @@ steps:
       allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$(ALLURE_RESULTS_DIR)"
     displayName: 'Generate Allure report'
 
-  # Deploy no Netlify (mantém link fixo)
+  # Netlify
   - script: |
       set -e
       netlify deploy \
@@ -105,7 +105,7 @@ steps:
       cat deploy.json || true
     displayName: 'Deploy to Netlify (prod)'
 
-  # Envia e-mail com o link fixo do site
+  # E-mail
   - task: PowerShell@2
     displayName: 'Send email with report link'
     inputs:
