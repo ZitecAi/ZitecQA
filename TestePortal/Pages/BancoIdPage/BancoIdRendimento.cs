@@ -61,15 +61,14 @@ namespace TestePortal.Pages.BancoIdPage
                         await Page.GetByLabel("Fundo:*").SelectOptionAsync(new[] { "08621199000187" });
                         await Page.Locator("#lstCarteiras").SelectOptionAsync(new[] { "255603" });
                         await Page.GetByLabel("Cotista:*").SelectOptionAsync(new[] { "27078529" });
-                        await Page.GetByLabel("CÃ³digo de Banco *").ClickAsync();
-                        await Page.GetByLabel("CÃ³digo de Banco *").FillAsync("123");
-                        await Page.GetByLabel("AgÃªncia *").ClickAsync();
-                        await Page.GetByLabel("AgÃªncia *").ClickAsync();
-                        await Page.GetByLabel("AgÃªncia *").FillAsync("1234");
-                        await Page.GetByLabel("Conta Corrente *").ClickAsync();
-                        await Page.GetByLabel("Conta Corrente *").FillAsync("1234567");
-                        await Page.GetByLabel("DÃ­gito *").ClickAsync();
-                        await Page.GetByLabel("DÃ­gito *").FillAsync("8");
+                        await Page.Locator("#codBancoInput").ClickAsync();
+                        await Page.Locator("#codBancoInput").FillAsync("123");
+                        await Page.Locator("#agenciaInput").ClickAsync();
+                        await Page.Locator("#agenciaInput").FillAsync("1234");
+                        await Page.Locator("#contaCorrenteInput").ClickAsync();
+                        await Page.Locator("#contaCorrenteInput").FillAsync("1234567");
+                        await Page.Locator("#digitoInput").ClickAsync();
+                        await Page.Locator("#digitoInput").FillAsync("8");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                         var cedenteCadastrado = await Page.WaitForSelectorAsync("text=Rendimento cadastrado com sucesso!", new PageWaitForSelectorOptions
 

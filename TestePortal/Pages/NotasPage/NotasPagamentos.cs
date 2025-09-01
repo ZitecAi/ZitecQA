@@ -53,35 +53,29 @@ namespace TestePortal.Pages.NotasPage
 
                     if (nivelLogado == NivelEnum.Master || nivelLogado == NivelEnum.Gestora || nivelLogado == NivelEnum.Consultoria)
                     {
-                        var apagarNotaPagamento2 = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "teste jessica");
+                        var apagarNotaPagamento2 = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "Teste");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Novo +" }).ClickAsync();
-                        await Page.Locator("#agendamentoFiltro").FillAsync("2024-09-02");
-                        await Task.Delay(300);
-                        await Page.Locator("#agendamentoFiltro").ClickAsync();
-                        await Task.Delay(300);
-                        await Page.Locator("#agendamentoFiltro").FillAsync("02/12/2024");
-                        await Task.Delay(300);
+                        var data = new DateTime(2024, 8, 28).ToString("yyyy-MM-dd");
+                        await Page.Locator("#agendamentoFiltro").FillAsync(data);
+                        await Page.Locator("#data").FillAsync("12/12/2025");
                         await Page.Locator("#tipoNota").SelectOptionAsync(new[] { "ASSEMBLEIA" });
-                        await Page.GetByPlaceholder("0000,00").ClickAsync();
-                        await Page.GetByPlaceholder("0000,00").FillAsync("100");
                         await Page.Locator("#Fundos").SelectOptionAsync(new[] { "36614123000160" });
-                        await Task.Delay(300);
+                        await Page.GetByPlaceholder("0000,00").FillAsync("100");                        
                         await Page.Locator("#Prestadores").SelectOptionAsync(new SelectOptionValue { Label = "ZIELO TECNOLOGIA LTDA" });
-                        await Task.Delay(300);
                         await Page.Locator("#filePagamentosNotas").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "21321321321.pdf" });
                         await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).ClickAsync();
-                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("teste jessica");
+                        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Insira a mensagem" }).FillAsync("Teste");
                         await Page.GetByRole(AriaRole.Button, new() { Name = "Enviar" }).ClickAsync();
                         await Task.Delay(700);
 
 
-                        var notaPagamentoExiste = Repository.NotaPagamento.NotaPagamentoRepository.VerificaExistenciaNotaPagamento("36614123000160", "teste jessica");
+                        var notaPagamentoExiste = Repository.NotaPagamento.NotaPagamentoRepository.VerificaExistenciaNotaPagamento("36614123000160", "Teste");
 
                         if (notaPagamentoExiste)
                         {
                             Console.WriteLine("Notas pagamento adicionado com sucesso na tabela.");
                             pagina.InserirDados = "✅";
-                            var apagarNotaPagamento = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "teste jessica");
+                            var apagarNotaPagamento = Repository.NotaPagamento.NotaPagamentoRepository.ApagarNotaPagamento("36614123000160", "Teste");
 
                             if (apagarNotaPagamento)
                             {
@@ -127,7 +121,7 @@ namespace TestePortal.Pages.NotasPage
             catch
             {
                 throw new Exception();
-                Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");               
+                Console.WriteLine("Timeout de 2000ms excedido, continuando a execução...");
                 pagina.InserirDados = "❌";
                 pagina.Excluir = "❌";
                 errosTotais += 2;

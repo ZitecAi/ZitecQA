@@ -67,7 +67,7 @@ namespace TestePortal.Pages.CadastroPage
                     await Page.GetByLabel("Estado", new() { Exact = true }).ClickAsync();
                     await Page.GetByLabel("Estado", new() { Exact = true }).FillAsync("SP");
                     await Page.GetByRole(AriaRole.Textbox, new() { Name = "CEP: CEP: CEP:" }).ClickAsync();
-                    await Page.GetByRole(AriaRole.Textbox, new() { Name = "CEP: CEP: CEP:" }).FillAsync("07084-370");
+                    await Page.GetByRole(AriaRole.Textbox, new() { Name = "CEP: CEP: CEP:" }).FillAsync("06463-260");
                     await Page.GetByLabel("E-mail:", new() { Exact = true }).ClickAsync();
                     await Page.GetByLabel("E-mail:", new() { Exact = true }).FillAsync("jessica.tavares@gmail.com");
                     await Page.Locator("#FilePrestador").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "documentosteste.zip" });
@@ -105,13 +105,13 @@ namespace TestePortal.Pages.CadastroPage
                     await Page.GetByRole(AriaRole.Button, new() { Name = "Confirmar" }).ClickAsync();
                     await Task.Delay(400);
 
-                    var prestadorServicoExiste = Repository.PrestadorServico.PrestadorServico.VerificaExistenciaPrestadorServico("info", "07084370");
+                    var prestadorServicoExiste = Repository.PrestadorServico.PrestadorServico.VerificaExistenciaPrestadorServico("info", "06463260");
                    
                     if (prestadorServicoExiste)
                     {
                         Console.WriteLine("Prestador de Serviço cadastrado com sucesso na tabela.");
                         pagina.InserirDados = "✅";
-                        var apagarPrestadorServico = Repository.PrestadorServico.PrestadorServico.ApagarPrestadorServico("info", "07084370");
+                        var apagarPrestadorServico = Repository.PrestadorServico.PrestadorServico.ApagarPrestadorServico("info", "06463260");
 
                         if (apagarPrestadorServico)
                         {

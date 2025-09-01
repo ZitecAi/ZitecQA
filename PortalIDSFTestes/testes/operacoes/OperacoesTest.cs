@@ -49,7 +49,7 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(2)]
-        public async Task Deve_Enviar_Uma_Operacao_CNAB()
+        public async Task Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.EnviarOperacaoCNAB();
@@ -84,7 +84,6 @@ namespace PortalIDSFTestes.testes.operacoes
         }            
 
         [Test, Order(7)]
-        [Ignore("Esse teste está em manutenção.")]
         public async Task Deve_Excluir_Uma_Operacao()
         {
             var operacoes = new OperacoesPage(page);
@@ -92,8 +91,7 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(8)]
-        //[Ignore("Esse teste está em manutenção.")]
-
+        [Ignore("Esse teste está em manutenção.")]
         public async Task Nao_Deve_Aceitar_Uma_Operacao_CNAB_Negativo()
         {
             var operacoes = new OperacoesPage(page);
@@ -130,8 +128,7 @@ namespace PortalIDSFTestes.testes.operacoes
 
 
         [Test, Order(9)]
-        //[Ignore("Esse teste está em manutenção.")]
-
+        [Ignore("Esse teste está em manutenção.")]
         public async Task Nao_Deve_Aceitar_Uma_Operacao_CSV_Negativo()
         {
             var operacoes = new OperacoesPage(page);

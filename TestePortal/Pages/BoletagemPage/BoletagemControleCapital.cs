@@ -47,7 +47,7 @@ namespace TestePortal.Pages.BoletagemPage
                         errosTotais++;
                     }
 
-                    pagina.BaixarExcel = Utils.Excel.BaixarExcel(Page).Result;
+                    pagina.BaixarExcel = Utils.Excel.BaixarExcelPorIdControleCapital(Page).Result;
                     if (pagina.BaixarExcel == "❌")
                     {
                         errosTotais++;

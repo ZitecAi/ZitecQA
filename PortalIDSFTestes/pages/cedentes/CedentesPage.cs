@@ -78,8 +78,8 @@ namespace PortalIDSFTestes.pages.cedentes
         public async Task ConsultarCedente()
         {
             await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar na Barra de pesquisa para inserir CPF cedente a ser excluído");
-            await metodo.Escrever(el.BarraPesquisaCedentes, "496.248.668-30", "Escrever CPF do cedente a ser excluido");
-            await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentes, "496.248.668-30","Pesquisar CPF Cedente presente na tabela");
+            await metodo.Escrever(el.BarraPesquisaCedentes, "FUNDO QA", "Escrever CPF do cedente a ser excluido");
+            await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentes, "FUNDO QA", "Pesquisar Fundo QA do Cedente presente na tabela");
         }
 
 

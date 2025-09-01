@@ -1,338 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TestRun id="e4d7cfe9-6230-48f1-add5-f50b97cba7c1" name="LeviAlves@ZITEC0029 2025-08-06 09:56:20" runUser="AzureAD\LeviAlves" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
-  <Times creation="2025-08-06T09:56:20.7422923-03:00" queuing="2025-08-06T09:56:20.7422930-03:00" start="2025-08-06T09:56:12.1950515-03:00" finish="2025-08-06T09:57:43.8507670-03:00" />
-  <TestSettings name="default" id="1f6a4403-01cc-4bfa-acc4-551ad2c35df1">
-    <Deployment runDeploymentRoot="LeviAlves_ZITEC0029_2025-08-06_09_56_20" />
+<TestRun id="424e11b7-b742-4b3d-ae6c-2f9a382850a8" name="LeviAlves@ZITEC0029 2025-09-01 08:13:31" runUser="AzureAD\LeviAlves" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-09-01T08:13:31.6100726-03:00" queuing="2025-09-01T08:13:31.6100730-03:00" start="2025-09-01T08:13:21.5224165-03:00" finish="2025-09-01T08:17:37.5801187-03:00" />
+  <TestSettings name="default" id="84936ce5-39a0-48e0-8cd5-21cd91a2c5a3">
+    <Deployment runDeploymentRoot="LeviAlves_ZITEC0029_2025-09-01_08_13_31" />
   </TestSettings>
   <Results>
-    <UnitTestResult executionId="9c2077e1-37d6-44d2-a5c1-46f9bdca2196" testId="e16a79ef-d395-6d61-8a54-b8b1c8a4dfb3" testName="Deve_Fazer_Download_Excel" computerName="ZITEC0029" duration="00:00:20.8943330" startTime="2025-08-06T09:56:22.5346814-03:00" endTime="2025-08-06T09:56:43.4290144-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9c2077e1-37d6-44d2-a5c1-46f9bdca2196">
+    <UnitTestResult executionId="ffc9cc19-8c9e-41b9-910c-15a00fd52759" testId="e16a79ef-d395-6d61-8a54-b8b1c8a4dfb3" testName="Deve_Fazer_Download_Excel" computerName="ZITEC0029" duration="00:00:27.8177920" startTime="2025-09-01T08:13:32.3177889-03:00" endTime="2025-09-01T08:14:00.1355790-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ffc9cc19-8c9e-41b9-910c-15a00fd52759">
       <Output>
         <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="ff0abdbb-f99a-4941-8775-f23471b20af8" testId="721dbbd6-1f79-b02d-0cc7-394a6b922573" testName="Deve_Cadastrar_Nova_Nota_Comercial" computerName="ZITEC0029" duration="00:00:14.0533740" startTime="2025-08-06T09:56:31.4116399-03:00" endTime="2025-08-06T09:56:45.4650129-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ff0abdbb-f99a-4941-8775-f23471b20af8">
+    <UnitTestResult executionId="e4a16e60-bfc6-42c7-b099-b6051de6cbd1" testId="b7d29f08-9ae0-9e6a-dea6-2ac8c5c99345" testName="Nao_Deve_Cadastrar_Nota_Comercial_Com_Carencia_Juros_Maior_Que_Juros_Principal" computerName="ZITEC0029" duration="00:00:13.9695260" startTime="2025-09-01T08:16:26.7919112-03:00" endTime="2025-09-01T08:16:40.7614367-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e4a16e60-bfc6-42c7-b099-b6051de6cbd1">
+      <Output>
+        <StdOut>✅ 'A carência de juros não pode ser maior que a carência do principal!' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+✅ 'Parcelas devem ser geradas corretamente' encontrado em '//div[@class='toast toast-warning']' (único match).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="79e2a69b-881f-4184-ba2c-89a7aadc1135" testId="b859e01f-2baf-131d-42ec-5093c10edc6c" testName="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Envolvidos" computerName="ZITEC0029" duration="00:00:13.2834170" startTime="2025-09-01T08:15:25.3840136-03:00" endTime="2025-09-01T08:15:38.6674292-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="79e2a69b-881f-4184-ba2c-89a7aadc1135">
+      <Output>
+        <StdOut>✅ 'Preencha todos os campos obrigatórios' encontrado em '//div[@class='toast toast-warning']' (único match).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ad8fdb33-1138-44fd-8416-7d5fec265138" testId="7df1f7e7-1586-5ee2-8671-f9ab73588caf" testName="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Inexistente" computerName="ZITEC0029" duration="00:00:11.2033650" startTime="2025-09-01T08:15:28.4761865-03:00" endTime="2025-09-01T08:15:39.6795511-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ad8fdb33-1138-44fd-8416-7d5fec265138">
       <Output>
         <StdOut>✅ Arquivo enviado com sucesso</StdOut>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="db59ceb2-a35c-4df5-9cdd-4636bc604f3f" testId="18916252-7d12-5881-94c8-7a53891bb8ac" testName="Deve_Fazer_Download_Arquivo_CNAB" computerName="ZITEC0029" duration="00:00:07.3939810" startTime="2025-08-06T09:56:39.4086470-03:00" endTime="2025-08-06T09:56:46.8026275-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="db59ceb2-a35c-4df5-9cdd-4636bc604f3f">
+    <UnitTestResult executionId="fa1c6886-b9f8-4a4a-82aa-b4dc00a74c39" testId="f2b50908-02ba-962b-4200-b30a44cb06da" testName="Deve_Fazer_Download_Arquivo" computerName="ZITEC0029" duration="00:00:24.0231810" startTime="2025-09-01T08:14:48.0202111-03:00" endTime="2025-09-01T08:15:12.0433915-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fa1c6886-b9f8-4a4a-82aa-b4dc00a74c39">
       <Output>
         <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="547a91bc-9311-44a8-b3d6-5b55dfaa67c1" testId="043fabe8-2dcc-9076-3fb8-76ec66d0fcc6" testName="Deve_Consultar_Cedente_Na_Tabela" computerName="ZITEC0029" duration="00:00:06.0472120" startTime="2025-08-06T09:56:42.7282228-03:00" endTime="2025-08-06T09:56:48.7754340-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="547a91bc-9311-44a8-b3d6-5b55dfaa67c1">
-      <Output>
-        <StdOut>✅ Texto encontrado: Fundo	Cedente	Criação	Status	Versão	Gestora	Cadastro	Compliance	Ações&#xD;
-FUNDO QA FIDC	Teste de cadastro - CPF: 496.248.668-30	06/08/2025 09:56:43	Análise	1	Em espera	&#xD;
-&#xD;
-Em espera&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Em espera&#xD;
-&#xD;
-	&#xD;
-&#xD;
-FUNDO QA FIDC	Jessica - CNPJ: 53.300.608/0001-06	06/08/2025 09:21:20	Análise	1	Em espera	&#xD;
-&#xD;
-Em espera&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-PRECATO IV FIDC	RAFAEL EILERT - CPF: 738.261.200-78	05/08/2025 15:52:45	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-AMERICA FIDC	SERVMAR SERVICOS TECNICOS AMBIENTAIS LTDA - CNPJ: 55.636.500/0001-06	05/08/2025 16:11:17	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-KINERET FIDC	TWM TRANSPORTES ESPECIAIS LTDA - CNPJ: 65.271.314/0001-74	06/08/2025 09:21:18	Análise	1	Aprovado	&#xD;
-&#xD;
-Em espera&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-AMERICA FIDC	JOMAGA PARTICIPACOES LTDA - CNPJ: 04.606.250/0001-20	05/08/2025 15:24:10	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-AG FIDC	SBA-MAQUINAS PARA BOBINAGEM E AUTOMACAO LTDA - CNPJ: 14.073.137/0001-80	05/08/2025 16:33:14	Formalização	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-PRECATO IV FIDC	CELIO FERNANDES SILVA - CPF: 231.551.167-49	05/08/2025 13:15:54	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-PRECATO IV FIDC	REGIS ANTÔNIO CAETANO - CPF: 044.496.141-00	05/08/2025 12:16:56	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-NEW SECURITIZAÇÃO	COMERCIAL TEXTIL SUL BRASIL LTDA - CNPJ: 07.259.306/0001-06	05/08/2025 11:41:27	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="c830d871-5294-434a-a63b-a45ab8d9d32e" testId="57f33e9f-4728-55f1-5802-16e8e99e4981" testName="Deve_Fazer_Download_Relatorio_Titulos" computerName="ZITEC0029" duration="00:00:00.0002509" startTime="2025-08-06T09:56:32.4555966-03:00" endTime="2025-08-06T09:56:32.4558473-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c830d871-5294-434a-a63b-a45ab8d9d32e">
-      <Output>
-        <StdOut>Esse teste está em manutenção.</StdOut>
-        <ErrorInfo>
-          <Message>Esse teste está em manutenção.</Message>
-        </ErrorInfo>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="b7bc1171-28da-4b3d-afe0-36532b8ef722" testId="5cec5290-d950-7798-fd1c-f69638fab407" testName="Deve_Cancelar_Nota_Comercial" computerName="ZITEC0029" duration="00:00:10.2390540" startTime="2025-08-06T09:56:54.6888138-03:00" endTime="2025-08-06T09:57:04.9278668-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b7bc1171-28da-4b3d-afe0-36532b8ef722" />
-    <UnitTestResult executionId="16d026a2-4614-4bf3-af22-4c261a7ae5f4" testId="489206ba-60c8-1822-1605-0ceb4f6776d3" testName="Deve_Enviar_Arquivo_Baixa" computerName="ZITEC0029" duration="00:00:06.0144320" startTime="2025-08-06T09:56:20.7154471-03:00" endTime="2025-08-06T09:56:26.7298781-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="16d026a2-4614-4bf3-af22-4c261a7ae5f4">
-      <Output>
-        <StdOut>✅ Arquivo atualizado salvo como: C:\TempQA\Arquivos\FundoQA_20250806_de256e78.txt&#xD;
-✅ Arquivo enviado com sucesso</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="f7c7387f-b148-426f-84a4-3c9be52bf52c" testId="a2e3872d-c41c-5ad3-fa5b-f5b5203954d7" testName="Deve_Realizar_Login_Com_Sucesso_Nivel_Interno" computerName="ZITEC0029" duration="00:00:09.4870900" startTime="2025-08-06T09:56:12.5646956-03:00" endTime="2025-08-06T09:56:22.0517844-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f7c7387f-b148-426f-84a4-3c9be52bf52c" />
-    <UnitTestResult executionId="1d367bb1-61cf-4fbb-98b7-c252cae529c7" testId="62982fee-a37b-8767-7a9b-2114e7c780f5" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:09.0686620" startTime="2025-08-06T09:56:12.5646385-03:00" endTime="2025-08-06T09:56:21.6332994-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1d367bb1-61cf-4fbb-98b7-c252cae529c7" />
-    <UnitTestResult executionId="b8bdffe7-3238-44eb-a89c-ab88eddeae0c" testId="7702d728-5967-3d76-54de-cfc8d3d6f578" testName="Deve_Cadastrar_Cedente" computerName="ZITEC0029" duration="00:00:10.1827900" startTime="2025-08-06T09:56:32.5453989-03:00" endTime="2025-08-06T09:56:42.7281888-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b8bdffe7-3238-44eb-a89c-ab88eddeae0c">
-      <Output>
-        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="682669e8-bf67-4569-8ef5-b0a6f01aa9d8" testId="552d0bdd-786d-3686-89ed-d63ab3b49118" testName="Deve_Fazer_Download_Excel" computerName="ZITEC0029" duration="00:00:09.2232810" startTime="2025-08-06T09:56:23.3220840-03:00" endTime="2025-08-06T09:56:32.5453644-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="682669e8-bf67-4569-8ef5-b0a6f01aa9d8">
-      <Output>
-        <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
-\ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="a8507956-d26f-4aef-8502-310b01c5e577" testId="f4cc9958-27be-4411-f1c6-39664b23e908" testName="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Gestora" computerName="ZITEC0029" duration="00:00:03.7715830" startTime="2025-08-06T09:56:39.8452146-03:00" endTime="2025-08-06T09:56:43.6167972-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a8507956-d26f-4aef-8502-310b01c5e577" />
-    <UnitTestResult executionId="128c85dc-2210-490a-9d9a-3e154aa80d9f" testId="43c79b1d-5c33-8818-cbbe-091b8689400e" testName="Deve_Fazer_Download_Excel" computerName="ZITEC0029" duration="00:00:07.7235500" startTime="2025-08-06T09:57:07.1255485-03:00" endTime="2025-08-06T09:57:14.8490979-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="128c85dc-2210-490a-9d9a-3e154aa80d9f">
-      <Output>
-        <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
-\ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="966d7725-98d3-45e0-9607-d0e9baa0764d" testId="39fb3a9c-1767-d39d-ac75-c6a06612891e" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:09.2745870" startTime="2025-08-06T09:56:12.5647474-03:00" endTime="2025-08-06T09:56:21.8393333-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="966d7725-98d3-45e0-9607-d0e9baa0764d" />
-    <UnitTestResult executionId="8e2900af-632c-48f4-a85d-f10f1a62db47" testId="23e26a42-7d06-238a-e39c-2c03c3a8a77c" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:10.7573860" startTime="2025-08-06T09:56:12.5646172-03:00" endTime="2025-08-06T09:56:23.3220020-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8e2900af-632c-48f4-a85d-f10f1a62db47">
-      <Output>
-        <ErrorInfo>
-          <Message>Microsoft.Playwright.PlaywrightException : Não foi possível validar acentuação da página no passo: Validar acentos na página de Cedentes&#xD;
-Erros de acentuação encontrados:&#xD;
-❌ Texto inválido 'Ã£' encontrado 16 vez(es).&#xD;
-❌ Texto inválido 'Ã§' encontrado 13 vez(es).&#xD;
-❌ Texto inválido 'Ã¡' encontrado 4 vez(es).&#xD;
-❌ Texto inválido 'Ã©' encontrado 1 vez(es).&#xD;
-❌ Texto inválido 'Ã§Ã£' encontrado 11 vez(es).&#xD;
-❌ Texto inválido 'Ã§Ã' encontrado 12 vez(es).&#xD;
-&#xD;
-  1) Erros de acentuação encontrados:&#xD;
-❌ Texto inválido 'Ã£' encontrado 16 vez(es).&#xD;
-❌ Texto inválido 'Ã§' encontrado 13 vez(es).&#xD;
-❌ Texto inválido 'Ã¡' encontrado 4 vez(es).&#xD;
-❌ Texto inválido 'Ã©' encontrado 1 vez(es).&#xD;
-❌ Texto inválido 'Ã§Ã£' encontrado 11 vez(es).&#xD;
-❌ Texto inválido 'Ã§Ã' encontrado 12 vez(es).&#xD;
-</Message>
-          <StackTrace>   at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 218&#xD;
-   at PortalIDSFTestes.pages.cedentes.CedentesPage.ValidarAcentosCedentesPage() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\cedentes\CedentesPage.cs:line 28&#xD;
-   at PortalIDSFTestes.testes.cedentes.CedentesTest.Nao_Deve_Conter_Acentos_Quebrados() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\cedentes\CedentesTest.cs:line 49&#xD;
-   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
-   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
-   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
-   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
-1)    at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 213&#xD;
-
-2)    at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 218&#xD;
-   at PortalIDSFTestes.pages.cedentes.CedentesPage.ValidarAcentosCedentesPage() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\cedentes\CedentesPage.cs:line 28&#xD;
-   at PortalIDSFTestes.testes.cedentes.CedentesTest.Nao_Deve_Conter_Acentos_Quebrados() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\cedentes\CedentesTest.cs:line 49&#xD;
-   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
-   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
-   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
-   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
-</StackTrace>
-        </ErrorInfo>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="3e40e26e-e478-448b-b529-3414dafa504e" testId="1504492c-c633-41cc-ae94-6d6d161a7bae" testName="Deve_Consultar_Nota_Comercial_Pela_Tabela" computerName="ZITEC0029" duration="00:00:09.2237210" startTime="2025-08-06T09:56:45.4650556-03:00" endTime="2025-08-06T09:56:54.6887759-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3e40e26e-e478-448b-b529-3414dafa504e">
-      <Output>
-        <StdOut>✅ Texto encontrado: Operação	Fundo	Tomador	Valor Principal	Valor Liquido	Custo da Emissão	Data de Início&#xD;
-3293	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	06/08/2025&#xD;
-3292	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	06/08/2025&#xD;
-3286	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	05/08/2025&#xD;
-3284	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	05/08/2025</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="a82fdf84-5810-4af8-8818-8ef1ee2ea7dd" testId="a7397485-8e4b-4440-13c1-65989f03ca1f" testName="Deve_Enviar_Uma_Operacao_CNAB" computerName="ZITEC0029" duration="00:00:07.7602810" startTime="2025-08-06T09:56:21.6333425-03:00" endTime="2025-08-06T09:56:29.3936230-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a82fdf84-5810-4af8-8818-8ef1ee2ea7dd">
-      <Output>
-        <StdOut>Arquivo FundoQA_20250806_82ee2db7.txt enviado com sucesso.</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="ee25da1e-a53f-49c0-89e6-c44203348371" testId="9a88c342-08e6-ee42-3c30-c5308044e877" testName="Deve_Realizar_Login_Com_Sucesso_Nivel_Gestora" computerName="ZITEC0029" duration="00:00:05.4622040" startTime="2025-08-06T09:56:34.3829728-03:00" endTime="2025-08-06T09:56:39.8451760-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ee25da1e-a53f-49c0-89e6-c44203348371" />
-    <UnitTestResult executionId="c7a48d32-9f94-4366-889a-9dd0873442b3" testId="f52ee22d-c5fd-4dc6-66b2-2aae450f69cd" testName="Deve_Excluir_Cedente" computerName="ZITEC0029" duration="00:00:07.5610320" startTime="2025-08-06T09:56:48.7754680-03:00" endTime="2025-08-06T09:56:56.3364992-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c7a48d32-9f94-4366-889a-9dd0873442b3" />
-    <UnitTestResult executionId="e2d8c319-cb74-4ef4-a7b6-26b823b1ad6a" testId="ec9e965f-4f06-ba37-83f0-d246296b66e4" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:02.9527510" startTime="2025-08-06T09:56:52.5310804-03:00" endTime="2025-08-06T09:56:55.4838299-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e2d8c319-cb74-4ef4-a7b6-26b823b1ad6a">
-      <Output>
-        <ErrorInfo>
-          <Message>Microsoft.Playwright.PlaywrightException : Não foi possível validar acentuação da página no passo: Validar Acentos na Pagina de Login&#xD;
-Erros de acentuação encontrados:&#xD;
-❌ Texto inválido 'Ã¡' encontrado 2 vez(es).&#xD;
-&#xD;
-  1) Erros de acentuação encontrados:&#xD;
-❌ Texto inválido 'Ã¡' encontrado 2 vez(es).&#xD;
-</Message>
-          <StackTrace>   at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 218&#xD;
-   at PortalIDSFTestes.pages.login.LoginPage.validarAcentosLoginPage() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\login\LoginPage.cs:line 25&#xD;
-   at PortalIDSFTestes.testes.login.LoginTest.Nao_Deve_Conter_Acentos_Quebrados() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\login\LoginTest.cs:line 90&#xD;
-   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
-   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
-   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
-   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
-1)    at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 213&#xD;
-
-2)    at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 218&#xD;
-   at PortalIDSFTestes.pages.login.LoginPage.validarAcentosLoginPage() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\login\LoginPage.cs:line 25&#xD;
-   at PortalIDSFTestes.testes.login.LoginTest.Nao_Deve_Conter_Acentos_Quebrados() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\login\LoginTest.cs:line 90&#xD;
-   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
-   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
-   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
-   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
-</StackTrace>
-        </ErrorInfo>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="6fa0a212-d0ea-4c28-a392-85e20093a77e" testId="f96d0e88-049e-1134-14de-7b86daca1cde" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:08.1499630" startTime="2025-08-06T09:56:12.5646582-03:00" endTime="2025-08-06T09:56:20.7145787-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6fa0a212-d0ea-4c28-a392-85e20093a77e" />
-    <UnitTestResult executionId="f52c744b-daf1-4229-ad15-8794934bedf8" testId="bab5c322-26da-2724-a60a-53cba6f4b241" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:09.9697500" startTime="2025-08-06T09:56:12.5646773-03:00" endTime="2025-08-06T09:56:22.5344269-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f52c744b-daf1-4229-ad15-8794934bedf8">
-      <Output>
-        <ErrorInfo>
-          <Message>Microsoft.Playwright.PlaywrightException : Não foi possível validar acentuação da página no passo: Validar Acentos na Pagina de Ativos&#xD;
-Erros de acentuação encontrados:&#xD;
-❌ Texto inválido 'Ã£' encontrado 34 vez(es).&#xD;
-❌ Texto inválido 'Ã§' encontrado 38 vez(es).&#xD;
-❌ Texto inválido 'Ã¡' encontrado 29 vez(es).&#xD;
-❌ Texto inválido 'Ã©' encontrado 7 vez(es).&#xD;
-❌ Texto inválido 'Ã§Ã£' encontrado 29 vez(es).&#xD;
-❌ Texto inválido 'Ã§Ã' encontrado 38 vez(es).&#xD;
-&#xD;
-  1) Erros de acentuação encontrados:&#xD;
-❌ Texto inválido 'Ã£' encontrado 34 vez(es).&#xD;
-❌ Texto inválido 'Ã§' encontrado 38 vez(es).&#xD;
-❌ Texto inválido 'Ã¡' encontrado 29 vez(es).&#xD;
-❌ Texto inválido 'Ã©' encontrado 7 vez(es).&#xD;
-❌ Texto inválido 'Ã§Ã£' encontrado 29 vez(es).&#xD;
-❌ Texto inválido 'Ã§Ã' encontrado 38 vez(es).&#xD;
-</Message>
-          <StackTrace>   at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 218&#xD;
-   at PortalIDSFTestes.pages.operacoes.AtivosPage.ValidarAcentosAtivosPage() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\operacoes\AtivosPage.cs:line 27&#xD;
-   at PortalIDSFTestes.testes.operacoes.AtivosTest.Nao_Deve_Conter_Acentos_Quebrados() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\operacoes\AtivosTest.cs:line 48&#xD;
-   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
-   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
-   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
-   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
-1)    at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 213&#xD;
-
-2)    at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 218&#xD;
-   at PortalIDSFTestes.pages.operacoes.AtivosPage.ValidarAcentosAtivosPage() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\operacoes\AtivosPage.cs:line 27&#xD;
-   at PortalIDSFTestes.testes.operacoes.AtivosTest.Nao_Deve_Conter_Acentos_Quebrados() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\operacoes\AtivosTest.cs:line 48&#xD;
-   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
-   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
-   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
-   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
-   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
-</StackTrace>
-        </ErrorInfo>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="0d841196-0dda-42c7-93cf-9c66545a028e" testId="d4ed6167-9692-f6c6-357b-547442aa74b4" testName="Deve_Realizar_Login_Com_Sucesso_Nivel_Denver" computerName="ZITEC0029" duration="00:00:05.2295600" startTime="2025-08-06T09:56:43.6168315-03:00" endTime="2025-08-06T09:56:48.8463907-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0d841196-0dda-42c7-93cf-9c66545a028e" />
-    <UnitTestResult executionId="60b44d72-4a2a-484b-b6c8-e2116bc71cae" testId="de3f339c-224e-668f-acf5-5e8475babfa6" testName="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Denver" computerName="ZITEC0029" duration="00:00:03.6846110" startTime="2025-08-06T09:56:48.8464354-03:00" endTime="2025-08-06T09:56:52.5310456-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="60b44d72-4a2a-484b-b6c8-e2116bc71cae" />
-    <UnitTestResult executionId="280f633c-efe4-4f36-b50f-c3d87027498d" testId="9213e2eb-3161-5f78-8226-02cb29f75884" testName="Deve_Consultar_Arquivo_Baixa" computerName="ZITEC0029" duration="00:00:05.7256300" startTime="2025-08-06T09:56:26.7299144-03:00" endTime="2025-08-06T09:56:32.4555440-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="280f633c-efe4-4f36-b50f-c3d87027498d">
-      <Output>
-        <StdOut>✅ Texto encontrado: Arquivo	Fundo	Status	Usuário	Data	Quantidade de Títulos&#xD;
-template.txt	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	ENVIADO	QA - teste	06/08/2025 00:00:00	0</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="91add2b3-1f55-4381-8f5c-4dcb29557d91" testId="430d02d0-e1ac-989a-5214-bbc87234c9cc" testName="Deve_Cadastrar_Um_Ativo" computerName="ZITEC0029" duration="00:00:19.0969360" startTime="2025-08-06T09:56:43.4290539-03:00" endTime="2025-08-06T09:57:02.5259891-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="91add2b3-1f55-4381-8f5c-4dcb29557d91">
-      <Output>
-        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="5a7af318-a932-422f-8888-414e28b0a6ef" testId="a37c924d-ada3-afad-4c77-c08cd9211a84" testName="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Interno" computerName="ZITEC0029" duration="00:00:03.9363970" startTime="2025-08-06T09:56:22.0518773-03:00" endTime="2025-08-06T09:56:25.9882739-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5a7af318-a932-422f-8888-414e28b0a6ef" />
-    <UnitTestResult executionId="d953da23-10da-4cd1-9f92-ebccd6c1d2a6" testId="8fb9357b-7feb-08e4-f480-f2608947deed" testName="Deve_Fazer_Download_Relatorio_Movimentos" computerName="ZITEC0029" duration="00:00:06.9527450" startTime="2025-08-06T09:56:32.4558549-03:00" endTime="2025-08-06T09:56:39.4085987-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d953da23-10da-4cd1-9f92-ebccd6c1d2a6">
-      <Output>
-        <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
-\ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="bf94d066-5095-4b05-a5c7-f612ca793376" testId="88c98239-ca9c-b2ce-2366-360667450b0c" testName="Deve_Fazer_Download_Excel" computerName="ZITEC0029" duration="00:00:09.5722340" startTime="2025-08-06T09:56:21.8393701-03:00" endTime="2025-08-06T09:56:31.4116037-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bf94d066-5095-4b05-a5c7-f612ca793376">
-      <Output>
-        <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
-\ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
-      </Output>
-    </UnitTestResult>
-    <UnitTestResult executionId="5fde0add-8478-4050-b5bc-65305e79a6bf" testId="af0d3d0e-e41f-d2a3-b41e-a8c7bbd84bf7" testName="Deve_Realizar_Login_Com_Sucesso_Nivel_Consultoria" computerName="ZITEC0029" duration="00:00:04.7988410" startTime="2025-08-06T09:56:25.9883339-03:00" endTime="2025-08-06T09:56:30.7871741-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5fde0add-8478-4050-b5bc-65305e79a6bf" />
-    <UnitTestResult executionId="62fddfc4-154a-4e84-b388-be018e5b74f8" testId="3468a7b9-0d97-ef2f-8ccc-f9a50fe46be1" testName="Deve_Fazer_Download_Minuta" computerName="ZITEC0029" duration="00:00:38.8666160" startTime="2025-08-06T09:57:04.9278988-03:00" endTime="2025-08-06T09:57:43.7945140-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="62fddfc4-154a-4e84-b388-be018e5b74f8">
+    <UnitTestResult executionId="02ba5f05-061d-4506-8b24-e06f78c3da1b" testId="3468a7b9-0d97-ef2f-8ccc-f9a50fe46be1" testName="Deve_Fazer_Download_Minuta" computerName="ZITEC0029" duration="00:00:41.3396130" startTime="2025-09-01T08:14:32.8098976-03:00" endTime="2025-09-01T08:15:14.1495093-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="02ba5f05-061d-4506-8b24-e06f78c3da1b">
       <Output>
         <ErrorInfo>
           <Message>System.TimeoutException : Timeout 30000ms exceeded while waiting for event "Download"&#xD;
@@ -340,7 +41,7 @@ template.txt	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	ENVIADO	QA - teste
           <StackTrace>   at Microsoft.Playwright.Core.Waiter.WaitForPromiseAsync[T](Task`1 task, Action dispose) in /_/src/Playwright/Core/Waiter.cs:line 179&#xD;
    at Microsoft.Playwright.Transport.Connection.WrapApiBoundaryAsync(Func`1 action) in /_/src/Playwright/Transport/Connection.cs:line 514&#xD;
    at Microsoft.Playwright.Core.Page.InnerWaitForEventAsync[T](PlaywrightEvent`1 pageEvent, Func`1 action, Func`2 predicate, Nullable`1 timeout) in /_/src/Playwright/Core/Page.cs:line 434&#xD;
-   at PortalIDSFTestes.pages.notaComercial.NotaComercialPage.DownloadMinuta() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\notaComercial\NotaComercialPage.cs:line 120&#xD;
+   at PortalIDSFTestes.pages.notaComercial.NotaComercialPage.DownloadMinuta() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\notaComercial\NotaComercialPage.cs:line 326&#xD;
    at PortalIDSFTestes.testes.notaComercial.NotaComercialTest.Deve_Fazer_Download_Minuta() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\notaComercial\NotaComercialTest.cs:line 82&#xD;
    at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
    at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
@@ -357,12 +58,12 @@ template.txt	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	ENVIADO	QA - teste
         </ErrorInfo>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="5b21125c-7770-493d-a049-dff34ab33221" testId="7c702900-008e-8ad6-8feb-973287a65b89" testName="Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes" computerName="ZITEC0029" duration="00:00:18.3787680" startTime="2025-08-06T09:56:29.3936577-03:00" endTime="2025-08-06T09:56:47.7724255-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5b21125c-7770-493d-a049-dff34ab33221">
+    <UnitTestResult executionId="19bd0741-3b90-4d5a-95b7-9a980571aa8b" testId="60f58855-02d3-34d9-2238-818a1c8ac443" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Nome_do_sacado_em_branco" computerName="ZITEC0029" duration="00:00:19.7300660" startTime="2025-09-01T08:16:02.0211548-03:00" endTime="2025-09-01T08:16:21.7512200-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="19bd0741-3b90-4d5a-95b7-9a980571aa8b">
       <Output>
-        <StdOut>✅ O texto 'Copia.txt' não está presente na tabela.</StdOut>
+        <StdOut>✅ Arquivo 'cnab_neg_08_20250901_111608870_45adcb.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="405f3a3c-6929-4042-a0f1-6cf39aaedf7f" testId="8ab4b7e9-a47c-7d63-6892-4088aedb6ed4" testName="Deve_Excluir_Uma_Operacao" computerName="ZITEC0029" duration="00:00:00.0000100" startTime="2025-08-06T09:57:23.0914666-03:00" endTime="2025-08-06T09:57:23.0914770-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="405f3a3c-6929-4042-a0f1-6cf39aaedf7f">
+    <UnitTestResult executionId="8073bc5c-1610-4679-a9ff-0933a8254913" testId="16c2b3c7-b726-12f9-d3ea-15f8449905a8" testName="Nao_Deve_Aceitar_Uma_Operacao_CSV_Negativo" computerName="ZITEC0029" duration="00:00:00.0000040" startTime="2025-09-01T08:15:14.6898410-03:00" endTime="2025-09-01T08:15:14.6898454-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8073bc5c-1610-4679-a9ff-0933a8254913">
       <Output>
         <StdOut>Esse teste está em manutenção.</StdOut>
         <ErrorInfo>
@@ -370,7 +71,113 @@ template.txt	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	ENVIADO	QA - teste
         </ErrorInfo>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="8422f476-060f-4bc5-8f23-f8b65369085b" testId="f92f5b3f-0954-6fa5-bd89-598960a8f907" testName="Deve_Fazer_Download_Relatorio_Movimento_Layout" computerName="ZITEC0029" duration="00:00:19.3530589" startTime="2025-08-06T09:56:47.7724597-03:00" endTime="2025-08-06T09:57:07.1255178-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8422f476-060f-4bc5-8f23-f8b65369085b">
+    <UnitTestResult executionId="bef83d56-cd2e-4ad4-9069-da19d04b7816" testId="356faf29-fc4b-5504-84e1-ebf6fb5ca5c9" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Data_Banco_inválido" computerName="ZITEC0029" duration="00:00:12.2829380" startTime="2025-09-01T08:14:39.6332559-03:00" endTime="2025-09-01T08:14:51.9161928-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bef83d56-cd2e-4ad4-9069-da19d04b7816">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_02_20250901_111448010_0de5ce.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4e6be6cb-50b7-4bdd-9915-053219fe95bd" testId="489206ba-60c8-1822-1605-0ceb4f6776d3" testName="Deve_Enviar_Arquivo_Baixa" computerName="ZITEC0029" duration="00:00:09.5174650" startTime="2025-09-01T08:13:32.1000432-03:00" endTime="2025-09-01T08:13:41.6175074-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4e6be6cb-50b7-4bdd-9915-053219fe95bd">
+      <Output>
+        <StdOut>✅ Arquivo atualizado salvo como: C:\TempQA\Arquivos\FundoQA_20250901_240bb0b7.txt&#xD;
+✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bff32e87-0e20-42b3-aab7-9103ca4ac656" testId="ec9e965f-4f06-ba37-83f0-d246296b66e4" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:03.6095570" startTime="2025-09-01T08:14:09.8118157-03:00" endTime="2025-09-01T08:14:13.4213713-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bff32e87-0e20-42b3-aab7-9103ca4ac656">
+      <Output>
+        <ErrorInfo>
+          <Message>Microsoft.Playwright.PlaywrightException : Não foi possível validar acentuação da página no passo: Validar Acentos na Pagina de Login&#xD;
+Erros de acentuação encontrados:&#xD;
+❌ Texto inválido 'Ã¡' encontrado 2 vez(es).&#xD;
+&#xD;
+  1) Erros de acentuação encontrados:&#xD;
+❌ Texto inválido 'Ã¡' encontrado 2 vez(es).&#xD;
+</Message>
+          <StackTrace>   at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 277&#xD;
+   at PortalIDSFTestes.pages.login.LoginPage.validarAcentosLoginPage() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\login\LoginPage.cs:line 25&#xD;
+   at PortalIDSFTestes.testes.login.LoginTest.Nao_Deve_Conter_Acentos_Quebrados() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\login\LoginTest.cs:line 90&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
+   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+1)    at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 272&#xD;
+
+2)    at PortalIDSFTestes.metodos.Metodos.ValidarAcentosAsync(IPage page, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 277&#xD;
+   at PortalIDSFTestes.pages.login.LoginPage.validarAcentosLoginPage() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\login\LoginPage.cs:line 25&#xD;
+   at PortalIDSFTestes.testes.login.LoginTest.Nao_Deve_Conter_Acentos_Quebrados() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\login\LoginTest.cs:line 90&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
+   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="05a4ff24-23e9-4dc1-943c-4e167d2196d4" testId="99dd438f-ee4f-af2b-b5c5-50f4862f3213" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Caractere_não_numérico" computerName="ZITEC0029" duration="00:00:17.4575000" startTime="2025-09-01T08:15:06.5106785-03:00" endTime="2025-09-01T08:15:23.9681615-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="05a4ff24-23e9-4dc1-943c-4e167d2196d4">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_04_20250901_111513877_9ab106.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="79af71ea-a1f2-42f7-bb49-a63310bd6734" testId="1504492c-c633-41cc-ae94-6d6d161a7bae" testName="Deve_Consultar_Nota_Comercial_Pela_Tabela" computerName="ZITEC0029" duration="00:00:11.9908470" startTime="2025-09-01T08:14:06.7744283-03:00" endTime="2025-09-01T08:14:18.7652743-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="79af71ea-a1f2-42f7-bb49-a63310bd6734">
+      <Output>
+        <StdOut>✅ Texto encontrado: Operação	Fundo	Tomador	Valor Principal	Valor Liquido	Custo da Emissão	Data de Início&#xD;
+3530	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	01/09/2025</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b9973f10-33df-46a4-b97a-1cb73cdf59e3" testId="4741233a-312d-86d3-2eec-44fa902db574" testName="Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Fundo_Invalido_Na_Conta_Template" computerName="ZITEC0029" duration="00:00:09.9676890" startTime="2025-09-01T08:16:25.3999143-03:00" endTime="2025-09-01T08:16:35.3676024-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b9973f10-33df-46a4-b97a-1cb73cdf59e3">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="230e639e-e827-4b53-b484-2b19ab836ce9" testId="de3f339c-224e-668f-acf5-5e8475babfa6" testName="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Denver" computerName="ZITEC0029" duration="00:00:04.7793860" startTime="2025-09-01T08:14:05.0323849-03:00" endTime="2025-09-01T08:14:09.8117693-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="230e639e-e827-4b53-b484-2b19ab836ce9" />
+    <UnitTestResult executionId="19af9624-c9a3-4c18-abbb-344b3da20631" testId="430d02d0-e1ac-989a-5214-bbc87234c9cc" testName="Deve_Cadastrar_Um_Ativo" computerName="ZITEC0029" duration="00:00:23.8815080" startTime="2025-09-01T08:14:00.1356460-03:00" endTime="2025-09-01T08:14:24.0171534-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="19af9624-c9a3-4c18-abbb-344b3da20631">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="281e19d3-7cc4-459b-b535-42a2808b5dbc" testId="13e160b2-2fc3-89a0-e874-40f43c85684e" testName="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Consultoria" computerName="ZITEC0029" duration="00:00:05.3854250" startTime="2025-09-01T08:13:42.0909828-03:00" endTime="2025-09-01T08:13:47.4764067-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="281e19d3-7cc4-459b-b535-42a2808b5dbc" />
+    <UnitTestResult executionId="3dbad97e-ea4a-4d15-8b19-f22b717327e4" testId="8ab4b7e9-a47c-7d63-6892-4088aedb6ed4" testName="Deve_Excluir_Uma_Operacao" computerName="ZITEC0029" duration="00:00:10.6193480" startTime="2025-09-01T08:15:04.0702989-03:00" endTime="2025-09-01T08:15:14.6896457-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3dbad97e-ea4a-4d15-8b19-f22b717327e4">
+      <Output>
+        <ErrorInfo>
+          <Message>Microsoft.Playwright.PlaywrightException : Não foi possivel Encontrar o Elemento: //div[@id='divTabelaCedentes_filter']//input Para escrever no passo: Escrever na Barra de pesquisa da tabela</Message>
+          <StackTrace>   at PortalIDSFTestes.metodos.Metodos.Escrever(String locator, String texto, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 30&#xD;
+   at PortalIDSFTestes.pages.operacoes.OperacoesPage.ExcluirArquivo() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\operacoes\OperacoesPage.cs:line 205&#xD;
+   at PortalIDSFTestes.testes.operacoes.OperacoesTest.Deve_Excluir_Uma_Operacao() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\operacoes\OperacoesTest.cs:line 90&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
+   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="887058b0-17d2-40c1-9919-e0cb860508a8" testId="a37c924d-ada3-afad-4c77-c08cd9211a84" testName="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Interno" computerName="ZITEC0029" duration="00:00:04.6972180" startTime="2025-09-01T08:13:31.5678056-03:00" endTime="2025-09-01T08:13:36.2650231-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="887058b0-17d2-40c1-9919-e0cb860508a8" />
+    <UnitTestResult executionId="72bbe68d-029c-499a-acb6-99b909b1dd7b" testId="62982fee-a37b-8767-7a9b-2114e7c780f5" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:11.5251280" startTime="2025-09-01T08:13:23.5918551-03:00" endTime="2025-09-01T08:13:35.1169826-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="72bbe68d-029c-499a-acb6-99b909b1dd7b" />
+    <UnitTestResult executionId="166f4e41-12e5-476c-a882-4a8a17e714b8" testId="a2e3872d-c41c-5ad3-fa5b-f5b5203954d7" testName="Deve_Realizar_Login_Com_Sucesso_Nivel_Interno" computerName="ZITEC0029" duration="00:00:07.9750480" startTime="2025-09-01T08:13:23.5917882-03:00" endTime="2025-09-01T08:13:31.5667802-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="166f4e41-12e5-476c-a882-4a8a17e714b8" />
+    <UnitTestResult executionId="9237c5b5-1396-44f5-930e-6b3f3be4ae5d" testId="f52ee22d-c5fd-4dc6-66b2-2aae450f69cd" testName="Deve_Excluir_Cedente" computerName="ZITEC0029" duration="00:00:09.4810100" startTime="2025-09-01T08:14:39.7355894-03:00" endTime="2025-09-01T08:14:49.2165980-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9237c5b5-1396-44f5-930e-6b3f3be4ae5d" />
+    <UnitTestResult executionId="bfac8818-d049-48a3-b6b1-bbd28c6648bf" testId="f96d0e88-049e-1134-14de-7b86daca1cde" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:08.5079049" startTime="2025-09-01T08:13:23.5918752-03:00" endTime="2025-09-01T08:13:32.0997790-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bfac8818-d049-48a3-b6b1-bbd28c6648bf" />
+    <UnitTestResult executionId="b58a33b0-1437-43a2-8586-cc129ef0650a" testId="d0f5366f-0eac-d523-98de-b353a4cc1074" testName="Nao_Deve_Cadastrar_Cedente_ComCnpj_Cedente_Inexistente" computerName="ZITEC0029" duration="00:00:10.9783300" startTime="2025-09-01T08:16:02.5569153-03:00" endTime="2025-09-01T08:16:13.5352447-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b58a33b0-1437-43a2-8586-cc129ef0650a">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="cff3ad0b-5837-4ebf-8ba5-de0aa21d6002" testId="30b339e9-f246-f6ea-1e26-5a6df84f653a" testName="Nao_Deve_Aceitar_Uma_Operacao_CNAB_Negativo" computerName="ZITEC0029" duration="00:00:00.0000640" startTime="2025-09-01T08:15:14.6897601-03:00" endTime="2025-09-01T08:15:14.6898238-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cff3ad0b-5837-4ebf-8ba5-de0aa21d6002">
+      <Output>
+        <StdOut>Esse teste está em manutenção.</StdOut>
+        <ErrorInfo>
+          <Message>Esse teste está em manutenção.</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2738d91c-88b8-4e9f-99b7-74d949372117" testId="f92f5b3f-0954-6fa5-bd89-598960a8f907" testName="Deve_Fazer_Download_Relatorio_Movimento_Layout" computerName="ZITEC0029" duration="00:00:21.0827810" startTime="2025-09-01T08:14:24.7953478-03:00" endTime="2025-09-01T08:14:45.8781273-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2738d91c-88b8-4e9f-99b7-74d949372117">
       <Output>
         <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.&#xD;
@@ -378,401 +185,1309 @@ template.txt	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	ENVIADO	QA - teste
 \ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="4bb2276f-423d-4de8-99cb-b1dc3e629608" testId="d67bca7b-d89a-f6c3-1bb0-ca31a6b27267" testName="Deve_Enviar_Uma_Operacao_CSV" computerName="ZITEC0029" duration="00:00:08.2423000" startTime="2025-08-06T09:57:14.8491335-03:00" endTime="2025-08-06T09:57:23.0914327-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4bb2276f-423d-4de8-99cb-b1dc3e629608">
+    <UnitTestResult executionId="62040020-1867-411f-b18f-a0eb7b732d26" testId="7702d728-5967-3d76-54de-cfc8d3d6f578" testName="Deve_Cadastrar_Cedente" computerName="ZITEC0029" duration="00:00:41.7607420" startTime="2025-09-01T08:13:47.5415930-03:00" endTime="2025-09-01T08:14:29.3023342-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="62040020-1867-411f-b18f-a0eb7b732d26">
       <Output>
-        <StdOut>Linha original: Zitec Tecnologia LTDA;54.638.076/0001-76;CEDENTE TESTE;90.400.888/0001-42;REGINA HELENA SANS FRANCHI ME;03.294.416/0001-58;106;190504,17;170504,17;30/06/2026;09/01/2025;09/01/2025;5232929-71.2024.14.6597;5949460-39.2024.4.1972&#xD;
+        <StdOut>✅ Arquivo enviado com sucesso&#xD;
+✅ Texto encontrado: FUNDO QA FIDC	Teste de cadastro - CPF: 496.248.668-30	29/08/2025 18:08:30	Análise	1	Em espera	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+FUNDO QA FIDC	Jessica - CNPJ: 53.300.608/0001-06	29/08/2025 18:08:24	Análise	1	Em espera	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+NOVA ERA FIDC	GIAN CARLO ROSARIO - CNPJ: 48.347.121/0004-83	29/08/2025 17:22:36	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+MARINO FIDC	FAM ASSESSORIA EM COBRANÇA EMPRESARIAL LTDA - CNPJ: 39.766.382/0001-02	29/08/2025 17:57:36	Formalização	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+KINERET FIDC	BOASAFRA COMERCIO E REPRESENTACOES LTDA - CNPJ: 05.662.861/0001-59	29/08/2025 18:06:11	Formalização	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+TELCOBANK I FIDC	MOBLY TELECOM DO BRASIL LTDA - CNPJ: 52.904.070/0001-78	29/08/2025 15:58:44	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+ADAMANTUS FIDC	ESTILO A INDUSTRIA &amp; COMERCIO DE CONFECCOES LTDA - CNPJ: 09.224.915/0001-55	29/08/2025 15:34:51	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+FAMCRED FIDC	COLORMINAS COLORIFICIO E MINERAÇÃO LTDA - CNPJ: 80.084.809/0001-88	29/08/2025 15:56:53	Ativo	2	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Volus FIDC	EDIELSON MAGALHAES DA SILVA 65183525234 - CNPJ: 43.730.310/0001-74	29/08/2025 14:25:59	Ativo	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+ID ANGRA PARTNERS FII	ANGRA PARTNERS DESENVOLVIMENTO IMOBILIÁRIO SPE LTDA - CNPJ: 62.225.059/0001-35	29/08/2025 16:25:22	Formalização 	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f6f0aef4-8f85-4ee1-9a24-c86abda2009e" testId="bab5c322-26da-2724-a60a-53cba6f4b241" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:08.7259870" startTime="2025-09-01T08:13:23.5917649-03:00" endTime="2025-09-01T08:13:32.3177512-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f6f0aef4-8f85-4ee1-9a24-c86abda2009e" />
+    <UnitTestResult executionId="00d9480f-283f-404d-8b2d-14d12e25d1a2" testId="721dbbd6-1f79-b02d-0cc7-394a6b922573" testName="Deve_Cadastrar_Nova_Nota_Comercial" computerName="ZITEC0029" duration="00:00:18.7472540" startTime="2025-09-01T08:13:48.0271005-03:00" endTime="2025-09-01T08:14:06.7743533-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="00d9480f-283f-404d-8b2d-14d12e25d1a2">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="94b4631e-d949-4e7c-bd83-5ba006655148" testId="f8749901-a00e-da94-bd13-c4edadc9bbf9" testName="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Documentos" computerName="ZITEC0029" duration="00:00:19.9248240" startTime="2025-09-01T08:15:52.9790090-03:00" endTime="2025-09-01T08:16:12.9038322-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="94b4631e-d949-4e7c-bd83-5ba006655148">
+      <Output>
+        <ErrorInfo>
+          <Message>System.Exception : ❌ Erro ao validar texto 'Preencha todos os campos para simular' em '//div[@class='toast toast-warning']', no passo: Validar mensagem retornada sobre campos em branco</Message>
+          <StackTrace>   at PortalIDSFTestes.metodos.Metodos.ValidarMensagemPorTextoAsync(String locator, String textoEsperado, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 133&#xD;
+   at PortalIDSFTestes.pages.notaComercial.NotaComercialPage.CadastrarNotaComercialNegativa(String cenarioTeste) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\notaComercial\NotaComercialPage.cs:line 198&#xD;
+   at PortalIDSFTestes.testes.notaComercial.NotaComercialTest.Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Documentos() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\notaComercial\NotaComercialTest.cs:line 107&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
+   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b2f03d60-5fab-46e5-a735-6b755f47d4d8" testId="7c702900-008e-8ad6-8feb-973287a65b89" testName="Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes" computerName="ZITEC0029" duration="00:00:08.2609290" startTime="2025-09-01T08:14:16.5343734-03:00" endTime="2025-09-01T08:14:24.7953013-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b2f03d60-5fab-46e5-a735-6b755f47d4d8">
+      <Output>
+        <ErrorInfo>
+          <Message>Microsoft.Playwright.PlaywrightException : Não foi possivel Encontrar o Elemento: //input[@aria-controls='tabelaHistorico'] Para escrever no passo: Digitar no campo pesquisar nome do arquivo CNAB a ser consultado</Message>
+          <StackTrace>   at PortalIDSFTestes.metodos.Metodos.Escrever(String locator, String texto, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 30&#xD;
+   at PortalIDSFTestes.pages.operacoes.OperacoesPage.ConsultarCNABPeloHistoricoImportacoes() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\operacoes\OperacoesPage.cs:line 166&#xD;
+   at PortalIDSFTestes.testes.operacoes.OperacoesTest.Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\operacoes\OperacoesTest.cs:line 62&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
+   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="7ee38a96-90cb-47eb-a20d-b8e9a286ba6f" testId="78c790cc-760a-a8c2-227e-fbeadc3c4245" testName="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco" computerName="ZITEC0029" duration="00:00:11.2343830" startTime="2025-09-01T08:15:14.1495549-03:00" endTime="2025-09-01T08:15:25.3839367-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7ee38a96-90cb-47eb-a20d-b8e9a286ba6f">
+      <Output>
+        <StdOut>✅ 'Preencha corretamente a Aba de Informações.' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+✅ 'Preencha todos os campos para simular' encontrado em '//div[@class='toast toast-warning']' (único match).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="cbf677cd-7995-4874-9470-70f7aa1b3c09" testId="423a6179-7f32-c9aa-76f8-a33504ab7a1f" testName="Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Cedente_Invalido_Na_Conta_Template" computerName="ZITEC0029" duration="00:00:11.8645960" startTime="2025-09-01T08:16:13.5352782-03:00" endTime="2025-09-01T08:16:25.3998729-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cbf677cd-7995-4874-9470-70f7aa1b3c09">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b25cb2a0-c0d7-4049-acef-102cef64b1e2" testId="39fb3a9c-1767-d39d-ac75-c6a06612891e" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:10.2790350" startTime="2025-09-01T08:13:23.5920411-03:00" endTime="2025-09-01T08:13:33.8710748-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b25cb2a0-c0d7-4049-acef-102cef64b1e2" />
+    <UnitTestResult executionId="fb2d9de1-9a87-4fc2-803f-9599bbbc1b74" testId="57f78f38-0b58-7466-197f-5cb74272410a" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_CNPJ_cedente_com_letra" computerName="ZITEC0029" duration="00:00:19.3917130" startTime="2025-09-01T08:17:04.0869302-03:00" endTime="2025-09-01T08:17:23.4786424-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fb2d9de1-9a87-4fc2-803f-9599bbbc1b74">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_11_20250901_111710497_9ddd8c.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="575bc7ec-a392-4e02-a624-cabce7e3234a" testId="af0d3d0e-e41f-d2a3-b41e-a8c7bbd84bf7" testName="Deve_Realizar_Login_Com_Sucesso_Nivel_Consultoria" computerName="ZITEC0029" duration="00:00:05.8258770" startTime="2025-09-01T08:13:36.2650635-03:00" endTime="2025-09-01T08:13:42.0909397-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="575bc7ec-a392-4e02-a624-cabce7e3234a" />
+    <UnitTestResult executionId="7db7eff7-8a47-4a52-82d7-3df02bdbd9b6" testId="d67bca7b-d89a-f6c3-1bb0-ca31a6b27267" testName="Deve_Enviar_Uma_Operacao_CSV" computerName="ZITEC0029" duration="00:00:10.2000499" startTime="2025-09-01T08:14:53.8702025-03:00" endTime="2025-09-01T08:15:04.0702516-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7db7eff7-8a47-4a52-82d7-3df02bdbd9b6">
+      <Output>
+        <StdOut>Linha original: Zitec Tecnologia LTDA;54.638.076/0001-76;CEDENTE TESTE;90.400.888/0001-42;REGINA HELENA SANS FRANCHI ME;03.294.416/0001-58;106;190504,17;170504,17;30/06/2026;09/01/2025;09/01/2025;5078661-72.2024.18.1637;5563456-94.2020.16.7044&#xD;
 Colunas encontradas: 14&#xD;
 ✅ Arquivo enviado com sucesso&#xD;
 ✅ Arquivo enviado com sucesso</StdOut>
       </Output>
     </UnitTestResult>
-    <UnitTestResult executionId="de8ae025-2367-4b9f-b7f5-32b7f0b608ba" testId="13e160b2-2fc3-89a0-e874-40f43c85684e" testName="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Consultoria" computerName="ZITEC0029" duration="00:00:03.5957240" startTime="2025-08-06T09:56:30.7872163-03:00" endTime="2025-08-06T09:56:34.3829394-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="de8ae025-2367-4b9f-b7f5-32b7f0b608ba" />
+    <UnitTestResult executionId="17bccf41-6033-40af-ba24-a679c3585a43" testId="bb814828-2801-f373-508a-5b7688ba4e33" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Sequencial_Duplicado" computerName="ZITEC0029" duration="00:00:13.5662060" startTime="2025-09-01T08:15:37.8844761-03:00" endTime="2025-09-01T08:15:51.4506806-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="17bccf41-6033-40af-ba24-a679c3585a43">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_06_20250901_111544445_e017bc.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="72acf243-f2e0-41e3-8d38-bdb1d375e34c" testId="5cec5290-d950-7798-fd1c-f69638fab407" testName="Deve_Cancelar_Nota_Comercial" computerName="ZITEC0029" duration="00:00:14.0445330" startTime="2025-09-01T08:14:18.7653304-03:00" endTime="2025-09-01T08:14:32.8098629-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="72acf243-f2e0-41e3-8d38-bdb1d375e34c" />
+    <UnitTestResult executionId="cf498cc8-1e70-4f82-a1dc-a4353490ec8b" testId="18916252-7d12-5881-94c8-7a53891bb8ac" testName="Deve_Fazer_Download_Arquivo_CNAB" computerName="ZITEC0029" duration="00:00:09.2758360" startTime="2025-09-01T08:14:07.8347035-03:00" endTime="2025-09-01T08:14:17.1105386-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cf498cc8-1e70-4f82-a1dc-a4353490ec8b">
+      <Output>
+        <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
+\ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="49271f8d-a7fd-4366-95ef-173602ded83a" testId="96273c04-d83c-057c-fb97-39e5d11c98ee" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_título_zero" computerName="ZITEC0029" duration="00:00:14.5944090" startTime="2025-09-01T08:14:51.9162291-03:00" endTime="2025-09-01T08:15:06.5106370-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="49271f8d-a7fd-4366-95ef-173602ded83a">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_03_20250901_111459526_5c3f66.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="3df5506b-b523-45f2-8cc6-3de17473bc69" testId="4a3f6c5b-4fe7-077b-3851-21bacdc56c4a" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Nosso_número_vazio" computerName="ZITEC0029" duration="00:00:10.5703940" startTime="2025-09-01T08:15:51.4507260-03:00" endTime="2025-09-01T08:16:02.0211193-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3df5506b-b523-45f2-8cc6-3de17473bc69">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_07_20250901_111558117_a7f69e.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="aae0f8ad-4791-4135-bf87-f7d5d1a137e2" testId="88c98239-ca9c-b2ce-2366-360667450b0c" testName="Deve_Fazer_Download_Excel" computerName="ZITEC0029" duration="00:00:14.1559540" startTime="2025-09-01T08:13:33.8711084-03:00" endTime="2025-09-01T08:13:48.0270614-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aae0f8ad-4791-4135-bf87-f7d5d1a137e2">
+      <Output>
+        <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
+\ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="8e053ec4-bd78-4637-8bb2-5cfcb41f83a7" testId="5d9a7105-db6f-27f6-1a3f-7a5163030e23" testName="Nao_Deve_Cadastrar_Nota_Comercial_Com_Amortizacao_Maior_Que_Duracao" computerName="ZITEC0029" duration="00:00:13.8880160" startTime="2025-09-01T08:16:12.9038656-03:00" endTime="2025-09-01T08:16:26.7918803-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8e053ec4-bd78-4637-8bb2-5cfcb41f83a7">
+      <Output>
+        <StdOut>✅ 'A carência de amortização não pode ser igual ou maior que a duração' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+✅ 'Parcelas devem ser geradas corretamente' encontrado em '//div[@class='toast toast-warning']' (único match).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4a680240-a0e6-4e47-9bac-c98d9d90903a" testId="e672f380-c86d-0b80-7320-ab66df6cc226" testName="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Em_Branco" computerName="ZITEC0029" duration="00:00:12.9151750" startTime="2025-09-01T08:15:15.5609340-03:00" endTime="2025-09-01T08:15:28.4761071-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4a680240-a0e6-4e47-9bac-c98d9d90903a">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a68ef8b5-b3be-4abb-9ee7-17476a036575" testId="8fb9357b-7feb-08e4-f480-f2608947deed" testName="Deve_Fazer_Download_Relatorio_Movimentos" computerName="ZITEC0029" duration="00:00:18.5640270" startTime="2025-09-01T08:13:49.2706276-03:00" endTime="2025-09-01T08:14:07.8346548-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a68ef8b5-b3be-4abb-9ee7-17476a036575">
+      <Output>
+        <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
+\ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d21a44b4-18f8-425b-a3f8-8e461fc011a9" testId="074d7d13-e4f4-1c14-ce9f-6a5c8398c41f" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Data_Vencimento_inválido" computerName="ZITEC0029" duration="00:00:16.9804710" startTime="2025-09-01T08:16:21.7512538-03:00" endTime="2025-09-01T08:16:38.7317236-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d21a44b4-18f8-425b-a3f8-8e461fc011a9">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_09_20250901_111628793_05f605.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ac1801e9-da0a-4554-89d6-b8d882d80a0a" testId="552d0bdd-786d-3686-89ed-d63ab3b49118" testName="Deve_Fazer_Download_Excel" computerName="ZITEC0029" duration="00:00:12.4023120" startTime="2025-09-01T08:13:35.1392372-03:00" endTime="2025-09-01T08:13:47.5415493-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ac1801e9-da0a-4554-89d6-b8d882d80a0a">
+      <Output>
+        <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
+\ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e763225e-2998-42d8-bb82-868a39692d21" testId="14182561-9397-3ce8-5225-37e03f740b59" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_DV_da_agência_conta_ausente" computerName="ZITEC0029" duration="00:00:14.0329770" startTime="2025-09-01T08:17:23.4786937-03:00" endTime="2025-09-01T08:17:37.5116700-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e763225e-2998-42d8-bb82-868a39692d21">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_12_20250901_111730592_6981ab.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f17e3781-c0b2-48bd-ba6a-3f17436575b1" testId="d4ed6167-9692-f6c6-357b-547442aa74b4" testName="Deve_Realizar_Login_Com_Sucesso_Nivel_Denver" computerName="ZITEC0029" duration="00:00:06.4657390" startTime="2025-09-01T08:13:58.5666034-03:00" endTime="2025-09-01T08:14:05.0323413-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f17e3781-c0b2-48bd-ba6a-3f17436575b1" />
+    <UnitTestResult executionId="e22a8dbc-b814-403b-b879-74902e58df60" testId="043fabe8-2dcc-9076-3fb8-76ec66d0fcc6" testName="Deve_Consultar_Cedente_Na_Tabela" computerName="ZITEC0029" duration="00:00:10.4331630" startTime="2025-09-01T08:14:29.3023754-03:00" endTime="2025-09-01T08:14:39.7355378-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e22a8dbc-b814-403b-b879-74902e58df60">
+      <Output>
+        <StdOut>✅ Texto encontrado: Fundo	Cedente	Criação	Status	Versão	Gestora	Cadastro	Compliance	Ações&#xD;
+FUNDO QA FIDC	Teste de cadastro - CPF: 496.248.668-30	29/08/2025 18:08:30	Análise	1	Em espera	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+FUNDO QA FIDC	Jessica - CNPJ: 53.300.608/0001-06	29/08/2025 18:08:24	Análise	1	Em espera	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+NOVA ERA FIDC	GIAN CARLO ROSARIO - CNPJ: 48.347.121/0004-83	29/08/2025 17:22:36	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+MARINO FIDC	FAM ASSESSORIA EM COBRANÇA EMPRESARIAL LTDA - CNPJ: 39.766.382/0001-02	29/08/2025 17:57:36	Formalização	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+KINERET FIDC	BOASAFRA COMERCIO E REPRESENTACOES LTDA - CNPJ: 05.662.861/0001-59	29/08/2025 18:06:11	Formalização	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+TELCOBANK I FIDC	MOBLY TELECOM DO BRASIL LTDA - CNPJ: 52.904.070/0001-78	29/08/2025 15:58:44	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+ADAMANTUS FIDC	ESTILO A INDUSTRIA &amp; COMERCIO DE CONFECCOES LTDA - CNPJ: 09.224.915/0001-55	29/08/2025 15:34:51	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+FAMCRED FIDC	COLORMINAS COLORIFICIO E MINERAÇÃO LTDA - CNPJ: 80.084.809/0001-88	29/08/2025 15:56:53	Ativo	2	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Volus FIDC	EDIELSON MAGALHAES DA SILVA 65183525234 - CNPJ: 43.730.310/0001-74	29/08/2025 14:25:59	Ativo	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+ID ANGRA PARTNERS FII	ANGRA PARTNERS DESENVOLVIMENTO IMOBILIÁRIO SPE LTDA - CNPJ: 62.225.059/0001-35	29/08/2025 16:25:22	Formalização 	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="90038ea9-38ab-432b-b39e-6a34bf83b4e6" testId="b822079a-81a3-01be-5bff-4303dc806992" testName="Deve_Aprovar_Gestor" computerName="ZITEC0029" duration="00:00:00.0000130" startTime="2025-09-01T08:14:48.0201897-03:00" endTime="2025-09-01T08:14:48.0202030-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="90038ea9-38ab-432b-b39e-6a34bf83b4e6">
+      <Output>
+        <StdOut>Esse teste está em manutenção.</StdOut>
+        <ErrorInfo>
+          <Message>Esse teste está em manutenção.</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="21d9213a-1678-4aa3-82ce-b8b381eb0c39" testId="9a88c342-08e6-ee42-3c30-c5308044e877" testName="Deve_Realizar_Login_Com_Sucesso_Nivel_Gestora" computerName="ZITEC0029" duration="00:00:06.6403000" startTime="2025-09-01T08:13:47.4764534-03:00" endTime="2025-09-01T08:13:54.1167513-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="21d9213a-1678-4aa3-82ce-b8b381eb0c39" />
+    <UnitTestResult executionId="33888e3d-90c0-462c-8321-57cb473d4202" testId="57f33e9f-4728-55f1-5802-16e8e99e4981" testName="Deve_Fazer_Download_Relatorio_Titulos" computerName="ZITEC0029" duration="00:00:00.0002390" startTime="2025-09-01T08:13:49.2702429-03:00" endTime="2025-09-01T08:13:49.2704817-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="33888e3d-90c0-462c-8321-57cb473d4202">
+      <Output>
+        <StdOut>Esse teste está em manutenção.</StdOut>
+        <ErrorInfo>
+          <Message>Esse teste está em manutenção.</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6fcce05f-5d97-49f5-95f6-55ca8818baf7" testId="9213e2eb-3161-5f78-8226-02cb29f75884" testName="Deve_Consultar_Arquivo_Baixa" computerName="ZITEC0029" duration="00:00:07.6524880" startTime="2025-09-01T08:13:41.6175545-03:00" endTime="2025-09-01T08:13:49.2700420-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6fcce05f-5d97-49f5-95f6-55ca8818baf7">
+      <Output>
+        <ErrorInfo>
+          <Message>System.Exception : ❌ Erro ao verificar o texto 'cnab' na tabela no passo: Verificar se arquivo Baixa esta presente na tabela..&#xD;
+Detalhes:   ❌ O texto 'cnab' não foi encontrado no(s) elemento(s) com seletor: #tabelaBaixas&#xD;
+  Expected: True&#xD;
+  But was:  False&#xD;
+&#xD;
+&#xD;
+  1)   ❌ O texto 'cnab' não foi encontrado no(s) elemento(s) com seletor: #tabelaBaixas&#xD;
+  Expected: True&#xD;
+  But was:  False&#xD;
+&#xD;
+</Message>
+          <StackTrace>   at PortalIDSFTestes.metodos.Metodos.VerificarElementoPresenteNaTabela(IPage page, String seletorTabela, String textoEsperado, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 204&#xD;
+   at PortalIDSFTestes.pages.operacoes.ArquivosBaixaPage.ConsultarArquivoBaixa() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\operacoes\ArquivosBaixaPage.cs:line 64&#xD;
+   at PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest.Deve_Consultar_Arquivo_Baixa() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\operacoes\ArquivosBaixaTest.cs:line 62&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
+   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+1)    at PortalIDSFTestes.metodos.Metodos.VerificarElementoPresenteNaTabela(IPage page, String seletorTabela, String textoEsperado, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 196&#xD;
+
+2)    at PortalIDSFTestes.metodos.Metodos.VerificarElementoPresenteNaTabela(IPage page, String seletorTabela, String textoEsperado, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 204&#xD;
+   at PortalIDSFTestes.pages.operacoes.ArquivosBaixaPage.ConsultarArquivoBaixa() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\operacoes\ArquivosBaixaPage.cs:line 64&#xD;
+   at PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest.Deve_Consultar_Arquivo_Baixa() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\operacoes\ArquivosBaixaTest.cs:line 62&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
+   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="99804817-8095-4f0d-9a4d-3ec3c9dad931" testId="9c81f9c7-c7c7-42c1-9125-35d2966e54f2" testName="Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido_Template" computerName="ZITEC0029" duration="00:00:12.1726470" startTime="2025-09-01T08:15:50.3842371-03:00" endTime="2025-09-01T08:16:02.5568830-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="99804817-8095-4f0d-9a4d-3ec3c9dad931">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="75e33c2a-cd8f-4d47-90bc-198ca02512fa" testId="8e7b2d7c-601b-94ad-ac9f-8b26a65cf748" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Header_com_443_colunas" computerName="ZITEC0029" duration="00:00:25.3551430" startTime="2025-09-01T08:16:38.7317565-03:00" endTime="2025-09-01T08:17:04.0868985-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="75e33c2a-cd8f-4d47-90bc-198ca02512fa">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_10_20250901_111645175_9c831d.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c09680f0-34d8-404e-aeaa-e33e9336fe8c" testId="672a6664-d253-8d59-e214-421801799700" testName="Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir" computerName="ZITEC0029" duration="00:00:41.4173050" startTime="2025-09-01T08:13:35.1170285-03:00" endTime="2025-09-01T08:14:16.5343328-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c09680f0-34d8-404e-aeaa-e33e9336fe8c">
+      <Output>
+        <StdOut>Arquivo FundoQA_20250901_5542408a.txt enviado com sucesso.&#xD;
+✅ 'Arquivo processado com sucesso' encontrado em '//div[@class='toast toast-success']' (único match).</StdOut>
+        <ErrorInfo>
+          <Message>Microsoft.Playwright.PlaywrightException : Não foi possivel Encontrar o Elemento: //td[@class='dtr-control'] Para Clicar no passo: Clicar no primeiro TD da tabela</Message>
+          <StackTrace>   at PortalIDSFTestes.metodos.Metodos.Clicar(String locator, String passo) in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\metodos\Metodos.cs:line 46&#xD;
+   at PortalIDSFTestes.pages.operacoes.OperacoesPage.EnviarOperacaoCNAB() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\pages\operacoes\OperacoesPage.cs:line 45&#xD;
+   at PortalIDSFTestes.testes.operacoes.OperacoesTest.Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir() in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\testes\operacoes\OperacoesTest.cs:line 55&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()&#xD;
+   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="dfdaa8bc-6fea-4078-8f5a-87de38420061" testId="514eeeab-6a11-5843-5cbb-99b9e799057d" testName="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido_Template" computerName="ZITEC0029" duration="00:00:00.0000130" startTime="2025-09-01T08:15:02.5462531-03:00" endTime="2025-09-01T08:15:02.5462663-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dfdaa8bc-6fea-4078-8f5a-87de38420061">
+      <Output>
+        <StdOut>Esse teste está em manutenção.</StdOut>
+        <ErrorInfo>
+          <Message>Esse teste está em manutenção.</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4455ad6d-9ee5-4827-80e9-4c1506fb9323" testId="0e8e0817-1271-d725-84f2-d1c84358f338" testName="Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Em_Branco_Template" computerName="ZITEC0029" duration="00:00:14.9587530" startTime="2025-09-01T08:16:35.3677514-03:00" endTime="2025-09-01T08:16:50.3265041-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4455ad6d-9ee5-4827-80e9-4c1506fb9323">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="188d5411-a8e8-45c1-be41-17987bae6bab" testId="43c79b1d-5c33-8818-cbbe-091b8689400e" testName="Deve_Fazer_Download_Excel" computerName="ZITEC0029" duration="00:00:07.9917200" startTime="2025-09-01T08:14:45.8784401-03:00" endTime="2025-09-01T08:14:53.8701597-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="188d5411-a8e8-45c1-be41-17987bae6bab">
+      <Output>
+        <StdOut>✅ Arquivo foi baixado e validado com sucesso.&#xD;
+\ud83d\uddd1️ Arquivo excluído após validação.</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="032f24bc-28ff-4cf8-9bea-2104f640965b" testId="75f16896-535e-f4af-ffc4-1125b9ea6eed" testName="Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido" computerName="ZITEC0029" duration="00:00:13.0146270" startTime="2025-09-01T08:15:02.5462747-03:00" endTime="2025-09-01T08:15:15.5609015-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="032f24bc-28ff-4cf8-9bea-2104f640965b">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="01f5798e-2465-4d2a-b9b1-559c62db44d2" testId="4b90fd46-09be-11bd-5e56-b2806fac3371" testName="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Operacoes" computerName="ZITEC0029" duration="00:00:14.3114650" startTime="2025-09-01T08:15:38.6675012-03:00" endTime="2025-09-01T08:15:52.9789653-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="01f5798e-2465-4d2a-b9b1-559c62db44d2">
+      <Output>
+        <StdOut>✅ 'Preencha todos os campos para simular' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+✅ 'Preencha corretamente a Aba de Informações.' encontrado em '//div[@class='toast toast-warning']' (único match).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="98e3ecd0-5112-4068-9c42-7162e45baa9e" testId="f3682d6a-ed8f-f805-0963-b9059373b365" testName="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido" computerName="ZITEC0029" duration="00:00:13.3294860" startTime="2025-09-01T08:14:49.2167207-03:00" endTime="2025-09-01T08:15:02.5462063-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="98e3ecd0-5112-4068-9c42-7162e45baa9e">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="3793c498-5b28-4d4d-8425-07b68739c48a" testId="da6fe48d-f1a4-45c8-0f9f-d17cab3d8106" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Data_Geracao_Invalida" computerName="ZITEC0029" duration="00:00:22.5226440" startTime="2025-09-01T08:14:17.1105768-03:00" endTime="2025-09-01T08:14:39.6332199-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3793c498-5b28-4d4d-8425-07b68739c48a">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_01_20250901_111423713_812546.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f9c92d68-90fd-41e3-8892-1a72ef207014" testId="f4cc9958-27be-4411-f1c6-39664b23e908" testName="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Gestora" computerName="ZITEC0029" duration="00:00:04.4497710" startTime="2025-09-01T08:13:54.1167898-03:00" endTime="2025-09-01T08:13:58.5665593-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f9c92d68-90fd-41e3-8892-1a72ef207014" />
+    <UnitTestResult executionId="b50db402-e11d-44ba-8054-c154aa0ef074" testId="deb30587-a5e5-0d86-a522-c0065d15d29e" testName="Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Invalidos_Template" computerName="ZITEC0029" duration="00:00:08.3310380" startTime="2025-09-01T08:16:50.3265370-03:00" endTime="2025-09-01T08:16:58.6575739-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b50db402-e11d-44ba-8054-c154aa0ef074">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="703921ba-1bbe-425f-83d7-7a8a69975e4a" testId="3c84695c-3ce7-71de-67d7-86ecbaee9869" testName="Deve_Consultar_Um_Ativo" computerName="ZITEC0029" duration="00:00:24.0029370" startTime="2025-09-01T08:14:24.0171919-03:00" endTime="2025-09-01T08:14:48.0201275-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="703921ba-1bbe-425f-83d7-7a8a69975e4a">
+      <Output>
+        <StdOut>✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status&#xD;
+3263	01/09/2025 08:14	2	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3228	28/08/2025 15:09	-1	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3189	27/08/2025 13:37	-2	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3188	27/08/2025 13:16	-2	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3185	27/08/2025 09:23	-2	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3183	26/08/2025 16:43	-3	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3179	26/08/2025 15:42	-3	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3178	26/08/2025 14:57	-3	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3154	25/08/2025 10:13	-4	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3103	20/08/2025 13:46	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3102	20/08/2025 13:28	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3100	20/08/2025 11:46	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3099	20/08/2025 11:29	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3095	20/08/2025 10:24	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3093	20/08/2025 10:06	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3072	18/08/2025 14:43	-11	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3071	18/08/2025 14:29	-11	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3070	18/08/2025 14:18	-11	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3067	18/08/2025 14:04	-11	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3044	14/08/2025 18:19	-15	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="302d5730-a34c-4e01-8d31-985e66c8dea2" testId="23e26a42-7d06-238a-e39c-2c03c3a8a77c" testName="Nao_Deve_Conter_Acentos_Quebrados" computerName="ZITEC0029" duration="00:00:11.5473480" startTime="2025-09-01T08:13:23.5917682-03:00" endTime="2025-09-01T08:13:35.1391150-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="302d5730-a34c-4e01-8d31-985e66c8dea2" />
+    <UnitTestResult executionId="bafd70fa-4a5b-4b88-9d49-eacf4d87cbca" testId="d80d5f47-49c8-f537-ff77-cbae363746b6" testName="Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Em_Branco" computerName="ZITEC0029" duration="00:00:10.7046200" startTime="2025-09-01T08:15:39.6795852-03:00" endTime="2025-09-01T08:15:50.3842045-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bafd70fa-4a5b-4b88-9d49-eacf4d87cbca">
+      <Output>
+        <StdOut>✅ Arquivo enviado com sucesso</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ad1057a0-b565-4155-b5c8-097a83b26e8b" testId="11caa210-f88e-3515-2411-5d783e5ff92c" testName="Nao_Deve_Aceitar_Arquivo_Baixa_Com_total_de_registros_incorreto" computerName="ZITEC0029" duration="00:00:13.9162240" startTime="2025-09-01T08:15:23.9682188-03:00" endTime="2025-09-01T08:15:37.8844423-03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ad1057a0-b565-4155-b5c8-097a83b26e8b">
+      <Output>
+        <StdOut>✅ Arquivo 'cnab_neg_05_20250901_111530923_6f177a.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).</StdOut>
+      </Output>
+    </UnitTestResult>
   </Results>
   <TestDefinitions>
+    <UnitTest name="Deve_Consultar_Um_Ativo" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="3c84695c-3ce7-71de-67d7-86ecbaee9869">
+      <Execution id="703921ba-1bbe-425f-83d7-7a8a69975e4a" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.AtivosTest" name="Deve_Consultar_Um_Ativo" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="75f16896-535e-f4af-ffc4-1125b9ea6eed">
+      <Execution id="032f24bc-28ff-4cf8-9bea-2104f640965b" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Em_Branco" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="e672f380-c86d-0b80-7320-ab66df6cc226">
+      <Execution id="4a680240-a0e6-4e47-9bac-c98d9d90903a" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Em_Branco" />
+    </UnitTest>
     <UnitTest name="Deve_Fazer_Download_Excel" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="552d0bdd-786d-3686-89ed-d63ab3b49118">
-      <Execution id="682669e8-bf67-4569-8ef5-b0a6f01aa9d8" />
+      <Execution id="ac1801e9-da0a-4554-89d6-b8d882d80a0a" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Deve_Fazer_Download_Excel" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Carencia_Juros_Maior_Que_Juros_Principal" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="b7d29f08-9ae0-9e6a-dea6-2ac8c5c99345">
+      <Execution id="e4a16e60-bfc6-42c7-b099-b6051de6cbd1" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Carencia_Juros_Maior_Que_Juros_Principal" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="78c790cc-760a-a8c2-227e-fbeadc3c4245">
+      <Execution id="7ee38a96-90cb-47eb-a20d-b8e9a286ba6f" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Caractere_não_numérico" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="99dd438f-ee4f-af2b-b5c5-50f4862f3213">
+      <Execution id="05a4ff24-23e9-4dc1-943c-4e167d2196d4" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Caractere_não_numérico" />
+    </UnitTest>
     <UnitTest name="Deve_Realizar_Login_Com_Sucesso_Nivel_Consultoria" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="af0d3d0e-e41f-d2a3-b41e-a8c7bbd84bf7">
-      <Execution id="5fde0add-8478-4050-b5bc-65305e79a6bf" />
+      <Execution id="575bc7ec-a392-4e02-a624-cabce7e3234a" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="Deve_Realizar_Login_Com_Sucesso_Nivel_Consultoria" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Cedente_Invalido_Na_Conta_Template" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="423a6179-7f32-c9aa-76f8-a33504ab7a1f">
+      <Execution id="cbf677cd-7995-4874-9470-70f7aa1b3c09" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Cedente_Invalido_Na_Conta_Template" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Data_Geracao_Invalida" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="da6fe48d-f1a4-45c8-0f9f-d17cab3d8106">
+      <Execution id="3793c498-5b28-4d4d-8425-07b68739c48a" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Data_Geracao_Invalida" />
+    </UnitTest>
     <UnitTest name="Deve_Fazer_Download_Arquivo_CNAB" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="18916252-7d12-5881-94c8-7a53891bb8ac">
-      <Execution id="db59ceb2-a35c-4df5-9cdd-4636bc604f3f" />
+      <Execution id="cf498cc8-1e70-4f82-a1dc-a4353490ec8b" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Deve_Fazer_Download_Arquivo_CNAB" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Invalidos_Template" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="deb30587-a5e5-0d86-a522-c0065d15d29e">
+      <Execution id="b50db402-e11d-44ba-8054-c154aa0ef074" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Invalidos_Template" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido_Template" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="514eeeab-6a11-5843-5cbb-99b9e799057d">
+      <Execution id="dfdaa8bc-6fea-4078-8f5a-87de38420061" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido_Template" />
+    </UnitTest>
     <UnitTest name="Deve_Enviar_Uma_Operacao_CSV" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="d67bca7b-d89a-f6c3-1bb0-ca31a6b27267">
-      <Execution id="4bb2276f-423d-4de8-99cb-b1dc3e629608" />
+      <Execution id="7db7eff7-8a47-4a52-82d7-3df02bdbd9b6" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.OperacoesTest" name="Deve_Enviar_Uma_Operacao_CSV" />
     </UnitTest>
     <UnitTest name="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Consultoria" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="13e160b2-2fc3-89a0-e874-40f43c85684e">
-      <Execution id="de8ae025-2367-4b9f-b7f5-32b7f0b608ba" />
+      <Execution id="281e19d3-7cc4-459b-b535-42a2808b5dbc" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Consultoria" />
     </UnitTest>
+    <UnitTest name="Deve_Fazer_Download_Arquivo" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="f2b50908-02ba-962b-4200-b30a44cb06da">
+      <Execution id="fa1c6886-b9f8-4a4a-82aa-b4dc00a74c39" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.AtivosTest" name="Deve_Fazer_Download_Arquivo" />
+    </UnitTest>
     <UnitTest name="Deve_Cadastrar_Um_Ativo" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="430d02d0-e1ac-989a-5214-bbc87234c9cc">
-      <Execution id="91add2b3-1f55-4381-8f5c-4dcb29557d91" />
+      <Execution id="19af9624-c9a3-4c18-abbb-344b3da20631" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.AtivosTest" name="Deve_Cadastrar_Um_Ativo" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Em_Branco_Template" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="0e8e0817-1271-d725-84f2-d1c84358f338">
+      <Execution id="4455ad6d-9ee5-4827-80e9-4c1506fb9323" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Em_Branco_Template" />
+    </UnitTest>
     <UnitTest name="Deve_Enviar_Arquivo_Baixa" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="489206ba-60c8-1822-1605-0ceb4f6776d3">
-      <Execution id="16d026a2-4614-4bf3-af22-4c261a7ae5f4" />
+      <Execution id="4e6be6cb-50b7-4bdd-9915-053219fe95bd" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Deve_Enviar_Arquivo_Baixa" />
     </UnitTest>
     <UnitTest name="Deve_Fazer_Download_Excel" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="43c79b1d-5c33-8818-cbbe-091b8689400e">
-      <Execution id="128c85dc-2210-490a-9d9a-3e154aa80d9f" />
+      <Execution id="188d5411-a8e8-45c1-be41-17987bae6bab" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.OperacoesTest" name="Deve_Fazer_Download_Excel" />
     </UnitTest>
     <UnitTest name="Deve_Fazer_Download_Minuta" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="3468a7b9-0d97-ef2f-8ccc-f9a50fe46be1">
-      <Execution id="62fddfc4-154a-4e84-b388-be018e5b74f8" />
+      <Execution id="02ba5f05-061d-4506-8b24-e06f78c3da1b" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Deve_Fazer_Download_Minuta" />
     </UnitTest>
+    <UnitTest name="Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="672a6664-d253-8d59-e214-421801799700">
+      <Execution id="c09680f0-34d8-404e-aeaa-e33e9336fe8c" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.OperacoesTest" name="Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir" />
+    </UnitTest>
     <UnitTest name="Deve_Fazer_Download_Excel" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="e16a79ef-d395-6d61-8a54-b8b1c8a4dfb3">
-      <Execution id="9c2077e1-37d6-44d2-a5c1-46f9bdca2196" />
+      <Execution id="ffc9cc19-8c9e-41b9-910c-15a00fd52759" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.AtivosTest" name="Deve_Fazer_Download_Excel" />
     </UnitTest>
     <UnitTest name="Deve_Realizar_Login_Com_Sucesso_Nivel_Gestora" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="9a88c342-08e6-ee42-3c30-c5308044e877">
-      <Execution id="ee25da1e-a53f-49c0-89e6-c44203348371" />
+      <Execution id="21d9213a-1678-4aa3-82ce-b8b381eb0c39" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="Deve_Realizar_Login_Com_Sucesso_Nivel_Gestora" />
     </UnitTest>
     <UnitTest name="Deve_Fazer_Download_Relatorio_Movimento_Layout" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="f92f5b3f-0954-6fa5-bd89-598960a8f907">
-      <Execution id="8422f476-060f-4bc5-8f23-f8b65369085b" />
+      <Execution id="2738d91c-88b8-4e9f-99b7-74d949372117" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.OperacoesTest" name="Deve_Fazer_Download_Relatorio_Movimento_Layout" />
     </UnitTest>
     <UnitTest name="Deve_Realizar_Login_Com_Sucesso_Nivel_Interno" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="a2e3872d-c41c-5ad3-fa5b-f5b5203954d7">
-      <Execution id="f7c7387f-b148-426f-84a4-3c9be52bf52c" />
+      <Execution id="166f4e41-12e5-476c-a882-4a8a17e714b8" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="Deve_Realizar_Login_Com_Sucesso_Nivel_Interno" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Envolvidos" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="b859e01f-2baf-131d-42ec-5093c10edc6c">
+      <Execution id="79e2a69b-881f-4184-ba2c-89a7aadc1135" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Envolvidos" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_CNPJ_cedente_com_letra" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="57f78f38-0b58-7466-197f-5cb74272410a">
+      <Execution id="fb2d9de1-9a87-4fc2-803f-9599bbbc1b74" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_CNPJ_cedente_com_letra" />
+    </UnitTest>
     <UnitTest name="Deve_Excluir_Uma_Operacao" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="8ab4b7e9-a47c-7d63-6892-4088aedb6ed4">
-      <Execution id="405f3a3c-6929-4042-a0f1-6cf39aaedf7f" />
+      <Execution id="3dbad97e-ea4a-4d15-8b19-f22b717327e4" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.OperacoesTest" name="Deve_Excluir_Uma_Operacao" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Amortizacao_Maior_Que_Duracao" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="5d9a7105-db6f-27f6-1a3f-7a5163030e23">
+      <Execution id="8e053ec4-bd78-4637-8bb2-5cfcb41f83a7" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Amortizacao_Maior_Que_Duracao" />
+    </UnitTest>
     <UnitTest name="Deve_Consultar_Nota_Comercial_Pela_Tabela" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="1504492c-c633-41cc-ae94-6d6d161a7bae">
-      <Execution id="3e40e26e-e478-448b-b529-3414dafa504e" />
+      <Execution id="79af71ea-a1f2-42f7-bb49-a63310bd6734" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Deve_Consultar_Nota_Comercial_Pela_Tabela" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_ComCnpj_Cedente_Inexistente" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="d0f5366f-0eac-d523-98de-b353a4cc1074">
+      <Execution id="b58a33b0-1437-43a2-8586-cc129ef0650a" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_ComCnpj_Cedente_Inexistente" />
+    </UnitTest>
     <UnitTest name="Nao_Deve_Conter_Acentos_Quebrados" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="f96d0e88-049e-1134-14de-7b86daca1cde">
-      <Execution id="6fa0a212-d0ea-4c28-a392-85e20093a77e" />
+      <Execution id="bfac8818-d049-48a3-b6b1-bbd28c6648bf" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Conter_Acentos_Quebrados" />
     </UnitTest>
     <UnitTest name="Nao_Deve_Conter_Acentos_Quebrados" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="62982fee-a37b-8767-7a9b-2114e7c780f5">
-      <Execution id="1d367bb1-61cf-4fbb-98b7-c252cae529c7" />
+      <Execution id="72bbe68d-029c-499a-acb6-99b909b1dd7b" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.OperacoesTest" name="Nao_Deve_Conter_Acentos_Quebrados" />
     </UnitTest>
     <UnitTest name="Deve_Cadastrar_Nova_Nota_Comercial" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="721dbbd6-1f79-b02d-0cc7-394a6b922573">
-      <Execution id="ff0abdbb-f99a-4941-8775-f23471b20af8" />
+      <Execution id="00d9480f-283f-404d-8b2d-14d12e25d1a2" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Deve_Cadastrar_Nova_Nota_Comercial" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Documentos" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="f8749901-a00e-da94-bd13-c4edadc9bbf9">
+      <Execution id="94b4631e-d949-4e7c-bd83-5ba006655148" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Documentos" />
+    </UnitTest>
     <UnitTest name="Deve_Fazer_Download_Relatorio_Movimentos" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="8fb9357b-7feb-08e4-f480-f2608947deed">
-      <Execution id="d953da23-10da-4cd1-9f92-ebccd6c1d2a6" />
+      <Execution id="a68ef8b5-b3be-4abb-9ee7-17476a036575" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Deve_Fazer_Download_Relatorio_Movimentos" />
     </UnitTest>
     <UnitTest name="Nao_Deve_Conter_Acentos_Quebrados" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="ec9e965f-4f06-ba37-83f0-d246296b66e4">
-      <Execution id="e2d8c319-cb74-4ef4-a7b6-26b823b1ad6a" />
+      <Execution id="bff32e87-0e20-42b3-aab7-9103ca4ac656" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="Nao_Deve_Conter_Acentos_Quebrados" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Fundo_Invalido_Na_Conta_Template" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="4741233a-312d-86d3-2eec-44fa902db574">
+      <Execution id="b9973f10-33df-46a4-b97a-1cb73cdf59e3" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Fundo_Invalido_Na_Conta_Template" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Uma_Operacao_CNAB_Negativo" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="30b339e9-f246-f6ea-1e26-5a6df84f653a">
+      <Execution id="cff3ad0b-5837-4ebf-8ba5-de0aa21d6002" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.OperacoesTest" name="Nao_Deve_Aceitar_Uma_Operacao_CNAB_Negativo" />
+    </UnitTest>
     <UnitTest name="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Denver" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="de3f339c-224e-668f-acf5-5e8475babfa6">
-      <Execution id="60b44d72-4a2a-484b-b6c8-e2116bc71cae" />
+      <Execution id="230e639e-e827-4b53-b484-2b19ab836ce9" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Denver" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido_Template" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="9c81f9c7-c7c7-42c1-9125-35d2966e54f2">
+      <Execution id="99804817-8095-4f0d-9a4d-3ec3c9dad931" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido_Template" />
+    </UnitTest>
     <UnitTest name="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Interno" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="a37c924d-ada3-afad-4c77-c08cd9211a84">
-      <Execution id="5a7af318-a932-422f-8888-414e28b0a6ef" />
+      <Execution id="887058b0-17d2-40c1-9919-e0cb860508a8" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Interno" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Data_Vencimento_inválido" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="074d7d13-e4f4-1c14-ce9f-6a5c8398c41f">
+      <Execution id="d21a44b4-18f8-425b-a3f8-8e461fc011a9" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Data_Vencimento_inválido" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Operacoes" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="4b90fd46-09be-11bd-5e56-b2806fac3371">
+      <Execution id="01f5798e-2465-4d2a-b9b1-559c62db44d2" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Operacoes" />
+    </UnitTest>
     <UnitTest name="Deve_Fazer_Download_Excel" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="88c98239-ca9c-b2ce-2366-360667450b0c">
-      <Execution id="bf94d066-5095-4b05-a5c7-f612ca793376" />
+      <Execution id="aae0f8ad-4791-4135-bf87-f7d5d1a137e2" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Deve_Fazer_Download_Excel" />
     </UnitTest>
     <UnitTest name="Nao_Deve_Conter_Acentos_Quebrados" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="bab5c322-26da-2724-a60a-53cba6f4b241">
-      <Execution id="f52c744b-daf1-4229-ad15-8794934bedf8" />
+      <Execution id="f6f0aef4-8f85-4ee1-9a24-c86abda2009e" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.AtivosTest" name="Nao_Deve_Conter_Acentos_Quebrados" />
     </UnitTest>
     <UnitTest name="Nao_Deve_Conter_Acentos_Quebrados" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="39fb3a9c-1767-d39d-ac75-c6a06612891e">
-      <Execution id="966d7725-98d3-45e0-9607-d0e9baa0764d" />
+      <Execution id="b25cb2a0-c0d7-4049-acef-102cef64b1e2" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Nao_Deve_Conter_Acentos_Quebrados" />
     </UnitTest>
     <UnitTest name="Deve_Excluir_Cedente" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="f52ee22d-c5fd-4dc6-66b2-2aae450f69cd">
-      <Execution id="c7a48d32-9f94-4366-889a-9dd0873442b3" />
+      <Execution id="9237c5b5-1396-44f5-930e-6b3f3be4ae5d" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Deve_Excluir_Cedente" />
     </UnitTest>
     <UnitTest name="Deve_Cadastrar_Cedente" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="7702d728-5967-3d76-54de-cfc8d3d6f578">
-      <Execution id="b8bdffe7-3238-44eb-a89c-ab88eddeae0c" />
+      <Execution id="62040020-1867-411f-b18f-a0eb7b732d26" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Deve_Cadastrar_Cedente" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Inexistente" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="7df1f7e7-1586-5ee2-8671-f9ab73588caf">
+      <Execution id="ad8fdb33-1138-44fd-8416-7d5fec265138" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Inexistente" />
+    </UnitTest>
     <UnitTest name="Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="7c702900-008e-8ad6-8feb-973287a65b89">
-      <Execution id="5b21125c-7770-493d-a049-dff34ab33221" />
+      <Execution id="b2f03d60-5fab-46e5-a735-6b755f47d4d8" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.OperacoesTest" name="Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Nome_do_sacado_em_branco" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="60f58855-02d3-34d9-2238-818a1c8ac443">
+      <Execution id="19bd0741-3b90-4d5a-95b7-9a980571aa8b" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Nome_do_sacado_em_branco" />
+    </UnitTest>
     <UnitTest name="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Gestora" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="f4cc9958-27be-4411-f1c6-39664b23e908">
-      <Execution id="a8507956-d26f-4aef-8502-310b01c5e577" />
+      <Execution id="f9c92d68-90fd-41e3-8892-1a72ef207014" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="Nao_Deve_Realizar_Login_Com_Senha_Invalida_Nivel_Gestora" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_total_de_registros_incorreto" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="11caa210-f88e-3515-2411-5d783e5ff92c">
+      <Execution id="ad1057a0-b565-4155-b5c8-097a83b26e8b" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_total_de_registros_incorreto" />
+    </UnitTest>
     <UnitTest name="Nao_Deve_Conter_Acentos_Quebrados" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="23e26a42-7d06-238a-e39c-2c03c3a8a77c">
-      <Execution id="8e2900af-632c-48f4-a85d-f10f1a62db47" />
+      <Execution id="302d5730-a34c-4e01-8d31-985e66c8dea2" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Conter_Acentos_Quebrados" />
     </UnitTest>
-    <UnitTest name="Deve_Enviar_Uma_Operacao_CNAB" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="a7397485-8e4b-4440-13c1-65989f03ca1f">
-      <Execution id="a82fdf84-5810-4af8-8818-8ef1ee2ea7dd" />
-      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.OperacoesTest" name="Deve_Enviar_Uma_Operacao_CNAB" />
+    <UnitTest name="Deve_Aprovar_Gestor" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="b822079a-81a3-01be-5bff-4303dc806992">
+      <Execution id="90038ea9-38ab-432b-b39e-6a34bf83b4e6" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.AtivosTest" name="Deve_Aprovar_Gestor" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Header_com_443_colunas" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="8e7b2d7c-601b-94ad-ac9f-8b26a65cf748">
+      <Execution id="75e33c2a-cd8f-4d47-90bc-198ca02512fa" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Header_com_443_colunas" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Uma_Operacao_CSV_Negativo" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="16c2b3c7-b726-12f9-d3ea-15f8449905a8">
+      <Execution id="8073bc5c-1610-4679-a9ff-0933a8254913" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.OperacoesTest" name="Nao_Deve_Aceitar_Uma_Operacao_CSV_Negativo" />
     </UnitTest>
     <UnitTest name="Deve_Consultar_Cedente_Na_Tabela" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="043fabe8-2dcc-9076-3fb8-76ec66d0fcc6">
-      <Execution id="547a91bc-9311-44a8-b3d6-5b55dfaa67c1" />
+      <Execution id="e22a8dbc-b814-403b-b879-74902e58df60" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Deve_Consultar_Cedente_Na_Tabela" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Data_Banco_inválido" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="356faf29-fc4b-5504-84e1-ebf6fb5ca5c9">
+      <Execution id="bef83d56-cd2e-4ad4-9069-da19d04b7816" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Data_Banco_inválido" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_título_zero" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="96273c04-d83c-057c-fb97-39e5d11c98ee">
+      <Execution id="49271f8d-a7fd-4366-95ef-173602ded83a" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_título_zero" />
+    </UnitTest>
     <UnitTest name="Deve_Realizar_Login_Com_Sucesso_Nivel_Denver" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="d4ed6167-9692-f6c6-357b-547442aa74b4">
-      <Execution id="0d841196-0dda-42c7-93cf-9c66545a028e" />
+      <Execution id="f17e3781-c0b2-48bd-ba6a-3f17436575b1" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.login.LoginTest" name="Deve_Realizar_Login_Com_Sucesso_Nivel_Denver" />
     </UnitTest>
     <UnitTest name="Deve_Consultar_Arquivo_Baixa" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="9213e2eb-3161-5f78-8226-02cb29f75884">
-      <Execution id="280f633c-efe4-4f36-b50f-c3d87027498d" />
+      <Execution id="6fcce05f-5d97-49f5-95f6-55ca8818baf7" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Deve_Consultar_Arquivo_Baixa" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Sequencial_Duplicado" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="bb814828-2801-f373-508a-5b7688ba4e33">
+      <Execution id="17bccf41-6033-40af-ba24-a679c3585a43" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Sequencial_Duplicado" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_DV_da_agência_conta_ausente" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="14182561-9397-3ce8-5225-37e03f740b59">
+      <Execution id="e763225e-2998-42d8-bb82-868a39692d21" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_DV_da_agência_conta_ausente" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Nosso_número_vazio" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="4a3f6c5b-4fe7-077b-3851-21bacdc56c4a">
+      <Execution id="3df5506b-b523-45f2-8cc6-3de17473bc69" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Nao_Deve_Aceitar_Arquivo_Baixa_Com_Nosso_número_vazio" />
+    </UnitTest>
     <UnitTest name="Deve_Fazer_Download_Relatorio_Titulos" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="57f33e9f-4728-55f1-5802-16e8e99e4981">
-      <Execution id="c830d871-5294-434a-a63b-a45ab8d9d32e" />
+      <Execution id="33888e3d-90c0-462c-8321-57cb473d4202" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.operacoes.ArquivosBaixaTest" name="Deve_Fazer_Download_Relatorio_Titulos" />
     </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Em_Branco" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="d80d5f47-49c8-f537-ff77-cbae363746b6">
+      <Execution id="bafd70fa-4a5b-4b88-9d49-eacf4d87cbca" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Em_Branco" />
+    </UnitTest>
+    <UnitTest name="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="f3682d6a-ed8f-f805-0963-b9059373b365">
+      <Execution id="98e3ecd0-5112-4068-9c42-7162e45baa9e" />
+      <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.cedentes.CedentesTest" name="Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido" />
+    </UnitTest>
     <UnitTest name="Deve_Cancelar_Nota_Comercial" storage="c:\users\levialves\projectslevi\zitecqa\portalidsftestes\bin\debug\net8.0\portalidsftestes.dll" id="5cec5290-d950-7798-fd1c-f69638fab407">
-      <Execution id="b7bc1171-28da-4b3d-afe0-36532b8ef722" />
+      <Execution id="72acf243-f2e0-41e3-8d38-bdb1d375e34c" />
       <TestMethod codeBase="C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll" adapterTypeName="executor://nunit3testexecutor/" className="PortalIDSFTestes.testes.notaComercial.NotaComercialTest" name="Deve_Cancelar_Nota_Comercial" />
     </UnitTest>
   </TestDefinitions>
   <TestEntries>
-    <TestEntry testId="e16a79ef-d395-6d61-8a54-b8b1c8a4dfb3" executionId="9c2077e1-37d6-44d2-a5c1-46f9bdca2196" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="721dbbd6-1f79-b02d-0cc7-394a6b922573" executionId="ff0abdbb-f99a-4941-8775-f23471b20af8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="18916252-7d12-5881-94c8-7a53891bb8ac" executionId="db59ceb2-a35c-4df5-9cdd-4636bc604f3f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="043fabe8-2dcc-9076-3fb8-76ec66d0fcc6" executionId="547a91bc-9311-44a8-b3d6-5b55dfaa67c1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="57f33e9f-4728-55f1-5802-16e8e99e4981" executionId="c830d871-5294-434a-a63b-a45ab8d9d32e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="5cec5290-d950-7798-fd1c-f69638fab407" executionId="b7bc1171-28da-4b3d-afe0-36532b8ef722" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="489206ba-60c8-1822-1605-0ceb4f6776d3" executionId="16d026a2-4614-4bf3-af22-4c261a7ae5f4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="a2e3872d-c41c-5ad3-fa5b-f5b5203954d7" executionId="f7c7387f-b148-426f-84a4-3c9be52bf52c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="62982fee-a37b-8767-7a9b-2114e7c780f5" executionId="1d367bb1-61cf-4fbb-98b7-c252cae529c7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="7702d728-5967-3d76-54de-cfc8d3d6f578" executionId="b8bdffe7-3238-44eb-a89c-ab88eddeae0c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="552d0bdd-786d-3686-89ed-d63ab3b49118" executionId="682669e8-bf67-4569-8ef5-b0a6f01aa9d8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="f4cc9958-27be-4411-f1c6-39664b23e908" executionId="a8507956-d26f-4aef-8502-310b01c5e577" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="43c79b1d-5c33-8818-cbbe-091b8689400e" executionId="128c85dc-2210-490a-9d9a-3e154aa80d9f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="39fb3a9c-1767-d39d-ac75-c6a06612891e" executionId="966d7725-98d3-45e0-9607-d0e9baa0764d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="23e26a42-7d06-238a-e39c-2c03c3a8a77c" executionId="8e2900af-632c-48f4-a85d-f10f1a62db47" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="1504492c-c633-41cc-ae94-6d6d161a7bae" executionId="3e40e26e-e478-448b-b529-3414dafa504e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="a7397485-8e4b-4440-13c1-65989f03ca1f" executionId="a82fdf84-5810-4af8-8818-8ef1ee2ea7dd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="9a88c342-08e6-ee42-3c30-c5308044e877" executionId="ee25da1e-a53f-49c0-89e6-c44203348371" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="f52ee22d-c5fd-4dc6-66b2-2aae450f69cd" executionId="c7a48d32-9f94-4366-889a-9dd0873442b3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="ec9e965f-4f06-ba37-83f0-d246296b66e4" executionId="e2d8c319-cb74-4ef4-a7b6-26b823b1ad6a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="f96d0e88-049e-1134-14de-7b86daca1cde" executionId="6fa0a212-d0ea-4c28-a392-85e20093a77e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="bab5c322-26da-2724-a60a-53cba6f4b241" executionId="f52c744b-daf1-4229-ad15-8794934bedf8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="d4ed6167-9692-f6c6-357b-547442aa74b4" executionId="0d841196-0dda-42c7-93cf-9c66545a028e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="de3f339c-224e-668f-acf5-5e8475babfa6" executionId="60b44d72-4a2a-484b-b6c8-e2116bc71cae" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="9213e2eb-3161-5f78-8226-02cb29f75884" executionId="280f633c-efe4-4f36-b50f-c3d87027498d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="430d02d0-e1ac-989a-5214-bbc87234c9cc" executionId="91add2b3-1f55-4381-8f5c-4dcb29557d91" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="a37c924d-ada3-afad-4c77-c08cd9211a84" executionId="5a7af318-a932-422f-8888-414e28b0a6ef" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="8fb9357b-7feb-08e4-f480-f2608947deed" executionId="d953da23-10da-4cd1-9f92-ebccd6c1d2a6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="88c98239-ca9c-b2ce-2366-360667450b0c" executionId="bf94d066-5095-4b05-a5c7-f612ca793376" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="af0d3d0e-e41f-d2a3-b41e-a8c7bbd84bf7" executionId="5fde0add-8478-4050-b5bc-65305e79a6bf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="3468a7b9-0d97-ef2f-8ccc-f9a50fe46be1" executionId="62fddfc4-154a-4e84-b388-be018e5b74f8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="7c702900-008e-8ad6-8feb-973287a65b89" executionId="5b21125c-7770-493d-a049-dff34ab33221" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="8ab4b7e9-a47c-7d63-6892-4088aedb6ed4" executionId="405f3a3c-6929-4042-a0f1-6cf39aaedf7f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="f92f5b3f-0954-6fa5-bd89-598960a8f907" executionId="8422f476-060f-4bc5-8f23-f8b65369085b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="d67bca7b-d89a-f6c3-1bb0-ca31a6b27267" executionId="4bb2276f-423d-4de8-99cb-b1dc3e629608" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="13e160b2-2fc3-89a0-e874-40f43c85684e" executionId="de8ae025-2367-4b9f-b7f5-32b7f0b608ba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e16a79ef-d395-6d61-8a54-b8b1c8a4dfb3" executionId="ffc9cc19-8c9e-41b9-910c-15a00fd52759" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b7d29f08-9ae0-9e6a-dea6-2ac8c5c99345" executionId="e4a16e60-bfc6-42c7-b099-b6051de6cbd1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b859e01f-2baf-131d-42ec-5093c10edc6c" executionId="79e2a69b-881f-4184-ba2c-89a7aadc1135" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7df1f7e7-1586-5ee2-8671-f9ab73588caf" executionId="ad8fdb33-1138-44fd-8416-7d5fec265138" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f2b50908-02ba-962b-4200-b30a44cb06da" executionId="fa1c6886-b9f8-4a4a-82aa-b4dc00a74c39" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3468a7b9-0d97-ef2f-8ccc-f9a50fe46be1" executionId="02ba5f05-061d-4506-8b24-e06f78c3da1b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="60f58855-02d3-34d9-2238-818a1c8ac443" executionId="19bd0741-3b90-4d5a-95b7-9a980571aa8b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="16c2b3c7-b726-12f9-d3ea-15f8449905a8" executionId="8073bc5c-1610-4679-a9ff-0933a8254913" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="356faf29-fc4b-5504-84e1-ebf6fb5ca5c9" executionId="bef83d56-cd2e-4ad4-9069-da19d04b7816" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="489206ba-60c8-1822-1605-0ceb4f6776d3" executionId="4e6be6cb-50b7-4bdd-9915-053219fe95bd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ec9e965f-4f06-ba37-83f0-d246296b66e4" executionId="bff32e87-0e20-42b3-aab7-9103ca4ac656" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="99dd438f-ee4f-af2b-b5c5-50f4862f3213" executionId="05a4ff24-23e9-4dc1-943c-4e167d2196d4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1504492c-c633-41cc-ae94-6d6d161a7bae" executionId="79af71ea-a1f2-42f7-bb49-a63310bd6734" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4741233a-312d-86d3-2eec-44fa902db574" executionId="b9973f10-33df-46a4-b97a-1cb73cdf59e3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="de3f339c-224e-668f-acf5-5e8475babfa6" executionId="230e639e-e827-4b53-b484-2b19ab836ce9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="430d02d0-e1ac-989a-5214-bbc87234c9cc" executionId="19af9624-c9a3-4c18-abbb-344b3da20631" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="13e160b2-2fc3-89a0-e874-40f43c85684e" executionId="281e19d3-7cc4-459b-b535-42a2808b5dbc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8ab4b7e9-a47c-7d63-6892-4088aedb6ed4" executionId="3dbad97e-ea4a-4d15-8b19-f22b717327e4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a37c924d-ada3-afad-4c77-c08cd9211a84" executionId="887058b0-17d2-40c1-9919-e0cb860508a8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="62982fee-a37b-8767-7a9b-2114e7c780f5" executionId="72bbe68d-029c-499a-acb6-99b909b1dd7b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a2e3872d-c41c-5ad3-fa5b-f5b5203954d7" executionId="166f4e41-12e5-476c-a882-4a8a17e714b8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f52ee22d-c5fd-4dc6-66b2-2aae450f69cd" executionId="9237c5b5-1396-44f5-930e-6b3f3be4ae5d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f96d0e88-049e-1134-14de-7b86daca1cde" executionId="bfac8818-d049-48a3-b6b1-bbd28c6648bf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d0f5366f-0eac-d523-98de-b353a4cc1074" executionId="b58a33b0-1437-43a2-8586-cc129ef0650a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="30b339e9-f246-f6ea-1e26-5a6df84f653a" executionId="cff3ad0b-5837-4ebf-8ba5-de0aa21d6002" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f92f5b3f-0954-6fa5-bd89-598960a8f907" executionId="2738d91c-88b8-4e9f-99b7-74d949372117" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7702d728-5967-3d76-54de-cfc8d3d6f578" executionId="62040020-1867-411f-b18f-a0eb7b732d26" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bab5c322-26da-2724-a60a-53cba6f4b241" executionId="f6f0aef4-8f85-4ee1-9a24-c86abda2009e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="721dbbd6-1f79-b02d-0cc7-394a6b922573" executionId="00d9480f-283f-404d-8b2d-14d12e25d1a2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f8749901-a00e-da94-bd13-c4edadc9bbf9" executionId="94b4631e-d949-4e7c-bd83-5ba006655148" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c702900-008e-8ad6-8feb-973287a65b89" executionId="b2f03d60-5fab-46e5-a735-6b755f47d4d8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="78c790cc-760a-a8c2-227e-fbeadc3c4245" executionId="7ee38a96-90cb-47eb-a20d-b8e9a286ba6f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="423a6179-7f32-c9aa-76f8-a33504ab7a1f" executionId="cbf677cd-7995-4874-9470-70f7aa1b3c09" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="39fb3a9c-1767-d39d-ac75-c6a06612891e" executionId="b25cb2a0-c0d7-4049-acef-102cef64b1e2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="57f78f38-0b58-7466-197f-5cb74272410a" executionId="fb2d9de1-9a87-4fc2-803f-9599bbbc1b74" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="af0d3d0e-e41f-d2a3-b41e-a8c7bbd84bf7" executionId="575bc7ec-a392-4e02-a624-cabce7e3234a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d67bca7b-d89a-f6c3-1bb0-ca31a6b27267" executionId="7db7eff7-8a47-4a52-82d7-3df02bdbd9b6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bb814828-2801-f373-508a-5b7688ba4e33" executionId="17bccf41-6033-40af-ba24-a679c3585a43" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5cec5290-d950-7798-fd1c-f69638fab407" executionId="72acf243-f2e0-41e3-8d38-bdb1d375e34c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="18916252-7d12-5881-94c8-7a53891bb8ac" executionId="cf498cc8-1e70-4f82-a1dc-a4353490ec8b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="96273c04-d83c-057c-fb97-39e5d11c98ee" executionId="49271f8d-a7fd-4366-95ef-173602ded83a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4a3f6c5b-4fe7-077b-3851-21bacdc56c4a" executionId="3df5506b-b523-45f2-8cc6-3de17473bc69" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="88c98239-ca9c-b2ce-2366-360667450b0c" executionId="aae0f8ad-4791-4135-bf87-f7d5d1a137e2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5d9a7105-db6f-27f6-1a3f-7a5163030e23" executionId="8e053ec4-bd78-4637-8bb2-5cfcb41f83a7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e672f380-c86d-0b80-7320-ab66df6cc226" executionId="4a680240-a0e6-4e47-9bac-c98d9d90903a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8fb9357b-7feb-08e4-f480-f2608947deed" executionId="a68ef8b5-b3be-4abb-9ee7-17476a036575" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="074d7d13-e4f4-1c14-ce9f-6a5c8398c41f" executionId="d21a44b4-18f8-425b-a3f8-8e461fc011a9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="552d0bdd-786d-3686-89ed-d63ab3b49118" executionId="ac1801e9-da0a-4554-89d6-b8d882d80a0a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="14182561-9397-3ce8-5225-37e03f740b59" executionId="e763225e-2998-42d8-bb82-868a39692d21" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d4ed6167-9692-f6c6-357b-547442aa74b4" executionId="f17e3781-c0b2-48bd-ba6a-3f17436575b1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="043fabe8-2dcc-9076-3fb8-76ec66d0fcc6" executionId="e22a8dbc-b814-403b-b879-74902e58df60" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b822079a-81a3-01be-5bff-4303dc806992" executionId="90038ea9-38ab-432b-b39e-6a34bf83b4e6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9a88c342-08e6-ee42-3c30-c5308044e877" executionId="21d9213a-1678-4aa3-82ce-b8b381eb0c39" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="57f33e9f-4728-55f1-5802-16e8e99e4981" executionId="33888e3d-90c0-462c-8321-57cb473d4202" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9213e2eb-3161-5f78-8226-02cb29f75884" executionId="6fcce05f-5d97-49f5-95f6-55ca8818baf7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9c81f9c7-c7c7-42c1-9125-35d2966e54f2" executionId="99804817-8095-4f0d-9a4d-3ec3c9dad931" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8e7b2d7c-601b-94ad-ac9f-8b26a65cf748" executionId="75e33c2a-cd8f-4d47-90bc-198ca02512fa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="672a6664-d253-8d59-e214-421801799700" executionId="c09680f0-34d8-404e-aeaa-e33e9336fe8c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="514eeeab-6a11-5843-5cbb-99b9e799057d" executionId="dfdaa8bc-6fea-4078-8f5a-87de38420061" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0e8e0817-1271-d725-84f2-d1c84358f338" executionId="4455ad6d-9ee5-4827-80e9-4c1506fb9323" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="43c79b1d-5c33-8818-cbbe-091b8689400e" executionId="188d5411-a8e8-45c1-be41-17987bae6bab" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="75f16896-535e-f4af-ffc4-1125b9ea6eed" executionId="032f24bc-28ff-4cf8-9bea-2104f640965b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4b90fd46-09be-11bd-5e56-b2806fac3371" executionId="01f5798e-2465-4d2a-b9b1-559c62db44d2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f3682d6a-ed8f-f805-0963-b9059373b365" executionId="98e3ecd0-5112-4068-9c42-7162e45baa9e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="da6fe48d-f1a4-45c8-0f9f-d17cab3d8106" executionId="3793c498-5b28-4d4d-8425-07b68739c48a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f4cc9958-27be-4411-f1c6-39664b23e908" executionId="f9c92d68-90fd-41e3-8892-1a72ef207014" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="deb30587-a5e5-0d86-a522-c0065d15d29e" executionId="b50db402-e11d-44ba-8054-c154aa0ef074" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3c84695c-3ce7-71de-67d7-86ecbaee9869" executionId="703921ba-1bbe-425f-83d7-7a8a69975e4a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="23e26a42-7d06-238a-e39c-2c03c3a8a77c" executionId="302d5730-a34c-4e01-8d31-985e66c8dea2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d80d5f47-49c8-f537-ff77-cbae363746b6" executionId="bafd70fa-4a5b-4b88-9d49-eacf4d87cbca" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="11caa210-f88e-3515-2411-5d783e5ff92c" executionId="ad1057a0-b565-4155-b5c8-097a83b26e8b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
   </TestEntries>
   <TestLists>
     <TestList name="Resultados que não estão em uma lista" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
     <TestList name="Todos os resultados carregados" id="19431567-8539-422a-85d7-44ee4e166bda" />
   </TestLists>
   <ResultSummary outcome="Failed">
-    <Counters total="36" executed="34" passed="30" failed="4" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Counters total="71" executed="66" passed="59" failed="7" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
     <Output>
       <StdOut>NUnit Adapter 4.5.0.0: Test execution started&#xD;
 Running all tests in C:\Users\LeviAlves\projectsLevi\ZitecQA\PortalIDSFTestes\bin\Debug\net8.0\PortalIDSFTestes.dll&#xD;
-   NUnit3TestExecutor discovered 36 of 36 NUnit test cases using Current Discovery mode, Non-Explicit run&#xD;
+   NUnit3TestExecutor discovered 71 of 71 NUnit test cases using Current Discovery mode, Non-Explicit run&#xD;
 Deve_Fazer_Download_Relatorio_Titulos: Esse teste está em manutenção.&#xD;
 O teste 'Deve_Fazer_Download_Relatorio_Titulos' foi ignorado na execução de teste.&#xD;
-Deve_Excluir_Uma_Operacao: Esse teste está em manutenção.&#xD;
-O teste 'Deve_Excluir_Uma_Operacao' foi ignorado na execução de teste.&#xD;
+Deve_Aprovar_Gestor: Esse teste está em manutenção.&#xD;
+O teste 'Deve_Aprovar_Gestor' foi ignorado na execução de teste.&#xD;
+Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido_Template: Esse teste está em manutenção.&#xD;
+O teste 'Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido_Template' foi ignorado na execução de teste.&#xD;
+Nao_Deve_Aceitar_Uma_Operacao_CNAB_Negativo: Esse teste está em manutenção.&#xD;
+Nao_Deve_Aceitar_Uma_Operacao_CSV_Negativo: Esse teste está em manutenção.&#xD;
+O teste 'Nao_Deve_Aceitar_Uma_Operacao_CNAB_Negativo' foi ignorado na execução de teste.&#xD;
+O teste 'Nao_Deve_Aceitar_Uma_Operacao_CSV_Negativo' foi ignorado na execução de teste.&#xD;
 NUnit Adapter 4.5.0.0: Test execution complete&#xD;
 </StdOut>
     </Output>
     <RunInfos>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:26.7312543-03:00">
-        <Text>✅ Arquivo atualizado salvo como: C:\TempQA\Arquivos\FundoQA_20250806_de256e78.txt&#xD;
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:13:41.6200366-03:00">
+        <Text>✅ Arquivo atualizado salvo como: C:\TempQA\Arquivos\FundoQA_20250901_240bb0b7.txt&#xD;
 ✅ Arquivo enviado com sucesso&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:29.3946612-03:00">
-        <Text>Arquivo FundoQA_20250806_82ee2db7.txt enviado com sucesso.&#xD;
-</Text>
-      </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:31.4123769-03:00">
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:13:47.5427341-03:00">
         <Text>✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:32.4566646-03:00">
-        <Text>✅ Texto encontrado: Arquivo	Fundo	Status	Usuário	Data	Quantidade de Títulos&#xD;
-template.txt	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	ENVIADO	QA - teste	06/08/2025 00:00:00	0&#xD;
-</Text>
-      </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:32.5461009-03:00">
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:13:48.0283084-03:00">
         <Text>✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:39.4096509-03:00">
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:00.1365886-03:00">
         <Text>✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:42.7289370-03:00">
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:06.7755242-03:00">
         <Text>✅ Arquivo enviado com sucesso&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:43.4302174-03:00">
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:07.8360339-03:00">
         <Text>✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:45.4658787-03:00">
-        <Text>✅ Arquivo enviado com sucesso&#xD;
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:16.5352089-03:00">
+        <Text>Arquivo FundoQA_20250901_5542408a.txt enviado com sucesso.&#xD;
+✅ 'Arquivo processado com sucesso' encontrado em '//div[@class='toast toast-success']' (único match).&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:46.8035649-03:00">
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:17.1115789-03:00">
         <Text>✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:47.7731187-03:00">
-        <Text>✅ O texto 'Copia.txt' não está presente na tabela.&#xD;
-</Text>
-      </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:48.7761673-03:00">
-        <Text>✅ Texto encontrado: Fundo	Cedente	Criação	Status	Versão	Gestora	Cadastro	Compliance	Ações&#xD;
-FUNDO QA FIDC	Teste de cadastro - CPF: 496.248.668-30	06/08/2025 09:56:43	Análise	1	Em espera	&#xD;
-&#xD;
-Em espera&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Em espera&#xD;
-&#xD;
-	&#xD;
-&#xD;
-FUNDO QA FIDC	Jessica - CNPJ: 53.300.608/0001-06	06/08/2025 09:21:20	Análise	1	Em espera	&#xD;
-&#xD;
-Em espera&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-PRECATO IV FIDC	RAFAEL EILERT - CPF: 738.261.200-78	05/08/2025 15:52:45	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-AMERICA FIDC	SERVMAR SERVICOS TECNICOS AMBIENTAIS LTDA - CNPJ: 55.636.500/0001-06	05/08/2025 16:11:17	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-KINERET FIDC	TWM TRANSPORTES ESPECIAIS LTDA - CNPJ: 65.271.314/0001-74	06/08/2025 09:21:18	Análise	1	Aprovado	&#xD;
-&#xD;
-Em espera&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-AMERICA FIDC	JOMAGA PARTICIPACOES LTDA - CNPJ: 04.606.250/0001-20	05/08/2025 15:24:10	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-AG FIDC	SBA-MAQUINAS PARA BOBINAGEM E AUTOMACAO LTDA - CNPJ: 14.073.137/0001-80	05/08/2025 16:33:14	Formalização	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-PRECATO IV FIDC	CELIO FERNANDES SILVA - CPF: 231.551.167-49	05/08/2025 13:15:54	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-PRECATO IV FIDC	REGIS ANTÔNIO CAETANO - CPF: 044.496.141-00	05/08/2025 12:16:56	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-NEW SECURITIZAÇÃO	COMERCIAL TEXTIL SUL BRASIL LTDA - CNPJ: 07.259.306/0001-06	05/08/2025 11:41:27	Ativo	1	Aprovado	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-&#xD;
-Aprovado&#xD;
-&#xD;
-	&#xD;
-</Text>
-      </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:56:54.6895176-03:00">
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:18.7664402-03:00">
         <Text>✅ Texto encontrado: Operação	Fundo	Tomador	Valor Principal	Valor Liquido	Custo da Emissão	Data de Início&#xD;
-3293	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	06/08/2025&#xD;
-3292	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	06/08/2025&#xD;
-3286	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	05/08/2025&#xD;
-3284	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	05/08/2025&#xD;
+3530	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	01/09/2025&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:57:02.5266993-03:00">
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:24.0179649-03:00">
         <Text>✅ Arquivo enviado com sucesso&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:57:07.1263691-03:00">
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:29.3033226-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+✅ Texto encontrado: FUNDO QA FIDC	Teste de cadastro - CPF: 496.248.668-30	29/08/2025 18:08:30	Análise	1	Em espera	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+FUNDO QA FIDC	Jessica - CNPJ: 53.300.608/0001-06	29/08/2025 18:08:24	Análise	1	Em espera	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+NOVA ERA FIDC	GIAN CARLO ROSARIO - CNPJ: 48.347.121/0004-83	29/08/2025 17:22:36	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+MARINO FIDC	FAM ASSESSORIA EM COBRANÇA EMPRESARIAL LTDA - CNPJ: 39.766.382/0001-02	29/08/2025 17:57:36	Formalização	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+KINERET FIDC	BOASAFRA COMERCIO E REPRESENTACOES LTDA - CNPJ: 05.662.861/0001-59	29/08/2025 18:06:11	Formalização	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+TELCOBANK I FIDC	MOBLY TELECOM DO BRASIL LTDA - CNPJ: 52.904.070/0001-78	29/08/2025 15:58:44	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+ADAMANTUS FIDC	ESTILO A INDUSTRIA &amp; COMERCIO DE CONFECCOES LTDA - CNPJ: 09.224.915/0001-55	29/08/2025 15:34:51	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+FAMCRED FIDC	COLORMINAS COLORIFICIO E MINERAÇÃO LTDA - CNPJ: 80.084.809/0001-88	29/08/2025 15:56:53	Ativo	2	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Volus FIDC	EDIELSON MAGALHAES DA SILVA 65183525234 - CNPJ: 43.730.310/0001-74	29/08/2025 14:25:59	Ativo	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+ID ANGRA PARTNERS FII	ANGRA PARTNERS DESENVOLVIMENTO IMOBILIÁRIO SPE LTDA - CNPJ: 62.225.059/0001-35	29/08/2025 16:25:22	Formalização 	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:39.6342889-03:00">
+        <Text>✅ Arquivo 'cnab_neg_01_20250901_111423713_812546.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:39.7368960-03:00">
+        <Text>✅ Texto encontrado: Fundo	Cedente	Criação	Status	Versão	Gestora	Cadastro	Compliance	Ações&#xD;
+FUNDO QA FIDC	Teste de cadastro - CPF: 496.248.668-30	29/08/2025 18:08:30	Análise	1	Em espera	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+FUNDO QA FIDC	Jessica - CNPJ: 53.300.608/0001-06	29/08/2025 18:08:24	Análise	1	Em espera	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+NOVA ERA FIDC	GIAN CARLO ROSARIO - CNPJ: 48.347.121/0004-83	29/08/2025 17:22:36	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Em espera&#xD;
+&#xD;
+	&#xD;
+&#xD;
+MARINO FIDC	FAM ASSESSORIA EM COBRANÇA EMPRESARIAL LTDA - CNPJ: 39.766.382/0001-02	29/08/2025 17:57:36	Formalização	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+KINERET FIDC	BOASAFRA COMERCIO E REPRESENTACOES LTDA - CNPJ: 05.662.861/0001-59	29/08/2025 18:06:11	Formalização	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+TELCOBANK I FIDC	MOBLY TELECOM DO BRASIL LTDA - CNPJ: 52.904.070/0001-78	29/08/2025 15:58:44	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+ADAMANTUS FIDC	ESTILO A INDUSTRIA &amp; COMERCIO DE CONFECCOES LTDA - CNPJ: 09.224.915/0001-55	29/08/2025 15:34:51	Pendência	1	Em espera	&#xD;
+&#xD;
+Rejeitado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+FAMCRED FIDC	COLORMINAS COLORIFICIO E MINERAÇÃO LTDA - CNPJ: 80.084.809/0001-88	29/08/2025 15:56:53	Ativo	2	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Volus FIDC	EDIELSON MAGALHAES DA SILVA 65183525234 - CNPJ: 43.730.310/0001-74	29/08/2025 14:25:59	Ativo	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+ID ANGRA PARTNERS FII	ANGRA PARTNERS DESENVOLVIMENTO IMOBILIÁRIO SPE LTDA - CNPJ: 62.225.059/0001-35	29/08/2025 16:25:22	Formalização 	1	Aprovado	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+&#xD;
+Aprovado&#xD;
+&#xD;
+	&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:45.8790157-03:00">
         <Text>✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.&#xD;
 ✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:57:14.8498549-03:00">
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:48.0211762-03:00">
+        <Text>✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status&#xD;
+3263	01/09/2025 08:14	2	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3228	28/08/2025 15:09	-1	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3189	27/08/2025 13:37	-2	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3188	27/08/2025 13:16	-2	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3185	27/08/2025 09:23	-2	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3183	26/08/2025 16:43	-3	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3179	26/08/2025 15:42	-3	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3178	26/08/2025 14:57	-3	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3154	25/08/2025 10:13	-4	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3103	20/08/2025 13:46	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3102	20/08/2025 13:28	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3100	20/08/2025 11:46	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3099	20/08/2025 11:29	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3095	20/08/2025 10:24	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3093	20/08/2025 10:06	-9	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3072	18/08/2025 14:43	-11	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3071	18/08/2025 14:29	-11	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3070	18/08/2025 14:18	-11	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3067	18/08/2025 14:04	-11	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+3044	14/08/2025 18:19	-15	QA	Teste NUnit	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:51.9170403-03:00">
+        <Text>✅ Arquivo 'cnab_neg_02_20250901_111448010_0de5ce.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:14:53.8711339-03:00">
         <Text>✅ Arquivo foi baixado e validado com sucesso.&#xD;
 \ud83d\uddd1️ Arquivo excluído após validação.&#xD;
 </Text>
       </RunInfo>
-      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-08-06T09:57:23.0922748-03:00">
-        <Text>Linha original: Zitec Tecnologia LTDA;54.638.076/0001-76;CEDENTE TESTE;90.400.888/0001-42;REGINA HELENA SANS FRANCHI ME;03.294.416/0001-58;106;190504,17;170504,17;30/06/2026;09/01/2025;09/01/2025;5232929-71.2024.14.6597;5949460-39.2024.4.1972&#xD;
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:02.5470618-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:04.0712513-03:00">
+        <Text>Linha original: Zitec Tecnologia LTDA;54.638.076/0001-76;CEDENTE TESTE;90.400.888/0001-42;REGINA HELENA SANS FRANCHI ME;03.294.416/0001-58;106;190504,17;170504,17;30/06/2026;09/01/2025;09/01/2025;5078661-72.2024.18.1637;5563456-94.2020.16.7044&#xD;
 Colunas encontradas: 14&#xD;
 ✅ Arquivo enviado com sucesso&#xD;
 ✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:06.5115816-03:00">
+        <Text>✅ Arquivo 'cnab_neg_03_20250901_111459526_5c3f66.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:12.0444482-03:00">
+        <Text>✅ Arquivo foi baixado e validado com sucesso.&#xD;
+\ud83d\uddd1️ Arquivo excluído após validação.&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:15.5617143-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:23.9691349-03:00">
+        <Text>✅ Arquivo 'cnab_neg_04_20250901_111513877_9ab106.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:25.3851618-03:00">
+        <Text>✅ 'Preencha corretamente a Aba de Informações.' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+✅ 'Preencha todos os campos para simular' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:28.4771718-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:37.8851003-03:00">
+        <Text>✅ Arquivo 'cnab_neg_05_20250901_111530923_6f177a.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:38.6681926-03:00">
+        <Text>✅ 'Preencha todos os campos obrigatórios' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:39.6804652-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:50.3849330-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:51.4513768-03:00">
+        <Text>✅ Arquivo 'cnab_neg_06_20250901_111544445_e017bc.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:15:52.9797662-03:00">
+        <Text>✅ 'Preencha todos os campos para simular' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+✅ 'Preencha corretamente a Aba de Informações.' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:02.0219186-03:00">
+        <Text>✅ Arquivo 'cnab_neg_07_20250901_111558117_a7f69e.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:02.5670325-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:13.5358975-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:21.7519238-03:00">
+        <Text>✅ Arquivo 'cnab_neg_08_20250901_111608870_45adcb.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:25.4010073-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:26.7927443-03:00">
+        <Text>✅ 'A carência de amortização não pode ser igual ou maior que a duração' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+✅ 'Parcelas devem ser geradas corretamente' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:35.3684348-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:38.7326345-03:00">
+        <Text>✅ Arquivo 'cnab_neg_09_20250901_111628793_05f605.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:40.7626023-03:00">
+        <Text>✅ 'A carência de juros não pode ser maior que a carência do principal!' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+✅ 'Parcelas devem ser geradas corretamente' encontrado em '//div[@class='toast toast-warning']' (único match).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:50.3273274-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:16:58.6585602-03:00">
+        <Text>✅ Arquivo enviado com sucesso&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:17:04.0876256-03:00">
+        <Text>✅ Arquivo 'cnab_neg_10_20250901_111645175_9c831d.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:17:23.4794064-03:00">
+        <Text>✅ Arquivo 'cnab_neg_11_20250901_111710497_9ddd8c.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="ZITEC0029" outcome="Warning" timestamp="2025-09-01T08:17:37.5124677-03:00">
+        <Text>✅ Arquivo 'cnab_neg_12_20250901_111730592_6981ab.txt' enviado com sucesso (Enviar Arquivo Baixa Negativo).&#xD;
 </Text>
       </RunInfo>
     </RunInfos>

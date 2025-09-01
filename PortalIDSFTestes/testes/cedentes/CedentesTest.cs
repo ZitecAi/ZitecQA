@@ -134,6 +134,7 @@ namespace PortalIDSFTestes.testes.cedentes
             await cedentes.CadastrarCedenteNegativo("50963249000170_33786902000154_N.zip");
         }
         [Test, Order(15)]
+        //[Ignore("Esse teste está em manutenção.")]
         public async Task Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Fundo_Invalido_Na_Conta_Template()
         {
             var cedentes = new CedentesPage(page);

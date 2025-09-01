@@ -37,6 +37,8 @@ namespace PortalIDSFTestes.elementos.notaComercial
         public string CampoTaxaJuros { get; } = "#taxaJuros";
         public string CampoDuração { get; } = "#duracao";
         public string CampoCarenciaAmortizacao { get; } = "#carenciaAmortizacao";
+
+        public string CarenciaJuros { get; } = "#carenciaJuros";
         public string SelectTipoCalculo { get; } = "#tipoCalculo";
         public string CampoDiaVencimento { get; } = "#diaVencimento";
         public string CampoDataInicio{ get; } = "#dataInicio";
@@ -63,6 +65,9 @@ namespace PortalIDSFTestes.elementos.notaComercial
         public string BtnDownloadMinuta { get; } = "//span//button[@title='Download Minuta']";
         public string BtnDownloadMinutaPDF { get; } = "//span//button[@title='Download Minuta PDF']";
 
+        //Error Message
+
+        public string MsgErro { get; } = "//div[@class='toast toast-warning']";
 
 
 
