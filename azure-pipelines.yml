@@ -1,117 +1,112 @@
-# azure-pipelines.yml  (TESTES E2E pós-deploy - somente projeto PortalIDSFTestes)
-name: E2E-Apos-Deploy-$(Date:yyyyMMdd)$(Rev:.r)
+
+# azure-pipelines.yml
 trigger: none
 
 resources:
   pipelines:
-    - pipeline: appDeploy
-      source: 'ZIDSF - PORTAL - DEV'
-      branch: 'Dev'
+    - pipeline: AppDeploy
+      project: 'Dev-ops IDSF'
+      source: 'ZIDSF - PORTAL - STAGING'
       trigger: true
 
 pool:
-  vmImage: 'windows-latest'   # ou 'windows-2022' para fixar
+  vmImage: 'ubuntu-latest'
 
 variables:
-  BuildConfiguration: 'Release'
-  TestResultsDir: '$(System.DefaultWorkingDirectory)\TestResults'
-  TestProject: 'PortalIDSFTestes\PortalIDSFTestes.csproj'
-  EmailTo: 'al@zitec.ai'
-  EmailFrom: 'no-reply@zitec.ai'     # remetente visível
-  SmtpHost: 'smtp.office365.com'
-  SmtpPort: '587'
-  # ATENÇÃO: crie MailUser e MailPass como variáveis secretas no pipeline (ver instruções abaixo)
+  - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
+  - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
+  - name: TEST_CSPROJ
+    value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'   # << seu projeto de testes (usar /)
+  - name: ALLURE_RESULTS_DIR
+    value: 'allure-results'
+  - name: ALLURE_REPORT_DIR
+    value: 'allure-report'
 
-stages:
-- stage: e2e_tests
-  displayName: 'E2E após Deploy'
-  condition: succeeded()
-  jobs:
-  - job: run_e2e
-    displayName: 'Rodar NUnit + Playwright (somente PortalIDSFTestes)'
-    steps:
-    - checkout: self
-      fetchDepth: 0
+steps:
+  - checkout: self
+    displayName: 'Checkout tests repo'
 
-    - task: UseDotNet@2
-      displayName: 'Instalar .NET SDK 8.x'
-      inputs:
-        packageType: 'sdk'
-        version: '8.x'
+  - task: NodeTool@0
+    displayName: 'Use Node 18'
+    inputs:
+      versionSpec: '18.x'
 
-    - script: dotnet restore "$(TestProject)"
-      displayName: 'Restore (somente PortalIDSFTestes)'
+  # Restore + Playwright (.NET) + navegadores
+  - script: |
+      set -e
+      dotnet --info
 
-    - script: dotnet build "$(TestProject)" --configuration $(BuildConfiguration) --no-restore
-      displayName: 'Build (somente PortalIDSFTestes)'
+      # Restore no projeto de testes correto
+      dotnet restore "$(TEST_CSPROJ)"
 
-    - powershell: |
-        dotnet tool update --global Microsoft.Playwright.CLI 2>$null; if ($LASTEXITCODE -ne 0) { dotnet tool install --global Microsoft.Playwright.CLI }
-        Write-Host "##vso[task.prependpath]$env:USERPROFILE\.dotnet\tools"
-        playwright install
-      displayName: 'Instalar Playwright browsers (Windows)'
+      # Playwright .NET CLI + browsers
+      dotnet tool update --global Microsoft.Playwright.CLI
+      echo "##vso[task.prependpath]$HOME/.dotnet/tools"
+      playwright install --with-deps
+    displayName: 'Restore + Playwright (.NET CLI + browsers)'
 
-    - script: |
-        mkdir "$(TestResultsDir)" 2>nul || exit /b 0
-        dotnet test "$(TestProject)" --configuration $(BuildConfiguration) ^
-          --logger "trx;LogFileName=e2e.trx" ^
-          --results-directory "$(TestResultsDir)" ^
-          --no-build
-      displayName: 'Executar testes E2E (PortalIDSFTestes)'
+  # Rodar testes
+  - script: |
+      set -e
+      echo "Rodando testes em: $(TEST_CSPROJ)"
+      dotnet test "$(TEST_CSPROJ)" --configuration Release --logger "trx"
+    displayName: 'Run tests'
 
-    - task: PublishTestResults@2
-      condition: always()
-      displayName: 'Publicar Test Results (TRX)'
-      inputs:
-        testResultsFormat: 'VSTest'
-        testResultsFiles: '$(TestResultsDir)\**\*.trx'
-        mergeTestResults: true
-        failTaskOnFailedTests: true
-        testRunTitle: 'E2E após deploy'
+  # Gerar Allure estático
+  - script: |
+      set -e
+      npm i -g allure-commandline netlify-cli
 
-    - task: PublishBuildArtifacts@1
-      condition: always()
-      displayName: 'Publicar artefatos (TRX, traces)'
-      inputs:
-        PathtoPublish: '$(System.DefaultWorkingDirectory)'
-        ArtifactName: 'e2e-artifacts'
-        publishLocation: 'Container'
+      if [ ! -d "$(ALLURE_RESULTS_DIR)" ]; then
+        echo "ERROR: pasta '$(ALLURE_RESULTS_DIR)' não encontrada. Ajuste o output do adapter Allure."
+        exit 1
+      fi
 
-    - task: PowerShell@2
-      condition: always()
-      displayName: 'Enviar e-mail com links do job'
-      inputs:
-        targetType: 'inline'
-        script: |
-          $from = '$(EmailFrom)'     # no-reply@zitec.ai (precisa de Send As)
-          $user = 'AKIA2CUNLQNRSSGO6QFX'      # ex.: qa-bot@zitec.ai (quem autentica)
-          if ($from -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') { throw "EmailFrom inválido: '$from'" }
-          if ($user -notmatch '^[^@\s]+@[^@\s]+\.[^@\s]+$') { throw "MailUser inválido (precisa ser e-mail)." }
+      allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$(ALLURE_RESULTS_DIR)"
+    displayName: 'Generate Allure report'
 
-          $buildUrl = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
-          $testsTab = "$buildUrl&_a=summary"
-          $subject = "[E2E] Pós-deploy - $(Build.SourceBranchName) #$(Build.BuildId) - $(Agent.JobStatus)"
-          $body = @"
-          <div style='font-family:Segoe UI,Arial,sans-serif'>
-            <h2>Automação E2E executada após deploy</h2>
-            <p><b>Status do job:</b> $(Agent.JobStatus)</p>
-            <ul>
-              <li><b>Resumo/Tests:</b> <a href='$testsTab'>$testsTab</a></li>
-              <li><b>Job completo:</b> <a href='$buildUrl'>$buildUrl</a></li>
-            </ul>
-          </div>
-          "@
+  # Deploy no Netlify (produção) — sobrescreve mantendo o mesmo link
+  - script: |
+      set -e
+      netlify deploy \
+        --prod \
+        --dir="$(ALLURE_REPORT_DIR)" \
+        --site "$(NETLIFY_SITE_ID)" \
+        --auth "$(NETLIFY_AUTH_TOKEN)" \
+        --json > deploy.json
 
-          $secure = ConvertTo-SecureString "BE0cHhRloF8n8A3hqHLFE3QWAQuZ4g5NSHW5ThRqHuse" -AsPlainText -Force
-          $cred = New-Object System.Management.Automation.PSCredential($user, $secure)
+      echo "======== Netlify Deploy Result ========"
+      cat deploy.json || true
+    displayName: 'Deploy to Netlify (prod)'
 
-          Send-MailMessage `
-            -From $from `
-            -To '$(EmailTo)' `
-            -Subject $subject `
-            -Body $body `
-            -BodyAsHtml `
-            -SmtpServer '$(SmtpHost)' `
-            -Port $(SmtpPort) `
-            -UseSsl `
-            -Credential $cred
+  # Enviar e-mail com link fixo
+  - task: PowerShell@2
+    displayName: 'Send email with report link'
+    inputs:
+      targetType: 'inline'
+      script: |
+        $siteUrl   = "$(SITE_URL)"
+        $smtpHost  = "$(SMTP_SERVER)"
+        $smtpPort  = [int]"$(SMTP_PORT)"
+        $smtpUser  = "$(SMTP_USER)"
+        $smtpPass  = "$(SMTP_PASS)"
+        $mailFrom  = "$(MAIL_FROM)"
+        $mailTo    = "$(MAIL_TO)"
+
+        $subject = "Allure - Execução $(Build.BuildNumber)"
+        $body = "Olá, time!`n`nO relatório Allure da execução $(Build.BuildNumber) está disponível em:`n$siteUrl`n`nPipeline: $(Build.DefinitionName)`nExecução: $(Build.BuildId)"
+
+        if ($smtpUser -and $smtpPass) {
+          $sec = ConvertTo-SecureString $smtpPass -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential($smtpUser, $sec)
+          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -UseSsl -Credential $cred
+        } else {
+          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort
+        }
+
+  - task: PublishTestResults@2
+    displayName: 'Publish TRX'
+    inputs:
+      testResultsFormat: 'VSTest'
+      testResultsFiles: '**/*.trx'
+      failTaskOnFailedTests: true
