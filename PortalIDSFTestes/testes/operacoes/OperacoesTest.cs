@@ -81,16 +81,9 @@ namespace PortalIDSFTestes.testes.operacoes
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.EnviarOperacaoCSV();
-        }            
+        } 
 
         [Test, Order(7)]
-        public async Task Deve_Excluir_Uma_Operacao()
-        {
-            var operacoes = new OperacoesPage(page);
-            await operacoes.ExcluirArquivo();
-        }
-
-        [Test, Order(8)]
         [Ignore("Esse teste está em manutenção.")]
         public async Task Nao_Deve_Aceitar_Uma_Operacao_CNAB_Negativo()
         {
@@ -127,7 +120,7 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
 
-        [Test, Order(9)]
+        [Test, Order(8)]
         [Ignore("Esse teste está em manutenção.")]
         public async Task Nao_Deve_Aceitar_Uma_Operacao_CSV_Negativo()
         {
