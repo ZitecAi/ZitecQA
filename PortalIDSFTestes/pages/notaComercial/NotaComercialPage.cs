@@ -1,11 +1,12 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
+using PortalIDSFTestes.elementos.notaComercial;
+using PortalIDSFTestes.metodos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.elementos.notaComercial;
 
 namespace PortalIDSFTestes.pages.notaComercial
 {
@@ -19,8 +20,13 @@ namespace PortalIDSFTestes.pages.notaComercial
             this.page = page;
             metodo = new Metodos(page);
         }
-
-        string caminhoArquivo = @"C:\TempQA\Arquivos\";
+        public static string GetPath()
+        {
+            ConfigurationManager config = new ConfigurationManager();
+            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            string path = config["Paths:Arquivo"].ToString();
+            return path;
+        }
 
         public async Task ValidarAcentosNotaComercialPage()
         {
@@ -54,7 +60,7 @@ namespace PortalIDSFTestes.pages.notaComercial
             await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
             await Task.Delay(500);
             await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "1", "Selecionar Relacionado A");
-            await metodo.ClicarNoSeletor(el.SelectEnvolvido, "43112744837", "Selecionar Envolvido");
+            await metodo.ClicarNoSeletor(el.SelectEnvolvido, "32084289874", "Selecionar Envolvido");
             await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "empregador", "Selecionar Tipo de relação");
             await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
             await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "assinaturaSelfie", "Selecionar Forma de Validação");
@@ -81,7 +87,7 @@ namespace PortalIDSFTestes.pages.notaComercial
             //sessão Documentos
             await metodo.Clicar(el.SessaoDocumentos, "Clicar na Sessão Documentos no modal");
             await metodo.Clicar(el.BtnAddDocumento, "Clicar na Sessão Documentos no modal");
-            await metodo.EnviarArquivo(el.InputFileNotaComercial, this.caminhoArquivo + "Arquivo teste 2.pdf", "Enviar Arquivo no input");
+            await metodo.EnviarArquivo(el.InputFileNotaComercial, GetPath() + "Arquivo teste 2.pdf", "Enviar Arquivo no input");
             await metodo.ClicarNoSeletor(el.SelectTipoDocumento, "cpf", "Selecionar tipo Documento na sessão Documentos");
             await metodo.Clicar(el.BtnAtualizarDocumento, "Clicar no botão para atualizar documento");
             await metodo.Clicar(el.BtnSalvarMudancas, "Clicar em Salvar Mudanças depois de todo o fluxo");

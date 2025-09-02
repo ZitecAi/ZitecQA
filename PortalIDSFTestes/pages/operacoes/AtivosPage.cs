@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using System;
@@ -14,13 +15,19 @@ namespace PortalIDSFTestes.pages.operacoes
         private IPage page;
         Metodos metodo;
         AtivosElements el = new AtivosElements();
-        string caminhoArquivo = @"C:\TempQA\Arquivos\";
         public AtivosPage(IPage page)
         {
             this.page = page;
             metodo = new Metodos(page);
         }
 
+        public static string GetPath()
+        {
+            ConfigurationManager config = new ConfigurationManager();
+            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            string path = config["Paths:Arquivo"].ToString();
+            return path;
+        }
 
         public async Task ValidarAcentosAtivosPage()
         {
@@ -52,7 +59,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Escrever(el.CampoValor, "10", "Digitar Valor");
             await metodo.Escrever(el.CampoResumoOperacao, "Teste NUnit", "Digitar Resumo da operação");
             await metodo.Clicar(el.BtnAnexos, "Clicar no Botão Anexos");
-            await metodo.EnviarArquivo(el.InputAnexos, caminhoArquivo + "21321321321.pdf", "Enviar Anexo no Input de anexos");
+            await metodo.EnviarArquivo(el.InputAnexos, GetPath() + "21321321321.pdf", "Enviar Anexo no Input de anexos");
             await metodo.Clicar(el.BtnVoltar, "Clicar no botão voltar após enviar anexo");
             await metodo.Clicar(el.CheckBoxTermo, "Aceitar Termos");
             await metodo.Clicar(el.BtnSalvar, "Clicar em Salvar");

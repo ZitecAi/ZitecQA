@@ -77,16 +77,14 @@ jobs:
       echo "Exit code dos testes: $TEST_EXIT"
       echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
 
-      # marca visualmente como SucceededWithIssues se falhou
       if [ "$TEST_EXIT" -ne 0 ]; then
         echo "##vso[task.complete result=SucceededWithIssues;]Há testes falhando, mas o fluxo continuará."
       fi
 
       exit 0
-    name: runTests              # <<< IMPORTANTe: dá um nome a este step para output variable
+    name: runTests
     displayName: 'Run tests (non-blocking)'
 
-  # Publica TRX como Test Results (não falha a task)
   - task: PublishTestResults@2
     displayName: Publish TRX
     inputs:
@@ -97,11 +95,9 @@ jobs:
       testRunTitle: 'NUnit TRX'
       mergeTestResults: true
 
-  # Junta possíveis pastas allure-results e publica como artifact
   - script: |
       set -e
       mkdir -p "$(Build.SourcesDirectory)/_allure/results"
-      # procura por 'allure-results' no bin/Release do projeto de teste
       FOUND=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
       if [ -n "$FOUND" ]; then
         echo "Copiando resultados do Allure de: $FOUND"
@@ -125,10 +121,9 @@ jobs:
   pool:
     vmImage: 'ubuntu-22.04'
   dependsOn: Tests
-  condition: always()       # <<< SEMPRE roda, independente do Job anterior
+  condition: always()
 
   variables:
-    # recupera o exit code real dos testes do Job anterior
     TEST_EXIT_FROM_PREV: $[ dependencies.Tests.outputs['runTests.TEST_EXIT'] ]
 
   steps:
@@ -145,16 +140,13 @@ jobs:
       set -e
       npm i -g allure-commandline netlify-cli
 
-      # prepara pastas
       mkdir -p "$(ALLURE_REPORT_DIR)"
-      # o DownloadPipelineArtifact baixa em $(Pipeline.Workspace)/allure-results
       SRC="$(Pipeline.Workspace)/allure-results"
       if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
         echo "Gerando Allure a partir de artifact..."
         allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$SRC" || true
       fi
 
-      # placeholder se não gerou
       if [ ! -d "$(ALLURE_REPORT_DIR)" ] || [ -z "$(ls -A "$(ALLURE_REPORT_DIR)" 2>/dev/null)" ]; then
         echo "Criando relatório placeholder..."
         mkdir -p "$(ALLURE_REPORT_DIR)"
@@ -174,37 +166,44 @@ jobs:
       echo "======== Netlify Deploy Result ========"
       cat deploy.json || true
 
-      # extrai a URL do JSON (se quiser usar no e-mail)
-      URL=$(cat deploy.json | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'');}catch(e){}})")
-      echo "##vso[task.setvariable variable=NETLIFY_URL;isOutput=true]$URL"
-    name: netlifyDeploy
+      # Extrai URL e salva como variável do job
+      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'');}catch(e){}})" < deploy.json)
+      echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
     displayName: 'Deploy to Netlify (prod)'
+    condition: always()
 
   - task: PowerShell@2
     displayName: 'Send email with report link (plain text)'
+    condition: always()
+    env:
+      SITE_URL: $(SITE_URL)            # do Variable Group
+      NETLIFY_URL: $(NETLIFY_URL)      # do passo Netlify acima
+      SMTP_SERVER: $(SMTP_SERVER)
+      SMTP_PORT: $(SMTP_PORT)
+      SMTP_USER: $(SMTP_USER)
+      SMTP_PASS: $(SMTP_PASS)
+      MAIL_FROM: $(MAIL_FROM)
+      MAIL_TO: $(MAIL_TO)
+      TEST_EXIT: $(TEST_EXIT_FROM_PREV)
+      BUILD_DEFINITIONNAME: $(Build.DefinitionName)
+      BUILD_BUILDID: $(Build.BuildId)
+      BUILD_BUILDNUMBER: $(Build.BuildNumber)
     inputs:
       targetType: inline
       script: |
-        $siteUrl   = "$(SITE_URL)"
-        # se o deploy.json trouxe uma URL, prioriza ela
-        $deployUrl = "$(NETLIFY_URL)"
-        if ($deployUrl) { $siteUrl = $deployUrl }
+        # Prioriza URL do deploy; se vazia, usa a do grupo
+        $siteUrl = $env:NETLIFY_URL
+        if ([string]::IsNullOrWhiteSpace($siteUrl)) { $siteUrl = $env:SITE_URL }
 
-        $pipeline  = "$(Build.DefinitionName)"
-        $buildId   = "$(Build.BuildId)"
-        $buildNum  = "$(Build.BuildNumber)"
-        $testExit  = "$(TEST_EXIT_FROM_PREV)"
+        $pipeline = $env:BUILD_DEFINITIONNAME
+        $buildId  = $env:BUILD_BUILDID
+        $buildNum = $env:BUILD_BUILDNUMBER
+        $testExit = $env:TEST_EXIT
 
-        $smtpHost  = "$(SMTP_SERVER)"
-        $smtpPort  = [int]"$(SMTP_PORT)"
-        $smtpUser  = "$(SMTP_USER)"
-        $smtpPass  = "$(SMTP_PASS)"
-        $mailFrom  = "$(MAIL_FROM)"
-        $mailTo    = "$(MAIL_TO)"
+        if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
+        $subject = "Relatório Allure (Staging) - $status"
 
-        if ($testExit -ne "0") { $status = "COM FALHAS"; } else { $status = "SUCESSO"; }
-        $subject   = "Relatório Allure (Staging) - $status"
-
+        # Sem here-string para evitar erro de identação
         $bodyLines = @(
           "Pipeline: $pipeline",
           "Execução: $buildNum (ID $buildId)",
@@ -213,10 +212,10 @@ jobs:
         )
         $body = $bodyLines -join "`n"
 
-        if ($smtpUser -and $smtpPass) {
-          $sec  = ConvertTo-SecureString $smtpPass -AsPlainText -Force
-          $cred = New-Object System.Management.Automation.PSCredential($smtpUser, $sec)
-          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -UseSsl -Credential $cred -Encoding UTF8
+        if ($env:SMTP_USER -and $env:SMTP_PASS) {
+          $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
+          Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
         } else {
-          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -Encoding UTF8
+          Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
         }
