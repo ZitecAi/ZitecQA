@@ -8,12 +8,9 @@ resources:
       source: 'ZIDSF - PORTAL - STAGING'
       trigger: true
 
-pool:
-  vmImage: 'ubuntu-22.04'
-
 variables:
-  - group: NetlifySecrets
-  - group: EmailSecrets
+  - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
+  - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
   - name: TEST_CSPROJ
     value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'
   - name: TEST_DIR
@@ -23,157 +20,203 @@ variables:
   - name: ALLURE_REPORT_DIR
     value: 'allure-report'
 
-steps:
-- checkout: self
-  displayName: 'Checkout tests repo'
+############################
+# JOB 1 — TESTS (não bloqueia)
+############################
+jobs:
+- job: Tests
+  displayName: "Run Playwright/NUnit tests"
+  pool:
+    vmImage: 'ubuntu-22.04'
 
-- task: UseDotNet@2
-  displayName: 'Use .NET 8 SDK'
-  inputs:
-    packageType: 'sdk'
-    version: '8.0.x'
+  steps:
+  - checkout: self
+    displayName: 'Checkout tests repo'
 
-- task: NodeTool@0
-  displayName: 'Use Node 18'
-  inputs:
-    versionSpec: '18.x'
+  - task: UseDotNet@2
+    displayName: 'Use .NET 8 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '8.0.x'
 
-# Restore + Build
-- script: |
-    dotnet --info
-    dotnet restore "$(TEST_CSPROJ)"
-    dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
-  displayName: 'Restore + Build'
+  - task: NodeTool@0
+    displayName: 'Use Node 18'
+    inputs:
+      versionSpec: '18.x'
 
-# Playwright browsers install (project script)
-- script: |
-    set -e
-    cd "$(TEST_DIR)"
+  - script: |
+      dotnet --info
+      dotnet restore "$(TEST_CSPROJ)"
+      dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
+    displayName: 'Restore + Build'
 
-    SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
-    if [ -z "$SCRIPT_PATH" ]; then
-      echo "ERRO: playwright.ps1 não encontrado após o build."
-      ls -R ./bin || true
-      exit 1
-    fi
+  - script: |
+      set -e
+      cd "$(TEST_DIR)"
 
-    echo "Usando script: $SCRIPT_PATH"
-    if ! pwsh "$SCRIPT_PATH" install --with-deps; then
-      echo "Aviso: --with-deps falhou. Tentando 'install' sem deps..."
-      pwsh "$SCRIPT_PATH" install
-    fi
-  displayName: 'Playwright browsers install (project script)'
+      SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
+      if [ -z "$SCRIPT_PATH" ]; then
+        echo "ERRO: playwright.ps1 não encontrado após o build."
+        ls -R ./bin || true
+        exit 1
+      fi
 
-# Run tests — captura exit code, marca status visual e SEMPRE sai 0
-- script: |
-    set +e
-    echo "Rodando testes em: $(TEST_CSPROJ)"
-    dotnet test "$(TEST_CSPROJ)" -c Release --logger "trx;LogFileName=$(Build.SourcesDirectory)/TestResults/results.trx"
-    TEST_EXIT=$?
-    echo "Exit code dos testes: $TEST_EXIT"
-    echo "##vso[task.setvariable variable=TEST_EXIT]$TEST_EXIT"
+      echo "Usando script: $SCRIPT_PATH"
+      if ! pwsh "$SCRIPT_PATH" install --with-deps; then
+        echo "Aviso: --with-deps falhou. Tentando 'install' sem deps..."
+        pwsh "$SCRIPT_PATH" install
+      fi
+    displayName: 'Playwright browsers install (project script)'
 
-    # Deixa o passo como 'SucceededWithIssues' se houve falhas (puro visual),
-    # mas sem travar o job.
-    if [ "$TEST_EXIT" -ne 0 ]; then
-      echo "##vso[task.complete result=SucceededWithIssues;]Há testes falhando, mas o fluxo continuará."
-    fi
+  # Roda testes, capta exit code e SEMPRE sai 0
+  - script: |
+      set +e
+      echo "Rodando testes em: $(TEST_CSPROJ)"
+      dotnet test "$(TEST_CSPROJ)" -c Release --logger "trx;LogFileName=$(Build.SourcesDirectory)/TestResults/results.trx"
+      TEST_EXIT=$?
+      echo "Exit code dos testes: $TEST_EXIT"
+      echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
 
-    exit 0
-  displayName: 'Run tests (non-blocking)'
+      # marca visualmente como SucceededWithIssues se falhou
+      if [ "$TEST_EXIT" -ne 0 ]; then
+        echo "##vso[task.complete result=SucceededWithIssues;]Há testes falhando, mas o fluxo continuará."
+      fi
 
-# Allure (sempre executa; gera placeholder se não houver resultados)
-- script: |
-    set -e
-    npm i -g allure-commandline netlify-cli
+      exit 0
+    name: runTests              # <<< IMPORTANTe: dá um nome a este step para output variable
+    displayName: 'Run tests (non-blocking)'
 
-    # Tenta achar o allure-results gerado pelo adaptador
-    RESULTS_FROM=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
-    if [ -n "$RESULTS_FROM" ] && [ ! -d "$(ALLURE_RESULTS_DIR)" ]; then
-      echo "Copiando resultados de: $RESULTS_FROM"
-      cp -r "$RESULTS_FROM" "./$(ALLURE_RESULTS_DIR)"
-    fi
+  # Publica TRX como Test Results (não falha a task)
+  - task: PublishTestResults@2
+    displayName: Publish TRX
+    inputs:
+      testResultsFormat: VSTest
+      testResultsFiles: 'TestResults/**/*.trx'
+      searchFolder: '$(Build.SourcesDirectory)'
+      failTaskOnFailedTests: false
+      testRunTitle: 'NUnit TRX'
+      mergeTestResults: true
 
-    if [ -d "$(ALLURE_RESULTS_DIR)" ] && [ "$(ls -A "$(ALLURE_RESULTS_DIR)" 2>/dev/null)" ]; then
-      echo "Gerando Allure a partir de '$(ALLURE_RESULTS_DIR)'..."
-      allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$(ALLURE_RESULTS_DIR)" || true
-    fi
+  # Junta possíveis pastas allure-results e publica como artifact
+  - script: |
+      set -e
+      mkdir -p "$(Build.SourcesDirectory)/_allure/results"
+      # procura por 'allure-results' no bin/Release do projeto de teste
+      FOUND=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
+      if [ -n "$FOUND" ]; then
+        echo "Copiando resultados do Allure de: $FOUND"
+        cp -r "$FOUND/." "$(Build.SourcesDirectory)/_allure/results/"
+      else
+        echo "Nenhum 'allure-results' encontrado. Publicaremos vazio."
+      fi
+    displayName: 'Collect allure-results (if any)'
 
-    # Placeholder se não houver relatório
-    if [ ! -d "$(ALLURE_REPORT_DIR)" ] || [ -z "$(ls -A "$(ALLURE_REPORT_DIR)" 2>/dev/null)" ]; then
-      echo "Criando relatório placeholder..."
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish artifact: allure-results'
+    inputs:
+      artifact: 'allure-results'
+      targetPath: '$(Build.SourcesDirectory)/_allure/results'
+
+############################
+# JOB 2 — REPORT (sempre roda)
+############################
+- job: Report
+  displayName: "Generate & publish Allure + Send email"
+  pool:
+    vmImage: 'ubuntu-22.04'
+  dependsOn: Tests
+  condition: always()       # <<< SEMPRE roda, independente do Job anterior
+
+  variables:
+    # recupera o exit code real dos testes do Job anterior
+    TEST_EXIT_FROM_PREV: $[ dependencies.Tests.outputs['runTests.TEST_EXIT'] ]
+
+  steps:
+  - download: current
+    displayName: 'Download artifact: allure-results'
+    artifact: 'allure-results'
+
+  - task: NodeTool@0
+    displayName: 'Use Node 18'
+    inputs:
+      versionSpec: '18.x'
+
+  - script: |
+      set -e
+      npm i -g allure-commandline netlify-cli
+
+      # prepara pastas
       mkdir -p "$(ALLURE_REPORT_DIR)"
-      echo '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p><ul><li>Verifique a etapa de testes (TRX publicado) para detalhes.</li><li>Confirme o output do adaptador Allure (pasta <code>allure-results</code>).</li></ul></body></html>' > "$(ALLURE_REPORT_DIR)/index.html"
-    fi
-  displayName: 'Generate Allure report'
-  condition: always()
+      # o DownloadPipelineArtifact baixa em $(Pipeline.Workspace)/allure-results
+      SRC="$(Pipeline.Workspace)/allure-results"
+      if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
+        echo "Gerando Allure a partir de artifact..."
+        allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$SRC" || true
+      fi
 
-# Deploy no Netlify (sempre)
-- script: |
-    set -e
-    netlify deploy \
-      --prod \
-      --dir="$(ALLURE_REPORT_DIR)" \
-      --site "$(NETLIFY_SITE_ID)" \
-      --auth "$(NETLIFY_AUTH_TOKEN)" \
-      --json > deploy.json
+      # placeholder se não gerou
+      if [ ! -d "$(ALLURE_REPORT_DIR)" ] || [ -z "$(ls -A "$(ALLURE_REPORT_DIR)" 2>/dev/null)" ]; then
+        echo "Criando relatório placeholder..."
+        mkdir -p "$(ALLURE_REPORT_DIR)"
+        echo '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>' > "$(ALLURE_REPORT_DIR)/index.html"
+      fi
+    displayName: 'Generate Allure report (from artifact)'
 
-    echo "======== Netlify Deploy Result ========"
-    cat deploy.json || true
-  displayName: 'Deploy to Netlify (prod)'
-  condition: always()
+  - script: |
+      set -e
+      netlify deploy \
+        --prod \
+        --dir="$(ALLURE_REPORT_DIR)" \
+        --site "$(NETLIFY_SITE_ID)" \
+        --auth "$(NETLIFY_AUTH_TOKEN)" \
+        --json > deploy.json
 
-# E-mail (sempre) — inclui status real dos testes
-- task: PowerShell@2
-  displayName: 'Send email with report link (plain text)'
-  condition: always()
-  inputs:
-    targetType: inline
-    script: |
-      $siteUrl   = "$(SITE_URL)"
-      $pipeline  = "$(Build.DefinitionName)"
-      $buildId   = "$(Build.BuildId)"
-      $buildNum  = "$(Build.BuildNumber)"
-      $testExit  = "$(TEST_EXIT)"
+      echo "======== Netlify Deploy Result ========"
+      cat deploy.json || true
 
-      $smtpHost  = "$(SMTP_SERVER)"
-      $smtpPort  = [int]"$(SMTP_PORT)"
-      $smtpUser  = "$(SMTP_USER)"
-      $smtpPass  = "$(SMTP_PASS)"
-      $mailFrom  = "$(MAIL_FROM)"
-      $mailTo    = "$(MAIL_TO)"
+      # extrai a URL do JSON (se quiser usar no e-mail)
+      URL=$(cat deploy.json | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'');}catch(e){}})")
+      echo "##vso[task.setvariable variable=NETLIFY_URL;isOutput=true]$URL"
+    name: netlifyDeploy
+    displayName: 'Deploy to Netlify (prod)'
 
-      if ($testExit -ne "0") { $status = "COM FALHAS"; } else { $status = "SUCESSO"; }
+  - task: PowerShell@2
+    displayName: 'Send email with report link (plain text)'
+    inputs:
+      targetType: inline
+      script: |
+        $siteUrl   = "$(SITE_URL)"
+        # se o deploy.json trouxe uma URL, prioriza ela
+        $deployUrl = "$(NETLIFY_URL)"
+        if ($deployUrl) { $siteUrl = $deployUrl }
 
-      $subject   = "Relatório Allure (Staging) - $status"
+        $pipeline  = "$(Build.DefinitionName)"
+        $buildId   = "$(Build.BuildId)"
+        $buildNum  = "$(Build.BuildNumber)"
+        $testExit  = "$(TEST_EXIT_FROM_PREV)"
 
-      $bodyLines = @(
-        "Execução: $buildNum (ID $buildId)",
-        "Status dos testes: $status (exit $testExit)",
-        "Relatório: $siteUrl"
-      )
-      $body = $bodyLines -join "`n"
+        $smtpHost  = "$(SMTP_SERVER)"
+        $smtpPort  = [int]"$(SMTP_PORT)"
+        $smtpUser  = "$(SMTP_USER)"
+        $smtpPass  = "$(SMTP_PASS)"
+        $mailFrom  = "$(MAIL_FROM)"
+        $mailTo    = "$(MAIL_TO)"
 
-      if ($smtpUser -and $smtpPass) {
-        $sec  = ConvertTo-SecureString $smtpPass -AsPlainText -Force
-        $cred = New-Object System.Management.Automation.PSCredential($smtpUser, $sec)
-        Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -UseSsl -Credential $cred -Encoding UTF8
-      } else {
-        Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -Encoding UTF8
-      }
+        if ($testExit -ne "0") { $status = "COM FALHAS"; } else { $status = "SUCESSO"; }
+        $subject   = "Relatório Allure (Staging) - $status"
 
-# Publicar TRX (sempre)
-- task: PublishTestResults@2
-  displayName: Publish TRX
-  condition: always()
-  inputs:
-    testResultsFormat: VSTest
-    testResultsFiles: '**/*.trx'
-    searchFolder: '$(Build.SourcesDirectory)'
-    failTaskOnFailedTests: false
-    testRunTitle: 'NUnit TRX'
-    mergeTestResults: true
-    # Evita erro quando não há TRX
-    # (se preferir estrito, remova)
-    # -> no PublishTestResults não tem allowEmptyResults,
-    #    então o searchFolder + pattern amplo já ajudam.
+        $bodyLines = @(
+          "Pipeline: $pipeline",
+          "Execução: $buildNum (ID $buildId)",
+          "Status dos testes: $status (exit $testExit)",
+          "Relatório: $siteUrl"
+        )
+        $body = $bodyLines -join "`n"
+
+        if ($smtpUser -and $smtpPass) {
+          $sec  = ConvertTo-SecureString $smtpPass -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential($smtpUser, $sec)
+          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -UseSsl -Credential $cred -Encoding UTF8
+        } else {
+          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -Encoding UTF8
+        }
