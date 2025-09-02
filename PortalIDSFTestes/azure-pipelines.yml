@@ -64,7 +64,7 @@ steps:
     fi
   displayName: 'Playwright browsers install (project script)'
 
-# Run tests — captura o exit code, mas SAI COM 0 para não bloquear os próximos steps
+# Run tests — captura exit code, marca status visual e SEMPRE sai 0
 - script: |
     set +e
     echo "Rodando testes em: $(TEST_CSPROJ)"
@@ -72,10 +72,13 @@ steps:
     TEST_EXIT=$?
     echo "Exit code dos testes: $TEST_EXIT"
     echo "##vso[task.setvariable variable=TEST_EXIT]$TEST_EXIT"
-    # Opcional: marca o passo como SucceededWithIssues se falhou (apenas para o visual)
+
+    # Deixa o passo como 'SucceededWithIssues' se houve falhas (puro visual),
+    # mas sem travar o job.
     if [ "$TEST_EXIT" -ne 0 ]; then
       echo "##vso[task.complete result=SucceededWithIssues;]Há testes falhando, mas o fluxo continuará."
     fi
+
     exit 0
   displayName: 'Run tests (non-blocking)'
 
