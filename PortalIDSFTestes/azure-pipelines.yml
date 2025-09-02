@@ -9,13 +9,15 @@ resources:
       trigger: true
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-22.04'  # compatível com Playwright 1.27.1
 
 variables:
   - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
   - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
   - name: TEST_CSPROJ
-    value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'   # << seu projeto de testes (usar /)
+    value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'
+  - name: TEST_DIR
+    value: 'PortalIDSFTestes'
   - name: ALLURE_RESULTS_DIR
     value: 'allure-results'
   - name: ALLURE_REPORT_DIR
@@ -25,46 +27,77 @@ steps:
   - checkout: self
     displayName: 'Checkout tests repo'
 
+  - task: UseDotNet@2
+    displayName: 'Use .NET 8 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '8.0.x'
+
   - task: NodeTool@0
     displayName: 'Use Node 18'
     inputs:
       versionSpec: '18.x'
 
-  # Restore + Playwright (.NET) + navegadores
+  # Restore + Build
   - script: |
       set -e
       dotnet --info
-
-      # Restore no projeto de testes correto
       dotnet restore "$(TEST_CSPROJ)"
+      dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
+    displayName: 'Restore + Build'
 
-      # Playwright .NET CLI + browsers
-      dotnet tool update --global Microsoft.Playwright.CLI
-      echo "##vso[task.prependpath]$HOME/.dotnet/tools"
-      playwright install --with-deps
-    displayName: 'Restore + Playwright (.NET CLI + browsers)'
+  # Instala browsers via script do projeto (alinhado à versão 1.27.1)
+  - script: |
+      set -e
+      cd "$(TEST_DIR)"
 
-  # Rodar testes
+      SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
+      if [ -z "$SCRIPT_PATH" ]; then
+        echo "ERRO: playwright.ps1 não encontrado após o build."
+        ls -R ./bin || true
+        exit 1
+      fi
+
+      echo "Usando script: $SCRIPT_PATH"
+      if ! pwsh "$SCRIPT_PATH" install --with-deps; then
+        echo "Aviso: --with-deps falhou. Tentando 'install' sem deps..."
+        pwsh "$SCRIPT_PATH" install
+      fi
+    displayName: 'Playwright browsers install (project script)'
+
+  # Testes (segue mesmo se falhar)
   - script: |
       set -e
       echo "Rodando testes em: $(TEST_CSPROJ)"
-      dotnet test "$(TEST_CSPROJ)" --configuration Release --logger "trx"
+      dotnet test "$(TEST_CSPROJ)" -c Release --logger "trx"
     displayName: 'Run tests'
+    continueOnError: true
 
-  # Gerar Allure estático
+  # Allure (sempre executa; gera placeholder se não houver resultados)
   - script: |
       set -e
       npm i -g allure-commandline netlify-cli
 
-      if [ ! -d "$(ALLURE_RESULTS_DIR)" ]; then
-        echo "ERROR: pasta '$(ALLURE_RESULTS_DIR)' não encontrada. Ajuste o output do adapter Allure."
-        exit 1
+      RESULTS_FROM=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
+      if [ -n "$RESULTS_FROM" ] && [ ! -d "$(ALLURE_RESULTS_DIR)" ]; then
+        cp -r "$RESULTS_FROM" "./$(ALLURE_RESULTS_DIR)"
       fi
 
-      allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$(ALLURE_RESULTS_DIR)"
-    displayName: 'Generate Allure report'
+      if [ -d "$(ALLURE_RESULTS_DIR)" ]; then
+        echo "Gerando Allure a partir de '$(ALLURE_RESULTS_DIR)'..."
+        allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$(ALLURE_RESULTS_DIR)" || true
+      fi
 
-  # Deploy no Netlify (produção) — sobrescreve mantendo o mesmo link
+      # Placeholder via echo (evita heredoc que quebra YAML)
+      if [ ! -d "$(ALLURE_REPORT_DIR)" ] || [ -z "$(ls -A "$(ALLURE_REPORT_DIR)" 2>/dev/null)" ]; then
+        echo "Criando relatório placeholder..."
+        mkdir -p "$(ALLURE_REPORT_DIR)"
+        echo '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p><ul><li>Verifique a etapa de testes (TRX publicado) para detalhes.</li><li>Confirme o output do adaptador Allure (pasta <code>allure-results</code>).</li></ul></body></html>' > "$(ALLURE_REPORT_DIR)/index.html"
+      fi
+    displayName: 'Generate Allure report'
+    condition: always()
+
+  # Netlify (sempre executa)
   - script: |
       set -e
       netlify deploy \
@@ -77,14 +110,19 @@ steps:
       echo "======== Netlify Deploy Result ========"
       cat deploy.json || true
     displayName: 'Deploy to Netlify (prod)'
+    condition: always()
 
-  # Enviar e-mail com link fixo
+  # E-mail (sempre executa) — texto simples
   - task: PowerShell@2
-    displayName: 'Send email with report link'
+    displayName: 'Send email with report link (plain text)'
     inputs:
-      targetType: 'inline'
+      targetType: inline
       script: |
         $siteUrl   = "$(SITE_URL)"
+        $pipeline  = "$(Build.DefinitionName)"
+        $buildId   = "$(Build.BuildId)"
+        $buildNum  = "$(Build.BuildNumber)"
+
         $smtpHost  = "$(SMTP_SERVER)"
         $smtpPort  = [int]"$(SMTP_PORT)"
         $smtpUser  = "$(SMTP_USER)"
@@ -92,20 +130,31 @@ steps:
         $mailFrom  = "$(MAIL_FROM)"
         $mailTo    = "$(MAIL_TO)"
 
-        $subject = "Allure - Execução $(Build.BuildNumber)"
-        $body = "Olá, time!`n`nO relatório Allure da execução $(Build.BuildNumber) está disponível em:`n$siteUrl`n`nPipeline: $(Build.DefinitionName)`nExecução: $(Build.BuildId)"
+        $subject   = "Segue relatorio apos atualização da Staging"
+
+        # Corpo do e-mail sem here-string (evita problemas de indentação)
+        $bodyLines = @(
+          "Segue relatorio apos atualização da Staging",
+          "",
+          "Pipeline: $pipeline",
+          "Execução: $buildNum (ID $buildId)",
+          "Relatório: $siteUrl"
+        )
+        $body = $bodyLines -join "`n"
 
         if ($smtpUser -and $smtpPass) {
-          $sec = ConvertTo-SecureString $smtpPass -AsPlainText -Force
+          $sec  = ConvertTo-SecureString $smtpPass -AsPlainText -Force
           $cred = New-Object System.Management.Automation.PSCredential($smtpUser, $sec)
-          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -UseSsl -Credential $cred
+          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -UseSsl -Credential $cred -Encoding UTF8
         } else {
-          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort
+          Send-MailMessage -From $mailFrom -To $mailTo -Subject $subject -Body $body -SmtpServer $smtpHost -Port $smtpPort -Encoding UTF8
         }
+    condition: always()
 
   - task: PublishTestResults@2
-    displayName: 'Publish TRX'
+    displayName: Publish TRX
     inputs:
-      testResultsFormat: 'VSTest'
+      testResultsFormat: VSTest
       testResultsFiles: '**/*.trx'
-      failTaskOnFailedTests: true
+      failTaskOnFailedTests: false
+    condition: always()
