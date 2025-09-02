@@ -40,7 +40,6 @@ steps:
 
   # Restore + Build
   - script: |
-      set -e
       dotnet --info
       dotnet restore "$(TEST_CSPROJ)"
       dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
@@ -67,7 +66,6 @@ steps:
 
   # Testes (segue mesmo se falhar)
   - script: |
-      set -e
       echo "Rodando testes em: $(TEST_CSPROJ)"
       dotnet test "$(TEST_CSPROJ)" -c Release --logger "trx"
     displayName: 'Run tests'
@@ -78,17 +76,19 @@ steps:
       set -e
       npm i -g allure-commandline netlify-cli
 
+      # Tenta achar o allure-results gerado pelo adaptador
       RESULTS_FROM=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
       if [ -n "$RESULTS_FROM" ] && [ ! -d "$(ALLURE_RESULTS_DIR)" ]; then
+        echo "Copiando resultados de: $RESULTS_FROM"
         cp -r "$RESULTS_FROM" "./$(ALLURE_RESULTS_DIR)"
       fi
 
-      if [ -d "$(ALLURE_RESULTS_DIR)" ]; then
+      if [ -d "$(ALLURE_RESULTS_DIR)" ] && [ "$(ls -A "$(ALLURE_RESULTS_DIR)" 2>/dev/null)" ]; then
         echo "Gerando Allure a partir de '$(ALLURE_RESULTS_DIR)'..."
         allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$(ALLURE_RESULTS_DIR)" || true
       fi
 
-      # Placeholder via echo (evita heredoc que quebra YAML)
+      # Placeholder se não houver relatório
       if [ ! -d "$(ALLURE_REPORT_DIR)" ] || [ -z "$(ls -A "$(ALLURE_REPORT_DIR)" 2>/dev/null)" ]; then
         echo "Criando relatório placeholder..."
         mkdir -p "$(ALLURE_REPORT_DIR)"
@@ -132,7 +132,6 @@ steps:
 
         $subject   = "Segue relatorio apos atualização da Staging"
 
-        # Corpo do e-mail sem here-string (evita problemas de indentação)
         $bodyLines = @(
           "Segue relatorio apos atualização da Staging",
           "",
@@ -157,4 +156,5 @@ steps:
       testResultsFormat: VSTest
       testResultsFiles: '**/*.trx'
       failTaskOnFailedTests: false
+      testRunTitle: 'NUnit TRX'
     condition: always()
