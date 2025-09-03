@@ -10,7 +10,7 @@ resources:
 
 variables:
   - group: NetlifySecrets # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
-  - group: EmailSecrets # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
+  - group: EmailSecrets   # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
   - name: TEST_CSPROJ
     value: "PortalIDSFTestes/PortalIDSFTestes.csproj"
   - name: TEST_DIR
@@ -20,9 +20,6 @@ variables:
   - name: ALLURE_REPORT_DIR
     value: "allure-report"
 
-############################
-# JOB 1 — TESTS (não bloqueia)
-############################
 jobs:
   - job: Tests
     displayName: "Run Playwright/NUnit tests"
@@ -31,7 +28,7 @@ jobs:
 
     steps:
       - checkout: self
-        clean: true # <- garante workspace limpo
+        clean: true
         displayName: "Checkout tests repo"
 
       - task: UseDotNet@2
@@ -45,7 +42,6 @@ jobs:
         inputs:
           versionSpec: "18.x"
 
-      # HARD CLEAN: remove bin/obj/TestResults de execuções anteriores
       - script: |
           set -e
           find "$(Build.SourcesDirectory)" -type d \( -name bin -o -name obj -o -name TestResults \) -prune -exec rm -rf {} +
@@ -75,7 +71,6 @@ jobs:
           fi
         displayName: "Playwright browsers install (project script)"
 
-      # Roda testes, capta exit code e SEMPRE sai 0
       - script: |
           set +e
           echo "Rodando testes em: $(TEST_CSPROJ)"
@@ -102,7 +97,6 @@ jobs:
           testRunTitle: "NUnit TRX"
           mergeTestResults: true
 
-      # Coleta allure-results novo (limpa destino antes de copiar)
       - script: |
           set -e
           rm -rf "$(Build.SourcesDirectory)/_allure/results" || true
@@ -122,9 +116,6 @@ jobs:
           artifact: "allure-results"
           targetPath: "$(Build.SourcesDirectory)/_allure/results"
 
-  ############################
-  # JOB 2 — REPORT (sempre roda)
-  ############################
   - job: Report
     displayName: "Generate & publish Allure + Send email"
     pool:
@@ -149,7 +140,6 @@ jobs:
           set -e
           npm i -g allure-commandline netlify-cli
 
-          # limpa diretório de relatório antes de gerar
           rm -rf "$(ALLURE_REPORT_DIR)" || true
           mkdir -p "$(ALLURE_REPORT_DIR)"
 
@@ -178,7 +168,6 @@ jobs:
           echo "======== Netlify Deploy Result ========"
           cat deploy.json || true
 
-          # Extrai URL e salva como variável do job
           URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'');}catch(e){}})" < deploy.json)
           echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
         displayName: "Deploy to Netlify (prod)"
@@ -188,8 +177,8 @@ jobs:
         displayName: "Send email with report link (plain text)"
         condition: always()
         env:
-          SITE_URL: $(SITE_URL) # do Variable Group
-          NETLIFY_URL: $(NETLIFY_URL) # do passo Netlify acima
+          SITE_URL: $(SITE_URL)
+          NETLIFY_URL: $(NETLIFY_URL)
           SMTP_SERVER: $(SMTP_SERVER)
           SMTP_PORT: $(SMTP_PORT)
           SMTP_USER: $(SMTP_USER)
@@ -215,7 +204,7 @@ jobs:
             if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
             $subject = "Relatório Allure (Staging) - $status"
 
-            # Sem here-string para evitar erro de identação
+            # Corpo em texto simples
             $bodyLines = @(
               "Pipeline: $pipeline",
               "Execução: $buildNum (ID $buildId)",
@@ -224,13 +213,20 @@ jobs:
             )
             $body = $bodyLines -join "`n"
 
-            # Converte MAIL_TO em array; aceita vírgula, ; e espaços
-            $toList = $env:MAIL_TO -split '[,; ]+' | Where-Object { $_ -and $_.Trim() } | Select-Object -Unique
+            # Destinatários (aceita vírgula, ; e espaços)
+            $toList = $env:MAIL_TO -split '[,; ]+' | Where-Object { $_ -and $_.Trim() -match '.+@.+' } | Select-Object -Unique
+            Write-Host "Destinatários: $($toList -join ', ')"
 
+            # Remetente — alguns servidores exigem SMTP_USER como From
+            $from = if ([string]::IsNullOrWhiteSpace($env:MAIL_FROM)) { $env:SMTP_USER } else { $env:MAIL_FROM }
+
+            # Envio
             if ($env:SMTP_USER -and $env:SMTP_PASS) {
               $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
               $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
-              Send-MailMessage -From $env:MAIL_FROM -To $toList -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
+              Send-MailMessage -From $from -To $toList -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
             } else {
-              Send-MailMessage -From $env:MAIL_FROM -To $toList -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
+              Send-MailMessage -From $from -To $toList -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
             }
+
+            Write-Host "E-mail enviado."
