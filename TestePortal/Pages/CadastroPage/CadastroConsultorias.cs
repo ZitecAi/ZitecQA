@@ -18,7 +18,7 @@ namespace TestePortal.Pages.CadastroPage
 {
     public class CadastroConsultorias
     {
-        public static async Task<(Pagina pagina, FluxosDeCadastros fluxosDeCadastros)> Consultorias (IPage Page, IBrowserContext context, NivelEnum nivelLogado)
+        public static async Task<(Pagina pagina, FluxosDeCadastros fluxosDeCadastros)> Consultorias(IPage Page, IBrowserContext context, NivelEnum nivelLogado)
         {
             var pagina = new Pagina();
             var listErros = new List<string>();
@@ -108,145 +108,145 @@ namespace TestePortal.Pages.CadastroPage
 
 
                             await newPage.Locator("#dtConstituicao").FillAsync("20/12/2023");
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Atividade Principal (CNAE)", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Atividade Principal (CNAE)", new() { Exact = true }).FillAsync("info");
-                            await Task.Delay(200);
+
                             await newPage.Locator("#controlAcionario").SelectOptionAsync(new[] { "nacional" });
-                            await Task.Delay(200);
+
                             await newPage.Locator("#ppeNao").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.Locator("#btnAvancar").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByPlaceholder("00000-000", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByPlaceholder("00000-000", new() { Exact = true }).FillAsync("07084-370");
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("Número", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("Número", new() { Exact = true }).FillAsync("901");
-                            await Task.Delay(200);
+
                             await newPage.GetByPlaceholder("(00)0000-").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByPlaceholder("(00)0000-").FillAsync("(11)9601-8324");
-                            await Task.Delay(200);
+
                             await newPage.GetByPlaceholder("(00)0000-").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("Celular Comercial", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("Celular Comercial", new() { Exact = true }).FillAsync("(11)96018-3248");
-                            await Task.Delay(200);
+
                             await newPage.Locator("#btnAvancar").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.Locator("#patrimLiq").FillAsync("100000");
-                            await Task.Delay(200);
+
                             await newPage.Locator("#faturamento12Meses").FillAsync("1000");
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Origem Capital").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Origem Capital").FillAsync("contratos");
-                            await Task.Delay(200);
-                            await Task.Delay(200);
+
+
                             await newPage.Locator("#nomeDiretor").ClickAsync();
-                            await Task.Delay(200);
-                            await newPage.Locator("#nomeDiretor").FillAsync("Jessica Vitoria Tavares");
-                            await Task.Delay(200);
+
+                            await newPage.Locator("#nomeDiretor").FillAsync("Zitec QA");
+
                             await newPage.GetByLabel("*CPF:").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*CPF:").FillAsync("496.248.668-30");
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Email:").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Email:").FillAsync("teste@gmail.com");
-                            await Task.Delay(200);
+
                             await newPage.Locator("#addDiretor").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.Locator("#tipoPessoaAcionSoc").SelectOptionAsync(new[] { "fisica" });
-                            await Task.Delay(200);
+
                             await newPage.Locator("#nomeBenefSoc").ClickAsync();
-                            await Task.Delay(200);
-                            await newPage.Locator("#nomeBenefSoc").FillAsync("Barbara");
-                            await Task.Delay(200);
+
+                            await newPage.Locator("#nomeBenefSoc").FillAsync("test User");
+
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "*CPF", Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "*CPF", Exact = true }).FillAsync("496.248.668-30");
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("E-mail:*").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("E-mail:*").FillAsync("robo@zitec.ai");
-                            await Task.Delay(200);
+
                             await newPage.Locator("div:nth-child(11) > .inputRadio > div:nth-child(2)").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.Locator("#vinculoPpeNao").CheckAsync();
-                            await Task.Delay(200);
+
                             await newPage.Locator("#addBenefAcionSoc").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.Locator("#btnAvancar").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Nome Completo", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Nome Completo", new() { Exact = true }).FillAsync("Guilherme Costa");
-                            await Task.Delay(200);
+
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "*CPF" }).FillAsync("496.248.668-30");
-                            await Task.Delay(200);
+
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).FillAsync("14/08/2003");
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Email", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Email", new() { Exact = true }).FillAsync("teste3@gmail.com");
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).FillAsync("(11)95478-5474");
-                            await Task.Delay(200);
+
                             await newPage.Locator("#assinaIsolSim").ClickAsync();
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "ADICIONAR REPRESENTANTE" }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Nome Completo", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Nome Completo", new() { Exact = true }).FillAsync("Caio Oliveira");
-                            await Task.Delay(200);
+
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "*CPF" }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "*CPF" }).FillAsync("426.792.428-74");
-                            await Task.Delay(200);
+
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByRole(AriaRole.Textbox, new() { Name = "/00/0000" }).FillAsync("14/08/2023");
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Email", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Email", new() { Exact = true }).FillAsync("robo@zitec.ai");
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("*Celular Telefone de Contato", new() { Exact = true }).FillAsync("(11)56498-4546");
-                            await Task.Delay(200);
+
                             await newPage.Locator("#assinaIsolSim").ClickAsync();
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "ADICIONAR REPRESENTANTE" }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.Locator("#btnAvancar").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("Conta Bancária Banco Agência").GetByLabel("Default select example").SelectOptionAsync(new[] { "69 " });
-                            await Task.Delay(200);
+
                             await newPage.GetByPlaceholder("0000", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByPlaceholder("0000", new() { Exact = true }).FillAsync("1564");
-                            await Task.Delay(200);
+
                             await newPage.GetByPlaceholder("00000", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByPlaceholder("00000", new() { Exact = true }).FillAsync("546456454");
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("Digito", new() { Exact = true }).ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByLabel("Digito", new() { Exact = true }).FillAsync("5");
-                            await Task.Delay(200);
+
                             await newPage.Locator("#addContaBancBtn").ClickAsync();
-                            await Task.Delay(200);
+
                             await newPage.GetByRole(AriaRole.Button, new() { Name = "AVANÇAR" }).ClickAsync();
                             await newPage.Locator("#fileQddAmbima").SetInputFilesAsync(new[] { TestePortalIDSF.Program.Config["Paths:Arquivo"] + "Arquivo teste 2.pdf" });
-                            await Task.Delay(200);
+
                             await newPage.Locator("#btnFinalizar").ClickAsync();
                             await Task.Delay(8000);
                             await newPage.CloseAsync();
@@ -254,7 +254,7 @@ namespace TestePortal.Pages.CadastroPage
                             await Task.Delay(1000);
                             await Page.GetByLabel("Pesquisar").ClickAsync();
                             await Task.Delay(800);
-                           await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
+                            await Page.GetByLabel("Pesquisar").FillAsync("robo@zitec.ai");
                             var primeiroTr2 = Page.Locator("#listaConsultoria tr").First;
                             var primeiroTd2 = primeiroTr.Locator("td").First;
                             await primeiroTd.ClickAsync();//ModalResumoFormConsultoria('214')
@@ -365,22 +365,22 @@ namespace TestePortal.Pages.CadastroPage
                             await Page.WaitForSelectorAsync("#faturamento12MesesResumo");
                             var faturamento12Meses = await Page.EvaluateAsync<string>("() => document.getElementById('faturamento12MesesResumo').value");
                             await Page.WaitForSelectorAsync("#origemCapResumo");
-                            await Task.Delay(200);
-                            var origemCap = await Page.EvaluateAsync<string>("() => document.getElementById('origemCapResumo').value");
-                            await Task.Delay(200);
-                            var nomeDiretor = await Page.EvaluateAsync<string>("() => document.querySelector('#listaDiretoresResumo tr td:nth-child(1)').innerText");
-                            await Task.Delay(200);
-                            var cpfDiretor = await Page.EvaluateAsync<string>("() => document.querySelector('#listaDiretoresResumo tr td:nth-child(2)').innerText");
-                            await Task.Delay(200);
-                            var tipoPessoa = await Page.EvaluateAsync<string>("() => document.querySelector('#benefAcionSocioListResumo tr td:nth-child(1)').innerText");
-                            await Task.Delay(200);
-                            var nomeBeneficiario = await Page.EvaluateAsync<string>("() => document.querySelector('#benefAcionSocioListResumo tr td:nth-child(2)').innerText");
-                            await Task.Delay(200);
-                            var cpfCnpjBeneficiario = await Page.EvaluateAsync<string>("() => document.querySelector('#benefAcionSocioListResumo tr td:nth-child(3)').innerText");
-                            await Task.Delay(200);
 
-                            if (patrimLiq == "100000" && faturamento12Meses == "1000" && origemCap == "contratos" && nomeDiretor == "Jessica Vitoria Tavares" && cpfDiretor == "496.248.668-30"
-                                && tipoPessoa == "Física" && nomeBeneficiario == "Barbara" && cpfCnpjBeneficiario == "496.248.668-30"
+                            var origemCap = await Page.EvaluateAsync<string>("() => document.getElementById('origemCapResumo').value");
+
+                            var nomeDiretor = await Page.EvaluateAsync<string>("() => document.querySelector('#listaDiretoresResumo tr td:nth-child(1)').innerText");
+
+                            var cpfDiretor = await Page.EvaluateAsync<string>("() => document.querySelector('#listaDiretoresResumo tr td:nth-child(2)').innerText");
+
+                            var tipoPessoa = await Page.EvaluateAsync<string>("() => document.querySelector('#benefAcionSocioListResumo tr td:nth-child(1)').innerText");
+
+                            var nomeBeneficiario = await Page.EvaluateAsync<string>("() => document.querySelector('#benefAcionSocioListResumo tr td:nth-child(2)').innerText");
+
+                            var cpfCnpjBeneficiario = await Page.EvaluateAsync<string>("() => document.querySelector('#benefAcionSocioListResumo tr td:nth-child(3)').innerText");
+
+
+                            if (patrimLiq == "100000" && faturamento12Meses == "1000" && origemCap == "contratos" && nomeDiretor == "Zitec QA" && cpfDiretor == "496.248.668-30"
+                                && tipoPessoa == "Física" && nomeBeneficiario == "test User" && cpfCnpjBeneficiario == "496.248.668-30"
                                 )
                             {
                                 Console.WriteLine("Dados de situação patrimonial salvos corretamente");
@@ -402,25 +402,25 @@ namespace TestePortal.Pages.CadastroPage
 
                             await Page.WaitForSelectorAsync("#tabelaProcuradorAdd tbody");
                             var nomeRepresentante1 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(1) td:nth-child(1)').innerText");
-                            await Task.Delay(200);
+
                             var cpfRepresentante1 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(1) td:nth-child(2)').innerText");
-                            await Task.Delay(200);
+
                             var dataNascimentoRepresentante1 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(1) td:nth-child(3)').innerText");
-                            await Task.Delay(200);
+
                             var emailRepresentante1 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(1) td:nth-child(4)').innerText");
-                            await Task.Delay(200);
+
                             var celularRepresentante1 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(1) td:nth-child(5)').innerText");
-                            await Task.Delay(200);
+
                             var nomeRepresentante2 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(2) td:nth-child(1)').innerText");
-                            await Task.Delay(200);
+
                             var cpfRepresentante2 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(2) td:nth-child(2)').innerText");
-                            await Task.Delay(200);
+
                             var dataNascimentoRepresentante2 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(2) td:nth-child(3)').innerText");
-                            await Task.Delay(200);
+
                             var emailRepresentante2 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(2) td:nth-child(4)').innerText");
-                            await Task.Delay(200);
+
                             var celularRepresentante2 = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaProcuradorAdd tbody tr:nth-child(2) td:nth-child(5)').innerText");
-                            await Task.Delay(200);
+
 
                             if (nomeRepresentante1 == "Guilherme Costa" && cpfRepresentante1 == "496.248.668-30" && dataNascimentoRepresentante1 == "14/08/2003" && emailRepresentante1 == "teste3@gmail.com" &&
                                 nomeRepresentante2 == "Caio Oliveira" && cpfRepresentante2 == "426.792.428-74" && dataNascimentoRepresentante2 == "14/08/2023" && emailRepresentante2 == "robo@zitec.ai"
@@ -446,11 +446,11 @@ namespace TestePortal.Pages.CadastroPage
 
                             await Page.WaitForSelectorAsync("#tabelaContasBancoResumo tbody");
                             var banco = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaContasBancoResumo tbody tr:nth-child(1) td:nth-child(1)').innerText");
-                            await Task.Delay(200);
+
                             var agencia = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaContasBancoResumo tbody tr:nth-child(1) td:nth-child(2)').innerText");
-                            await Task.Delay(200);
+
                             var conta = await Page.EvaluateAsync<string>("() => document.querySelector('#tabelaContasBancoResumo tbody tr:nth-child(1) td:nth-child(3)').innerText");
-                            await Task.Delay(200);
+
 
                             if (banco == "69 - Crefisa" && agencia == "1564" && conta == "546456454-5")
                             {
@@ -583,8 +583,8 @@ namespace TestePortal.Pages.CadastroPage
                     pagina.StatusCode = CadastroConsultorias.Status;
                     errosTotais++;
                     await Page.GotoAsync("https://portal.idsf.com.br/Home.aspx");
-                } 
-            
+                }
+
             }
             catch (TimeoutException ex)
             {
@@ -596,7 +596,7 @@ namespace TestePortal.Pages.CadastroPage
                 Console.WriteLine($"Exceção: {ex.Message}");
                 pagina.InserirDados = "❌";
                 pagina.Excluir = "❌";
-                errosTotais+=2;
+                errosTotais += 2;
                 fluxoDeCadastros.TotalErros = errosTotais;
                 pagina.TotalErros = errosTotais;
                 return (pagina, fluxoDeCadastros);
@@ -609,5 +609,5 @@ namespace TestePortal.Pages.CadastroPage
             pagina.TotalErros = errosTotais;
             return (pagina, fluxoDeCadastros);
         }
-    }  
+    }
 }

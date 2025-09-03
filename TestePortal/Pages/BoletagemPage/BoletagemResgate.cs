@@ -60,7 +60,7 @@ namespace TestePortal.Pages.BoletagemPage
                         await Page.Locator("#dataLiquidInput").ClickAsync();
                         await Page.Locator("#dataLiquidInput").FillAsync(DateTime.Now.ToString("dd/MM/yyyy"));
                         await Page.Locator("#NomeCotista").ClickAsync();
-                        await Page.Locator("#NomeCotista").FillAsync("Jessica Vitoria Tavares");
+                        await Page.Locator("#NomeCotista").FillAsync("Zitec PJ");
                         await Page.Locator("#CpfCnpjCotista").ClickAsync();
                         await Page.Locator("#CpfCnpjCotista").FillAsync("49624866830");
                         await Page.GetByLabel("Valor Bruto:").ClickAsync();
