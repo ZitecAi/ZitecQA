@@ -212,10 +212,14 @@ jobs:
         )
         $body = $bodyLines -join "`n"
 
+        # <<< Normaliza separadores em MAIL_TO: converte ';' para ',' e remove espaços
+        $mailTo = (($env:MAIL_TO -as [string]) -replace ';', ',')
+        $mailTo = ($mailTo -replace '\s+', '')
+
         if ($env:SMTP_USER -and $env:SMTP_PASS) {
           $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
           $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
-          Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
+          Send-MailMessage -From $env:MAIL_FROM -To $mailTo -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
         } else {
-          Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
+          Send-MailMessage -From $env:MAIL_FROM -To $mailTo -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
         }
