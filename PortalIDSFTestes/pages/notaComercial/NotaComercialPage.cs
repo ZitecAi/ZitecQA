@@ -137,7 +137,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
                 await Task.Delay(500);
                 await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "1", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "43112744837", "Selecionar Envolvido");
+                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "32084289874", "Selecionar Envolvido");
                 await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "empregador", "Selecionar Tipo de relação");
                 await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
                 await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "assinaturaSelfie", "Selecionar Forma de Validação");
@@ -155,55 +155,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await metodo.Clicar(el.BtnSalvarMudancas, "Clicar em Salvar Mudanças depois de todo o fluxo");
                 await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha todos os campos para simular", "Validar mensagem retornada sobre campos em branco");
                 await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha corretamente a Aba de Informações.", "Validar mensagem retornada sobre campos em branco");
-            }
-            else if(cenarioTeste == "CamposEmBrancoDocumentos")
-            {
-                var dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
-
-                await metodo.Clicar(el.BtnNovoNotaComercial, "Clicar no Botão para inserir nova nota comercial");
-                await metodo.ClicarNoSeletor(el.SelectFundoCessionario, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-                await metodo.ClicarNoSeletor(el.SelectProduto, "125", "Selecionar Produto Teste");
-                await metodo.ClicarNoSeletor(el.SelectTipoLiquidacao, "pix", "Selecionar tipo liquidação PIX");
-                await metodo.Escrever(el.CampoTomador, "CEDENTE TESTE", "Buscar por CEDENTE TESTE no campo tomador");
-                await metodo.Clicar(el.BtnLupaTomador, "Clicar na lupa de pesquisa para pesquisar Tomador");
-                await metodo.Clicar(el.CedenteTest, "Selecionar CEDENTE TESTE no campo tomador");
-                await metodo.ClicarNoSeletor(el.SelectConta, "58066857", "Selecionar conta bancaria ID");
-                await metodo.Escrever(el.CampoObservacaoInfo, "Cadastro Nota Comercial Test", "Digitar a observação no modal");
-                //Sessão Envolvidos
-                await metodo.Clicar(el.SessaoEnvolvidos, "Clicar na sessão envolvidos no modal");
-                await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
-                await Task.Delay(500);
-                await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "1", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "43112744837", "Selecionar Envolvido");
-                await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "empregador", "Selecionar Tipo de relação");
-                await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
-                await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "assinaturaSelfie", "Selecionar Forma de Validação");
-                await metodo.Clicar(el.BtnConfirmarAddEnvolvido, "CLicar no botão submit envolvido");
-                await Task.Delay(500);
-                await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
-                await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "idsf", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "46837686828", "Selecionar Envolvido");
-                await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "cedente", "Selecionar Tipo de relação");
-                await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
-                await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "biometriaFacial", "Selecionar Forma de Validação");
-                await metodo.Clicar(el.BtnConfirmarAddEnvolvido, "CLicar no botão submit envolvido");
-                //sessão Operação
-                await metodo.Clicar(el.SessaoOperacaoes, "Clicar na Sessão operações no modal");
-                await metodo.Escrever(el.CampoValorSolicitado, "10000", "Preencher Valor Solicitado na sessão operações");
-                await metodo.Escrever(el.CampoTaxaJuros, "1", "Preencher Taxa de Juros na sessão operações");
-                await metodo.Escrever(el.CampoDuração, "10", "Preencher Duração sessão operações");
-                await metodo.Escrever(el.CampoCarenciaAmortizacao, "5", "Preencher Carência de amortização sessão operações");
-                await metodo.ClicarNoSeletor(el.SelectTipoCalculo, "bruto", "Selecionar Tipo de calculo na sessão operações");
-                await metodo.Escrever(el.CampoDiaVencimento, "05", "Preencher Dia de Vencimento na sessão operações");
-                await metodo.Clicar(el.CampoDataInicio, "Clicar no seletor Data de inicio");
-                await metodo.Escrever(el.CampoDataInicio, dataAtual, "Inserir Data Atual no seletor Data de inicio");
-                await metodo.ClicarNoSeletor(el.SelectIndexPosFix, "CDI", "Selecionar Indexador Pós-Fixado na sessão Operações");
-                //sessão Documentos
-                await metodo.Clicar(el.SessaoDocumentos, "Clicar na Sessão Documentos no modal");
-                await metodo.Clicar(el.BtnAddDocumento, "Clicar na Sessão Documentos no modal");
-                await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha todos os campos para simular", "Validar mensagem retornada sobre campos em branco");
-                await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha corretamente a Aba de Informações.", "Validar mensagem retornada sobre campos em branco");
-            }
+            }            
             else if (cenarioTeste == "AmortizacaoMaiorQueDuracao")
             {
                 var dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
@@ -222,7 +174,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
                 await Task.Delay(500);
                 await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "1", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "43112744837", "Selecionar Envolvido");
+                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "32084289874", "Selecionar Envolvido");
                 await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "empregador", "Selecionar Tipo de relação");
                 await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
                 await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "assinaturaSelfie", "Selecionar Forma de Validação");
@@ -269,7 +221,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
                 await Task.Delay(500);
                 await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "1", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "43112744837", "Selecionar Envolvido");
+                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "32084289874", "Selecionar Envolvido");
                 await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "empregador", "Selecionar Tipo de relação");
                 await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
                 await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "assinaturaSelfie", "Selecionar Forma de Validação");

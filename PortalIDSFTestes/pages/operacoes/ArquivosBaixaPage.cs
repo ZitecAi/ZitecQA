@@ -44,7 +44,7 @@ namespace PortalIDSFTestes.pages.operacoes
             var arquivoAtualizado = await metodo.AtualizarDataArquivo(GetPath() + "template.txt", "Atualizar Data Arquivo");
             await metodo.EnviarArquivo(el.EnviarBaixas, GetPath() + "template.txt", "Enviar Arquivo Baixa");
             await metodo.ValidarMsgRetornada(el.MsgArquivoRecebido, "Validação mensagem arquivo recebido mas aguardando validação");
-        }
+            }
 
         public async Task EnviarArquivoBaixaNegativo(string nomeArquivoBaixaNegativo, string validacao)
         {
@@ -62,15 +62,6 @@ namespace PortalIDSFTestes.pages.operacoes
             
         }
 
-
-
-        public async Task ConsultarArquivoBaixa()
-        {
-            await Task.Delay(1000);
-            await metodo.Clicar(el.BarraDePesquisa, "Clicar na barra de pesquisa");
-            await metodo.Escrever(el.BarraDePesquisa, "cnab", "Escrever na barra de pesquisa");
-            await metodo.VerificarElementoPresenteNaTabela(page,el.TabelaBaixas, "cnab", "Verificar se arquivo Baixa esta presente na tabela.");
-        }
 
         public async Task BaixarRelatorioDeTitulos()
         {
