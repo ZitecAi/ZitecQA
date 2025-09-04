@@ -10,7 +10,7 @@ resources:
 
 variables:
   - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
-  - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
+  - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM (MAIL_TO pode ter vários e-mails separados por ;)
   - name: TEST_CSPROJ
     value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'
   - name: TEST_DIR
@@ -183,7 +183,7 @@ jobs:
       SMTP_USER: $(SMTP_USER)
       SMTP_PASS: $(SMTP_PASS)
       MAIL_FROM: $(MAIL_FROM)
-      MAIL_TO: $(MAIL_TO)
+      MAIL_TO: $(MAIL_TO)              # ex: "a@empresa.com;b@empresa.com"
       TEST_EXIT: $(TEST_EXIT_FROM_PREV)
       BUILD_DEFINITIONNAME: $(Build.DefinitionName)
       BUILD_BUILDID: $(Build.BuildId)
@@ -203,7 +203,17 @@ jobs:
         if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
         $subject = "Relatório Allure (Staging) - $status"
 
-        # Sem here-string para evitar erro de identação
+        # Divide MAIL_TO por ; ou , e remove espaços/entradas vazias
+        $recipients = @()
+        if (-not [string]::IsNullOrWhiteSpace($env:MAIL_TO)) {
+          $recipients = $env:MAIL_TO -split '[;,]' | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+        }
+
+        if ($recipients.Count -eq 0) {
+          Write-Host "Nenhum destinatário válido em MAIL_TO."
+          exit 0
+        }
+
         $bodyLines = @(
           "Pipeline: $pipeline",
           "Execução: $buildNum (ID $buildId)",
@@ -215,7 +225,7 @@ jobs:
         if ($env:SMTP_USER -and $env:SMTP_PASS) {
           $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
           $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
-          Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
+          Send-MailMessage -From $env:MAIL_FROM -To $recipients -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
         } else {
-          Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
+          Send-MailMessage -From $env:MAIL_FROM -To $recipients -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
         }
