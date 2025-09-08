@@ -1,5 +1,6 @@
 ﻿using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.administrativo;
+using PortalIDSFTestes.elementos.bancoId;
 using PortalIDSFTestes.metodos;
 using System;
 using System.Collections.Generic;
@@ -7,26 +8,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.pages.administrativo
+namespace PortalIDSFTestes.pages.bancoId
 {
-    public class EnviarMensagemPage
+
+
+    public class DevolucaoReembolsoPage
     {
         private readonly IPage page;
         Metodos metodo;
-        EnviarMensagemElements el = new EnviarMensagemElements();
+        DevolucaoReembolsoElements el = new DevolucaoReembolsoElements();
 
-        public EnviarMensagemPage(IPage page)
+
+        public DevolucaoReembolsoPage(IPage page)
         {
             this.page = page;
             metodo = new Metodos(page);
         }
 
 
-        public async Task ValidarAcentosEnviarMensagemPage()
+        public async Task ValidarAcentosDevolucaoReembolso()
         {
-            await metodo.ValidarAcentosAsync(page,"Validar Acentos na Página Administrativo - Enviar mensagem");
+            await metodo.ValidarAcentosAsync(page, "Validar Acentos na Página DevolucaoReembolso");
         }
 
-
     }
+
 }

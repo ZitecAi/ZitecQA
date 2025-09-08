@@ -46,7 +46,7 @@ namespace PortalIDSFTestes.testes.administrativo
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var tokens = new TokensPage(page);
-            await tokens.validarAcentosTokens();
+            await tokens.ValidarAcentosTokens();
         }
 
     }

@@ -1,7 +1,8 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.administrativo;
+using PortalIDSFTestes.elementos.bancoId;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.administrativo;
+using PortalIDSFTestes.pages.bancoId;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
 using System;
@@ -10,18 +11,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes.administrativo
+namespace PortalIDSFTestes.testes.bancoId
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Enviar Mensagem")]
+    [Category("Suíte: Controle Escrow")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
-    public class EnviarMensagemTests : Executa
+    public class ControleEscrowTests : Executa
     {
+
         private IPage page;
         Metodos metodo;
-        EnviarMensagemElements el = new EnviarMensagemElements();
+        ControleEscrowElements el = new ControleEscrowElements();
 
         [SetUp]
         public async Task Setup()
@@ -31,7 +33,7 @@ namespace PortalIDSFTestes.testes.administrativo
             metodo = new Metodos(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuAdministrativo, "Clicar na sessão Admninistrativo no menú hamburguer");
-            await metodo.Clicar(el.PaginaEnviarMensagem, "Clicar na página Enviar Mensagem");
+            await metodo.Clicar(el.PaginaControleEscrow, "Clicar na página  Controle Escrow");
             await Task.Delay(500);
         }
 
@@ -39,17 +41,14 @@ namespace PortalIDSFTestes.testes.administrativo
         public async Task TearDown()
         {
             await FecharBrowserAsync();
-
         }
 
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var enviarMensagem = new EnviarMensagemPage(page);
-            await enviarMensagem.ValidarAcentosEnviarMensagemPage();
+            var ControleEscrow = new ControleEscrowPage(page);
+            await ControleEscrow.ValidarAcentosControleEscrow();
         }
-
-
 
     }
 }

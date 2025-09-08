@@ -25,7 +25,7 @@ namespace PortalIDSFTestes.pages.bancoId
         }
 
 
-        public async Task validarAcentosCorrentistas()
+        public async Task ValidarAcentosCorrentistas()
         {
             await metodo.ValidarAcentosAsync(page, "Validar Acentos na Página Correntistas");
         }

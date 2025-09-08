@@ -46,7 +46,7 @@ namespace PortalIDSFTestes.testes.administrativo
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var usuarios = new UsuariosPage(page);
-            await usuarios.validarAcentosUsuarios();
+            await usuarios.ValidarAcentosUsuarios();
         }
 
     }

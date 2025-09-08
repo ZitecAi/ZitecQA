@@ -22,7 +22,7 @@ namespace PortalIDSFTestes.pages.administrativo
         }
 
 
-        public async Task validarAcentosTokens()
+        public async Task ValidarAcentosTokens()
         {
             await metodo.ValidarAcentosAsync(page, "Validar Acentos na Página Tokens");
         }

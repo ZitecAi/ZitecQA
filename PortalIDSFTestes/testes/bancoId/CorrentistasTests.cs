@@ -47,7 +47,7 @@ namespace PortalIDSFTestes.testes.bancoId
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var correntistas = new CorrentistasPage(page);
-            await correntistas.validarAcentosCorrentistas();
+            await correntistas.ValidarAcentosCorrentistas();
         }
 
     }
