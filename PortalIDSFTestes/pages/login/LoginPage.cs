@@ -53,7 +53,7 @@ namespace PortalIDSFTestes.pages.login
             await metodo.Escrever(el.campoEmail, "jessica.tavares@aluno.ifsp.edu.br", "Inserir Email para Login");
             await metodo.Escrever(el.campoSenha, "Jehtavares?123", "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-            await metodo.ValidarUrl("https://portal.idsf.com.br/Investidor/SaldosAplicacoes.aspx", "Validar Url Logada na Página Home");
+            await metodo.ValidarUrl("https://portal.idsf.com.br/Home.aspx", "Validar Url Logada na Página Home");
         }
         public async Task LoginNegativoConsultoria(string email, string senha)
         {

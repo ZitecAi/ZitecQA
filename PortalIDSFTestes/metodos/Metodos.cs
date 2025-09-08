@@ -376,7 +376,7 @@ namespace PortalIDSFTestes.metodos
             {
                 Assert.IsTrue(File.Exists(caminhoArquivo), $"❌ Arquivo para envio não encontrado: {caminhoArquivo}");
 
-                await page.Locator(locator).SetInputFilesAsync(caminhoArquivo);
+                await page.Locator(locator).SetInputFilesAsync(caminhoArquivo, new LocatorSetInputFilesOptions { Timeout = 120_000 });
                 Console.WriteLine("✅ Arquivo enviado com sucesso");
             }
             catch (Exception ex)
