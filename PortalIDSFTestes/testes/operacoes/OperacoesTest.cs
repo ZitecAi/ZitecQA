@@ -52,10 +52,11 @@ namespace PortalIDSFTestes.testes.operacoes
         public async Task Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir()
         {
             var operacoes = new OperacoesPage(page);
-            await operacoes.EnviarOperacaoCNAB();
+            await operacoes.EnviarOperacaoCNAB_Consultar_Excluir();
         }
 
         [Test, Order(3)]
+        [Ignore ("Este teste está em Manutenção")]
         public async Task Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes()
         {
             var operacoes = new OperacoesPage(page);

@@ -31,7 +31,7 @@ namespace PortalIDSFTestes.testes.cedentes
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuCedentes, "Clicar na seção cedentes no menú hamburguer");
+            await metodo.Clicar(el.MenuCedentes, "Clicar na sessão cedentes no menú hamburguer");
             await metodo.Clicar(el.PaginaCedentes, "Clicar na página cedentes");
             await Task.Delay(500);
         }
