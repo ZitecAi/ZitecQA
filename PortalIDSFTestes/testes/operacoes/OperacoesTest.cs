@@ -34,7 +34,6 @@ namespace PortalIDSFTestes.testes.operacoes
             await metodo.Clicar(el.PaginaOperacoes, "Clicar em Operações para acessar a página");
             await Task.Delay(500);
         }
-
         [TearDown]
         public async Task TearDown()
         {

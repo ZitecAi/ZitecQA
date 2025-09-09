@@ -9,8 +9,8 @@ resources:
       trigger: true
 
 variables:
-  - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
-  - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
+  - group: NetlifySecrets
+  - group: EmailSecrets
   - name: TEST_CSPROJ
     value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'
   - name: TEST_DIR
@@ -20,10 +20,10 @@ variables:
   - name: ALLURE_REPORT_DIR
     value: 'allure-report'
 
-############################
-# JOB 1 — TESTS (não bloqueia)
-############################
 jobs:
+# =========================
+# JOB 1 — TESTS (não bloqueia)
+# =========================
 - job: Tests
   displayName: "Run Playwright/NUnit tests"
   pool:
@@ -45,9 +45,10 @@ jobs:
       versionSpec: '18.x'
 
   - script: |
+      set -e
       dotnet --info
       dotnet restore "$(TEST_CSPROJ)"
-      dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
+      dotnet build   "$(TEST_CSPROJ)" -c Release --no-restore
     displayName: 'Restore + Build'
 
   - script: |
@@ -68,7 +69,7 @@ jobs:
       fi
     displayName: 'Playwright browsers install (project script)'
 
-  # Roda testes, capta exit code e SEMPRE sai 0
+  # Roda testes, captura exit code e SEMPRE sai 0
   - script: |
       set +e
       echo "Rodando testes em: $(TEST_CSPROJ)"
@@ -76,11 +77,9 @@ jobs:
       TEST_EXIT=$?
       echo "Exit code dos testes: $TEST_EXIT"
       echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
-
       if [ "$TEST_EXIT" -ne 0 ]; then
         echo "##vso[task.complete result=SucceededWithIssues;]Há testes falhando, mas o fluxo continuará."
       fi
-
       exit 0
     name: runTests
     displayName: 'Run tests (non-blocking)'
@@ -95,17 +94,23 @@ jobs:
       testRunTitle: 'NUnit TRX'
       mergeTestResults: true
 
+  # ⚠️ Ajuste: limpar destino e pegar o allure-results MAIS RECENTE
   - script: |
       set -e
-      mkdir -p "$(Build.SourcesDirectory)/_allure/results"
-      FOUND=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
-      if [ -n "$FOUND" ]; then
+      DEST="$(Build.SourcesDirectory)/_allure/results"
+      rm -rf "$DEST"
+      mkdir -p "$DEST"
+
+      # pega a pasta mais recente por data de modificação
+      FOUND=$(ls -td "$(TEST_DIR)"/bin/Release/**/"$(ALLURE_RESULTS_DIR)" 2>/dev/null | head -n 1 || true)
+
+      if [ -n "$FOUND" ] && [ -d "$FOUND" ]; then
         echo "Copiando resultados do Allure de: $FOUND"
-        cp -r "$FOUND/." "$(Build.SourcesDirectory)/_allure/results/"
+        cp -r "$FOUND/." "$DEST/"
       else
         echo "Nenhum 'allure-results' encontrado. Publicaremos vazio."
       fi
-    displayName: 'Collect allure-results (if any)'
+    displayName: 'Collect newest allure-results'
 
   - task: PublishPipelineArtifact@1
     displayName: 'Publish artifact: allure-results'
@@ -113,9 +118,9 @@ jobs:
       artifact: 'allure-results'
       targetPath: '$(Build.SourcesDirectory)/_allure/results'
 
-############################
+# =========================
 # JOB 2 — REPORT (sempre roda)
-############################
+# =========================
 - job: Report
   displayName: "Generate & publish Allure + Send email"
   pool:
@@ -140,19 +145,25 @@ jobs:
       set -e
       npm i -g allure-commandline netlify-cli
 
-      mkdir -p "$(ALLURE_REPORT_DIR)"
       SRC="$(Pipeline.Workspace)/allure-results"
+      OUT="$(ALLURE_REPORT_DIR)"
+
+      # Recria diretório do relatório do zero
+      rm -rf "$OUT"
+      mkdir -p "$OUT"
+
       if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
-        echo "Gerando Allure a partir de artifact..."
-        allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$SRC" || true
+        echo "Gerando Allure a partir do artifact..."
+        allure generate --clean -o "$OUT" "$SRC" || true
       fi
 
-      if [ ! -d "$(ALLURE_REPORT_DIR)" ] || [ -z "$(ls -A "$(ALLURE_REPORT_DIR)" 2>/dev/null)" ]; then
+      if [ ! -d "$OUT" ] || [ -z "$(ls -A "$OUT" 2>/dev/null)" ]; then
         echo "Criando relatório placeholder..."
-        mkdir -p "$(ALLURE_REPORT_DIR)"
-        echo '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>' > "$(ALLURE_REPORT_DIR)/index.html"
-      fi
-    displayName: 'Generate Allure report (from artifact)'
+        mkdir -p "$OUT"
+        cat > "$OUT/index.html" <<'HTML'<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>HTMLfi
+      # Cabeçalhos para evitar cache do HTML no Netlify
+      cat > "$OUT/_headers" <<'HDR'/*  cache-control: max-age=0cache-control: no-cachecache-control: no-storecache-control: must-revalidateHDR
+    displayName: 'Generate Allure report (from artifact) + no-cache headers'
 
   - script: |
       set -e
@@ -161,13 +172,14 @@ jobs:
         --dir="$(ALLURE_REPORT_DIR)" \
         --site "$(NETLIFY_SITE_ID)" \
         --auth "$(NETLIFY_AUTH_TOKEN)" \
+        --message "Allure $(Build.BuildNumber)" \
         --json > deploy.json
 
       echo "======== Netlify Deploy Result ========"
       cat deploy.json || true
 
-      # Extrai URL e salva como variável do job
-      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'');}catch(e){}})" < deploy.json)
+      # Extrai URL preferindo deploy_ssl_url -> deploy_url -> url -> site_url
+      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.deploy_ssl_url||j.deploy_url||j.url||j.site_url||'');}catch(e){}})" < deploy.json)
       echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
     displayName: 'Deploy to Netlify (prod)'
     condition: always()
@@ -176,8 +188,8 @@ jobs:
     displayName: 'Send email with report link (plain text)'
     condition: always()
     env:
-      SITE_URL: $(SITE_URL)            # do Variable Group
-      NETLIFY_URL: $(NETLIFY_URL)      # do passo Netlify acima
+      SITE_URL: $(SITE_URL)
+      NETLIFY_URL: $(NETLIFY_URL)
       SMTP_SERVER: $(SMTP_SERVER)
       SMTP_PORT: $(SMTP_PORT)
       SMTP_USER: $(SMTP_USER)
@@ -191,7 +203,6 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        # Prioriza URL do deploy; se vazia, usa a do grupo
         $siteUrl = $env:NETLIFY_URL
         if ([string]::IsNullOrWhiteSpace($siteUrl)) { $siteUrl = $env:SITE_URL }
 
@@ -199,11 +210,9 @@ jobs:
         $buildId  = $env:BUILD_BUILDID
         $buildNum = $env:BUILD_BUILDNUMBER
         $testExit = $env:TEST_EXIT
-
         if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
-        $subject = "Relatório Allure (Staging) - $status"
 
-        # Sem here-string para evitar erro de identação
+        $subject = "Relatório Allure (Staging) - $status"
         $bodyLines = @(
           "Pipeline: $pipeline",
           "Execução: $buildNum (ID $buildId)",
