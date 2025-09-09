@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.elementos.bancoId
 {
-    public class DevolucaoReembolsoElements
+    public class ExtratosElements
     {
         public string MenuBancoId { get; } = "//p[text()='Banco ID']";
-        public string PaginaDevolucaoReembolsos { get; } = "//p[text()='Devolução/Reembolso']";
+        public string PaginaExtratos { get; } = "//p[text()='Extratos']";
+
 
     }
 }

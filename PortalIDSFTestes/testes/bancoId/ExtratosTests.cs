@@ -15,15 +15,15 @@ namespace PortalIDSFTestes.testes.bancoId
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Correntistas")]
+    [Category("Suíte: Extratos")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
-    public class CorrentistasTests : Executa
+    public class ExtratosTests : Executa
     {
 
         private IPage page;
         Metodos metodo;
-        CorrentistasElements el = new CorrentistasElements();
+        ExtratosElements el = new ExtratosElements();
 
         [SetUp]
         public async Task Setup()
@@ -33,7 +33,7 @@ namespace PortalIDSFTestes.testes.bancoId
             metodo = new Metodos(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuBancoId, "Clicar na sessão Banco ID no menú hamburguer");
-            await metodo.Clicar(el.PaginaCorrentistas, "Clicar na página Usuarios");
+            await metodo.Clicar(el.PaginaExtratos, "Clicar na página Usuarios");
             await Task.Delay(500);
         }
 
@@ -46,8 +46,8 @@ namespace PortalIDSFTestes.testes.bancoId
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var correntistas = new CorrentistasPage(page);
-            await correntistas.ValidarAcentosCorrentistas();
+            var extratos = new ExtratosPage(page);
+            await extratos.ValidarAcentosExtratos();
         }
 
     }

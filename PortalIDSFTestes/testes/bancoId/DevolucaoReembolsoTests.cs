@@ -31,7 +31,7 @@ namespace PortalIDSFTestes.testes.bancoId
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuAdministrativo, "Clicar na sessão Admninistrativo no menú hamburguer");
+            await metodo.Clicar(el.MenuBancoId, "Clicar na sessão Banco ID no menú hamburguer");
             await metodo.Clicar(el.PaginaDevolucaoReembolsos, "Clicar na página Usuarios");
             await Task.Delay(500);
         }

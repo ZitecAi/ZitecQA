@@ -8,7 +8,7 @@ namespace PortalIDSFTestes.elementos.bancoId
 {
     public class ContasEscrowElements
     {
-        public string MenuAdministrativo { get; } = "//p[text()='Banco ID']";
+        public string MenuBancoId { get; } = "//p[text()='Banco ID']";
         public string PaginaContasEscrow { get; } = "//p[text()='Contas Escrow']";
 
 

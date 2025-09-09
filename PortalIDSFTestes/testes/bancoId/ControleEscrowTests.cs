@@ -32,7 +32,7 @@ namespace PortalIDSFTestes.testes.bancoId
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuAdministrativo, "Clicar na sessão Admninistrativo no menú hamburguer");
+            await metodo.Clicar(el.MenuBancoId, "Clicar na sessão Banco Id no menú hamburguer");
             await metodo.Clicar(el.PaginaControleEscrow, "Clicar na página  Controle Escrow");
             await Task.Delay(500);
         }

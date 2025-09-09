@@ -15,15 +15,15 @@ namespace PortalIDSFTestes.testes.bancoId
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Correntistas")]
+    [Category("Suíte: Zeragem")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
-    public class CorrentistasTests : Executa
+    public class ZeragemTests : Executa
     {
 
         private IPage page;
         Metodos metodo;
-        CorrentistasElements el = new CorrentistasElements();
+        ZeragemElements el = new ZeragemElements();
 
         [SetUp]
         public async Task Setup()
@@ -33,7 +33,7 @@ namespace PortalIDSFTestes.testes.bancoId
             metodo = new Metodos(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuBancoId, "Clicar na sessão Banco ID no menú hamburguer");
-            await metodo.Clicar(el.PaginaCorrentistas, "Clicar na página Usuarios");
+            await metodo.Clicar(el.PaginaZeragem, "Clicar na página Saldos");
             await Task.Delay(500);
         }
 
@@ -46,8 +46,8 @@ namespace PortalIDSFTestes.testes.bancoId
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var correntistas = new CorrentistasPage(page);
-            await correntistas.ValidarAcentosCorrentistas();
+            var zeragem = new ZeragemPage(page);
+            await zeragem.ValidarAcentosZeragem();
         }
 
     }
