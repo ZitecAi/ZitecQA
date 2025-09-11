@@ -382,7 +382,7 @@ namespace TestePortalIDSF
             try
             {
                 EmailPadrao emailPadrao = new EmailPadrao(
-                    "al@zitec.ai",
+                    "todos@zitec.ai",
                     "Relatório das páginas do portal. Validação do deploy no repositório de QA.",
                     EnviarEmail.GerarHtml(listaPagina, listaFluxos, listaOperacoes, conciliacao)
 
