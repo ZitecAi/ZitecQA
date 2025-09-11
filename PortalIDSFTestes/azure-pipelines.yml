@@ -87,6 +87,23 @@ jobs:
       EOF
     displayName: 'Clean e configurar Allure results dir'
 
+  # 🔥 NOVO STEP: cria executor.json com timestamp único
+  - script: |
+      set -e
+      NOW=$(date +"%Y-%m-%d %H:%M:%S")
+      cat > "$(Build.SourcesDirectory)/_allure/results/executor.json" <<EOF
+      {
+        "name": "Azure DevOps",
+        "type": "azure-pipelines",
+        "url": "https://dev.azure.com/$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)",
+        "buildName": "$(Build.DefinitionName) #$(Build.BuildNumber)",
+        "buildOrder": "$(Build.BuildId)",
+        "reportName": "Allure Report $(Build.BuildNumber) - $NOW",
+        "timestamp": "$NOW"
+      }
+      EOF
+    displayName: 'Create executor.json (pipeline metadata)'
+
   # Roda testes apontando ALLURE_CONFIG, captura exit code e SEMPRE sai 0
   - script: |
       set +e
@@ -123,6 +140,7 @@ jobs:
     inputs:
       artifact: 'allure-results'
       targetPath: '$(Build.SourcesDirectory)/_allure/results'
+
 
 # =========================
 # JOB 2 — REPORT (sempre roda)
