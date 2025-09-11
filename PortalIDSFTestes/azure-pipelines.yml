@@ -176,6 +176,9 @@ jobs:
       rm -rf "$OUT"
       mkdir -p "$OUT"
 
+      # 🔥 REMOVE history para não reaproveitar datas antigas
+      rm -rf "$SRC/history" || true
+
       if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
         echo "Gerando Allure a partir do artifact..."
         allure generate --clean -o "$OUT" "$SRC" || true
