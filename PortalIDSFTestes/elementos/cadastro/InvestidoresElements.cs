@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.elementos.cadastro
 {
-    public class CarteirasElements
+    public class InvestidoresElements
     {
         public string MenuCadastro { get; } = "(//p[text()='Cadastro'])[1]";
-        public string PaginaCarteiras { get; } = "//p[text()='Carteiras']";
+        public string PaginaInvestidores { get; } = "//p[text()='Investidores']";
 
 
 
