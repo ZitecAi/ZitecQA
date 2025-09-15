@@ -38,7 +38,7 @@ namespace PortalIDSFTestes.metodos
             try
             {
                 var elemento = page.Locator(locator);
-                await elemento.WaitForAsync();
+                await elemento.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
                 await elemento.ClickAsync();
             }
             catch
