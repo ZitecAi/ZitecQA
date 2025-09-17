@@ -14,6 +14,11 @@ using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.testes.cadastro
 {
+    [Parallelizable(ParallelScope.Self)]
+    [TestFixture]
+    [Category("Suíte: Cotistas")]
+    [Category("Criticidade: Alta")]
+    [Category("Regressivos")]
     public class CotistasTests : Executa
     {
         private IPage page;

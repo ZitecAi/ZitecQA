@@ -1,10 +1,8 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.bancoId;
-using PortalIDSFTestes.elementos.cadastro;
+using PortalIDSFTestes.elementos.relatorios;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.bancoId;
-using PortalIDSFTestes.pages.cadastro;
 using PortalIDSFTestes.pages.login;
+using PortalIDSFTestes.pages.relatorios;
 using PortalIDSFTestes.runner;
 using System;
 using System.Collections.Generic;
@@ -12,18 +10,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes.cadastro
+namespace PortalIDSFTestes.testes.relatorios
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Consultorias Internas")]
+    [Category("Suíte: Relatorio Cedentes")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
-    public class ConsultorasTests : Executa
+    public class RelatorioCedentesTest : Executa
     {
         private IPage page;
         Metodos metodo;
-        ConsultorasElements el = new ConsultorasElements();
+        RelatorioCedentesElements el = new RelatorioCedentesElements();
 
         [SetUp]
         public async Task Setup()
@@ -32,8 +30,8 @@ namespace PortalIDSFTestes.testes.cadastro
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
-            await metodo.Clicar(el.PaginaConsultoras, "Clicar na página Consultoras");
+            await metodo.Clicar(el.MenuRelatorios, "Clicar em Relatorios menu hamburguer");
+            await metodo.Clicar(el.PaginaRelatorioCedentes, "Clicar em Cedentes para acessar a página Cedentes na sessão relatorios");
             await Task.Delay(500);
         }
 
@@ -46,8 +44,8 @@ namespace PortalIDSFTestes.testes.cadastro
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var consultoras = new ConsultorasPage(page);
-            await consultoras.ValidarAcentosConsultoras();
+            var relatorioCedentes = new RelatorioCedentesPage(page);
+            await relatorioCedentes.ValidarAcentosRelatorioCedentesPage();
         }
 
 

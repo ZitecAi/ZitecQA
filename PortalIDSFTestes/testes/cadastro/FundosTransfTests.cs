@@ -16,14 +16,14 @@ namespace PortalIDSFTestes.testes.cadastro
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Consultorias Internas")]
+    [Category("Suíte: Fundos de transferência")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
-    public class ConsultorasTests : Executa
+    public class FundosTransfTests : Executa
     {
         private IPage page;
         Metodos metodo;
-        ConsultorasElements el = new ConsultorasElements();
+        FundosTransfElements el = new FundosTransfElements();
 
         [SetUp]
         public async Task Setup()
@@ -33,7 +33,7 @@ namespace PortalIDSFTestes.testes.cadastro
             metodo = new Metodos(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
-            await metodo.Clicar(el.PaginaConsultoras, "Clicar na página Consultoras");
+            await metodo.Clicar(el.PaginaFundosTransf, "Clicar na página Fundos de transferência");
             await Task.Delay(500);
         }
 
@@ -46,10 +46,9 @@ namespace PortalIDSFTestes.testes.cadastro
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var consultoras = new ConsultorasPage(page);
-            await consultoras.ValidarAcentosConsultoras();
+            var fundosTransf = new FundosTransfPage(page);
+            await fundosTransf.ValidarAcentosFundosTransf();
         }
-
 
     }
 }

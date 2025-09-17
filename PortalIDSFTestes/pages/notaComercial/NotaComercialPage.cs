@@ -60,7 +60,7 @@ namespace PortalIDSFTestes.pages.notaComercial
             await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
             await Task.Delay(500);
             await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "1", "Selecionar Relacionado A");
-            await metodo.ClicarNoSeletor(el.SelectEnvolvido, "32084289874", "Selecionar Envolvido");
+            await page.Locator("#envolvido").SelectOptionAsync(new SelectOptionValue { Index = 1 });
             await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "empregador", "Selecionar Tipo de relação");
             await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
             await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "assinaturaSelfie", "Selecionar Forma de Validação");
@@ -68,7 +68,7 @@ namespace PortalIDSFTestes.pages.notaComercial
             await Task.Delay(500);
             await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
             await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "idsf", "Selecionar Relacionado A");
-            await metodo.ClicarNoSeletor(el.SelectEnvolvido, "46837686828", "Selecionar Envolvido");
+            await page.Locator("#envolvido").SelectOptionAsync(new SelectOptionValue { Index = 1 });
             await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "cedente", "Selecionar Tipo de relação");
             await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
             await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "biometriaFacial", "Selecionar Forma de Validação");
@@ -137,7 +137,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
                 await Task.Delay(500);
                 await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "1", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "32084289874", "Selecionar Envolvido");
+                await page.Locator("#envolvido").SelectOptionAsync(new SelectOptionValue { Index = 1 });
                 await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "empregador", "Selecionar Tipo de relação");
                 await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
                 await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "assinaturaSelfie", "Selecionar Forma de Validação");
@@ -145,7 +145,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await Task.Delay(500);
                 await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
                 await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "idsf", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "46837686828", "Selecionar Envolvido");
+                await page.Locator("#envolvido").SelectOptionAsync(new SelectOptionValue { Index = 1 });
                 await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "cedente", "Selecionar Tipo de relação");
                 await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
                 await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "biometriaFacial", "Selecionar Forma de Validação");
@@ -174,7 +174,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
                 await Task.Delay(500);
                 await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "1", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "32084289874", "Selecionar Envolvido");
+                await page.Locator("#envolvido").SelectOptionAsync(new SelectOptionValue { Index = 1 });
                 await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "empregador", "Selecionar Tipo de relação");
                 await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
                 await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "assinaturaSelfie", "Selecionar Forma de Validação");
@@ -182,7 +182,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await Task.Delay(500);
                 await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
                 await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "idsf", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "46837686828", "Selecionar Envolvido");
+                await page.Locator("#envolvido").SelectOptionAsync(new SelectOptionValue { Index = 1 });
                 await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "cedente", "Selecionar Tipo de relação");
                 await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
                 await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "biometriaFacial", "Selecionar Forma de Validação");
@@ -221,7 +221,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
                 await Task.Delay(500);
                 await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "1", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "32084289874", "Selecionar Envolvido");
+                await page.Locator("#envolvido").SelectOptionAsync(new SelectOptionValue { Index = 1 });
                 await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "empregador", "Selecionar Tipo de relação");
                 await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
                 await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "assinaturaSelfie", "Selecionar Forma de Validação");
@@ -229,7 +229,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await Task.Delay(500);
                 await metodo.Clicar(el.AdicionarEnvolvido, "Clicar no botão para adicionar envolvido");
                 await metodo.ClicarNoSeletor(el.SelectRelacionadoA, "idsf", "Selecionar Relacionado A");
-                await metodo.ClicarNoSeletor(el.SelectEnvolvido, "46837686828", "Selecionar Envolvido");
+                await page.Locator("#envolvido").SelectOptionAsync(new SelectOptionValue { Index = 1 });
                 await metodo.ClicarNoSeletor(el.SelectTipoRelacao, "cedente", "Selecionar Tipo de relação");
                 await metodo.ClicarNoSeletor(el.SelectFormaEnvio, "email", "Selecionar Forma de envio");
                 await metodo.ClicarNoSeletor(el.SelectFormaValidacao, "biometriaFacial", "Selecionar Forma de Validação");

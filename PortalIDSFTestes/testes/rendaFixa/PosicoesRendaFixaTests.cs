@@ -1,10 +1,8 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.bancoId;
-using PortalIDSFTestes.elementos.cadastro;
+using PortalIDSFTestes.elementos.rendaFixa;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.bancoId;
-using PortalIDSFTestes.pages.cadastro;
 using PortalIDSFTestes.pages.login;
+using PortalIDSFTestes.pages.rendaFixa;
 using PortalIDSFTestes.runner;
 using System;
 using System.Collections.Generic;
@@ -12,18 +10,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes.cadastro
+namespace PortalIDSFTestes.testes.rendaFixa
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Consultorias Internas")]
+    [Category("Suíte: Posicoes Renda Fixa")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
-    public class ConsultorasTests : Executa
+    public class PosicoesRendaFixaTests : Executa
     {
         private IPage page;
         Metodos metodo;
-        ConsultorasElements el = new ConsultorasElements();
+        PosicoesRendaFixaElements el = new PosicoesRendaFixaElements();
 
         [SetUp]
         public async Task Setup()
@@ -32,8 +30,8 @@ namespace PortalIDSFTestes.testes.cadastro
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
-            await metodo.Clicar(el.PaginaConsultoras, "Clicar na página Consultoras");
+            await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
+            await metodo.Clicar(el.PaginaPosicoesRendaFixa, "Clicar em Posições Renda Fixa para acessar a página");
             await Task.Delay(500);
         }
 
@@ -46,10 +44,9 @@ namespace PortalIDSFTestes.testes.cadastro
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var consultoras = new ConsultorasPage(page);
-            await consultoras.ValidarAcentosConsultoras();
+            var posicoesRendaFixa = new PosicoesRendaFixaPage(page);
+            await posicoesRendaFixa.ValidarAcentosPosicoesRendaFixaPage();
         }
-
 
     }
 }

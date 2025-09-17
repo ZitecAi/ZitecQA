@@ -1,10 +1,10 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.bancoId;
-using PortalIDSFTestes.elementos.cadastro;
+using PortalIDSFTestes.elementos.controleInterno;
+using PortalIDSFTestes.elementos.risco;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.bancoId;
-using PortalIDSFTestes.pages.cadastro;
+using PortalIDSFTestes.pages.controleInterno;
 using PortalIDSFTestes.pages.login;
+using PortalIDSFTestes.pages.risco;
 using PortalIDSFTestes.runner;
 using System;
 using System.Collections.Generic;
@@ -12,18 +12,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes.cadastro
+namespace PortalIDSFTestes.testes.risco
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Consultorias Internas")]
+    [Category("Suíte: Fundos Desenquadrados")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
-    public class ConsultorasTests : Executa
+    public class FundosDesenquadradosTests : Executa
     {
         private IPage page;
         Metodos metodo;
-        ConsultorasElements el = new ConsultorasElements();
+        FundosDesenquadradosElements el = new FundosDesenquadradosElements();
 
         [SetUp]
         public async Task Setup()
@@ -32,8 +32,8 @@ namespace PortalIDSFTestes.testes.cadastro
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
-            await metodo.Clicar(el.PaginaConsultoras, "Clicar na página Consultoras");
+            await metodo.Clicar(el.MenuRisco, "Clicar em Controle interno menu hamburguer");
+            await metodo.Clicar(el.PaginaFundosDesenquadrados, "Clicar em Fundos Desenquadrados para acessar a página");
             await Task.Delay(500);
         }
 
@@ -46,10 +46,8 @@ namespace PortalIDSFTestes.testes.cadastro
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var consultoras = new ConsultorasPage(page);
-            await consultoras.ValidarAcentosConsultoras();
+            var fundosDesenquadrados = new FundosDesenquadradosPage(page);
+            await fundosDesenquadrados.ValidarAcentosFundosDesenquadradosPage();
         }
-
-
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.bancoId;
-using PortalIDSFTestes.elementos.cadastro;
+using PortalIDSFTestes.elementos.cedentes;
+using PortalIDSFTestes.elementos.custodia;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.bancoId;
-using PortalIDSFTestes.pages.cadastro;
+using PortalIDSFTestes.pages.cedentes;
+using PortalIDSFTestes.pages.custodia;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
 using System;
@@ -12,18 +12,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes.cadastro
+namespace PortalIDSFTestes.testes.custodia
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Consultorias Internas")]
-    [Category("Criticidade: Alta")]
+    [Category("Suíte:  Painel de Cotas")]
+    [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
-    public class ConsultorasTests : Executa
+    public class PainelCotasTests : Executa
     {
         private IPage page;
         Metodos metodo;
-        ConsultorasElements el = new ConsultorasElements();
+        PainelCotasElement el = new PainelCotasElement();
 
         [SetUp]
         public async Task Setup()
@@ -32,8 +32,8 @@ namespace PortalIDSFTestes.testes.cadastro
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
-            await metodo.Clicar(el.PaginaConsultoras, "Clicar na página Consultoras");
+            await metodo.Clicar(el.MenuCedentes, "Clicar na sessão custodia no menú hamburguer");
+            await metodo.Clicar(el.PaginaPainelCotas, "Clicar na página Painel de Cotas");
             await Task.Delay(500);
         }
 
@@ -41,15 +41,14 @@ namespace PortalIDSFTestes.testes.cadastro
         public async Task TearDown()
         {
             await FecharBrowserAsync();
+
         }
 
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var consultoras = new ConsultorasPage(page);
-            await consultoras.ValidarAcentosConsultoras();
+            var painelCotas = new PainelCotasPage(page);
+            await painelCotas.ValidarAcentosPainelCotasPage();
         }
-
-
     }
 }

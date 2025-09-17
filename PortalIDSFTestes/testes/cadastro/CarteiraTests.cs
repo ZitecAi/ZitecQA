@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.testes.cadastro
 {
-    public class ConsultorasTests : Executa
+    public class CarteirasTests : Executa
     {
         private IPage page;
         Metodos metodo;

@@ -64,6 +64,7 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(4)]
+        [Ignore("Esse teste está em manutenção.")]
         public async Task Deve_Fazer_Download_Relatorio_Movimentos()
         {
             var baixa = new ArquivosBaixaPage(page);
@@ -71,6 +72,7 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(5)]
+        [Ignore("Esse teste está em manutenção.")]
         public async Task Deve_Fazer_Download_Arquivo_CNAB()
         {
             var baixa = new ArquivosBaixaPage(page);

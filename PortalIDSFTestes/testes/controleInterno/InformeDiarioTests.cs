@@ -1,9 +1,7 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.bancoId;
-using PortalIDSFTestes.elementos.cadastro;
+using PortalIDSFTestes.elementos.controleInterno;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.bancoId;
-using PortalIDSFTestes.pages.cadastro;
+using PortalIDSFTestes.pages.controleInterno;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
 using System;
@@ -12,18 +10,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes.cadastro
+namespace PortalIDSFTestes.testes.controleInterno
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Consultorias Internas")]
+    [Category("Suíte: Informe Diario")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
-    public class ConsultorasTests : Executa
+    public class InformeDiarioTests : Executa
     {
         private IPage page;
         Metodos metodo;
-        ConsultorasElements el = new ConsultorasElements();
+        InformeDiarioElements el = new InformeDiarioElements();
 
         [SetUp]
         public async Task Setup()
@@ -32,8 +30,8 @@ namespace PortalIDSFTestes.testes.cadastro
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
-            await metodo.Clicar(el.PaginaConsultoras, "Clicar na página Consultoras");
+            await metodo.Clicar(el.MenuControleInterno, "Clicar em Controle interno menu hamburguer");
+            await metodo.Clicar(el.PaginaInformeDiario, "Clicar em Informe Diario para acessar a página");
             await Task.Delay(500);
         }
 
@@ -46,8 +44,8 @@ namespace PortalIDSFTestes.testes.cadastro
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var consultoras = new ConsultorasPage(page);
-            await consultoras.ValidarAcentosConsultoras();
+            var informeDiario = new InformeDiarioPage(page);
+            await informeDiario.ValidarAcentosInformeDiarioPage();
         }
 
 
