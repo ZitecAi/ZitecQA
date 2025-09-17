@@ -16,14 +16,14 @@ namespace PortalIDSFTestes.testes.cadastro
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Consultorias Internas")]
+    [Category("Suíte: Laminas")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
-    public class ConsultoriasInternasTests : Executa
+    public class LaminasTests : Executa
     {
         private IPage page;
         Metodos metodo;
-        ConsultoriasInternasElements el = new ConsultoriasInternasElements();
+        LaminasElements el = new LaminasElements();
 
         [SetUp]
         public async Task Setup()
@@ -33,7 +33,7 @@ namespace PortalIDSFTestes.testes.cadastro
             metodo = new Metodos(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
-            await metodo.Clicar(el.PaginaConsultoriasInternas, "Clicar na página Consultorias Internas");
+            await metodo.Clicar(el.PaginaLaminas, "Clicar na página Laminas");
             await Task.Delay(500);
         }
 
@@ -46,8 +46,8 @@ namespace PortalIDSFTestes.testes.cadastro
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var consultoriasInternas = new ConsultoriasInternasPage(page);
-            await consultoriasInternas.ValidarAcentosConsultoriasInternas();
+            var laminas = new LaminasPage(page);
+            await laminas.ValidarAcentosLaminas();
         }
 
 

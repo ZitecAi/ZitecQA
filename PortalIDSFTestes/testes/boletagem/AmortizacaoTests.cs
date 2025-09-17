@@ -1,9 +1,7 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.bancoId;
-using PortalIDSFTestes.elementos.cadastro;
+using PortalIDSFTestes.elementos.Boletagem;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.bancoId;
-using PortalIDSFTestes.pages.cadastro;
+using PortalIDSFTestes.pages.boletagem;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
 using System;
@@ -12,18 +10,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes.cadastro
+namespace PortalIDSFTestes.testes.boletagem
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Consultorias Internas")]
+    [Category("Suíte: Amortizacao")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
-    public class ConsultoriasInternasTests : Executa
+    public class AmortizacaoTests : Executa
     {
         private IPage page;
         Metodos metodo;
-        ConsultoriasInternasElements el = new ConsultoriasInternasElements();
+        AmortizacaoElements el = new AmortizacaoElements();
 
         [SetUp]
         public async Task Setup()
@@ -33,7 +31,7 @@ namespace PortalIDSFTestes.testes.cadastro
             metodo = new Metodos(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
-            await metodo.Clicar(el.PaginaConsultoriasInternas, "Clicar na página Consultorias Internas");
+            await metodo.Clicar(el.PaginaAmortizacao, "Clicar na página Amortizacao");
             await Task.Delay(500);
         }
 
@@ -46,10 +44,9 @@ namespace PortalIDSFTestes.testes.cadastro
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var consultoriasInternas = new ConsultoriasInternasPage(page);
-            await consultoriasInternas.ValidarAcentosConsultoriasInternas();
+            var amortizacao = new AmortizacaoPage(page);
+            await amortizacao.ValidarAcentosAmortizacao();
         }
-
 
     }
 }

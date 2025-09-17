@@ -14,11 +14,16 @@ using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.testes.cadastro
 {
-    public class CarteiraTests : Executa
+    [Parallelizable(ParallelScope.Self)]
+    [TestFixture]
+    [Category("Suíte: Consultoras")]
+    [Category("Criticidade: Alta")]
+    [Category("Regressivos")]
+    public class ConsultorasTests : Executa
     {
         private IPage page;
         Metodos metodo;
-        CarteirasElements el = new CarteirasElements();
+        ConsultorasElements el = new ConsultorasElements();
 
         [SetUp]
         public async Task Setup()
@@ -28,7 +33,7 @@ namespace PortalIDSFTestes.testes.cadastro
             metodo = new Metodos(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
-            await metodo.Clicar(el.PaginaCarteiras, "Clicar na página Carteiras");
+            await metodo.Clicar(el.PaginaConsultoras, "Clicar na página Consultoras");
             await Task.Delay(500);
         }
 
@@ -41,8 +46,8 @@ namespace PortalIDSFTestes.testes.cadastro
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var carteiras = new CarteirasPage(page);
-            await carteiras.ValidarAcentosCarteiras();
+            var consultoras = new ConsultorasPage(page);
+            await consultoras.ValidarAcentosConsultoras();
         }
 
 

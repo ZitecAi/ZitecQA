@@ -1,29 +1,28 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.bancoId;
-using PortalIDSFTestes.elementos.cadastro;
-using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.bancoId;
-using PortalIDSFTestes.pages.cadastro;
-using PortalIDSFTestes.pages.login;
+using PortalIDSFTestes.pages.cedentes;
 using PortalIDSFTestes.runner;
+using PortalIDSFTestes.metodos;
+using PortalIDSFTestes.pages.login;
+using PortalIDSFTestes.pages.operacoes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PortalIDSFTestes.elementos.cedentes;
 
-namespace PortalIDSFTestes.testes.cadastro
+namespace PortalIDSFTestes.testes.cedentes
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Consultorias Internas")]
-    [Category("Criticidade: Alta")]
+    [Category("Suíte: Kit Cedentes")]
+    [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
-    public class ConsultoriasInternasTests : Executa
+    public class KitCedenteTest : Executa
     {
         private IPage page;
         Metodos metodo;
-        ConsultoriasInternasElements el = new ConsultoriasInternasElements();
+        KitCedenteElements el = new KitCedenteElements();  
 
         [SetUp]
         public async Task Setup()
@@ -32,8 +31,8 @@ namespace PortalIDSFTestes.testes.cadastro
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
-            await metodo.Clicar(el.PaginaConsultoriasInternas, "Clicar na página Consultorias Internas");
+            await metodo.Clicar(el.MenuCedentes, "Clicar na sessão cedentes no menú hamburguer");
+            await metodo.Clicar(el.PaginaKitCedente, "Clicar na página Kit cedente");
             await Task.Delay(500);
         }
 
@@ -41,15 +40,17 @@ namespace PortalIDSFTestes.testes.cadastro
         public async Task TearDown()
         {
             await FecharBrowserAsync();
+
         }
 
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var consultoriasInternas = new ConsultoriasInternasPage(page);
-            await consultoriasInternas.ValidarAcentosConsultoriasInternas();
+            var kitCedente = new KitCedentePage(page);
+            await kitCedente.ValidarAcentosKitCedentePage();
         }
 
+        
 
     }
 }

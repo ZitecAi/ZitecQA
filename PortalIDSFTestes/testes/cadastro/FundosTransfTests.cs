@@ -14,6 +14,11 @@ using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.testes.cadastro
 {
+    [Parallelizable(ParallelScope.Self)]
+    [TestFixture]
+    [Category("Suíte: Fundos de transferência")]
+    [Category("Criticidade: Alta")]
+    [Category("Regressivos")]
     public class FundosTransfTests : Executa
     {
         private IPage page;
