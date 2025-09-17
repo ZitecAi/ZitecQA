@@ -7,14 +7,20 @@ resources:
       project: 'Dev-ops IDSF'
       source: 'ZIDSF - PORTAL - STAGING'
       trigger: true
+  repositories:
+    # ==> REPO DOS TESTES, sempre em main
+    - repository: testsRepo
+      type: git
+      name: Dev-ops IDSF/PortalIDSFTestes          # <== ajuste para o nome exato do repo
+      ref: refs/heads/main                         # força última main
 
 variables:
-  - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
-  - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
+  - group: NetlifySecrets
+  - group: EmailSecrets
   - name: TEST_CSPROJ
-    value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'
+    value: 'tests/PortalIDSFTestes/PortalIDSFTestes.csproj'   # path com prefixo "tests/"
   - name: TEST_DIR
-    value: 'PortalIDSFTestes'
+    value: 'tests/PortalIDSFTestes'
   - name: ALLURE_RESULTS_DIR
     value: 'allure-results'
   - name: ALLURE_REPORT_DIR
@@ -25,14 +31,20 @@ jobs:
 # JOB 1 — TESTS (não bloqueia)
 # =========================
 - job: Tests
-  displayName: "Run Playwright/NUnit tests"
+  displayName: "Run Playwright/NUnit tests (latest main)"
   pool:
     vmImage: 'ubuntu-22.04'
 
   steps:
-  - checkout: self
-    displayName: 'Checkout tests repo'
+  # Se você não precisa do repo atual, evite checkout do self
+  - checkout: none
+
+  # Checkout do repositório de testes na última main
+  - checkout: testsRepo
+    displayName: 'Checkout tests repo (main)'
+    path: tests                   # faz o repo cair na pasta ./tests
     clean: true
+    fetchDepth: 0                 # garante histórico (útil pro Playwright script discovery etc.)
 
   - task: UseDotNet@2
     displayName: 'Use .NET 8 SDK'
@@ -70,39 +82,32 @@ jobs:
       fi
     displayName: 'Playwright browsers install (project script)'
 
-  # Limpa diretórios e força o Allure a gravar em _allure/results desta execução
   - script: |
       set -e
-      rm -rf "$(Build.SourcesDirectory)/_allure/results" \
-             "$(Build.SourcesDirectory)/_allure/report" \
-             "$(TEST_DIR)/bin" "$(TEST_DIR)/TestResults"
-      mkdir -p "$(Build.SourcesDirectory)/_allure/results"
+      # Gere config e resultados fora do repo para facilitar publicação depois
+      ROOT="$(pwd)"
+      ALLURE_ROOT="$ROOT/_allure"
+      rm -rf "$ALLURE_ROOT"
+      mkdir -p "$ALLURE_ROOT/results"
 
-      cat > "$(Build.SourcesDirectory)/allure.config.json" <<EOF
+      cat > "$ROOT/allure.config.json" <<EOF
       {
         "allure": {
-          "directory": "$(Build.SourcesDirectory)/_allure/results"
+          "directory": "$ALLURE_ROOT/results"
         }
       }
       EOF
     displayName: 'Clean e configurar Allure results dir'
 
-  # Roda testes apontando ALLURE_CONFIG, captura exit code e SEMPRE sai 0
   - script: |
       set +e
       echo "Rodando testes em: $(TEST_CSPROJ)"
-      ALLURE_CONFIG="$(Build.SourcesDirectory)/allure.config.json" \
+      ALLURE_CONFIG="$(System.DefaultWorkingDirectory)/tests/allure.config.json" \
       dotnet test "$(TEST_CSPROJ)" -c Release \
-        --logger "trx;LogFileName=$(Build.SourcesDirectory)/TestResults/results.trx"
+        --logger "trx;LogFileName=$(System.DefaultWorkingDirectory)/tests/TestResults/results.trx"
       TEST_EXIT=$?
       echo "Exit code dos testes: $TEST_EXIT"
       echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
-      if [ "$TEST_EXIT" -ne 0 ]; then
-        echo "##vso[task.complete result=SucceededWithIssues;]Há testes falhando, mas o fluxo continuará."
-      fi
-
-      echo "Conteúdo recém-gerado em _allure/results:"
-      ls -la "$(Build.SourcesDirectory)/_allure/results" || true
       exit 0
     name: runTests
     displayName: 'Run tests (non-blocking)'
@@ -111,18 +116,17 @@ jobs:
     displayName: Publish TRX
     inputs:
       testResultsFormat: VSTest
-      testResultsFiles: 'TestResults/**/*.trx'
-      searchFolder: '$(Build.SourcesDirectory)'
+      testResultsFiles: 'tests/TestResults/**/*.trx'
+      searchFolder: '$(System.DefaultWorkingDirectory)'
       failTaskOnFailedTests: false
       testRunTitle: 'NUnit TRX'
       mergeTestResults: true
 
-  # Publica exatamente o diretório fixo de results (sem procurar no bin)
   - task: PublishPipelineArtifact@1
     displayName: 'Publish artifact: allure-results'
     inputs:
       artifact: 'allure-results'
-      targetPath: '$(Build.SourcesDirectory)/_allure/results'
+      targetPath: '$(System.DefaultWorkingDirectory)/tests/_allure/results'
 
 # =========================
 # JOB 2 — REPORT (sempre roda)
@@ -154,23 +158,18 @@ jobs:
       SRC="$(Pipeline.Workspace)/allure-results"
       OUT="$(ALLURE_REPORT_DIR)"
 
-      # Recria diretório do relatório do zero
       rm -rf "$OUT"
       mkdir -p "$OUT"
 
       if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
-        echo "Gerando Allure a partir do artifact..."
         allure generate --clean -o "$OUT" "$SRC" || true
       fi
 
-      # Placeholder se vazio
       if [ ! -d "$OUT" ] || [ -z "$(ls -A "$OUT" 2>/dev/null)" ]; then
-        echo "Criando relatório placeholder..."
         mkdir -p "$OUT"
         cat > "$OUT/index.html" <<'HTML'<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>HTML
       fi
 
-      # Cabeçalhos para evitar cache do HTML no Netlify
       cat > "$OUT/_headers" <<'HDR'/*cache-control: max-age=0cache-control: no-cachecache-control: no-storecache-control: must-revalidateHDR
     displayName: 'Generate Allure report (from artifact) + no-cache headers'
 
@@ -187,61 +186,4 @@ jobs:
       echo "======== Netlify Deploy Result ========"
       cat deploy.json || true
 
-      # Extrai URL preferindo deploy_ssl_url -> deploy_url -> url -> site_url
-      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.deploy_ssl_url||j.deploy_url||j.url||j.site_url||'');}catch(e){}})" < deploy.json)
-      echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
-    displayName: 'Deploy to Netlify (prod)'
-    condition: always()
-
-  # Purga cache da CDN para garantir conteúdo fresco
-  - script: |
-      set -e
-      netlify api purgeCache --auth "$(NETLIFY_AUTH_TOKEN)" \
-        --data '{"site_id":"'"$(NETLIFY_SITE_ID)"'"}' || true
-    displayName: 'Purge Netlify CDN cache'
-    condition: always()
-
-  - task: PowerShell@2
-    displayName: 'Send email with report link (plain text)'
-    condition: always()
-    env:
-      SITE_URL: $(SITE_URL)
-      NETLIFY_URL: $(NETLIFY_URL)
-      SMTP_SERVER: $(SMTP_SERVER)
-      SMTP_PORT: $(SMTP_PORT)
-      SMTP_USER: $(SMTP_USER)
-      SMTP_PASS: $(SMTP_PASS)
-      MAIL_FROM: $(MAIL_FROM)
-      MAIL_TO: $(MAIL_TO)
-      TEST_EXIT: $(TEST_EXIT_FROM_PREV)
-      BUILD_DEFINITIONNAME: $(Build.DefinitionName)
-      BUILD_BUILDID: $(Build.BuildId)
-      BUILD_BUILDNUMBER: $(Build.BuildNumber)
-    inputs:
-      targetType: inline
-      script: |
-        $siteUrl = $env:NETLIFY_URL
-        if ([string]::IsNullOrWhiteSpace($siteUrl)) { $siteUrl = $env:SITE_URL }
-
-        $pipeline = $env:BUILD_DEFINITIONNAME
-        $buildId  = $env:BUILD_BUILDID
-        $buildNum = $env:BUILD_BUILDNUMBER
-        $testExit = $env:TEST_EXIT
-        if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
-
-        $subject = "Relatório Allure (Staging) - $status"
-        $bodyLines = @(
-          "Pipeline: $pipeline",
-          "Execução: $buildNum (ID $buildId)",
-          "Status dos testes: $status (exit $testExit)",
-          "Relatório: $siteUrl"
-        )
-        $body = $bodyLines -join "`n"
-
-        if ($env:SMTP_USER -and $env:SMTP_PASS) {
-          $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
-          $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
-          Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
-        } else {
-          Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
-        }
+      URL=$(node -e "let d='';process.
