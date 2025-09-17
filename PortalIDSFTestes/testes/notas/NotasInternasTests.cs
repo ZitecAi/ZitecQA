@@ -1,8 +1,10 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.Boletagem;
+using PortalIDSFTestes.elementos.dashboards;
+using PortalIDSFTestes.elementos.notas;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.boletagem;
+using PortalIDSFTestes.pages.dashboards;
 using PortalIDSFTestes.pages.login;
+using PortalIDSFTestes.pages.notas;
 using PortalIDSFTestes.runner;
 using System;
 using System.Collections.Generic;
@@ -10,18 +12,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes.boletagem
+namespace PortalIDSFTestes.testes.notas
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Aporte")]
-    [Category("Criticidade: Alta")]
+    [Category("Suíte:  Notas Internas")]
+    [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
-    public class AporteTests : Executa
+    public class NotasInternasTests : Executa
     {
         private IPage page;
         Metodos metodo;
-        AporteElements el = new AporteElements();
+        NotasInternasElements el = new NotasInternasElements();
 
         [SetUp]
         public async Task Setup()
@@ -30,8 +32,8 @@ namespace PortalIDSFTestes.testes.boletagem
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuBoletagem, "Clicar na sessão Boletagem no menú hamburguer");
-            await metodo.Clicar(el.PaginaAporte, "Clicar na página Aporte");
+            await metodo.Clicar(el.MenuNotas, "Clicar na sessão Notas no menú hamburguer");
+            await metodo.Clicar(el.PaginaNotasInternas, "Clicar na página Pagamentos notas");
             await Task.Delay(500);
         }
 
@@ -39,14 +41,14 @@ namespace PortalIDSFTestes.testes.boletagem
         public async Task TearDown()
         {
             await FecharBrowserAsync();
+
         }
 
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var aporte = new AportePage(page);
-            await aporte.ValidarAcentosAporte();
+            var notasInternas = new NotasInternasPage(page);
+            await notasInternas.ValidarAcentosPagamentosNotasInternasPage();
         }
-
     }
 }

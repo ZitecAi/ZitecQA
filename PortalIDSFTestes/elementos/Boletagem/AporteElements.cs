@@ -8,7 +8,7 @@ namespace PortalIDSFTestes.elementos.Boletagem
 {
     public class AporteElements
     {
-        public string MenuCadastro { get; } = "(//p[text()='Boletagem'])[1]";
+        public string MenuBoletagem { get; } = "(//p[text()='Boletagem'])[1]";
         public string PaginaAporte { get; } = "//p[text()='Aporte']";
 
     }

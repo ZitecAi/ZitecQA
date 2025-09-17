@@ -16,7 +16,7 @@ namespace PortalIDSFTestes.testes.cadastro
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Consultoras")]
+    [Category("Suíte: Consultorias Internas")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
     public class ConsultorasTests : Executa

@@ -1,8 +1,8 @@
-﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.Boletagem;
+using Microsoft.Playwright;
+using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.boletagem;
 using PortalIDSFTestes.pages.login;
+using PortalIDSFTestes.pages.operacoes;
 using PortalIDSFTestes.runner;
 using System;
 using System.Collections.Generic;
@@ -10,18 +10,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes.boletagem
+namespace PortalIDSFTestes.testes.operacoes
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Aporte")]
-    [Category("Criticidade: Alta")]
+    [Category("Suíte: Baixas em Lote")]
+    [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
-    public class AporteTests : Executa
+    public class BaixasLoteTest : Executa
     {
         private IPage page;
         Metodos metodo;
-        AporteElements el = new AporteElements();
+        OperacoesElements el = new OperacoesElements();
 
         [SetUp]
         public async Task Setup()
@@ -30,8 +30,8 @@ namespace PortalIDSFTestes.testes.boletagem
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuBoletagem, "Clicar na sessão Boletagem no menú hamburguer");
-            await metodo.Clicar(el.PaginaAporte, "Clicar na página Aporte");
+            await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
+            await metodo.Clicar(el.PaginaOperacoes, "Clicar em Operações para acessar a página");
             await Task.Delay(500);
         }
 
@@ -44,9 +44,10 @@ namespace PortalIDSFTestes.testes.boletagem
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var aporte = new AportePage(page);
-            await aporte.ValidarAcentosAporte();
+            var operacoes = new OperacoesPage(page);
+            await operacoes.ValidarAcentosOperacoesPage();
         }
+
 
     }
 }

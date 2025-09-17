@@ -1,7 +1,9 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.Boletagem;
+using PortalIDSFTestes.elementos.custodia;
+using PortalIDSFTestes.elementos.dashboards;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.boletagem;
+using PortalIDSFTestes.pages.custodia;
+using PortalIDSFTestes.pages.dashboards;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
 using System;
@@ -10,18 +12,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalIDSFTestes.testes.boletagem
+namespace PortalIDSFTestes.testes.dashboards
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Aporte")]
-    [Category("Criticidade: Alta")]
+    [Category("Suíte:  Dashboards Cedentes")]
+    [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
-    public class AporteTests : Executa
+    public class DashCedentesTests : Executa
     {
         private IPage page;
         Metodos metodo;
-        AporteElements el = new AporteElements();
+        DashCedentesElements el = new DashCedentesElements();
 
         [SetUp]
         public async Task Setup()
@@ -30,8 +32,8 @@ namespace PortalIDSFTestes.testes.boletagem
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuBoletagem, "Clicar na sessão Boletagem no menú hamburguer");
-            await metodo.Clicar(el.PaginaAporte, "Clicar na página Aporte");
+            await metodo.Clicar(el.MenuDashboards, "Clicar na sessão Dashboards no menú hamburguer");
+            await metodo.Clicar(el.PaginaDashCedentes, "Clicar na página Dashboards cedentes");
             await Task.Delay(500);
         }
 
@@ -39,14 +41,14 @@ namespace PortalIDSFTestes.testes.boletagem
         public async Task TearDown()
         {
             await FecharBrowserAsync();
+
         }
 
         [Test, Order(1)]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var aporte = new AportePage(page);
-            await aporte.ValidarAcentosAporte();
+            var dashCedentes = new DashCedentesPage(page);
+            await dashCedentes.ValidarAcentosDashCedentesPage();
         }
-
     }
 }

@@ -30,7 +30,7 @@ namespace PortalIDSFTestes.testes.boletagem
             var login = new LoginPage(page);
             metodo = new Metodos(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
+            await metodo.Clicar(el.MenuBoletagem, "Clicar na sessão Boletagem no menú hamburguer");
             await metodo.Clicar(el.PaginaContaOrdem, "Clicar na página Conta Ordem");
             await Task.Delay(500);
         }
