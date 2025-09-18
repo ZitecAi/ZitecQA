@@ -44,36 +44,34 @@ jobs:
     inputs:
       versionSpec: '18.x'
 
-  # Limpa build antigo e QUALQUER allure-results residual
+  # LIMPEZA total + prepara diretório ABSOLUTO do Allure
   - script: |
       set -e
+      # limpa build antigo e resultados residuais
       dotnet clean "$(TEST_CSPROJ)" -c Release
       rm -rf "$(TEST_DIR)/bin" \
              "$(TEST_DIR)/obj" \
              "$(Build.SourcesDirectory)/TestResults" \
              "$(Build.SourcesDirectory)/_allure"
-      # remove pastas allure-results perdidas no repo
+      # remove quaisquer 'allure-results' perdidos no repo
       find "$(Build.SourcesDirectory)" -type d -name "allure-results" -prune -exec rm -rf {} +
-    displayName: 'Clean bin/obj/TestResults + varrer allure-results antigos'
-
-  # Cria allure.config.json com diretório ABSOLUTO e prepara pasta de resultados
-  - script: |
-      set -e
+      # cria pasta fixa para os resultados desta execução
       mkdir -p "$(Build.SourcesDirectory)/_allure/results"
-      printf '%s\n' \
-        '{' \
-        '  "allure": {' \
-        "    \"directory\": \"$(Build.SourcesDirectory)/_allure/results\"" \
-        '  }' \
-        '}' > "$(Build.SourcesDirectory)/allure.config.json"
-      echo "Allure config em: $(Build.SourcesDirectory)/allure.config.json"
-    displayName: 'Configurar Allure (path absoluto)'
+      # configura o adaptador do Allure para GRAVAR nessa pasta fixa
+      cat > "$(Build.SourcesDirectory)/allure.config.json" <<EOF
+      {
+        "allure": {
+          "directory": "$(Build.SourcesDirectory)/_allure/results"
+        }
+      }
+      EOF
+    displayName: 'Clean + configurar Allure (path absoluto)'
 
   - script: |
       set -e
       dotnet --info
       dotnet restore "$(TEST_CSPROJ)"
-      dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
+      dotnet build   "$(TEST_CSPROJ)" -c Release --no-restore
     displayName: 'Restore + Build'
 
   - script: |
@@ -94,7 +92,7 @@ jobs:
       fi
     displayName: 'Playwright browsers install (project script)'
 
-  # Roda testes, grava Allure na pasta fixa e SEMPRE sai 0
+  # Roda testes apontando o ALLURE_CONFIG e SEMPRE sai 0
   - script: |
       set +e
       echo "Rodando testes em: $(TEST_CSPROJ)"
@@ -106,6 +104,7 @@ jobs:
 
       echo "Conteúdo em _allure/results:"
       ls -la "$(Build.SourcesDirectory)/_allure/results" || true
+      # peek de timestamp vindo dos JSONs
       grep -R --include='*.json' -m 1 '"start"' "$(Build.SourcesDirectory)/_allure/results" || true
 
       if [ "$TEST_EXIT" -ne 0 ]; then
@@ -129,7 +128,27 @@ jobs:
       testRunTitle: 'NUnit TRX'
       mergeTestResults: true
 
-  # Publica a pasta fixa de resultados (sem copiar de bin/Release)
+  # Mantém o passo original, mas só copia de bin/Release se a pasta fixa estiver vazia
+  - script: |
+      set -e
+      TARGET="$(Build.SourcesDirectory)/_allure/results"
+
+      if [ -d "$TARGET" ] && [ -n "$(ls -A "$TARGET" 2>/dev/null)" ]; then
+        echo "Resultados já estão em $TARGET (ALLURE_CONFIG)."
+      else
+        echo "Pasta fixa vazia; tentando coletar de bin/Release como fallback..."
+        FOUND=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
+        if [ -n "$FOUND" ]; then
+          echo "Copiando resultados do Allure de: $FOUND"
+          cp -r "$FOUND/." "$TARGET/"
+        else
+          echo "Nenhum 'allure-results' encontrado."
+        fi
+      fi
+      echo "Listando $TARGET:"
+      ls -la "$TARGET" || true
+    displayName: 'Collect allure-results (preferência: pasta fixa)'
+
   - task: PublishPipelineArtifact@1
     displayName: 'Publish artifact: allure-results'
     inputs:
@@ -163,39 +182,34 @@ jobs:
       set -e
       npm i -g allure-commandline netlify-cli
 
+      # limpa e recria diretório do relatório
+      rm -rf "$(ALLURE_REPORT_DIR)"
+      mkdir -p "$(ALLURE_REPORT_DIR)"
+
       SRC="$(Pipeline.Workspace)/allure-results"
-      OUT="$(ALLURE_REPORT_DIR)"
-
-      # recria diretório do relatório do zero
-      rm -rf "$OUT"
-      mkdir -p "$OUT"
-
       if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
-        echo "Gerando Allure a partir do artifact..."
-        allure generate --clean -o "$OUT" "$SRC" || true
+        echo "Gerando Allure a partir de artifact..."
+        allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$SRC" || true
       fi
 
-      # remove histórico para não herdar datas/graphs antigos
-      rm -rf "$OUT/history" || true
-      find "$OUT" -type f -name 'history.json' -delete || true
-      find "$OUT" -type f -name '*history-trend*.json' -delete || true
+      # remove histórico para não herdar datas antigas
+      rm -rf "$(ALLURE_REPORT_DIR)/history" || true
+      find "$(ALLURE_REPORT_DIR)" -type f -name 'history.json' -delete || true
+      find "$(ALLURE_REPORT_DIR)" -type f -name '*history-trend*.json' -delete || true
 
-      # cria _headers com indentação correta (Netlify no-cache)
+      # _headers com indentação correta (evita cache no Netlify)
       {
         echo '/*'
         echo '  Cache-Control: no-store, no-cache, must-revalidate, max-age=0'
         echo '  Pragma: no-cache'
         echo '  Expires: 0'
-      } > "$OUT/_headers"
+      } > "$(ALLURE_REPORT_DIR)/_headers"
 
-      # placeholder se ainda assim ficou vazio
-      if [ -z "$(ls -A "$OUT" 2>/dev/null)" ]; then
-        printf '%s\n' \
-          '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>' \
-          > "$OUT/index.html"
+      # Placeholder se vazio
+      if [ -z "$(ls -A "$(ALLURE_REPORT_DIR)" 2>/dev/null)" ]; then
+        echo '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>' > "$(ALLURE_REPORT_DIR)/index.html"
       fi
     displayName: 'Generate Allure report (from artifact) + no-cache headers'
-    condition: always()
 
   - script: |
       set -e
@@ -209,19 +223,10 @@ jobs:
       echo "======== Netlify Deploy Result ========"
       cat deploy.json || true
 
-      # Extrai URL preferindo deploy_ssl_url -> deploy_url -> url -> site_url
-      URL=$(node -e "let d=require('fs').readFileSync('deploy.json','utf8');let j=JSON.parse(d);console.log(j.deploy_ssl_url||j.deploy_url||j.url||j.site_url||'');")
+      # Mantém a lógica ORIGINAL de URL (evita trocar domínio)
+      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'');}catch(e){}})" < deploy.json)
       echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
-      echo "Publicado em: $URL"
     displayName: 'Deploy to Netlify (prod)'
-    condition: always()
-
-  # Purga cache da CDN do Netlify (defensivo)
-  - script: |
-      set -e
-      netlify api purgeCache --auth "$(NETLIFY_AUTH_TOKEN)" \
-        --data '{"site_id":"'"$(NETLIFY_SITE_ID)"'"}' || true
-    displayName: 'Purge Netlify CDN cache'
     condition: always()
 
   - task: PowerShell@2
@@ -243,6 +248,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
+        # Prioriza URL do deploy; se vazia, usa a do grupo
         $siteUrl = $env:NETLIFY_URL
         if ([string]::IsNullOrWhiteSpace($siteUrl)) { $siteUrl = $env:SITE_URL }
 
@@ -250,9 +256,11 @@ jobs:
         $buildId  = $env:BUILD_BUILDID
         $buildNum = $env:BUILD_BUILDNUMBER
         $testExit = $env:TEST_EXIT
-        if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
 
+        if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
         $subject = "Relatório Allure (Staging) - $status"
+
+        # Sem here-string para evitar erro de identação
         $bodyLines = @(
           "Pipeline: $pipeline",
           "Execução: $buildNum (ID $buildId)",
