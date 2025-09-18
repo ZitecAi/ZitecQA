@@ -7,304 +7,215 @@ resources:
       project: 'Dev-ops IDSF'
       source: 'ZIDSF - PORTAL - STAGING'
       trigger: true
-  repositories:
-    - repository: testsRepo
-      type: git
-      name: Dev-ops IDSF/PortalIDSFTestes
-      ref: refs/heads/main
 
 variables:
-  - group: NetlifySecrets
-  - group: EmailSecrets
+  - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
+  - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
   - name: TEST_CSPROJ
-    value: 'tests/PortalIDSFTestes/PortalIDSFTestes.csproj'
+    value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'
   - name: TEST_DIR
-    value: 'tests/PortalIDSFTestes'
+    value: 'PortalIDSFTestes'
   - name: ALLURE_RESULTS_DIR
     value: 'allure-results'
   - name: ALLURE_REPORT_DIR
     value: 'allure-report'
 
+############################
+# JOB 1 — TESTS (não bloqueia)
+############################
 jobs:
-  - job: Tests
-    displayName: "Run Playwright/NUnit tests (latest main)"
-    pool:
-      vmImage: 'ubuntu-22.04'
-    steps:
-      - checkout: none
+- job: Tests
+  displayName: "Run Playwright/NUnit tests"
+  pool:
+    vmImage: 'ubuntu-22.04'
 
-      - checkout: testsRepo
-        displayName: 'Checkout tests repo (main)'
-        path: tests
-        clean: true
-        fetchDepth: 0
+  steps:
+  - checkout: self
+    displayName: 'Checkout tests repo'
 
-      - script: |
-          set -e
-          cd tests
-          git fetch origin main --prune
-          git checkout -f main
-          git reset --hard origin/main
-          echo "HEAD em:" && git log -1 --pretty=oneline
-        displayName: 'Force latest origin/main (hard reset)'
+  - task: UseDotNet@2
+    displayName: 'Use .NET 8 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '8.0.x'
 
-      - task: UseDotNet@2
-        inputs:
-          packageType: 'sdk'
-          version: '8.0.x'
-        displayName: 'Use .NET 8 SDK'
+  - task: NodeTool@0
+    displayName: 'Use Node 18'
+    inputs:
+      versionSpec: '18.x'
 
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '18.x'
-        displayName: 'Use Node 18'
+  - script: |
+      dotnet --info
+      dotnet restore "$(TEST_CSPROJ)"
+      dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
+    displayName: 'Restore + Build'
 
-      - script: |
-          set -e
-          dotnet clean "$(TEST_CSPROJ)" -c Release
-          rm -rf "$(TEST_DIR)/bin" "$(TEST_DIR)/obj" "$(System.DefaultWorkingDirectory)/tests/TestResults"
-        displayName: 'Clean bin/obj/TestResults (build 100% novo)'
+  - script: |
+      set -e
+      cd "$(TEST_DIR)"
 
-      - script: |
-          set -e
-          dotnet --info
-          dotnet restore "$(TEST_CSPROJ)"
-          dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
-        displayName: 'Restore + Build'
+      SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
+      if [ -z "$SCRIPT_PATH" ]; then
+        echo "ERRO: playwright.ps1 não encontrado após o build."
+        ls -R ./bin || true
+        exit 1
+      fi
 
-      - script: |
-          set -e
-          cd "$(TEST_DIR)"
-          SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
-          if [ -z "$SCRIPT_PATH" ]; then
-            echo "ERRO: playwright.ps1 não encontrado após o build."; ls -R ./bin || true; exit 1
-          fi
-          echo "Usando script: $SCRIPT_PATH"
-          if ! pwsh "$SCRIPT_PATH" install --with-deps; then
-            echo "Aviso: --with-deps falhou. Tentando 'install' sem deps..."; pwsh "$SCRIPT_PATH" install
-          fi
-        displayName: 'Playwright browsers install (project script)'
+      echo "Usando script: $SCRIPT_PATH"
+      if ! pwsh "$SCRIPT_PATH" install --with-deps; then
+        echo "Aviso: --with-deps falhou. Tentando 'install' sem deps..."
+        pwsh "$SCRIPT_PATH" install
+      fi
+    displayName: 'Playwright browsers install (project script)'
 
-      - script: |
-          set -e
-          ROOT="$(System.DefaultWorkingDirectory)/tests"
-          ALLURE_ROOT="$ROOT/_allure"
-          rm -rf "$ALLURE_ROOT"
-          mkdir -p "$ALLURE_ROOT/results"
-          printf '%s\n' \
-            '{' \
-            '  "allure": {' \
-            "    \"directory\": \"${ALLURE_ROOT}/results\"" \
-            '  }' \
-            '}' > "$ROOT/allure.config.json"
-        displayName: 'Clean e configurar Allure (path absoluto)'
+  # Roda testes, capta exit code e SEMPRE sai 0
+  - script: |
+      set +e
+      echo "Rodando testes em: $(TEST_CSPROJ)"
+      dotnet test "$(TEST_CSPROJ)" -c Release --logger "trx;LogFileName=$(Build.SourcesDirectory)/TestResults/results.trx"
+      TEST_EXIT=$?
+      echo "Exit code dos testes: $TEST_EXIT"
+      echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
 
-      - script: |
-          set +e
-          echo "Rodando testes em: $(TEST_CSPROJ)"
-          dotnet test "$(TEST_CSPROJ)" -c Release \
-            --logger "trx;LogFileName=$(System.DefaultWorkingDirectory)/tests/TestResults/results.trx"
-          TEST_EXIT=$?
-          echo "Exit code dos testes: $TEST_EXIT"
-          echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
-          echo "Arquivos em _allure/results:"
-          ls -la "$(System.DefaultWorkingDirectory)/tests/_allure/results" || true
-          grep -R --include='*.json' -m 1 '"start"' "$(System.DefaultWorkingDirectory)/tests/_allure/results" || true
-          exit 0
-        name: runTests
-        displayName: 'Run tests (non-blocking)'
-        env:
-          ALLURE_CONFIG: $(System.DefaultWorkingDirectory)/tests/allure.config.json
-          ALLURE_RESULTS_DIRECTORY: $(System.DefaultWorkingDirectory)/tests/_allure/results
+      if [ "$TEST_EXIT" -ne 0 ]; then
+        echo "##vso[task.complete result=SucceededWithIssues;]Há testes falhando, mas o fluxo continuará."
+      fi
 
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFormat: VSTest
-          testResultsFiles: 'tests/TestResults/**/*.trx'
-          searchFolder: '$(System.DefaultWorkingDirectory)'
-          failTaskOnFailedTests: false
-          testRunTitle: 'NUnit TRX'
-          mergeTestResults: true
-        displayName: 'Publish TRX'
+      exit 0
+    name: runTests
+    displayName: 'Run tests (non-blocking)'
 
-      - task: PublishPipelineArtifact@1
-        inputs:
-          artifact: 'allure-results'
-          targetPath: '$(System.DefaultWorkingDirectory)/tests/_allure/results'
-        displayName: 'Publish artifact: allure-results'
+  - task: PublishTestResults@2
+    displayName: Publish TRX
+    inputs:
+      testResultsFormat: VSTest
+      testResultsFiles: 'TestResults/**/*.trx'
+      searchFolder: '$(Build.SourcesDirectory)'
+      failTaskOnFailedTests: false
+      testRunTitle: 'NUnit TRX'
+      mergeTestResults: true
 
-  - job: Report
-    displayName: "Generate & publish Allure + Send email"
-    pool:
-      vmImage: 'ubuntu-22.04'
-    dependsOn: Tests
+  - script: |
+      set -e
+      mkdir -p "$(Build.SourcesDirectory)/_allure/results"
+      FOUND=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
+      if [ -n "$FOUND" ]; then
+        echo "Copiando resultados do Allure de: $FOUND"
+        cp -r "$FOUND/." "$(Build.SourcesDirectory)/_allure/results/"
+      else
+        echo "Nenhum 'allure-results' encontrado. Publicaremos vazio."
+      fi
+    displayName: 'Collect allure-results (if any)'
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish artifact: allure-results'
+    inputs:
+      artifact: 'allure-results'
+      targetPath: '$(Build.SourcesDirectory)/_allure/results'
+
+############################
+# JOB 2 — REPORT (sempre roda)
+############################
+- job: Report
+  displayName: "Generate & publish Allure + Send email"
+  pool:
+    vmImage: 'ubuntu-22.04'
+  dependsOn: Tests
+  condition: always()
+
+  variables:
+    TEST_EXIT_FROM_PREV: $[ dependencies.Tests.outputs['runTests.TEST_EXIT'] ]
+
+  steps:
+  - download: current
+    displayName: 'Download artifact: allure-results'
+    artifact: 'allure-results'
+
+  - task: NodeTool@0
+    displayName: 'Use Node 18'
+    inputs:
+      versionSpec: '18.x'
+
+  - script: |
+      set -e
+      npm i -g allure-commandline netlify-cli
+
+      mkdir -p "$(ALLURE_REPORT_DIR)"
+      SRC="$(Pipeline.Workspace)/allure-results"
+      if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
+        echo "Gerando Allure a partir de artifact..."
+        allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$SRC" || true
+      fi
+
+      if [ ! -d "$(ALLURE_REPORT_DIR)" ] || [ -z "$(ls -A "$(ALLURE_REPORT_DIR)" 2>/dev/null)" ]; then
+        echo "Criando relatório placeholder..."
+        mkdir -p "$(ALLURE_REPORT_DIR)"
+        echo '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>' > "$(ALLURE_REPORT_DIR)/index.html"
+      fi
+    displayName: 'Generate Allure report (from artifact)'
+
+  - script: |
+      set -e
+      netlify deploy \
+        --prod \
+        --dir="$(ALLURE_REPORT_DIR)" \
+        --site "$(NETLIFY_SITE_ID)" \
+        --auth "$(NETLIFY_AUTH_TOKEN)" \
+        --json > deploy.json
+
+      echo "======== Netlify Deploy Result ========"
+      cat deploy.json || true
+
+      # Extrai URL e salva como variável do job
+      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'');}catch(e){}})" < deploy.json)
+      echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
+    displayName: 'Deploy to Netlify (prod)'
     condition: always()
-    variables:
-      TEST_EXIT_FROM_PREV: $[ dependencies.Tests.outputs['runTests.TEST_EXIT'] ]
-    steps:
-      - download: current
-        artifact: 'allure-results'
-        displayName: 'Download artifact: allure-results'
 
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '18.x'
-        displayName: 'Use Node 18'
+  - task: PowerShell@2
+    displayName: 'Send email with report link (plain text)'
+    condition: always()
+    env:
+      SITE_URL: $(SITE_URL)            # do Variable Group
+      NETLIFY_URL: $(NETLIFY_URL)      # do passo Netlify acima
+      SMTP_SERVER: $(SMTP_SERVER)
+      SMTP_PORT: $(SMTP_PORT)
+      SMTP_USER: $(SMTP_USER)
+      SMTP_PASS: $(SMTP_PASS)
+      MAIL_FROM: $(MAIL_FROM)
+      MAIL_TO: $(MAIL_TO)
+      TEST_EXIT: $(TEST_EXIT_FROM_PREV)
+      BUILD_DEFINITIONNAME: $(Build.DefinitionName)
+      BUILD_BUILDID: $(Build.BuildId)
+      BUILD_BUILDNUMBER: $(Build.BuildNumber)
+    inputs:
+      targetType: inline
+      script: |
+        # Prioriza URL do deploy; se vazia, usa a do grupo
+        $siteUrl = $env:NETLIFY_URL
+        if ([string]::IsNullOrWhiteSpace($siteUrl)) { $siteUrl = $env:SITE_URL }
 
-      - script: |
-          set -e
-          npm i -g allure-commandline netlify-cli
+        $pipeline = $env:BUILD_DEFINITIONNAME
+        $buildId  = $env:BUILD_BUILDID
+        $buildNum = $env:BUILD_BUILDNUMBER
+        $testExit = $env:TEST_EXIT
 
-          SRC="$(Pipeline.Workspace)/allure-results"
-          SITE="_site"
-          LATEST="$SITE/latest"
-          VERSIONED="$SITE/builds/$(Build.BuildId)"
-          TMP="allure-tmp"
+        if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
+        $subject = "Relatório Allure (Staging) - $status"
 
-          rm -rf "$SITE" "$TMP"
-          mkdir -p "$TMP" "$LATEST" "$VERSIONED" "$SITE"
+        # Sem here-string para evitar erro de identação
+        $bodyLines = @(
+          "Pipeline: $pipeline",
+          "Execução: $buildNum (ID $buildId)",
+          "Status dos testes: $status (exit $testExit)",
+          "Relatório: $siteUrl"
+        )
+        $body = $bodyLines -join "`n"
 
-          if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
-            echo "Gerando Allure..."; allure generate --clean -o "$TMP" "$SRC" || true
-          fi
-
-          # limpa qualquer histórico para latest
-          rm -rf "$TMP/history" || true
-          find "$TMP" -type f -name 'history.json' -delete || true
-          find "$TMP" -type f -name '*history-trend*.json' -delete || true
-
-          # placeholder se vazio
-          if [ ! -d "$TMP" ] || [ -z "$(ls -A "$TMP" 2>/dev/null)" ]; then
-            mkdir -p "$TMP"
-            printf '%s\n' \
-              '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>' \
-              > "$TMP/index.html"
-          fi
-
-          # latest sobrescreve tudo
-          rsync -a --delete "$TMP/" "$LATEST/"
-          # versão por build
-          rsync -a "$TMP/" "$VERSIONED/"
-
-          # _headers com INDENTAÇÃO (Netlify exige 2 espaços)
-          {
-            echo '/*'
-            echo '  Cache-Control: no-store, no-cache, must-revalidate, max-age=0'
-            echo '  Pragma: no-cache'
-            echo '  Expires: 0'
-          } > "$SITE/_headers"
-
-          # index com cache-buster no link "latest"
-          printf '%s\n' \'<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Relatórios Allure</title><style>body{font-family:Arial,Helvetica,sans-serif;padding:24px} a{display:block;margin:.4rem 0}</style></head><body>' \'<h1>Relatórios Allure</h1>' \"<p><a href=\"./latest/?b=$(Build.BuildId)\">🔗 Último relatório (latest)</a></p>" \'<h2>Histórico por execução</h2>' \'<ul>' \"<li><a href=\"./builds/$(Build.BuildId)/\">Build $(Build.BuildNumber) — ID $(Build.BuildId)</a></li>" \'</ul>' \'</body></html>' > "$SITE/index.html"
-
-          # hash local do summary
-          if [ -f "$LATEST/widgets/summary.json" ]; then
-            sha1sum "$LATEST/widgets/summary.json" | awk '{print $1}' > local_summary.sha1
-          fi
-        displayName: 'Generate versioned site (_site/latest and _site/builds/<id>)'
-        condition: always()
-
-      - script: |
-          set -e
-          netlify deploy \
-            --prod \
-            --dir="_site" \
-            --site "$(NETLIFY_SITE_ID)" \
-            --auth "$(NETLIFY_AUTH_TOKEN)" \
-            --message "Allure $(Build.BuildNumber)" \
-            --json > deploy.json
-
-          echo "======== Netlify Deploy Result ========"; cat deploy.json || true
-          STATE=$(node -e "let j=require('fs').readFileSync('deploy.json','utf8');j=JSON.parse(j);console.log(j.state||j.deploy_state||'');")
-          if [ "$STATE" != "ready" ]; then echo "ERRO: deploy state = '$STATE'"; exit 1; fi
-          URL=$(node -e "let j=require('fs').readFileSync('deploy.json','utf8');j=JSON.parse(j);console.log(j.deploy_ssl_url||j.deploy_url||j.url||j.site_url||'');")
-          echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
-          echo "Publicado em: $URL"
-        displayName: 'Deploy to Netlify (prod)'
-        condition: always()
-
-      # MOSTRA cabeçalhos servidos pelo Netlify (confirma no-cache e Last-Modified)
-      - script: |
-          set -e
-          echo "HEADERS index.html:"
-          curl -sI "$(NETLIFY_URL)/latest/index.html" | tr -d '\r'
-          echo
-          echo "HEADERS summary.json:"
-          curl -sI "$(NETLIFY_URL)/latest/widgets/summary.json" | tr -d '\r'
-        displayName: 'Inspecionar headers do Netlify (index.html e summary.json)'
-        condition: always()
-
-      - script: |
-          set -e
-          if [ -s local_summary.sha1 ]; then
-            echo "Comparando summary publicado x local..."
-            curl -fsSL "$(NETLIFY_URL)/latest/widgets/summary.json" -o remote_summary.json || true
-            if [ -s remote_summary.json ]; then
-              REMOTE_HASH=$(sha1sum remote_summary.json | awk '{print $1}')
-              LOCAL_HASH=$(cat local_summary.sha1)
-              echo "LOCAL : $LOCAL_HASH"
-              echo "REMOTE: $REMOTE_HASH"
-              if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
-                echo "ATENÇÃO: summary em produção difere do local (pode ser cache/CDN)."
-              else
-                echo "OK: summary em produção bate com o local."
-              fi
-            else
-              echo "WARN: não consegui baixar o summary publicado."
-            fi
-          else
-            echo "Sem hash local para comparar."
-          fi
-        displayName: 'Verificar conteúdo publicado (hash do summary)'
-        condition: always()
-
-      - script: |
-          set -e
-          netlify api purgeCache --auth "$(NETLIFY_AUTH_TOKEN)" \
-            --data '{"site_id":"'"$(NETLIFY_SITE_ID)"'"}' || true
-        displayName: 'Purge Netlify CDN cache'
-        condition: always()
-
-      - task: PowerShell@2
-        displayName: 'Send email with report links'
-        condition: always()
-        env:
-          SITE_URL: $(SITE_URL)
-          NETLIFY_URL: $(NETLIFY_URL)
-          SMTP_SERVER: $(SMTP_SERVER)
-          SMTP_PORT: $(SMTP_PORT)
-          SMTP_USER: $(SMTP_USER)
-          SMTP_PASS: $(SMTP_PASS)
-          MAIL_FROM: $(MAIL_FROM)
-          MAIL_TO: $(MAIL_TO)
-          TEST_EXIT: $(TEST_EXIT_FROM_PREV)
-          BUILD_DEFINITIONNAME: $(Build.DefinitionName)
-          BUILD_BUILDID: $(Build.BuildId)
-          BUILD_BUILDNUMBER: $(Build.BuildNumber)
-        inputs:
-          targetType: inline
-          script: |
-            $siteUrl = $env:NETLIFY_URL; if ([string]::IsNullOrWhiteSpace($siteUrl)) { $siteUrl = $env:SITE_URL }
-            $latest = "$siteUrl/latest/?b=$($env:BUILD_BUILDID)"   # cache-buster
-            $this   = "$siteUrl/builds/$($env:BUILD_BUILDID)/"
-            $pipeline = $env:BUILD_DEFINITIONNAME
-            $buildId  = $env:BUILD_BUILDID
-            $buildNum = $env:BUILD_BUILDNUMBER
-            $testExit = $env:TEST_EXIT
-            if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
-            $subject = "Relatório Allure (Staging) - $status"
-            $bodyLines = @(
-              "Pipeline: $pipeline",
-              "Execução: $buildNum (ID $buildId)",
-              "Status dos testes: $status (exit $testExit)",
-              "Relatório (latest): $latest",
-              "Relatório desta execução: $this"
-            )
-            $body = $bodyLines -join "`n"
-            if ($env:SMTP_USER -and $env:SMTP_PASS) {
-              $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
-              $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
-              Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
-            } else {
-              Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
-            }
+        if ($env:SMTP_USER -and $env:SMTP_PASS) {
+          $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
+          Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -UseSsl -Credential $cred -Encoding UTF8
+        } else {
+          Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
+        }
