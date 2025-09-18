@@ -41,8 +41,9 @@ jobs:
         displayName: 'Checkout tests repo (main)'
         path: tests
         clean: true
-        fetchDepth: "0"
+        fetchDepth: 0   # <<< sem aspas, para garantir clone completo
 
+      # Força HEAD exatamente na última origin/main
       - script: |
           set -e
           cd tests
@@ -89,6 +90,7 @@ jobs:
           fi
         displayName: 'Playwright browsers install (project script)'
 
+      # Garante que os resultados serão SEMPRE de agora (dir limpo)
       - script: |
           set -e
           ROOT="$(System.DefaultWorkingDirectory)/tests"
@@ -114,6 +116,8 @@ jobs:
           TEST_EXIT=$?
           echo "Exit code dos testes: $TEST_EXIT"
           echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
+          echo "Arquivos gerados em _allure/results:"
+          ls -la "$(System.DefaultWorkingDirectory)/tests/_allure/results" || true
           exit 0
         name: runTests
         displayName: 'Run tests (non-blocking)'
@@ -157,6 +161,7 @@ jobs:
         inputs:
           versionSpec: '18.x'
 
+      # Gera site; limpa QUALQUER histórico antes de publicar "latest"
       - script: |
           set -e
           npm i -g allure-commandline netlify-cli
@@ -175,6 +180,11 @@ jobs:
             allure generate --clean -o "$TMP" "$SRC" || true
           fi
 
+          # >>> Remove qualquer 'history' do Allure para não reaproveitar data/trend
+          rm -rf "$TMP/history" || true
+          find "$TMP" -type f -name 'history.json' -delete || true
+          find "$TMP" -type f -name '*history-trend*.json' -delete || true
+
           if [ ! -d "$TMP" ] || [ -z "$(ls -A "$TMP" 2>/dev/null)" ]; then
             echo "Criando placeholder..."
             mkdir -p "$TMP"
@@ -183,9 +193,12 @@ jobs:
             HTML
           fi
 
+          # >>> latest SEMPRE sobrescreve (rsync --delete)
           rsync -a --delete "$TMP/" "$LATEST/"
+          # mantém versão da execução
           rsync -a "$TMP/" "$VERSIONED/"
 
+          # Index com links
           cat > "$SITE/index.html" <<HTML
           <!doctype html><html lang="pt-br"><head><meta charset="utf-8">
           <title>Relatórios Allure</title>
@@ -200,6 +213,7 @@ jobs:
           </body></html>
           HTML
 
+          # Cabeçalhos no-cache
           cat > "$SITE/_headers" <<'HDR'
           /*
           cache-control: max-age=0
