@@ -33,7 +33,6 @@ jobs:
     displayName: "Run Playwright/NUnit tests (latest main)"
     pool:
       vmImage: 'ubuntu-22.04'
-
     steps:
       - checkout: none
 
@@ -41,9 +40,8 @@ jobs:
         displayName: 'Checkout tests repo (main)'
         path: tests
         clean: true
-        fetchDepth: 0   # sem aspas
+        fetchDepth: 0
 
-      # Garante HEAD == última origin/main
       - script: |
           set -e
           cd tests
@@ -67,6 +65,12 @@ jobs:
 
       - script: |
           set -e
+          dotnet clean "$(TEST_CSPROJ)" -c Release
+          rm -rf "$(TEST_DIR)/bin" "$(TEST_DIR)/obj" "$(System.DefaultWorkingDirectory)/tests/TestResults"
+        displayName: 'Clean bin/obj/TestResults (build 100% novo)'
+
+      - script: |
+          set -e
           dotnet --info
           dotnet restore "$(TEST_CSPROJ)"
           dotnet build "$(TEST_CSPROJ)" -c Release --no-restore
@@ -75,14 +79,12 @@ jobs:
       - script: |
           set -e
           cd "$(TEST_DIR)"
-
           SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
           if [ -z "$SCRIPT_PATH" ]; then
             echo "ERRO: playwright.ps1 não encontrado após o build."
             ls -R ./bin || true
             exit 1
           fi
-
           echo "Usando script: $SCRIPT_PATH"
           if ! pwsh "$SCRIPT_PATH" install --with-deps; then
             echo "Aviso: --with-deps falhou. Tentando 'install' sem deps..."
@@ -90,7 +92,6 @@ jobs:
           fi
         displayName: 'Playwright browsers install (project script)'
 
-      # Saída Allure SEMPRE do zero
       - script: |
           set -e
           ROOT="$(System.DefaultWorkingDirectory)/tests"
@@ -98,19 +99,18 @@ jobs:
           rm -rf "$ALLURE_ROOT"
           mkdir -p "$ALLURE_ROOT/results"
 
-          cat > "$ROOT/allure.config.json" <<'EOF'
-          {
-            "allure": {
-              "directory": "_allure/results"
-            }
-          }
-          EOF
-        displayName: 'Clean e configurar Allure results dir'
+          # Cria allure.config.json com caminho absoluto
+          printf '%s\n' \
+            '{' \
+            '  "allure": {' \
+            "    \"directory\": \"${ALLURE_ROOT}/results\"" \
+            '  }' \
+            '}' > "$ROOT/allure.config.json"
+        displayName: 'Clean e configurar Allure (path absoluto)'
 
       - script: |
           set +e
           echo "Rodando testes em: $(TEST_CSPROJ)"
-          export ALLURE_CONFIG="$(System.DefaultWorkingDirectory)/tests/allure.config.json"
           dotnet test "$(TEST_CSPROJ)" -c Release \
             --logger "trx;LogFileName=$(System.DefaultWorkingDirectory)/tests/TestResults/results.trx"
           TEST_EXIT=$?
@@ -118,11 +118,13 @@ jobs:
           echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
           echo "Arquivos em _allure/results:"
           ls -la "$(System.DefaultWorkingDirectory)/tests/_allure/results" || true
-          # Mostra um timestamp de exemplo que o Allure gravou (para auditoria)
           grep -R --include='*.json' -m 1 '"start"' "$(System.DefaultWorkingDirectory)/tests/_allure/results" || true
           exit 0
         name: runTests
         displayName: 'Run tests (non-blocking)'
+        env:
+          ALLURE_CONFIG: $(System.DefaultWorkingDirectory)/tests/allure.config.json
+          ALLURE_RESULTS_DIRECTORY: $(System.DefaultWorkingDirectory)/tests/_allure/results
 
       - task: PublishTestResults@2
         displayName: 'Publish TRX'
@@ -149,10 +151,8 @@ jobs:
       vmImage: 'ubuntu-22.04'
     dependsOn: Tests
     condition: always()
-
     variables:
       TEST_EXIT_FROM_PREV: $[ dependencies.Tests.outputs['runTests.TEST_EXIT'] ]
-
     steps:
       - download: current
         displayName: 'Download artifact: allure-results'
@@ -163,7 +163,6 @@ jobs:
         inputs:
           versionSpec: '18.x'
 
-      # Gera site limpo; zera HISTORY; valida hash do summary
       - script: |
           set -e
           npm i -g allure-commandline netlify-cli
@@ -174,7 +173,6 @@ jobs:
           VERSIONED="$SITE/builds/$(Build.BuildId)"
           TMP="allure-tmp"
 
-          # limpa TUDO do site anterior para não ficar lixo
           rm -rf "$SITE" "$TMP"
           mkdir -p "$TMP" "$LATEST" "$VERSIONED" "$SITE"
 
@@ -183,17 +181,17 @@ jobs:
             allure generate --clean -o "$TMP" "$SRC" || true
           fi
 
-          # remove qualquer histórico para o 'latest' não herdar datas antigas
+          # Remove histórico para o 'latest' não herdar datas antigas
           rm -rf "$TMP/history" || true
           find "$TMP" -type f -name 'history.json' -delete || true
           find "$TMP" -type f -name '*history-trend*.json' -delete || true
 
-          # placeholder se não gerou
+          # Placeholder se não gerou
           if [ ! -d "$TMP" ] || [ -z "$(ls -A "$TMP" 2>/dev/null)" ]; then
             mkdir -p "$TMP"
-            cat > "$TMP/index.html" <<'HTML'
-            <!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>
-            HTML
+            printf '%s\n' \
+              '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>' \
+              > "$TMP/index.html"
           fi
 
           # latest sempre substitui TUDO
@@ -201,36 +199,23 @@ jobs:
           # guarda versão por build
           rsync -a "$TMP/" "$VERSIONED/"
 
-          # imprime data/horário que vai para produção
+          # Hash do summary local (para checagem após deploy)
           if [ -f "$LATEST/widgets/summary.json" ]; then
-            echo "Resumo local (latest/widgets/summary.json):"
-            head -c 1000 "$LATEST/widgets/summary.json" | tr -d '\n' | cut -c1-1000; echo
-            # hash para comparar depois com o publicado
             sha1sum "$LATEST/widgets/summary.json" | awk '{print $1}' > local_summary.sha1
           fi
 
-          # index + headers
-          cat > "$SITE/index.html" <<HTML
-          <!doctype html><html lang="pt-br"><head><meta charset="utf-8">
-          <title>Relatórios Allure</title>
-          <style>body{font-family:Arial,Helvetica,sans-serif;padding:24px} a{display:block;margin:.4rem 0}</style>
-          </head><body>
-          <h1>Relatórios Allure</h1>
-          <p><a href="./latest/">🔗 Último relatório (latest)</a></p>
-          <h2>Histórico por execução</h2>
-          <ul>
-            <li><a href="./builds/$(Build.BuildId)/">Build $(Build.BuildNumber) — ID $(Build.BuildId)</a></li>
-          </ul>
-          </body></html>
-          HTML
+          # index.html do site
+          printf '%s\n' \'<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Relatórios Allure</title><style>body{font-family:Arial,Helvetica,sans-serif;padding:24px} a{display:block;margin:.4rem 0}</style></head><body>' \'<h1>Relatórios Allure</h1>' \'<p><a href="./latest/">🔗 Último relatório (latest)</a></p>' \'<h2>Histórico por execução</h2>' \'<ul>' \"<li><a href=\"./builds/$(Build.BuildId)/\">Build $(Build.BuildNumber) — ID $(Build.BuildId)</a></li>" \'</ul>' \'</body></html>' \
+          > "$SITE/index.html"
 
-          cat > "$SITE/_headers" <<'HDR'
-          /*
-          cache-control: max-age=0
-          cache-control: no-cache
-          cache-control: no-store
-          cache-control: must-revalidate
-          HDR
+          # _headers para no-cache
+          {
+            echo '/*'
+            echo 'cache-control: max-age=0'
+            echo 'cache-control: no-cache'
+            echo 'cache-control: no-store'
+            echo 'cache-control: must-revalidate'
+          } > "$SITE/_headers"
         displayName: 'Generate versioned site (_site/latest and _site/builds/<id>)'
         condition: always()
 
@@ -247,7 +232,6 @@ jobs:
           echo "======== Netlify Deploy Result ========"
           cat deploy.json || true
 
-          # checa estado do deploy
           STATE=$(node -e "let d=require('fs').readFileSync('deploy.json','utf8');let j=JSON.parse(d);console.log(j.state||j.deploy_state||'');")
           if [ "$STATE" != "ready" ]; then
             echo "ERRO: deploy state = '$STATE' (não é 'ready')."
@@ -260,7 +244,6 @@ jobs:
         displayName: 'Deploy to Netlify (prod)'
         condition: always()
 
-      # Confere se o arquivo em produção = arquivo local (hash do summary)
       - script: |
           set -e
           if [ -s local_summary.sha1 ]; then
@@ -273,7 +256,6 @@ jobs:
               echo "REMOTE: $REMOTE_HASH"
               if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
                 echo "ATENÇÃO: summary em produção difere do local (pode ser cache/CDN ou deploy antigo)."
-                # força um erro leve para ficar visível no log, mas não quebrar a pipeline:
                 false || true
               else
                 echo "OK: summary em produção bate com o local."
@@ -315,16 +297,13 @@ jobs:
           script: |
             $siteUrl = $env:NETLIFY_URL
             if ([string]::IsNullOrWhiteSpace($siteUrl)) { $siteUrl = $env:SITE_URL }
-
             $latest = "$siteUrl/latest/"
             $this   = "$siteUrl/builds/$($env:BUILD_BUILDID)/"
-
             $pipeline = $env:BUILD_DEFINITIONNAME
             $buildId  = $env:BUILD_BUILDID
             $buildNum = $env:BUILD_BUILDNUMBER
             $testExit = $env:TEST_EXIT
             if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
-
             $subject = "Relatório Allure (Staging) - $status"
             $bodyLines = @(
               "Pipeline: $pipeline",
@@ -334,7 +313,6 @@ jobs:
               "Relatório desta execução: $this"
             )
             $body = $bodyLines -join "`n"
-
             if ($env:SMTP_USER -and $env:SMTP_PASS) {
               $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
               $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
