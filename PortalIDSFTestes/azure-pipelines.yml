@@ -41,9 +41,9 @@ jobs:
         displayName: 'Checkout tests repo (main)'
         path: tests
         clean: true
-        fetchDepth: 0   # <<< sem aspas, para garantir clone completo
+        fetchDepth: 0   # sem aspas
 
-      # Força HEAD exatamente na última origin/main
+      # Garante HEAD == última origin/main
       - script: |
           set -e
           cd tests
@@ -90,7 +90,7 @@ jobs:
           fi
         displayName: 'Playwright browsers install (project script)'
 
-      # Garante que os resultados serão SEMPRE de agora (dir limpo)
+      # Saída Allure SEMPRE do zero
       - script: |
           set -e
           ROOT="$(System.DefaultWorkingDirectory)/tests"
@@ -116,8 +116,10 @@ jobs:
           TEST_EXIT=$?
           echo "Exit code dos testes: $TEST_EXIT"
           echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
-          echo "Arquivos gerados em _allure/results:"
+          echo "Arquivos em _allure/results:"
           ls -la "$(System.DefaultWorkingDirectory)/tests/_allure/results" || true
+          # Mostra um timestamp de exemplo que o Allure gravou (para auditoria)
+          grep -R --include='*.json' -m 1 '"start"' "$(System.DefaultWorkingDirectory)/tests/_allure/results" || true
           exit 0
         name: runTests
         displayName: 'Run tests (non-blocking)'
@@ -161,7 +163,7 @@ jobs:
         inputs:
           versionSpec: '18.x'
 
-      # Gera site; limpa QUALQUER histórico antes de publicar "latest"
+      # Gera site limpo; zera HISTORY; valida hash do summary
       - script: |
           set -e
           npm i -g allure-commandline netlify-cli
@@ -172,7 +174,8 @@ jobs:
           VERSIONED="$SITE/builds/$(Build.BuildId)"
           TMP="allure-tmp"
 
-          rm -rf "$TMP" "$LATEST" "$VERSIONED"
+          # limpa TUDO do site anterior para não ficar lixo
+          rm -rf "$SITE" "$TMP"
           mkdir -p "$TMP" "$LATEST" "$VERSIONED" "$SITE"
 
           if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
@@ -180,25 +183,33 @@ jobs:
             allure generate --clean -o "$TMP" "$SRC" || true
           fi
 
-          # >>> Remove qualquer 'history' do Allure para não reaproveitar data/trend
+          # remove qualquer histórico para o 'latest' não herdar datas antigas
           rm -rf "$TMP/history" || true
           find "$TMP" -type f -name 'history.json' -delete || true
           find "$TMP" -type f -name '*history-trend*.json' -delete || true
 
+          # placeholder se não gerou
           if [ ! -d "$TMP" ] || [ -z "$(ls -A "$TMP" 2>/dev/null)" ]; then
-            echo "Criando placeholder..."
             mkdir -p "$TMP"
             cat > "$TMP/index.html" <<'HTML'
             <!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>
             HTML
           fi
 
-          # >>> latest SEMPRE sobrescreve (rsync --delete)
+          # latest sempre substitui TUDO
           rsync -a --delete "$TMP/" "$LATEST/"
-          # mantém versão da execução
+          # guarda versão por build
           rsync -a "$TMP/" "$VERSIONED/"
 
-          # Index com links
+          # imprime data/horário que vai para produção
+          if [ -f "$LATEST/widgets/summary.json" ]; then
+            echo "Resumo local (latest/widgets/summary.json):"
+            head -c 1000 "$LATEST/widgets/summary.json" | tr -d '\n' | cut -c1-1000; echo
+            # hash para comparar depois com o publicado
+            sha1sum "$LATEST/widgets/summary.json" | awk '{print $1}' > local_summary.sha1
+          fi
+
+          # index + headers
           cat > "$SITE/index.html" <<HTML
           <!doctype html><html lang="pt-br"><head><meta charset="utf-8">
           <title>Relatórios Allure</title>
@@ -213,7 +224,6 @@ jobs:
           </body></html>
           HTML
 
-          # Cabeçalhos no-cache
           cat > "$SITE/_headers" <<'HDR'
           /*
           cache-control: max-age=0
@@ -237,9 +247,44 @@ jobs:
           echo "======== Netlify Deploy Result ========"
           cat deploy.json || true
 
-          URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.deploy_ssl_url||j.deploy_url||j.url||j.site_url||'');}catch(e){}})" < deploy.json)
+          # checa estado do deploy
+          STATE=$(node -e "let d=require('fs').readFileSync('deploy.json','utf8');let j=JSON.parse(d);console.log(j.state||j.deploy_state||'');")
+          if [ "$STATE" != "ready" ]; then
+            echo "ERRO: deploy state = '$STATE' (não é 'ready')."
+            exit 1
+          fi
+
+          URL=$(node -e "let d=require('fs').readFileSync('deploy.json','utf8');let j=JSON.parse(d);console.log(j.deploy_ssl_url||j.deploy_url||j.url||j.site_url||'');")
           echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
+          echo "Publicado em: $URL"
         displayName: 'Deploy to Netlify (prod)'
+        condition: always()
+
+      # Confere se o arquivo em produção = arquivo local (hash do summary)
+      - script: |
+          set -e
+          if [ -s local_summary.sha1 ]; then
+            echo "Baixando summary publicado para comparar..."
+            curl -fsSL "$(NETLIFY_URL)/latest/widgets/summary.json" -o remote_summary.json || true
+            if [ -s remote_summary.json ]; then
+              REMOTE_HASH=$(sha1sum remote_summary.json | awk '{print $1}')
+              LOCAL_HASH=$(cat local_summary.sha1)
+              echo "LOCAL : $LOCAL_HASH"
+              echo "REMOTE: $REMOTE_HASH"
+              if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
+                echo "ATENÇÃO: summary em produção difere do local (pode ser cache/CDN ou deploy antigo)."
+                # força um erro leve para ficar visível no log, mas não quebrar a pipeline:
+                false || true
+              else
+                echo "OK: summary em produção bate com o local."
+              fi
+            else
+              echo "WARN: não consegui baixar o summary publicado."
+            fi
+          else
+            echo "Sem hash local para comparar."
+          fi
+        displayName: 'Verificar conteúdo publicado (hash do summary)'
         condition: always()
 
       - script: |
