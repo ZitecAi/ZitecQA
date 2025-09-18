@@ -26,9 +26,6 @@ variables:
     value: 'allure-report'
 
 jobs:
-  # =========================
-  # JOB 1 — TESTS (não bloqueia)
-  # =========================
   - job: Tests
     displayName: "Run Playwright/NUnit tests (latest main)"
     pool:
@@ -48,20 +45,19 @@ jobs:
           git fetch origin main --prune
           git checkout -f main
           git reset --hard origin/main
-          echo "HEAD em:"
-          git log -1 --pretty=oneline
+          echo "HEAD em:" && git log -1 --pretty=oneline
         displayName: 'Force latest origin/main (hard reset)'
 
       - task: UseDotNet@2
-        displayName: 'Use .NET 8 SDK'
         inputs:
           packageType: 'sdk'
           version: '8.0.x'
+        displayName: 'Use .NET 8 SDK'
 
       - task: NodeTool@0
-        displayName: 'Use Node 18'
         inputs:
           versionSpec: '18.x'
+        displayName: 'Use Node 18'
 
       - script: |
           set -e
@@ -81,14 +77,11 @@ jobs:
           cd "$(TEST_DIR)"
           SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
           if [ -z "$SCRIPT_PATH" ]; then
-            echo "ERRO: playwright.ps1 não encontrado após o build."
-            ls -R ./bin || true
-            exit 1
+            echo "ERRO: playwright.ps1 não encontrado após o build."; ls -R ./bin || true; exit 1
           fi
           echo "Usando script: $SCRIPT_PATH"
           if ! pwsh "$SCRIPT_PATH" install --with-deps; then
-            echo "Aviso: --with-deps falhou. Tentando 'install' sem deps..."
-            pwsh "$SCRIPT_PATH" install
+            echo "Aviso: --with-deps falhou. Tentando 'install' sem deps..."; pwsh "$SCRIPT_PATH" install
           fi
         displayName: 'Playwright browsers install (project script)'
 
@@ -98,8 +91,6 @@ jobs:
           ALLURE_ROOT="$ROOT/_allure"
           rm -rf "$ALLURE_ROOT"
           mkdir -p "$ALLURE_ROOT/results"
-
-          # Cria allure.config.json com caminho absoluto
           printf '%s\n' \
             '{' \
             '  "allure": {' \
@@ -127,7 +118,6 @@ jobs:
           ALLURE_RESULTS_DIRECTORY: $(System.DefaultWorkingDirectory)/tests/_allure/results
 
       - task: PublishTestResults@2
-        displayName: 'Publish TRX'
         inputs:
           testResultsFormat: VSTest
           testResultsFiles: 'tests/TestResults/**/*.trx'
@@ -135,16 +125,14 @@ jobs:
           failTaskOnFailedTests: false
           testRunTitle: 'NUnit TRX'
           mergeTestResults: true
+        displayName: 'Publish TRX'
 
       - task: PublishPipelineArtifact@1
-        displayName: 'Publish artifact: allure-results'
         inputs:
           artifact: 'allure-results'
           targetPath: '$(System.DefaultWorkingDirectory)/tests/_allure/results'
+        displayName: 'Publish artifact: allure-results'
 
-  # =========================
-  # JOB 2 — REPORT (sempre roda)
-  # =========================
   - job: Report
     displayName: "Generate & publish Allure + Send email"
     pool:
@@ -155,13 +143,13 @@ jobs:
       TEST_EXIT_FROM_PREV: $[ dependencies.Tests.outputs['runTests.TEST_EXIT'] ]
     steps:
       - download: current
-        displayName: 'Download artifact: allure-results'
         artifact: 'allure-results'
+        displayName: 'Download artifact: allure-results'
 
       - task: NodeTool@0
-        displayName: 'Use Node 18'
         inputs:
           versionSpec: '18.x'
+        displayName: 'Use Node 18'
 
       - script: |
           set -e
@@ -177,16 +165,15 @@ jobs:
           mkdir -p "$TMP" "$LATEST" "$VERSIONED" "$SITE"
 
           if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
-            echo "Gerando Allure..."
-            allure generate --clean -o "$TMP" "$SRC" || true
+            echo "Gerando Allure..."; allure generate --clean -o "$TMP" "$SRC" || true
           fi
 
-          # Remove histórico para o 'latest' não herdar datas antigas
+          # limpa qualquer histórico para latest
           rm -rf "$TMP/history" || true
           find "$TMP" -type f -name 'history.json' -delete || true
           find "$TMP" -type f -name '*history-trend*.json' -delete || true
 
-          # Placeholder se não gerou
+          # placeholder se vazio
           if [ ! -d "$TMP" ] || [ -z "$(ls -A "$TMP" 2>/dev/null)" ]; then
             mkdir -p "$TMP"
             printf '%s\n' \
@@ -194,28 +181,26 @@ jobs:
               > "$TMP/index.html"
           fi
 
-          # latest sempre substitui TUDO
+          # latest sobrescreve tudo
           rsync -a --delete "$TMP/" "$LATEST/"
-          # guarda versão por build
+          # versão por build
           rsync -a "$TMP/" "$VERSIONED/"
 
-          # Hash do summary local (para checagem após deploy)
+          # _headers com INDENTAÇÃO (Netlify exige 2 espaços)
+          {
+            echo '/*'
+            echo '  Cache-Control: no-store, no-cache, must-revalidate, max-age=0'
+            echo '  Pragma: no-cache'
+            echo '  Expires: 0'
+          } > "$SITE/_headers"
+
+          # index com cache-buster no link "latest"
+          printf '%s\n' \'<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Relatórios Allure</title><style>body{font-family:Arial,Helvetica,sans-serif;padding:24px} a{display:block;margin:.4rem 0}</style></head><body>' \'<h1>Relatórios Allure</h1>' \"<p><a href=\"./latest/?b=$(Build.BuildId)\">🔗 Último relatório (latest)</a></p>" \'<h2>Histórico por execução</h2>' \'<ul>' \"<li><a href=\"./builds/$(Build.BuildId)/\">Build $(Build.BuildNumber) — ID $(Build.BuildId)</a></li>" \'</ul>' \'</body></html>' > "$SITE/index.html"
+
+          # hash local do summary
           if [ -f "$LATEST/widgets/summary.json" ]; then
             sha1sum "$LATEST/widgets/summary.json" | awk '{print $1}' > local_summary.sha1
           fi
-
-          # index.html do site
-          printf '%s\n' \'<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Relatórios Allure</title><style>body{font-family:Arial,Helvetica,sans-serif;padding:24px} a{display:block;margin:.4rem 0}</style></head><body>' \'<h1>Relatórios Allure</h1>' \'<p><a href="./latest/">🔗 Último relatório (latest)</a></p>' \'<h2>Histórico por execução</h2>' \'<ul>' \"<li><a href=\"./builds/$(Build.BuildId)/\">Build $(Build.BuildNumber) — ID $(Build.BuildId)</a></li>" \'</ul>' \'</body></html>' \
-          > "$SITE/index.html"
-
-          # _headers para no-cache
-          {
-            echo '/*'
-            echo 'cache-control: max-age=0'
-            echo 'cache-control: no-cache'
-            echo 'cache-control: no-store'
-            echo 'cache-control: must-revalidate'
-          } > "$SITE/_headers"
         displayName: 'Generate versioned site (_site/latest and _site/builds/<id>)'
         condition: always()
 
@@ -229,25 +214,30 @@ jobs:
             --message "Allure $(Build.BuildNumber)" \
             --json > deploy.json
 
-          echo "======== Netlify Deploy Result ========"
-          cat deploy.json || true
-
-          STATE=$(node -e "let d=require('fs').readFileSync('deploy.json','utf8');let j=JSON.parse(d);console.log(j.state||j.deploy_state||'');")
-          if [ "$STATE" != "ready" ]; then
-            echo "ERRO: deploy state = '$STATE' (não é 'ready')."
-            exit 1
-          fi
-
-          URL=$(node -e "let d=require('fs').readFileSync('deploy.json','utf8');let j=JSON.parse(d);console.log(j.deploy_ssl_url||j.deploy_url||j.url||j.site_url||'');")
+          echo "======== Netlify Deploy Result ========"; cat deploy.json || true
+          STATE=$(node -e "let j=require('fs').readFileSync('deploy.json','utf8');j=JSON.parse(j);console.log(j.state||j.deploy_state||'');")
+          if [ "$STATE" != "ready" ]; then echo "ERRO: deploy state = '$STATE'"; exit 1; fi
+          URL=$(node -e "let j=require('fs').readFileSync('deploy.json','utf8');j=JSON.parse(j);console.log(j.deploy_ssl_url||j.deploy_url||j.url||j.site_url||'');")
           echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
           echo "Publicado em: $URL"
         displayName: 'Deploy to Netlify (prod)'
         condition: always()
 
+      # MOSTRA cabeçalhos servidos pelo Netlify (confirma no-cache e Last-Modified)
+      - script: |
+          set -e
+          echo "HEADERS index.html:"
+          curl -sI "$(NETLIFY_URL)/latest/index.html" | tr -d '\r'
+          echo
+          echo "HEADERS summary.json:"
+          curl -sI "$(NETLIFY_URL)/latest/widgets/summary.json" | tr -d '\r'
+        displayName: 'Inspecionar headers do Netlify (index.html e summary.json)'
+        condition: always()
+
       - script: |
           set -e
           if [ -s local_summary.sha1 ]; then
-            echo "Baixando summary publicado para comparar..."
+            echo "Comparando summary publicado x local..."
             curl -fsSL "$(NETLIFY_URL)/latest/widgets/summary.json" -o remote_summary.json || true
             if [ -s remote_summary.json ]; then
               REMOTE_HASH=$(sha1sum remote_summary.json | awk '{print $1}')
@@ -255,8 +245,7 @@ jobs:
               echo "LOCAL : $LOCAL_HASH"
               echo "REMOTE: $REMOTE_HASH"
               if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
-                echo "ATENÇÃO: summary em produção difere do local (pode ser cache/CDN ou deploy antigo)."
-                false || true
+                echo "ATENÇÃO: summary em produção difere do local (pode ser cache/CDN)."
               else
                 echo "OK: summary em produção bate com o local."
               fi
@@ -295,9 +284,8 @@ jobs:
         inputs:
           targetType: inline
           script: |
-            $siteUrl = $env:NETLIFY_URL
-            if ([string]::IsNullOrWhiteSpace($siteUrl)) { $siteUrl = $env:SITE_URL }
-            $latest = "$siteUrl/latest/"
+            $siteUrl = $env:NETLIFY_URL; if ([string]::IsNullOrWhiteSpace($siteUrl)) { $siteUrl = $env:SITE_URL }
+            $latest = "$siteUrl/latest/?b=$($env:BUILD_BUILDID)"   # cache-buster
             $this   = "$siteUrl/builds/$($env:BUILD_BUILDID)/"
             $pipeline = $env:BUILD_DEFINITIONNAME
             $buildId  = $env:BUILD_BUILDID
