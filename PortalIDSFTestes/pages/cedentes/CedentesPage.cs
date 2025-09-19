@@ -51,7 +51,7 @@ namespace PortalIDSFTestes.pages.cedentes
         public async Task CadastrarCedente(string nomeFundo)
         {
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
-            await metodo.EnviarArquivo(el.InputNovoCedente, GetPath() + "36614123000160_49624866830_N.zip", "Enviar arquivo no input para cadastrar novo cedente");
+            await metodo.EnviarArquivoCedenteNovo(el.InputNovoCedente, GetPath() + "36614123000160_49624866830_N.zip",GetPath() + "36614123000160_49624866830_N.zip" + "\\Kit Cedente",  "Enviar arquivo no input para cadastrar novo cedente");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela")
                 .ContinueWith(async t =>
                 {
