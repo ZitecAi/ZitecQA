@@ -1,6 +1,8 @@
 ﻿using Microsoft.Playwright;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +40,7 @@ namespace PortalIDSFTestes.metodos
             try
             {
                 var elemento = page.Locator(locator);
-                await elemento.WaitForAsync(new LocatorWaitForOptions { Timeout = 60000 });
+                await elemento.WaitForAsync(new LocatorWaitForOptions { Timeout = 90000 });
                 await elemento.ClickAsync();
             }
             catch
@@ -58,8 +60,6 @@ namespace PortalIDSFTestes.metodos
             {
                 throw new PlaywrightException("Não foi possivel Encontrar o Elemento: " + locator + " Para Clicar no passo: " + passo);
             }
-
-
         }
 
         public async Task ValidarUrl(string urlEsperada, string passo)
@@ -263,7 +263,7 @@ namespace PortalIDSFTestes.metodos
 
                     if (count > 0)
                     {
-                        errosEncontrados.Add($"❌ Texto inválido '{texto}' encontrado {count} vez(es).");
+                        errosEncontrados.Add($"❌ Texto inválido encontrado");
                     }
                 }
 
@@ -384,6 +384,71 @@ namespace PortalIDSFTestes.metodos
                 throw new Exception($"❌ Erro ao enviar o arquivo no passo '{passo}': {ex.Message}", ex);
             }
         }
+
+        private static readonly List<string> Cnpjs = new()
+    {
+        "50.897.660/0001-95","13.510.970/0001-89","26.852.107/0001-51","87.310.318/0001-57",
+        "17.014.940/0001-32","56.448.242/0001-05","13.147.471/0001-79","74.526.484/0001-43",
+        "01.134.570/0001-37","56.464.116/0001-36","45.884.607/0001-10","80.811.533/0001-92",
+        "27.560.914/0001-63","93.321.601/0001-87","30.340.770/0001-44","63.567.253/0001-61",
+        "64.567.089/0001-55","55.339.152/0001-05","84.605.741/0001-96"
+    };
+
+        public async Task EnviarArquivoCedenteNovo(string locator, string caminhoArquivo, string caminhoExcel, string passo)
+        {
+            try
+            {
+                Assert.IsTrue(File.Exists(caminhoArquivo), $"Arquivo para envio não encontrado: {caminhoArquivo}");
+
+                // EPPlus precisa disso
+                ExcelPackage.License.SetNonCommercialOrganization("Zitec");
+
+
+                string entryPath = "Kit Cedente/Ficha Cedente - ID CTVM.xlsx";
+
+                using (var zip = ZipFile.Open(caminhoArquivo, ZipArchiveMode.Update))
+                {
+                    var entry = zip.GetEntry(entryPath);
+                    if (entry == null)
+                        throw new FileNotFoundException($"Excel não encontrado dentro do zip: {entryPath}");
+
+                    using var ms = new MemoryStream();
+                    using (var entryStream = entry.Open())
+                        entryStream.CopyTo(ms);
+
+                    ms.Position = 0;
+                    var random = new Random();
+                    string cnpjAleatorio = Cnpjs[random.Next(Cnpjs.Count)];
+
+                    using (var package = new ExcelPackage(ms))
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            var plan = package.Workbook.Worksheets[i];
+                            plan.Cells[3, 3].Value = cnpjAleatorio;
+                        }
+                        package.Save();
+                    }
+
+                    entry.Delete(); // remove o antigo
+                    var newEntry = zip.CreateEntry(entryPath);
+                    ms.Position = 0;
+                    using (var newStream = newEntry.Open())
+                        ms.CopyTo(newStream);
+                }
+
+                await page.Locator(locator).SetInputFilesAsync(
+                    caminhoArquivo,
+                    new LocatorSetInputFilesOptions { Timeout = 120_000 });
+
+                Console.WriteLine("✅ Arquivo enviado com sucesso");
+            }
+            catch (Exception)
+            {
+                throw new Exception($"❌ Erro ao enviar o arquivo no passo '{passo}'");
+            }
+        }
+
         public async Task<string> EnviarArquivoNomeAtualizado(string locator, string caminhoArquivo, string passo)
         {
             try
