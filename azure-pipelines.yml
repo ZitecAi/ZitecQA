@@ -4,6 +4,7 @@ trigger: none
 resources:
   pipelines:
     - pipeline: AppDeploy
+      project: 'Dev-ops IDSF'
       source: 'Portal-IDSF-Staging'
       trigger: true
 
