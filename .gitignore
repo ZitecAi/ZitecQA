@@ -360,3 +360,5 @@ Arquivos/
 Repository/AmbienteDBContext.cs
 
 Configuration/Implementations/AmbienteMiddleware.cs
+
+allure-report/
