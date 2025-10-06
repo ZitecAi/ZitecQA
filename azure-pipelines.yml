@@ -1,9 +1,16 @@
 # azure-pipelines.yml
 trigger: none
 
+pool:
+  name: zportal-idsf-hmg
+  demands:
+  - msbuild
+  - visualstudio
+
 resources:
   pipelines:
     - pipeline: AppDeploy
+      project: 'Dev-ops IDSF'
       source: 'Portal-IDSF-Staging'
       trigger: true
 
