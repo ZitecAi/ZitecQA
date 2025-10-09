@@ -9,6 +9,6 @@ namespace PortalIDSFTestes.elementos.operacoes
     public class EnviarLastrosElements
     {
         public string MenuOperacoes { get; } = "(//p[text()='Operações'])[2]";
-        public string PaginaEnviarLastros { get; } = "//p[text()='Enviar Lastros 2.0']";
+        public string PaginaEnviarLastros { get; } = "//p[text()='Enviar Lastros']";
     }
 }

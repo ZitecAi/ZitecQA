@@ -52,14 +52,12 @@ namespace PortalIDSFTestes.pages.cedentes
         {
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
             await metodo.EnviarArquivoCedenteNovo(el.InputNovoCedente, GetPath() + "36614123000160_21465218000191_N.zip", GetPath() + "36614123000160_21465218000191_N.zip" + "\\Kit Cedente",  "Enviar arquivo no input para cadastrar novo cedente");
-            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela")
-                .ContinueWith(async t =>
-                {
-                    await page.ReloadAsync();
-                    await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar no input da Barra de pesquisa");
-                    await metodo.Escrever(el.BarraPesquisaCedentes, nomeFundo, "Pesquisar nome do arquivo para validar cadastro");
-                    await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentesCadastrado, nomeFundo, "Validar Se o nome do arquivo esta presente na tabela");
-                }).Unwrap();
+            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
+            await page.ReloadAsync();
+            await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar no input da Barra de pesquisa");
+            await metodo.Escrever(el.BarraPesquisaCedentes, nomeFundo, "Pesquisar nome do arquivo para validar cadastro");
+            await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentesCadastrado, nomeFundo, "Validar Se o nome do arquivo esta presente na tabela");
+                
             
         }
 
