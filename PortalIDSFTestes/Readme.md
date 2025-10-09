@@ -8,7 +8,7 @@ Tecnologias: C#, Playwright, NUnit
 ## FAQ – Perguntas Frequentes
 
 ### 1. Qual o objetivo deste projeto?
-Fornecer uma arquitetura de automação de testes E2E (end-to-end) para aplicações Web utilizando Playwright + NUnit + Page Object Model (POM), priorizando:  
+Fornecer uma arquitetura de automação de testes E2E (end-to-end) para aplicação Web PortalIDSF utilizando Playwright + NUnit + Page Object Model (POM), priorizando:  
 - Redução de retrabalho  
 - Reutilização de código  
 - Relatórios claros e acessíveis  
