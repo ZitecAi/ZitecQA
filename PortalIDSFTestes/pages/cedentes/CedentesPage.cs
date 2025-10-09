@@ -19,6 +19,9 @@ namespace PortalIDSFTestes.pages.cedentes
         string caminhoArquivo = @"C:\TempQA\Arquivos\36614123000160_49624866830_N.zip";
         string caminhoCedenteNegativo = @"C:\TempQA\Arquivos\CedentesNegativos\";
 
+        public string cnpjTest { get; }
+
+
         public CedentesPage(IPage page) 
         {
             this.page = page;
@@ -50,15 +53,24 @@ namespace PortalIDSFTestes.pages.cedentes
 
         public async Task CadastrarCedente(string nomeFundo)
         {
+            string cnpjTest = DataGenerator.Generate(DocumentType.Cnpj);
+
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
-            await metodo.EnviarArquivoCedenteNovo(el.InputNovoCedente, GetPath() + "36614123000160_21465218000191_N.zip", GetPath() + "36614123000160_21465218000191_N.zip" + "\\Kit Cedente",  "Enviar arquivo no input para cadastrar novo cedente");
+            await metodo.EnviarArquivoCedenteNovo(el.InputNovoCedente, GetPath() + "36614123000160_21465218000191_N.zip", GetPath() + "36614123000160_21465218000191_N.zip" + "\\Kit Cedente", cnpjTest,  "Enviar arquivo no input para cadastrar novo cedente");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
             await page.ReloadAsync();
+            //consultar
             await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar no input da Barra de pesquisa");
-            await metodo.Escrever(el.BarraPesquisaCedentes, nomeFundo, "Pesquisar nome do arquivo para validar cadastro");
-            await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentesCadastrado, nomeFundo, "Validar Se o nome do arquivo esta presente na tabela");
-                
-            
+            await metodo.Escrever(el.BarraPesquisaCedentes, "21.465.218/0001-91", "Pesquisar nome do arquivo para validar cadastro");
+            await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentesCadastrado, "21.465.218/0001-91", "Validar Se o nome do arquivo esta presente na tabela");
+            //excluir
+            await Task.Delay(500);
+            await metodo.Clicar(el.BtnLixeiraCedentes, "Clicar na lixeira para excluir cedente selecionado");
+            await metodo.Clicar(el.CampoObservacaoExcluir, "Clicar na lixeira para excluir cedente selecionado");
+            await metodo.Escrever(el.CampoObservacaoExcluir, "Teste Excluir Cedente", "Escrever Observação no modal excluir cedente");
+            await metodo.Clicar(el.BtnConfirmarExcluir, "Clicar na Botão para confirmar exclusão cedente selecionado");
+            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem presente na tela");
+
         }
 
         public async Task CadastrarCedenteNegativo(string nomeArquivoNegativo)
@@ -72,12 +84,7 @@ namespace PortalIDSFTestes.pages.cedentes
         {
             await metodo.Clicar(el.BarraPesquisaCedentes,"Clicar na Barra de pesquisa para inserir CPF cedente a ser excluído");
             await metodo.Escrever(el.BarraPesquisaCedentes, "496.248.668-30", "Escrever CPF do cedente a ser excluido");
-            await Task.Delay(500);
-            await metodo.Clicar(el.BtnLixeiraCedentes, "Clicar na lixeira para excluir cedente selecionado");
-            await metodo.Clicar(el.CampoObservacaoExcluir, "Clicar na lixeira para excluir cedente selecionado");
-            await metodo.Escrever(el.CampoObservacaoExcluir,"Teste Excluir Cedente", "Escrever Observação no modal excluir cedente");
-            await metodo.Clicar(el.BtnConfirmarExcluir, "Clicar na Botão para confirmar exclusão cedente selecionado");
-            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem presente na tela");
+            
         }
 
         public async Task ConsultarCedente()

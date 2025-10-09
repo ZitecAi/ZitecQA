@@ -387,7 +387,7 @@ namespace PortalIDSFTestes.metodos
 
      
 
-        public async Task EnviarArquivoCedenteNovo(string locator, string caminhoArquivo, string caminhoExcel, string passo)
+        public async Task EnviarArquivoCedenteNovo(string locator, string caminhoArquivo, string caminhoExcel,string cnpjMassa, string passo)
         {
             try
             {
@@ -411,7 +411,7 @@ namespace PortalIDSFTestes.metodos
 
                     ms.Position = 0;
                     var random = new Random();
-                    string cnpjAleatorio = DataGenerator.Generate(DocumentType.Cnpj);
+                    string cnpjAleatorio = cnpjMassa;
 
                     using (var package = new ExcelPackage(ms))
                     {

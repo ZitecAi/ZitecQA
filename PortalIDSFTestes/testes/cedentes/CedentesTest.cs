@@ -64,20 +64,6 @@ namespace PortalIDSFTestes.testes.cedentes
             await cedentes.CadastrarCedente("FUNDO QA");
         }
 
-        [Test, Order(4)]
-        public async Task Deve_Consultar_Cedente_Na_Tabela()
-        {
-            var cedentes = new CedentesPage(page);
-            await cedentes.ConsultarCedente();
-        }
-
-        [Test, Order(5)]
-        public async Task Deve_Excluir_Cedente()
-        {
-            var cedentes = new CedentesPage(page);
-            await cedentes.ExcluirCedente();
-        }
-
         [Test, Order(6)]
         public async Task Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido()
         {
