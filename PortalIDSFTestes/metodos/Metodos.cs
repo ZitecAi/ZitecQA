@@ -385,14 +385,7 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-        private static readonly List<string> Cnpjs = new()
-    {
-        "50.897.660/0001-95","13.510.970/0001-89","26.852.107/0001-51","87.310.318/0001-57",
-        "17.014.940/0001-32","56.448.242/0001-05","13.147.471/0001-79","74.526.484/0001-43",
-        "01.134.570/0001-37","56.464.116/0001-36","45.884.607/0001-10","80.811.533/0001-92",
-        "27.560.914/0001-63","93.321.601/0001-87","30.340.770/0001-44","63.567.253/0001-61",
-        "64.567.089/0001-55","55.339.152/0001-05","84.605.741/0001-96"
-    };
+     
 
         public async Task EnviarArquivoCedenteNovo(string locator, string caminhoArquivo, string caminhoExcel, string passo)
         {
@@ -418,7 +411,7 @@ namespace PortalIDSFTestes.metodos
 
                     ms.Position = 0;
                     var random = new Random();
-                    string cnpjAleatorio = Cnpjs[random.Next(Cnpjs.Count)];
+                    string cnpjAleatorio = DataGenerator.Generate(DocumentType.Cnpj);
 
                     using (var package = new ExcelPackage(ms))
                     {
