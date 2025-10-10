@@ -97,10 +97,10 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task EnviarOperacaoCSV()
         {
             string caminhoArquivoCSVparaModificar = GetPath();
-
+            //arquivoteste_operacoescsv_qa.csv
             await metodo.Clicar(el.BtnNovaOperacaoCSV, "Clicar no botão para enviar uma Nova Operação CSV");
             await metodo.ClicarNoSeletor(el.SelectFundoCSV, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            var arquivoComNomeModificado = metodo.ModificarCsv(GetPath() + "arquivoteste_operacoescsv_qa.csv", caminhoArquivoCSVparaModificar);
+            var arquivoComNomeModificado = metodo.ModificarCsv(GetPath() + "TesteOperacaoCSV.csv", caminhoArquivoCSVparaModificar);
             await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, arquivoComNomeModificado, "Enviar Arquivo CSV no Input");
             var caminhoLastro = GetPath() + "Arquivo teste.zip";
             await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
