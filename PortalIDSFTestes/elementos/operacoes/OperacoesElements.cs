@@ -39,6 +39,7 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string BtnFecharModalOperacaoCnab { get; } = "#btnFecharNovoOperacao";
         public string BtnFecharModalOperacaoCsv { get; } = "#btnFecharNovoOperacaoCsv";
         public string TabelaOperacoes { get; } = "#divTabelaCedentes";
+        public string MsgSucesso { get; } = "//div[@class='toast toast-success']";
 
         //Feat 7980
         //public string btnNovaOperacaoCNAB { get; } = "//span[text()='Nova Operação - CNAB']";
