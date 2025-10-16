@@ -61,7 +61,7 @@ namespace PortalIDSFTestes.testes.cedentes
         public async Task Deve_Cadastrar_Cedente()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastrarCedente();
+            await cedentes.CadastrarCedente("21.465.218/0001-91");
         }
 
         [Test, Order(6)]
