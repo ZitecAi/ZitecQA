@@ -61,7 +61,7 @@ namespace PortalIDSFTestes.testes.cedentes
         public async Task Deve_Cadastrar_Cedente()
         {
             var cedentes = new CedentesPage(page);
-            await cedentes.CadastrarCedente("FUNDO QA");
+            await cedentes.CadastrarCedente();
         }
 
         [Test, Order(6)]
