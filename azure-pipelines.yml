@@ -15,7 +15,7 @@ resources:
       trigger: true
 
 variables:
-  - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL
+  - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL (opcional)
   - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
   - name: TEST_CSPROJ
     value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'
@@ -50,28 +50,24 @@ jobs:
     inputs:
       versionSpec: '18.x'
 
-  # LIMPEZA total + prepara diretório ABSOLUTO do Allure
+  # LIMPEZA total e config do Allure (resultado SEMPRE novo)
   - script: |
       set -e
-      # limpa build antigo e resultados residuais
       dotnet clean "$(TEST_CSPROJ)" -c Release
       rm -rf "$(TEST_DIR)/bin" \
              "$(TEST_DIR)/obj" \
              "$(Build.SourcesDirectory)/TestResults" \
-             "$(Build.SourcesDirectory)/_allure"
-      # remove quaisquer 'allure-results' perdidos no repo
-      find "$(Build.SourcesDirectory)" -type d -name "allure-results" -prune -exec rm -rf {} +
-      # cria pasta fixa para os resultados desta execução
+             "$(Build.SourcesDirectory)/_allure" \
+             "$(Build.SourcesDirectory)/$(ALLURE_REPORT_DIR)"
+      # remove quaisquer pastas antigas chamadas allure-results no repo
+      find "$(Build.SourcesDirectory)" -type d -name "$(ALLURE_RESULTS_DIR)" -prune -exec rm -rf {} +
+      # cria pasta fixa desta execução
       mkdir -p "$(Build.SourcesDirectory)/_allure/results"
-      # configura o adaptador do Allure para GRAVAR nessa pasta fixa
+      # aponta o adaptador do Allure para a pasta fixa
       cat > "$(Build.SourcesDirectory)/allure.config.json" <<EOF
-      {
-        "allure": {
-          "directory": "$(Build.SourcesDirectory)/_allure/results"
-        }
-      }
+      { "allure": { "directory": "$(Build.SourcesDirectory)/_allure/results" } }
       EOF
-    displayName: 'Clean + configurar Allure (path absoluto)'
+    displayName: 'Clean + configurar Allure (executa sempre do zero)'
 
   - script: |
       set -e
@@ -83,40 +79,25 @@ jobs:
   - script: |
       set -e
       cd "$(TEST_DIR)"
-
       SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
       if [ -z "$SCRIPT_PATH" ]; then
         echo "ERRO: playwright.ps1 não encontrado após o build."
         ls -R ./bin || true
         exit 1
       fi
+      pwsh "$SCRIPT_PATH" install --with-deps || pwsh "$SCRIPT_PATH" install
+    displayName: 'Playwright browsers install'
 
-      echo "Usando script: $SCRIPT_PATH"
-      if ! pwsh "$SCRIPT_PATH" install --with-deps; then
-        echo "Aviso: --with-deps falhou. Tentando 'install' sem deps..."
-        pwsh "$SCRIPT_PATH" install
-      fi
-    displayName: 'Playwright browsers install (project script)'
-
-  # Roda testes apontando o ALLURE_CONFIG e SEMPRE sai 0
+  # Executa testes e NÃO falha o job
   - script: |
       set +e
       echo "Rodando testes em: $(TEST_CSPROJ)"
       dotnet test "$(TEST_CSPROJ)" -c Release \
         --logger "trx;LogFileName=$(Build.SourcesDirectory)/TestResults/results.trx"
       TEST_EXIT=$?
-      echo "Exit code dos testes: $TEST_EXIT"
       echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
-
       echo "Conteúdo em _allure/results:"
       ls -la "$(Build.SourcesDirectory)/_allure/results" || true
-      # peek de timestamp vindo dos JSONs
-      grep -R --include='*.json' -m 1 '"start"' "$(Build.SourcesDirectory)/_allure/results" || true
-
-      if [ "$TEST_EXIT" -ne 0 ]; then
-        echo "##vso[task.complete result=SucceededWithIssues;]Há testes falhando, mas o fluxo continuará."
-      fi
-
       exit 0
     name: runTests
     displayName: 'Run tests (non-blocking)'
@@ -125,7 +106,7 @@ jobs:
       ALLURE_RESULTS_DIRECTORY: $(Build.SourcesDirectory)/_allure/results
 
   - task: PublishTestResults@2
-    displayName: Publish TRX
+    displayName: 'Publish TRX'
     inputs:
       testResultsFormat: VSTest
       testResultsFiles: 'TestResults/**/*.trx'
@@ -134,27 +115,7 @@ jobs:
       testRunTitle: 'NUnit TRX'
       mergeTestResults: true
 
-  # Mantém o passo original, mas só copia de bin/Release se a pasta fixa estiver vazia
-  - script: |
-      set -e
-      TARGET="$(Build.SourcesDirectory)/_allure/results"
-
-      if [ -d "$TARGET" ] && [ -n "$(ls -A "$TARGET" 2>/dev/null)" ]; then
-        echo "Resultados já estão em $TARGET (ALLURE_CONFIG)."
-      else
-        echo "Pasta fixa vazia; tentando coletar de bin/Release como fallback..."
-        FOUND=$(find "$(TEST_DIR)/bin/Release" -type d -name "$(ALLURE_RESULTS_DIR)" | head -n 1 || true)
-        if [ -n "$FOUND" ]; then
-          echo "Copiando resultados do Allure de: $FOUND"
-          cp -r "$FOUND/." "$TARGET/"
-        else
-          echo "Nenhum 'allure-results' encontrado."
-        fi
-      fi
-      echo "Listando $TARGET:"
-      ls -la "$TARGET" || true
-    displayName: 'Collect allure-results (preferência: pasta fixa)'
-
+  # Publica SOMENTE os resultados da pasta fixa (sem fallback)
   - task: PublishPipelineArtifact@1
     displayName: 'Publish artifact: allure-results'
     inputs:
@@ -165,7 +126,7 @@ jobs:
 # JOB 2 — REPORT (sempre roda)
 ############################
 - job: Report
-  displayName: "Generate & publish Allure + Send email"
+  displayName: "Generate Allure + Deploy Netlify + E-mail"
   pool:
     vmImage: 'ubuntu-22.04'
   dependsOn: Tests
@@ -184,63 +145,58 @@ jobs:
     inputs:
       versionSpec: '18.x'
 
+  # Gera relatório LIMPO sempre e impede cache
   - script: |
       set -e
-      npm i -g allure-commandline netlify-cli
-
-      # limpa e recria diretório do relatório
+      SRC="$(Pipeline.Workspace)/allure-results"
       rm -rf "$(ALLURE_REPORT_DIR)"
       mkdir -p "$(ALLURE_REPORT_DIR)"
 
-      SRC="$(Pipeline.Workspace)/allure-results"
-      if [ -d "$SRC" ] && [ "$(ls -A "$SRC" 2>/dev/null)" ]; then
-        echo "Gerando Allure a partir de artifact..."
-        allure generate --clean -o "$(ALLURE_REPORT_DIR)" "$SRC" || true
+      if [ -d "$SRC" ] && [ -n "$(ls -A "$SRC" 2>/dev/null)" ]; then
+        npx -y allure-commandline@2.29.0 generate --clean -o "$(ALLURE_REPORT_DIR)" "$SRC"
+      else
+        echo '<!doctype html><html lang="pt-br"><meta charset="utf-8"><title>Allure</title><body style="font-family:sans-serif;padding:24px"><h1>Sem resultados nesta execução</h1></body></html>' > "$(ALLURE_REPORT_DIR)/index.html"
       fi
 
-      # remove histórico para não herdar datas antigas
+      # NÃO carregar histórico antigo -> data/hora sempre atual
       rm -rf "$(ALLURE_REPORT_DIR)/history" || true
       find "$(ALLURE_REPORT_DIR)" -type f -name 'history.json' -delete || true
       find "$(ALLURE_REPORT_DIR)" -type f -name '*history-trend*.json' -delete || true
 
-      # _headers com indentação correta (evita cache no Netlify)
-      {
-        echo '/*'
-        echo '  Cache-Control: no-store, no-cache, must-revalidate, max-age=0'
-        echo '  Pragma: no-cache'
-        echo '  Expires: 0'
-      } > "$(ALLURE_REPORT_DIR)/_headers"
+      # anticache no Netlify e bloqueia Jekyll
+      printf '/*\n  Cache-Control: no-store, no-cache, must-revalidate, max-age=0\n  Pragma: no-cache\n  Expires: 0\n' > "$(ALLURE_REPORT_DIR)/_headers"
+      touch "$(ALLURE_REPORT_DIR)/.nojekyll"
 
-      # Placeholder se vazio
-      if [ -z "$(ls -A "$(ALLURE_REPORT_DIR)" 2>/dev/null)" ]; then
-        echo '<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><title>Allure - Placeholder</title></head><body style="font-family:Arial,Helvetica,sans-serif;padding:24px"><h1>Allure Report</h1><p>Não há resultados de teste disponíveis para esta execução, ou a geração do Allure falhou.</p></body></html>' > "$(ALLURE_REPORT_DIR)/index.html"
-      fi
-    displayName: 'Generate Allure report (from artifact) + no-cache headers'
+      # sanity check
+      test -f "$(ALLURE_REPORT_DIR)/index.html" || { echo "ERRO: index.html não gerado"; exit 1; }
+    displayName: 'Generate Allure report (fresh)'
 
+  # Deploy PROD no Netlify apontando para allure-report/
   - script: |
       set -e
+      npm i -g netlify-cli
+      netlify --version
+
       netlify deploy \
         --prod \
         --dir="$(ALLURE_REPORT_DIR)" \
         --site "$(NETLIFY_SITE_ID)" \
         --auth "$(NETLIFY_AUTH_TOKEN)" \
+        --message "Allure $(Build.BuildNumber)" \
         --json > deploy.json
 
       echo "======== Netlify Deploy Result ========"
-      cat deploy.json || true
+      cat deploy.json
 
-      # Mantém a lógica ORIGINAL de URL (evita trocar domínio)
-      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'');}catch(e){}})" < deploy.json)
+      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'');}catch(e){process.exit(1)}})" < deploy.json)
       echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
     displayName: 'Deploy to Netlify (prod)'
-    condition: always()
 
   - task: PowerShell@2
-    displayName: 'Send email with report link (plain text)'
+    displayName: 'Send email with report link'
     condition: always()
     env:
-      SITE_URL: $(SITE_URL)            # do Variable Group
-      NETLIFY_URL: $(NETLIFY_URL)      # do passo Netlify acima
+      SITE_URL: $(NETLIFY_URL)          # usa a URL publicada desta execução
       SMTP_SERVER: $(SMTP_SERVER)
       SMTP_PORT: $(SMTP_PORT)
       SMTP_USER: $(SMTP_USER)
@@ -254,27 +210,14 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        # Prioriza URL do deploy; se vazia, usa a do grupo
-        $siteUrl = $env:NETLIFY_URL
-        if ([string]::IsNullOrWhiteSpace($siteUrl)) { $siteUrl = $env:SITE_URL }
-
+        $siteUrl = $env:SITE_URL
         $pipeline = $env:BUILD_DEFINITIONNAME
         $buildId  = $env:BUILD_BUILDID
         $buildNum = $env:BUILD_BUILDNUMBER
         $testExit = $env:TEST_EXIT
-
         if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
         $subject = "Relatório Allure (Staging) - $status"
-
-        # Sem here-string para evitar erro de identação
-        $bodyLines = @(
-          "Pipeline: $pipeline",
-          "Execução: $buildNum (ID $buildId)",
-          "Status dos testes: $status (exit $testExit)",
-          "Relatório: $siteUrl"
-        )
-        $body = $bodyLines -join "`n"
-
+        $body = "Pipeline: $pipeline`nExecução: $buildNum (ID $buildId)`nStatus dos testes: $status (exit $testExit)`nRelatório: $siteUrl"
         if ($env:SMTP_USER -and $env:SMTP_PASS) {
           $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
           $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
