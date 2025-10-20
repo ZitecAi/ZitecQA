@@ -26,31 +26,21 @@ variables:
   - name: ALLURE_REPORT_DIR
     value: 'allure-report'
 
-############################
-# JOB 1 — TESTS (não bloqueia)
-############################
 jobs:
+# ========================= JOB 1 — TESTS =========================
 - job: Tests
   displayName: "Run Playwright/NUnit tests"
-  pool:
-    vmImage: 'ubuntu-22.04'
+  pool: { vmImage: 'ubuntu-22.04' }
 
   steps:
   - checkout: self
-    displayName: 'Checkout tests repo'
 
   - task: UseDotNet@2
-    displayName: 'Use .NET 8 SDK'
-    inputs:
-      packageType: 'sdk'
-      version: '8.0.x'
+    inputs: { packageType: 'sdk', version: '8.0.x' }
 
   - task: NodeTool@0
-    displayName: 'Use Node 18'
-    inputs:
-      versionSpec: '18.x'
+    inputs: { versionSpec: '18.x' }
 
-  # LIMPEZA total e config do Allure (resultado SEMPRE novo)
   - script: |
       set -e
       dotnet clean "$(TEST_CSPROJ)" -c Release
@@ -59,15 +49,12 @@ jobs:
              "$(Build.SourcesDirectory)/TestResults" \
              "$(Build.SourcesDirectory)/_allure" \
              "$(Build.SourcesDirectory)/$(ALLURE_REPORT_DIR)"
-      # remove quaisquer pastas antigas chamadas allure-results no repo
       find "$(Build.SourcesDirectory)" -type d -name "$(ALLURE_RESULTS_DIR)" -prune -exec rm -rf {} +
-      # cria pasta fixa desta execução
       mkdir -p "$(Build.SourcesDirectory)/_allure/results"
-      # aponta o adaptador do Allure para a pasta fixa
       cat > "$(Build.SourcesDirectory)/allure.config.json" <<EOF
       { "allure": { "directory": "$(Build.SourcesDirectory)/_allure/results" } }
       EOF
-    displayName: 'Clean + configurar Allure (executa sempre do zero)'
+    displayName: 'Clean + configurar Allure (fresh)'
 
   - script: |
       set -e
@@ -81,23 +68,21 @@ jobs:
       cd "$(TEST_DIR)"
       SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
       if [ -z "$SCRIPT_PATH" ]; then
-        echo "ERRO: playwright.ps1 não encontrado após o build."
+        echo "ERRO: playwright.ps1 não encontrado."
         ls -R ./bin || true
         exit 1
       fi
       pwsh "$SCRIPT_PATH" install --with-deps || pwsh "$SCRIPT_PATH" install
     displayName: 'Playwright browsers install'
 
-  # Executa testes e NÃO falha o job
   - script: |
       set +e
       echo "Rodando testes em: $(TEST_CSPROJ)"
       dotnet test "$(TEST_CSPROJ)" -c Release \
+        -l "console;verbosity=detailed" \
         --logger "trx;LogFileName=$(Build.SourcesDirectory)/TestResults/results.trx"
       TEST_EXIT=$?
       echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
-      echo "Conteúdo em _allure/results:"
-      ls -la "$(Build.SourcesDirectory)/_allure/results" || true
       exit 0
     name: runTests
     displayName: 'Run tests (non-blocking)'
@@ -106,7 +91,6 @@ jobs:
       ALLURE_RESULTS_DIRECTORY: $(Build.SourcesDirectory)/_allure/results
 
   - task: PublishTestResults@2
-    displayName: 'Publish TRX'
     inputs:
       testResultsFormat: VSTest
       testResultsFiles: 'TestResults/**/*.trx'
@@ -114,21 +98,32 @@ jobs:
       failTaskOnFailedTests: false
       testRunTitle: 'NUnit TRX'
       mergeTestResults: true
+    displayName: 'Publish TRX'
 
-  # Publica SOMENTE os resultados da pasta fixa (sem fallback)
+  # Sanity obrigatório: falha se não houver JSONs do Allure
+  - script: |
+      set -e
+      DIR="$(Build.SourcesDirectory)/_allure/results"
+      echo "Sanity em $DIR"
+      ls -la "$DIR" || true
+      COUNT=$(find "$DIR" -maxdepth 1 -type f -name '*.json' | wc -l | xargs)
+      echo "Arquivos Allure: $COUNT"
+      if [ "$COUNT" -eq 0 ]; then
+        echo "ERRO: Nenhum JSON do Allure gerado. Verifique pacotes Allure.NUnit/Allure.Commons e variáveis ALLURE_CONFIG/ALLURE_RESULTS_DIRECTORY."
+        exit 1
+      fi
+    displayName: 'Sanity: validar _allure/results'
+
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish artifact: allure-results'
     inputs:
       artifact: 'allure-results'
       targetPath: '$(Build.SourcesDirectory)/_allure/results'
+    displayName: 'Publish artifact: allure-results'
 
-############################
-# JOB 2 — REPORT (sempre roda)
-############################
+# ========================= JOB 2 — REPORT =========================
 - job: Report
   displayName: "Generate Allure + Deploy Netlify + E-mail"
-  pool:
-    vmImage: 'ubuntu-22.04'
+  pool: { vmImage: 'ubuntu-22.04' }
   dependsOn: Tests
   condition: always()
 
@@ -137,41 +132,29 @@ jobs:
 
   steps:
   - download: current
-    displayName: 'Download artifact: allure-results'
     artifact: 'allure-results'
+    displayName: 'Download artifact: allure-results'
 
   - task: NodeTool@0
+    inputs: { versionSpec: '18.x' }
     displayName: 'Use Node 18'
-    inputs:
-      versionSpec: '18.x'
 
-  # Gera relatório LIMPO sempre e impede cache
   - script: |
       set -e
       SRC="$(Pipeline.Workspace)/allure-results"
       rm -rf "$(ALLURE_REPORT_DIR)"
       mkdir -p "$(ALLURE_REPORT_DIR)"
 
-      if [ -d "$SRC" ] && [ -n "$(ls -A "$SRC" 2>/dev/null)" ]; then
-        npx -y allure-commandline@2.29.0 generate --clean -o "$(ALLURE_REPORT_DIR)" "$SRC"
-      else
-        echo '<!doctype html><html lang="pt-br"><meta charset="utf-8"><title>Allure</title><body style="font-family:sans-serif;padding:24px"><h1>Sem resultados nesta execução</h1></body></html>' > "$(ALLURE_REPORT_DIR)/index.html"
-      fi
+      echo "Listando SRC=$SRC"
+      find "$SRC" -maxdepth 1 -type f -name '*.json' -printf '%f\n' | head || true
 
-      # NÃO carregar histórico antigo -> data/hora sempre atual
+      # Gera e remove history para evitar datas “travadas”
+      npx -y allure-commandline@2.29.0 generate --clean -o "$(ALLURE_REPORT_DIR)" "$SRC"
       rm -rf "$(ALLURE_REPORT_DIR)/history" || true
-      find "$(ALLURE_REPORT_DIR)" -type f -name 'history.json' -delete || true
-      find "$(ALLURE_REPORT_DIR)" -type f -name '*history-trend*.json' -delete || true
-
-      # anticache no Netlify e bloqueia Jekyll
-      printf '/*\n  Cache-Control: no-store, no-cache, must-revalidate, max-age=0\n  Pragma: no-cache\n  Expires: 0\n' > "$(ALLURE_REPORT_DIR)/_headers"
       touch "$(ALLURE_REPORT_DIR)/.nojekyll"
-
-      # sanity check
-      test -f "$(ALLURE_REPORT_DIR)/index.html" || { echo "ERRO: index.html não gerado"; exit 1; }
+      test -f "$(ALLURE_REPORT_DIR)/index.html"
     displayName: 'Generate Allure report (fresh)'
 
-  # Deploy PROD no Netlify apontando para allure-report/
   - script: |
       set -e
       npm i -g netlify-cli
@@ -185,18 +168,15 @@ jobs:
         --message "Allure $(Build.BuildNumber)" \
         --json > deploy.json
 
-      echo "======== Netlify Deploy Result ========"
       cat deploy.json
-
-      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'');}catch(e){process.exit(1)}})" < deploy.json)
+      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'')})" < deploy.json)
       echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
     displayName: 'Deploy to Netlify (prod)'
 
   - task: PowerShell@2
-    displayName: 'Send email with report link'
     condition: always()
     env:
-      SITE_URL: $(NETLIFY_URL)          # usa a URL publicada desta execução
+      SITE_URL: $(NETLIFY_URL)
       SMTP_SERVER: $(SMTP_SERVER)
       SMTP_PORT: $(SMTP_PORT)
       SMTP_USER: $(SMTP_USER)
@@ -225,3 +205,4 @@ jobs:
         } else {
           Send-MailMessage -From $env:MAIL_FROM -To $env:MAIL_TO -Subject $subject -Body $body -SmtpServer $env:SMTP_SERVER -Port ([int]$env:SMTP_PORT) -Encoding UTF8
         }
+    displayName: 'Send email with report link'
