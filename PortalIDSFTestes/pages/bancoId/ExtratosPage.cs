@@ -31,6 +31,15 @@ namespace PortalIDSFTestes.pages.bancoId
             await metodo.ValidarAcentosAsync(page, "Validar Acentos na Página Extratos");
         }
 
+        public async Task GerarExtratoPdf()
+        {
+            await metodo.Clicar(el.BtnGerarExtrato, "Clicar em Gerar extrato para abrir modal");
+            await metodo.ClicarNoSeletor(el.SelectFundo, "61995402000168", "Selecionar Fundo Zitec Tecnologia LTDA");
+            await metodo.ValidateDownloadAndLength(page, el.BtnGerar, ".pdf", "Validar download do extrato em PDF");
+            await metodo.ValidarTextoPresente("Relatório gerado com sucesso", "Validar mensagem de sucesso retornada");
+
+        }
+
     }
 
 }

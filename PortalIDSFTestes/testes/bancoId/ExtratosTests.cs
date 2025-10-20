@@ -49,6 +49,12 @@ namespace PortalIDSFTestes.testes.bancoId
             var extratos = new ExtratosPage(page);
             await extratos.ValidarAcentosExtratos();
         }
+        [Test, Order(2)]
+        public async Task Deve_Gerar_Extrato_Pdf_Com_Sucesso()
+        {
+            var extratos = new ExtratosPage(page);
+            await extratos.GerarExtratoPdf();
+        }
 
     }
 }
