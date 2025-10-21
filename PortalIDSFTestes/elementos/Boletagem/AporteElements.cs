@@ -21,6 +21,14 @@ namespace PortalIDSFTestes.elementos.Boletagem
         public string SelectFundo { get; } = "#Fundos";
         public string SelectCarteira { get; } = "#Carteiras";
         public string BtnEnviar { get; } = "#submitButton";
+        public string Filtro { get; } = "//div[@id]//input[@type='search']";
+        public string AprovacaoCustodia { get; } = "(//tr)[2]//td[8]//button";
+        public string AprovacaoEscrituracao { get; } = "(//tr)[2]//td[9]//button";
+        public string AprovacaoControladoria { get; } = "(//tr)[2]//td[10]//button";
+        public string BtnAprovado { get; } = "//span[text()='Aprovado']";
+        public string Descricao { get; } = "#descricao";
+        public string BtnConfirmar { get; } = "#statusButton";
+        public string StatusBoletado { get; } = "(//tr)[2]//td[7]//span";
 
     }
 }
