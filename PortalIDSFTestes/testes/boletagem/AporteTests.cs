@@ -47,6 +47,12 @@ namespace PortalIDSFTestes.testes.boletagem
             var aporte = new AportePage(page);
             await aporte.ValidarAcentosAporte();
         }
+        [Test, Order(2)]
+        public async Task Deve_Realizar_Aporte_Com_Sucesso()
+        {
+            var aporte = new AportePage(page);
+            await aporte.RealizarAporte();
+        }
 
     }
 }
