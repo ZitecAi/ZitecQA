@@ -178,7 +178,7 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: {ex.Message}");
             }
         }
-
+        
 
         public async Task VerificarElementoPresenteNaTabela(IPage page, string seletorTabela, string textoEsperado, string passo)
         {
