@@ -48,6 +48,7 @@ namespace PortalIDSFTestes.testes.boletagem
             await aporte.ValidarAcentosAporte();
         }
         [Test, Order(2)]
+        //[Ignore ("Teste ignorado temporariamente para manutenção.")]
         public async Task Deve_Realizar_Aporte_Com_Sucesso()
         {
             var aporte = new AportePage(page);

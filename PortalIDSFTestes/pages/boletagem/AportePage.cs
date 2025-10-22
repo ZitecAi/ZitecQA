@@ -56,7 +56,7 @@ namespace PortalIDSFTestes.pages.boletagem
             await metodo.Clicar(el.BtnEnviar, "Clicar em enviar");
             await metodo.ValidarTextoPresente("Aporte realizado com sucesso", "Validar mensagem de sucesso retornada");
             await metodo.Escrever(el.Filtro, "54638076000176", "Pesquisar Zitec no filtro");
-            await Task.Delay(700);
+            await Task.Delay(1500);
             await metodo.Clicar(el.AprovacaoCustodia, "Aprovar aporte na custódia");
             await metodo.Clicar(el.BtnAprovado, "Selecionar status aprovado");  
             await metodo.Escrever(el.Descricao, "Aprovado", "Inserir descrição da aprovação");
