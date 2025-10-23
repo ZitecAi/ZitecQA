@@ -78,12 +78,9 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
             await metodo.Escrever(el.BarraPesquisa, "Teste NUnit", "Clicar na Barra de Pesquisa");
-            await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
-            var download = await page.RunAndWaitForDownloadAsync(async () =>
-            {
-                await metodo.Clicar(el.BtnBaixarArquivo, "Clicar no botão para baixar Arquivo");
-            });
-            await metodo.ValidarDownloadAsync(download,"Baixar Arquivo", "Validar se Download do arquivo foi feito");       
+            await Task.Delay(1000);
+            await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");            
+            await metodo.ValidateDownloadAndLength(page, el.BtnBaixarArquivo, "Baixar Arquivo");
         }
 
         public async Task AprovarGestor()

@@ -64,13 +64,13 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.Escrever(el.BarraPesquisaCedentes, cnpjCedente, "Pesquisar nome do arquivo para validar cadastro");
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentesCadastrado, cnpjCedente, "Validar Se o nome do arquivo esta presente na tabela");
             //aprovações
-            await metodo.Clicar(el.BtnAprovarGestora(Cedente), "Clicar no botão para aprovar cadastro do cedente");
+            await metodo.Clicar(el.BtnAprovarGestora(Cedente), "Clicar no botão para aprovar gestora do cedente");
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para selecionar aprovado");
             await metodo.Escrever(el.Obs, "Aprovado", "Escrever observação para aprovação do cadastro");
             await metodo.Clicar(el.BtnEnviarParecerDepartamento, "Clicar no botão para enviar parecer do departamento");
             await metodo.ValidarTextoPresente("Ação Status atualizado!", "Validar mensagem Ação realizada com sucesso presente na tela na aprovação cadastro");
             await Task.Delay(500);
-            await metodo.Clicar(el.BtnAprovarCadastro(Cedente), "Clicar no botão para aprovar gestora do cedente");
+            await metodo.Clicar(el.BtnAprovarCadastro(Cedente), "Clicar no botão para aprovar cadastro do cedente");
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para selecionar aprovado");
             await metodo.Escrever(el.Obs, "Aprovado", "Escrever observação para aprovação da gestora");
             await metodo.Clicar(el.BtnEnviarParecerDepartamento, "Clicar no botão para enviar parecer do departamento");
