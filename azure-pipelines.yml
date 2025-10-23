@@ -30,7 +30,6 @@ jobs:
 # ========================= JOB 1 — TESTS =========================
 - job: Tests
   displayName: "Run Playwright/NUnit tests"
-  pool: { vmImage: 'ubuntu-22.04' }
 
   steps:
   - checkout: self
@@ -123,7 +122,6 @@ jobs:
 # ========================= JOB 2 — REPORT =========================
 - job: Report
   displayName: "Generate Allure + Deploy Netlify + E-mail"
-  pool: { vmImage: 'ubuntu-22.04' }
   dependsOn: Tests
   condition: always()
 
