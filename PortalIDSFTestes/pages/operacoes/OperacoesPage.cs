@@ -177,18 +177,10 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BtnHistoricoImportacoes, "Clicar no botão para abrir modal de histórico de importações");
             await metodo.Clicar(el.BarraPesquisaHistorico, "Clicar no campo pesquisar para inserir nome do arquivo CNAB a ser consultado");
             await metodo.Escrever(el.BarraPesquisaHistorico, ".rem", "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
-            await Task.Delay(10000);
+            await Task.Delay(15000);
             await metodo.Clicar(el.PrimeiroTdHistorico, "Clicar no primeiro TD que estiver presente para baixar arquivo validação movimento");
-            var download = await page.RunAndWaitForDownloadAsync(async () =>
-            {
-                await metodo.Clicar(el.BtnDownloadValidacaoMovimento, "Click para baixar relatorio movimento atraves do histórico importações");
-            });
-            await metodo.ValidarDownloadAsync(download, "Download Validação Movimento", "Validar Download de arquivo validação movimento");
-            var download1 = await page.RunAndWaitForDownloadAsync(async () =>
-            {
-                await metodo.Clicar(el.BtnDownloadValidacaoLayout, "Clicar no botão para baixar validação Layout");
-            });
-            await metodo.ValidarDownloadAsync(download1, "Download Validação Layout", "Validar Download de arquivo validação Layout");
+            await metodo.ValidateDownloadAndLength(page, el.BtnDownloadValidacaoMovimento, "Download Validação Movimento");
+            await metodo.ValidateDownloadAndLength(page, el.BtnDownloadValidacaoLayout, "Download Validação Layout Alternativo");
         }
 
 
