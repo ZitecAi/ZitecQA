@@ -118,8 +118,8 @@ jobs:
     name: runTests
     displayName: 'Run tests (non-blocking)'
     env:
-      ALLURE_CONFIG: $(Build.SourcesDirectory)/allure.config.json
-      ALLURE_RESULTS_DIRECTORY: $(Build.SourcesDirectory)/_allure/results
+      ALLURE_CONFIG: $(Build.SourcesDirectory)\allure.config.json
+      ALLURE_RESULTS_DIRECTORY: $(Build.SourcesDirectory)\_allure\results
 
   - task: PublishTestResults@2
     inputs:
