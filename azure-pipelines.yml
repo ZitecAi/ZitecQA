@@ -107,12 +107,30 @@ jobs:
 
   - powershell: |
       $ErrorActionPreference = 'Continue'
+      $sourceDir = '$(Build.SourcesDirectory)'
       Write-Host "Rodando testes em: $(TEST_CSPROJ)"
-      $trxPath = Join-Path '$(Build.SourcesDirectory)' 'TestResults\results.trx'
+      $trxPath = Join-Path $sourceDir 'TestResults\results.trx'
       dotnet test '$(TEST_CSPROJ)' -c Release `
         -l "console;verbosity=detailed" `
         --logger "trx;LogFileName=$trxPath"
       $testExit = $LASTEXITCODE
+
+      $resultsRoot = Join-Path $sourceDir '_allure\results'
+      if (-not (Test-Path $resultsRoot)) {
+          New-Item -Path $resultsRoot -ItemType Directory -Force | Out-Null
+      }
+
+      $allureDirs = Get-ChildItem -Path $sourceDir -Directory -Filter '$(ALLURE_RESULTS_DIR)' -Recurse -ErrorAction SilentlyContinue |
+        Where-Object { $_.FullName -ne $resultsRoot }
+
+      foreach ($dir in $allureDirs) {
+          Write-Host "Copiando resultados do Allure de: $($dir.FullName)"
+          Copy-Item -Path (Join-Path $dir.FullName '*') -Destination $resultsRoot -Recurse -Force -ErrorAction SilentlyContinue
+      }
+
+      $jsonCount = (Get-ChildItem -Path $resultsRoot -Filter '*.json' -File -ErrorAction SilentlyContinue | Measure-Object).Count
+      Write-Host "Allure JSONs disponiveis em $resultsRoot: $jsonCount"
+
       Write-Host "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$testExit"
       exit 0
     name: runTests
