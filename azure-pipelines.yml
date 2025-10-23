@@ -40,48 +40,80 @@ jobs:
   - task: NodeTool@0
     inputs: { versionSpec: '18.x' }
 
-  - script: |
-      set -e
-      dotnet clean "$(TEST_CSPROJ)" -c Release
-      rm -rf "$(TEST_DIR)/bin" \
-             "$(TEST_DIR)/obj" \
-             "$(Build.SourcesDirectory)/TestResults" \
-             "$(Build.SourcesDirectory)/_allure" \
-             "$(Build.SourcesDirectory)/$(ALLURE_REPORT_DIR)"
-      find "$(Build.SourcesDirectory)" -type d -name "$(ALLURE_RESULTS_DIR)" -prune -exec rm -rf {} +
-      mkdir -p "$(Build.SourcesDirectory)/_allure/results"
-      cat > "$(Build.SourcesDirectory)/allure.config.json" <<EOF
-      { "allure": { "directory": "$(Build.SourcesDirectory)/_allure/results" } }
-      EOF
+  - powershell: |
+      $ErrorActionPreference = 'Stop'
+      $testCsproj = '$(TEST_CSPROJ)'
+      dotnet clean $testCsproj -c Release
+      $testDir = '$(TEST_DIR)'
+      $sourceDir = '$(Build.SourcesDirectory)'
+      $pathsToRemove = @(
+          Join-Path $testDir 'bin'
+          Join-Path $testDir 'obj'
+          Join-Path $sourceDir 'TestResults'
+          Join-Path $sourceDir '_allure'
+          Join-Path $sourceDir '$(ALLURE_REPORT_DIR)'
+      )
+
+      foreach ($path in $pathsToRemove) {
+          if (Test-Path $path) {
+              Remove-Item -Path $path -Recurse -Force -ErrorAction SilentlyContinue
+          }
+      }
+
+      Get-ChildItem -Path $sourceDir -Directory -Filter '$(ALLURE_RESULTS_DIR)' -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+          Remove-Item -Path $_.FullName -Recurse -Force -ErrorAction SilentlyContinue
+      }
+
+      $allureResults = Join-Path $sourceDir '_allure\results'
+      New-Item -Path $allureResults -ItemType Directory -Force | Out-Null
+
+      $configPath = Join-Path $sourceDir 'allure.config.json'
+      $config = @{
+          allure = @{
+              directory = $allureResults
+          }
+      } | ConvertTo-Json -Depth 3
+      Set-Content -Path $configPath -Value $config -Encoding UTF8
     displayName: 'Clean + configurar Allure (fresh)'
 
-  - script: |
-      set -e
+  - powershell: |
+      $ErrorActionPreference = 'Stop'
       dotnet --info
-      dotnet restore "$(TEST_CSPROJ)"
-      dotnet build   "$(TEST_CSPROJ)" -c Release --no-restore
+      dotnet restore '$(TEST_CSPROJ)'
+      dotnet build '$(TEST_CSPROJ)' -c Release --no-restore
     displayName: 'Restore + Build'
 
-  - script: |
-      set -e
-      cd "$(TEST_DIR)"
-      SCRIPT_PATH="$(find ./bin -type f -name 'playwright.ps1' | head -n 1 || true)"
-      if [ -z "$SCRIPT_PATH" ]; then
-        echo "ERRO: playwright.ps1 não encontrado."
-        ls -R ./bin || true
-        exit 1
-      fi
-      pwsh "$SCRIPT_PATH" install --with-deps || pwsh "$SCRIPT_PATH" install
+  - powershell: |
+      $ErrorActionPreference = 'Stop'
+      Push-Location '$(TEST_DIR)'
+      try {
+          $scriptPath = Get-ChildItem -Path '.\bin' -Filter 'playwright.ps1' -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $scriptPath) {
+              Write-Host 'ERRO: playwright.ps1 nao encontrado.'
+              Get-ChildItem -Path '.\bin' -Recurse | Out-String | Write-Host
+              throw 'playwright.ps1 nao encontrado.'
+          }
+
+          try {
+              & $scriptPath.FullName install --with-deps
+          } catch {
+              Write-Warning 'Falha ao instalar com --with-deps, tentando sem dependencias adicionais.'
+              & $scriptPath.FullName install
+          }
+      } finally {
+          Pop-Location
+      }
     displayName: 'Playwright browsers install'
 
-  - script: |
-      set +e
-      echo "Rodando testes em: $(TEST_CSPROJ)"
-      dotnet test "$(TEST_CSPROJ)" -c Release \
-        -l "console;verbosity=detailed" \
-        --logger "trx;LogFileName=$(Build.SourcesDirectory)/TestResults/results.trx"
-      TEST_EXIT=$?
-      echo "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$TEST_EXIT"
+  - powershell: |
+      $ErrorActionPreference = 'Continue'
+      Write-Host "Rodando testes em: $(TEST_CSPROJ)"
+      $trxPath = Join-Path '$(Build.SourcesDirectory)' 'TestResults\results.trx'
+      dotnet test '$(TEST_CSPROJ)' -c Release `
+        -l "console;verbosity=detailed" `
+        --logger "trx;LogFileName=$trxPath"
+      $testExit = $LASTEXITCODE
+      Write-Host "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$testExit"
       exit 0
     name: runTests
     displayName: 'Run tests (non-blocking)'
@@ -100,17 +132,20 @@ jobs:
     displayName: 'Publish TRX'
 
   # Sanity obrigatório: falha se não houver JSONs do Allure
-  - script: |
-      set -e
-      DIR="$(Build.SourcesDirectory)/_allure/results"
-      echo "Sanity em $DIR"
-      ls -la "$DIR" || true
-      COUNT=$(find "$DIR" -maxdepth 1 -type f -name '*.json' | wc -l | xargs)
-      echo "Arquivos Allure: $COUNT"
-      if [ "$COUNT" -eq 0 ]; then
-        echo "ERRO: Nenhum JSON do Allure gerado. Verifique pacotes Allure.NUnit/Allure.Commons e variáveis ALLURE_CONFIG/ALLURE_RESULTS_DIRECTORY."
-        exit 1
-      fi
+  - powershell: |
+      $ErrorActionPreference = 'Stop'
+      $dir = Join-Path '$(Build.SourcesDirectory)' '_allure\results'
+      Write-Host "Sanity em $dir"
+      if (Test-Path $dir) {
+          Get-ChildItem -Path $dir | ForEach-Object { Write-Host $_.Name }
+          $count = (Get-ChildItem -Path $dir -Filter '*.json' -File | Measure-Object).Count
+      } else {
+          $count = 0
+      }
+      Write-Host "Arquivos Allure: $count"
+      if ($count -eq 0) {
+          throw 'ERRO: Nenhum JSON do Allure gerado. Verifique pacotes Allure.NUnit/Allure.Commons e variaveis ALLURE_CONFIG/ALLURE_RESULTS_DIRECTORY.'
+      }
     displayName: 'Sanity: validar _allure/results'
 
   - task: PublishPipelineArtifact@1
@@ -137,38 +172,73 @@ jobs:
     inputs: { versionSpec: '18.x' }
     displayName: 'Use Node 18'
 
-  - script: |
-      set -e
-      SRC="$(Pipeline.Workspace)/allure-results"
-      rm -rf "$(ALLURE_REPORT_DIR)"
-      mkdir -p "$(ALLURE_REPORT_DIR)"
+  - powershell: |
+      $ErrorActionPreference = 'Stop'
+      $src = Join-Path '$(Pipeline.Workspace)' 'allure-results'
+      $reportDir = '$(ALLURE_REPORT_DIR)'
 
-      echo "Listando SRC=$SRC"
-      find "$SRC" -maxdepth 1 -type f -name '*.json' -printf '%f\n' | head || true
+      if (Test-Path $reportDir) {
+          Remove-Item -Path $reportDir -Recurse -Force -ErrorAction SilentlyContinue
+      }
+      New-Item -Path $reportDir -ItemType Directory -Force | Out-Null
 
-      # Gera e remove history para evitar datas “travadas”
-      npx -y allure-commandline@2.29.0 generate --clean -o "$(ALLURE_REPORT_DIR)" "$SRC"
-      rm -rf "$(ALLURE_REPORT_DIR)/history" || true
-      touch "$(ALLURE_REPORT_DIR)/.nojekyll"
-      test -f "$(ALLURE_REPORT_DIR)/index.html"
+      Write-Host "Listando SRC=$src"
+      if (Test-Path $src) {
+          Get-ChildItem -Path $src -Filter '*.json' -File | Select-Object -First 10 | ForEach-Object { Write-Host $_.Name }
+      } else {
+          Write-Host 'Nenhum arquivo encontrado; diretorio de origem nao existe.'
+      }
+
+      $npxOutput = npx -y allure-commandline@2.29.0 generate --clean -o $reportDir $src 2>&1
+      $exitCode = $LASTEXITCODE
+      $npxOutput | Write-Host
+      if ($exitCode -ne 0) {
+          throw "Falha ao gerar relatorio Allure. Codigo: $exitCode"
+      }
+
+      $historyPath = Join-Path $reportDir 'history'
+      if (Test-Path $historyPath) {
+          Remove-Item -Path $historyPath -Recurse -Force -ErrorAction SilentlyContinue
+      }
+      New-Item -Path (Join-Path $reportDir '.nojekyll') -ItemType File -Force | Out-Null
+      if (-not (Test-Path (Join-Path $reportDir 'index.html'))) {
+          throw 'Arquivo index.html nao encontrado no diretorio do relatorio.'
+      }
     displayName: 'Generate Allure report (fresh)'
 
-  - script: |
-      set -e
-      npm i -g netlify-cli
+  - powershell: |
+      $ErrorActionPreference = 'Stop'
+      npm install -g netlify-cli
       netlify --version
 
-      netlify deploy \
-        --prod \
-        --dir="$(ALLURE_REPORT_DIR)" \
-        --site "$(NETLIFY_SITE_ID)" \
-        --auth "$(NETLIFY_AUTH_TOKEN)" \
-        --message "Allure $(Build.BuildNumber)" \
-        --json > deploy.json
+      $reportDir = '$(ALLURE_REPORT_DIR)'
+      $deployOutput = & netlify deploy `
+        --prod `
+        --dir="$reportDir" `
+        --site="$(NETLIFY_SITE_ID)" `
+        --auth="$(NETLIFY_AUTH_TOKEN)" `
+        --message="Allure $(Build.BuildNumber)" `
+        --json 2>&1
+      $exitCode = $LASTEXITCODE
+      $deployOutput | Write-Host
+      if ($exitCode -ne 0) {
+          throw "Falha no deploy Netlify. Codigo: $exitCode"
+      }
 
-      cat deploy.json
-      URL=$(node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{let j=JSON.parse(d);console.log(j.url||j.deploy_url||'')})" < deploy.json)
-      echo "##vso[task.setvariable variable=NETLIFY_URL]$URL"
+      $deployJsonPath = 'deploy.json'
+      $deployText = $deployOutput -join [Environment]::NewLine
+      Set-Content -Path $deployJsonPath -Value $deployText -Encoding UTF8
+
+      $json = $deployText | ConvertFrom-Json
+      $url = $json.url
+      if (-not $url) {
+          $url = $json.deploy_url
+      }
+      if ($url) {
+          Write-Host "##vso[task.setvariable variable=NETLIFY_URL]$url"
+      } else {
+          throw 'Nao foi possivel obter URL do deploy Netlify.'
+      }
     displayName: 'Deploy to Netlify (prod)'
 
   - task: PowerShell@2
