@@ -129,7 +129,7 @@ jobs:
       }
 
       $jsonCount = (Get-ChildItem -Path $resultsRoot -Filter '*.json' -File -ErrorAction SilentlyContinue | Measure-Object).Count
-      Write-Host "Allure JSONs disponiveis em $resultsRoot: $jsonCount"
+      Write-Host ("Allure JSONs disponiveis em {0}: {1}" -f $resultsRoot, $jsonCount)
 
       Write-Host "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$testExit"
       exit 0
