@@ -1,9 +1,12 @@
 ﻿using Microsoft.Playwright;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 
 namespace PortalIDSFTestes.runner
 {
+    [AllureNUnit]
     public abstract class Executa
     {
         private IPlaywright? playwright;
