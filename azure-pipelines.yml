@@ -214,22 +214,50 @@ jobs:
     artifact: 'allure-results'
     displayName: 'Download artifact: allure-results'
 
-  # --- INÍCIO DA CORREÇÃO FINAL ---
-  # Passo 1: Instalar o Java JDK 11 baixando de uma fonte pública
-  - task: JavaToolInstaller@0
-    inputs:
-      versionSpec: '11'
-      jdkArchitectureOption: 'x64'
-      jdkSourceOption: 'Download' # <-- ALTERADO PARA 'Download'
-    displayName: 'Install Java JDK 11'
+  # --- INÍCIO DA SOLUÇÃO DEFINITIVA ---
+  # Passo 1: Instalar o Java JDK 11 manualmente via script
+  - powershell: |
+      Write-Host "Iniciando instalação manual do Java JDK 11..."
+      
+      # URL para download do JDK 11 (Temurin by Adoptium) para Windows x64
+      $jdkUrl = "https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.23%2B9/OpenJDK11U-jdk_x64_windows_hotspot_11.0.23_9.zip"
+      $jdkZipPath = "$(Agent.TempDirectory)\jdk11.zip"
+      $javaHome = "$(Agent.TempDirectory)\jdk11"
+      
+      # Baixar o JDK
+      Write-Host "Baixando JDK de: $jdkUrl"
+      Invoke-WebRequest -Uri $jdkUrl -OutFile $jdkZipPath
+      
+      # Extrair o JDK
+      Write-Host "Extraindo JDK para: $javaHome"
+      if (Test-Path $javaHome) {
+          Remove-Item -Path $javaHome -Recurse -Force
+      }
+      Expand-Archive -Path $jdkZipPath -DestinationPath "$(Agent.TempDirectory)"
+      
+      # Renomear a pasta extraída para um nome fixo
+      $extractedFolder = Get-ChildItem -Path "$(Agent.TempDirectory)" -Directory -Filter "jdk-11*" | Select-Object -First 1
+      if ($extractedFolder) {
+          Rename-Item -Path $extractedFolder.FullName -NewName "jdk11"
+      } else {
+          Write-Error "Não foi possível encontrar a pasta extraída do JDK."
+          exit 1
+      }
+      
+      # Configurar variáveis de ambiente para a pipeline
+      Write-Host "##vso[task.setvariable variable=JAVA_HOME]$javaHome"
+      Write-Host "##vso[task.prependpath]$($javaHome)\bin"
+      
+      Write-Host "Instalação do Java concluída."
+    displayName: 'Manually Install Java JDK 11'
 
-  # Passo 2: Verificar se o Java foi instalado corretamente
+  # Passo 2: Verificar se o Java foi instalado e configurado corretamente
   - powershell: |
       Write-Host "JAVA_HOME está configurado para: $env:JAVA_HOME"
       Write-Host "Verificando instalação do Java:"
       java -version
     displayName: 'Verify Java Installation'
-  # --- FIM DA CORREÇÃO ---
+  # --- FIM DA SOLUÇÃO DEFINITIVA ---
 
   - task: NodeTool@0
     inputs: { versionSpec: '18.x' }
