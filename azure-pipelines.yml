@@ -214,6 +214,23 @@ jobs:
     artifact: 'allure-results'
     displayName: 'Download artifact: allure-results'
 
+  # --- INÍCIO DA CORREÇÃO ---
+  # Passo 1: Instalar o Java JDK 11
+  - task: JavaToolInstaller@0
+    inputs:
+      versionSpec: '11'
+      jdkArchitectureOption: 'x64'
+      jdkSourceOption: 'PreInstalled'
+    displayName: 'Install Java JDK 11'
+
+  # Passo 2: Verificar se o Java foi instalado corretamente
+  - powershell: |
+      Write-Host "JAVA_HOME está configurado para: $env:JAVA_HOME"
+      Write-Host "Verificando instalação do Java:"
+      java -version
+    displayName: 'Verify Java Installation'
+  # --- FIM DA CORREÇÃO ---
+
   - task: NodeTool@0
     inputs: { versionSpec: '18.x' }
     displayName: 'Use Node 18'
@@ -281,9 +298,9 @@ jobs:
           $url = $json.deploy_url
       }
       if ($url) {
-          Write-Host "##vso[task.setvariable variable=NETLIFY_URL]$url"
+        Write-Host "##vso[task.setvariable variable=NETLIFY_URL]$url"
       } else {
-          throw 'Nao foi possivel obter URL do deploy Netlify.'
+        throw 'Nao foi possivel obter URL do deploy Netlify.'
       }
     displayName: 'Deploy to Netlify (prod)'
 
