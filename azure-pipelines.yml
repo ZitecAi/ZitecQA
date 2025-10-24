@@ -214,13 +214,13 @@ jobs:
     artifact: 'allure-results'
     displayName: 'Download artifact: allure-results'
 
-  # --- INÍCIO DA CORREÇÃO ---
-  # Passo 1: Instalar o Java JDK 11
+  # --- INÍCIO DA CORREÇÃO DEFINITIVA ---
+  # Passo 1: Instalar o Java JDK 11 baixando de uma fonte pública
   - task: JavaToolInstaller@0
     inputs:
       versionSpec: '11'
       jdkArchitectureOption: 'x64'
-      jdkSourceOption: 'PreInstalled'
+      # A linha jdkSourceOption foi removida para permitir o download automático
     displayName: 'Install Java JDK 11'
 
   # Passo 2: Verificar se o Java foi instalado corretamente
