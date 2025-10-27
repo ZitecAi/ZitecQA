@@ -57,12 +57,12 @@ namespace PortalIDSFTestes.elementos.notaComercial
         public string BarraPesquisaTabela { get; } = "//label[text()='Pesquisar']";
         public string TabelaNotasComerciais { get; } = "#tabelaNotaComercial";
         public string PrimeiroTD { get; } = "(//table//tr[@class='odd']//td)[1]";
-        public string BtnEngrenagem { get; } = "//span//button[@title='Fechar operação!']";
+        public string BtnEngrenagem { get; } = "(//tr[td[contains(normalize-space(.), 'Zitec Tecnologia LTDA - 54.638.076/0001-76')]] //button[@title='Fechar operação!'])[1]";
         public string RadioBtnCancelarOp { get; } = "(//span[text()='Cancelar Operação'])[1]";
         public string MinutaPdf { get; } = "#downloadMinutaParHelperPDF";
         public string ObsFecharOp { get; } = "#obsFecharOP";
         public string BtnSubmitFecharOp { get; } = "#submitBtnFecharOp";
-        public string BtnDownloadMinuta { get; } = "//span//button[@title='Download Minuta']";
+        public string BtnDownloadMinuta { get; } = "(//td//button[@title='Download Minuta'])[1]";
         public string BtnDownloadMinutaPDF { get; } = "//span//button[@title='Download Minuta PDF']";
 
         //Error Message
