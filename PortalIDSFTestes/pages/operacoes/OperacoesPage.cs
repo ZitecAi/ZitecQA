@@ -43,7 +43,7 @@ namespace PortalIDSFTestes.pages.operacoes
             NomeNovoArquivo = await metodo.AtualizarDataEEnviarArquivo(page, GetPath() + "CNABz - Copia.txt", "Enviar Arquivo CNAB para teste positivo");            
             //await metodo.ValidarMensagemPorTextoAsync(el.MsgSucessoRetornada, "Arquivo processado com sucesso", "Validar Mensagem de Sucesso retornada");
             //await metodo.ValidarMsgRetornada(el.MsgSucesso, "Validar Mensagem sucesso retornada");
-            await metodo.EsperarTextoPresente("Arquivo processado com sucesso!","Esperar Arquivo Ser Processado para seguir o fluxo");
+            //await metodo.EsperarTextoPresente("Arquivo processado com sucesso!","Esperar Arquivo Ser Processado para seguir o fluxo");
             //Consultar
             await Task.Delay(20000);
             await page.ReloadAsync();

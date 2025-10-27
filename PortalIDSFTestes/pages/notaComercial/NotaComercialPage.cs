@@ -280,12 +280,8 @@ namespace PortalIDSFTestes.pages.notaComercial
         {
             await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na tabela para inserir nota a ser consultada");
             await metodo.Escrever(el.BarraPesquisaTabela, "Zitec", "Escrever Fundo nome do fundo na barra de pesquisa da tabela ");
-            await metodo.Clicar(el.PrimeiroTD, "Clicar no primeiro TD para Expandir menu na tabela");
-            var download = await page.RunAndWaitForDownloadAsync(async () =>
-            {
-                await metodo.Clicar(el.BtnDownloadMinuta, "Clicar no botão para baixar Excel");
-            });
-            await metodo.ValidarDownloadAsync(download,"Download Minuta","Validar Download da Minuta");
+            await metodo.Clicar(el.PrimeiroTD, "Clicar no primeiro TD para Expandir menu na tabela");            
+            await metodo.ValidateDownloadAndLength(page, el.BtnDownloadMinuta, "Validar Download da Minuta");
             //var download1 = await page.RunAndWaitForDownloadAsync(async () =>
             //{
             //    await metodo.Clicar(el.BtnDownloadMinutaPDF, "Clicar no botão para baixar Excel");

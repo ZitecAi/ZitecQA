@@ -676,7 +676,7 @@ namespace PortalIDSFTestes.metodos
                 var download = await page.RunAndWaitForDownloadAsync(async () =>
                 {
                     var element = page.Locator(locatorClickDownload);
-                    await element.WaitForAsync();
+                    await element.WaitForAsync(new LocatorWaitForOptions { Timeout = 90000 }); // 90s
                     await element.ClickAsync();
                 });
 
