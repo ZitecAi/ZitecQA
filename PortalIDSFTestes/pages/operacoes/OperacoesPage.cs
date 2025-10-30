@@ -45,7 +45,7 @@ namespace PortalIDSFTestes.pages.operacoes
             //await metodo.ValidarMsgRetornada(el.MsgSucesso, "Validar Mensagem sucesso retornada");
             //await metodo.EsperarTextoPresente("Arquivo processado com sucesso!","Esperar Arquivo Ser Processado para seguir o fluxo");
             //Consultar
-            await Task.Delay(60000);
+            await Task.Delay(30000);
             await page.ReloadAsync();
             await metodo.Clicar(el.CampoPesquisaTabela, "Clicar no campo pesquisar para inserir nome do arquivo CNAB a ser consultado");
             await metodo.Escrever(el.CampoPesquisaTabela, NomeNovoArquivo, "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");

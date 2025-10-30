@@ -67,14 +67,17 @@ namespace PortalIDSFTestes.metodos
             try
             {
                 await page.WaitForURLAsync(urlEsperada);
-                if(urlEsperada == "https://portal.idsf.com.br/home.aspx#") { 
-                await Expect(page).ToHaveURLAsync(urlEsperada);
+                if (urlEsperada == "https://portal.idsf.com.br/home.aspx#")
+                {
+                    await Expect(page).ToHaveURLAsync(urlEsperada);
                 }
-                if(urlEsperada == "https://portal-staging.idsf.com.br/Home.aspx") { 
-                await Expect(page).ToHaveURLAsync(urlEsperada);
+                if (urlEsperada == "https://portal-staging.idsf.com.br/Home.aspx")
+                {
+                    await Expect(page).ToHaveURLAsync(urlEsperada);
                 }
-                if(urlEsperada == "https://portal-dev.idsf.com.br/Home.aspx") { 
-                await Expect(page).ToHaveURLAsync(urlEsperada);
+                if (urlEsperada == "https://portal-dev.idsf.com.br/Home.aspx")
+                {
+                    await Expect(page).ToHaveURLAsync(urlEsperada);
                 }
             }
             catch (Exception ex)
@@ -178,7 +181,7 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: {ex.Message}");
             }
         }
-        
+
 
         public async Task VerificarElementoPresenteNaTabela(IPage page, string seletorTabela, string textoEsperado, string passo)
         {
@@ -398,9 +401,9 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-     
 
-        public async Task EnviarArquivoCedenteNovo(string locator, string caminhoArquivo, string caminhoExcel,string cnpjMassa, string passo)
+
+        public async Task EnviarArquivoCedenteNovo(string locator, string caminhoArquivo, string caminhoExcel, string cnpjMassa, string passo)
         {
             try
             {
@@ -553,7 +556,7 @@ namespace PortalIDSFTestes.metodos
 
                 // Atualizando num consultoria
                 Random random = new Random();
-                for (int i = 1; i <= 7; i++)
+                for (int i = 1; i <= 2; i++)
                 {
                     string randomNumber = "";
                     for (int j = 0; j < 25; j++)
@@ -588,9 +591,9 @@ namespace PortalIDSFTestes.metodos
 
                 return novoNomeArquivo;
             }
-            catch
+            catch (Exception e)
             {
-                throw new Exception("Não foi possivel Encontrar Arquivo " + caminhoArquivo + " No passo: " + passo);
+                throw new Exception("Não foi possivel Encontrar Arquivo " + caminhoArquivo + " No passo: " + passo + " Mensagem: " + e.Message);
             }
         }
 
