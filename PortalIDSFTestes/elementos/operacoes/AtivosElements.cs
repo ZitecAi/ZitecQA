@@ -30,11 +30,12 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string BtnExcel { get; } = "//span[text()='Excel']";
         public string BarraPesquisa { get; } = "//label[text()='Pesquisar']";
         public string TabelaAtivos { get; } = "#tabelaContratos";
-        public string PrimeiroTd { get; } = "(//td[@class='sorting_1 dtr-control'])[1]";
+        public string PrimeiroTd { get; } = "(//td[@class='dtr-control sorting_1'])[1]";
         public string BtnBaixarArquivo { get; } = "(//button[@title='Baixar arquivos'])[2]";
         public string BtnSituacaoGestor { get; } = "(//button[@id='53300608000106_53300608000106_GESTORA'])[5]";
         public string BtnAprovado { get; } = "//label[@for='option-1']";
         public string CampoObservacaoParecer { get; } = "#msgParecerContrato";
         public string BtnAprovadoGestora { get; } = "#submitButtonGestora";
+        public string TotalAtivos { get; } = "//p[text()='Total de Ativos']/ancestor::div[@class='totalInvest']//div//p";
     }
 }

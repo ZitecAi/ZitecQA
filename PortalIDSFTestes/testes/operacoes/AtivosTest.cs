@@ -84,6 +84,12 @@ namespace PortalIDSFTestes.testes.operacoes
             var ativos = new AtivosPage(page);
             await ativos.DownloadArquivo();
         }
+        [Test, Order(7)]
+        public async Task Deve_Conter_Quantidade_Total_Correta_De_Ativos()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.ContagemDeAtivosTotais();
+        }
 
     }
 }

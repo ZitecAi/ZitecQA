@@ -94,5 +94,10 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo gestor");
         }
 
+        public async Task ContagemDeAtivosTotais()
+        {
+            await metodo.CapturarTextoDoElemento(el.TotalAtivos, "capturar e validar o total de ativos na página");
+        }
+
     }
 }

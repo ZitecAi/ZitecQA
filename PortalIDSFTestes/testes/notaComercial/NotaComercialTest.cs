@@ -67,20 +67,21 @@ namespace PortalIDSFTestes.testes.notaComercial
             var notaComercial = new NotaComercialPage(page);
             await notaComercial.ConsultarNotaComercialNaTabela();
         }
-
         [Test, Order(5)]
+        public async Task Deve_Fazer_Download_Minuta()
+        {
+            var notaComercial = new NotaComercialPage(page);
+            await notaComercial.DownloadMinuta();
+        }
+
+        [Test, Order(6)]
         public async Task Deve_Cancelar_Nota_Comercial()
         {
             var notaComercial = new NotaComercialPage(page);
             await notaComercial.CancelarNotaComercialNaTabela();
         }
 
-        [Test, Order(6)]
-        public async Task Deve_Fazer_Download_Minuta()
-        {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.DownloadMinuta();
-        }
+        
         [Test, Order(7)]
         public async Task Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco()
         {

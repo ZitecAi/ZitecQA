@@ -181,6 +181,30 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: {ex.Message}");
             }
         }
+        public async Task<string> CapturarTextoDoElemento(string locator, string passo)
+        {
+            try
+            {
+                await page.WaitForSelectorAsync(locator, new PageWaitForSelectorOptions
+                {
+                    State = WaitForSelectorState.Visible
+                });
+                string texto = await page.Locator(locator).InnerTextAsync();
+
+                int quantidade = Convert.ToInt16(texto);
+
+                if (quantidade > 10) 
+                {
+                    Assert.That(quantidade, Is.GreaterThan(10), "❌ A quantidade esperada deve ser maior que 10.");
+                }
+                Console.WriteLine($"✅ Texto capturado, Quantidade de ativos: {texto}");
+                return texto;
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{locator}' no passo: '{passo}'. Detalhes: {ex.Message}");
+            }
+        }
 
 
         public async Task VerificarElementoPresenteNaTabela(IPage page, string seletorTabela, string textoEsperado, string passo)

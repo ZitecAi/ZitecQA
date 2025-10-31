@@ -93,7 +93,6 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.Clicar(el.ButtonAtivacao, "Clicar no botão para ativar cedente");
             await metodo.ValidarTextoPresente("Contrato recebido com sucesso, em breve ele será ativado", "Validar mensagem Contrato recebido com sucesso presente na tela");
 
-
             //await metodo.Clicar(el.BtnReprovarCedente(cnpjCedente), $"Reprovar cedente do cnpj {cnpjCedente}");
             //await metodo.Escrever(el.ObsReprovar, "Aprovado", "Escrever observação para aprovação do compliance");
             //await metodo.Clicar(el.ButtonReprovar, "Clicar no botão para reprovar cedente");
@@ -106,6 +105,7 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.Clicar(el.ButtonAprovado, "Clicar na opção aprovado");
             await metodo.Escrever(el.ObsContratoMae, "Aprovado", "Escrever observação para aprovação do contrato mãe");
             await metodo.Clicar(el.BtnAtivarCedente, "Clicar no botão para ativar cedente");
+            await Task.Delay(1500);
             await metodo.ValidarTextoDoElemento(el.TdAprovados("4"), "Ativo", "Validar se o status do cedente está como ativo");
 
             //reprovar
