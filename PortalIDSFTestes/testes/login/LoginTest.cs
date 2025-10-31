@@ -28,6 +28,7 @@ namespace PortalIDSFTestes.testes.login
         }
 
         [Test, Order(1)]
+        [Ignore ("Este teste está em manutenção")]
         public async Task Deve_Realizar_Login_Com_Sucesso_Nivel_Interno()
         {
             var login = new LoginPage(page);

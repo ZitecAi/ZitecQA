@@ -22,9 +22,9 @@ namespace PortalIDSFTestes.elementos.Boletagem
         public string SelectCarteira { get; } = "#Carteiras";
         public string BtnEnviar { get; } = "#submitButton";
         public string Filtro { get; } = "//div[@id]//input[@type='search']";
-        public string AprovacaoCustodia { get; } = "(//tr[td[contains(normalize-space(.), 'Zitec Tecnologia LTDA')]]//td[8])[1]//button";
-        public string AprovacaoEscrituracao { get; } = "(//tr[td[contains(normalize-space(.), 'Zitec Tecnologia LTDA')]]//td[9])[1]//button";
-        public string AprovacaoControladoria { get; } = "(//tr[td[contains(normalize-space(.), 'Zitec Tecnologia LTDA')]]//td[10])[1]//button";
+        public string AprovacaoCustodia (string nomeCotista) => $"(//tr[td[contains(normalize-space(.), '{nomeCotista}')]]//td[8])[1]//button";
+        public string AprovacaoEscrituracao(string nomeCotista) => $"(//tr[td[contains(normalize-space(.), '{nomeCotista}')]]//td[9])[1]//button";
+        public string AprovacaoControladoria(string nomeCotista) => $"(//tr[td[contains(normalize-space(.), '{nomeCotista}')]]//td[10])[1]//button";
         public string BtnAprovado { get; } = "//span[text()='Aprovado']";
         public string Descricao { get; } = "#descricao";
         public string BtnConfirmar { get; } = "#statusButton";

@@ -30,9 +30,14 @@ namespace PortalIDSFTestes.pages.boletagem
 
         public async Task RealizarAporte()
         {
+
+            Random random = new Random();
+
+            int randomNumber = random.Next(0, 9999);
+
             var today = DateTime.Today.ToString();
             string cpfCotista = "496.248.668-30";
-            string nomeCotista = "Cotista Zitec";
+            string nomeCotista = $"Cotista Zitec {randomNumber}";
             string nomeFundo = "Zitec Tecnologia LTDA";
             string cnpjFundo = "54.638.076/0001-76";
             string valorAporte = "10000";
@@ -47,29 +52,39 @@ namespace PortalIDSFTestes.pages.boletagem
             await metodo.ClicarNoSeletor(el.SelectCota, "COTAFIXA", "Selecionar Cota Fixa");
             await metodo.Escrever(el.ValorCota, "1000", "valor da cota");
             await metodo.ClicarNoSeletor(el.TipoAporte, "FINANCEIRO", "Selecionar aporte Financeiro");
+            await Task.Delay(1000);
+            bool isVisible = false;
 
-
+            while (isVisible == false)
+            {
+                await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar fundo zitec tecnologia");
+                if (await page.GetByText("CARTEIRA TESTE").IsEnabledAsync())
+                {
+                    isVisible = true;
+                    break;
+                }
+            }
             //await metodo.Clicar(el.SelectFundo, "Expandir seletor do fundo");           
-            await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar fundo zitec tecnologia");            
+                      
             //await page.Keyboard.PressAsync("Escape");
             await Task.Delay(1000);
             await metodo.Clicar(el.BtnEnviar, "Clicar em enviar");
             await metodo.ValidarTextoPresente("Aporte realizado com sucesso", "Validar mensagem de sucesso retornada");
-            await metodo.Escrever(el.Filtro, "54638076000176", "Pesquisar Zitec no filtro");
-            await Task.Delay(1500);
-            await metodo.Clicar(el.AprovacaoCustodia, "Aprovar aporte na custódia");
+            await metodo.Escrever(el.Filtro, nomeCotista, "Pesquisar Nome do Cotista no filtro");
+            await Task.Delay(3000);
+            await metodo.Clicar(el.AprovacaoCustodia(nomeCotista), "Aprovar aporte na custódia");
             await metodo.Clicar(el.BtnAprovado, "Selecionar status aprovado");  
             await metodo.Escrever(el.Descricao, "Aprovado", "Inserir descrição da aprovação");
             await metodo.Clicar(el.BtnConfirmar, "Confirmar aprovação");
             await metodo.ValidarTextoPresente("Status atualizado com sucesso", "Validar mensagem de sucesso na aprovação da custódia");
             await Task.Delay(700);
-            await metodo.Clicar(el.AprovacaoEscrituracao, "Aprovar aporte na escrituracao");
+            await metodo.Clicar(el.AprovacaoEscrituracao(nomeCotista), "Aprovar aporte na escrituracao");
             await metodo.Clicar(el.BtnAprovado, "Selecionar status aprovado");
             await metodo.Escrever(el.Descricao, "Aprovado", "Inserir descrição da aprovação");
             await metodo.Clicar(el.BtnConfirmar, "Confirmar aprovação");
             await metodo.ValidarTextoPresente("Status atualizado com sucesso", "Validar mensagem de sucesso na aprovação da escrituracao");
             await Task.Delay(700);
-            await metodo.Clicar(el.AprovacaoControladoria, "Aprovar aporte na controladoria");
+            await metodo.Clicar(el.AprovacaoControladoria(nomeCotista), "Aprovar aporte na controladoria");
             await metodo.Clicar(el.BtnAprovado, "Selecionar status aprovado");
             await metodo.Escrever(el.Descricao, "Aprovado", "Inserir descrição da aprovação");
             await metodo.Clicar(el.BtnConfirmar, "Confirmar aprovação");
