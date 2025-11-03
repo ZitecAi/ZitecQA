@@ -158,11 +158,11 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
-                await page.GetByText(textoEsperado).IsVisibleAsync();
+                await Expect(page.GetByText(textoEsperado)).ToBeVisibleAsync();
             }
             catch (Exception ex)
             {
-                throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'.");
+                throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: " + ex.Message);
             }
         }
 

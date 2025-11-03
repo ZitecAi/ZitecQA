@@ -66,8 +66,32 @@ namespace PortalIDSFTestes.testes.operacoes
             var ativos = new AtivosPage(page);
             await ativos.CadastrarEConsultarAtivo();
         }
-
         [Test, Order(5)]
+        public async Task Deve_Aprovar_Um_Ativo_Por_Gestor()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.AprovarGestor();
+        }
+        [Test, Order(6)]
+        public async Task Deve_Aprovar_Um_Ativo_Pelo_Juridico()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.AprovarJuridico();
+        }
+        [Test, Order(7)]
+        public async Task Deve_Aprovar_Um_Ativo_Por_Risco()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.AprovarRisco();
+        }
+        [Test, Order(8)]
+        public async Task Deve_Aprovar_Um_Ativo_Por_Cadastro()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.AprovarCadastro();
+        }
+
+        [Test, Order(9)]
         public async Task Deve_Fazer_Download_Arquivo()
         {
             var ativos = new AtivosPage(page);
