@@ -365,3 +365,5 @@ Configuration/Implementations/AmbienteMiddleware.cs
 allure-report/
 
 allure-results/
+
+PortalIDSFTestes/appsettings.json

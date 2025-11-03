@@ -32,7 +32,7 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string TabelaAtivos { get; } = "#tabelaContratos";
         public string PrimeiroTd { get; } = "(//td[@class='dtr-control sorting_1'])[1]";
         public string BtnBaixarArquivo { get; } = "(//button[@title='Baixar arquivos'])[2]";
-        public string BtnSituacaoGestor { get; } = "(//button[@id='53300608000106_53300608000106_GESTORA'])[5]";
+        public string BtnEmAnalise (string posicao) => $"(//button[text()='Análise'])[{posicao}]";
         public string BtnAprovado { get; } = "//label[@for='option-1']";
         public string CampoObservacaoParecer { get; } = "#msgParecerContrato";
         public string BtnAprovadoGestora { get; } = "#submitButtonGestora";

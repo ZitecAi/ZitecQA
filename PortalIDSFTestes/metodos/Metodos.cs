@@ -193,9 +193,9 @@ namespace PortalIDSFTestes.metodos
 
                 int quantidade = Convert.ToInt16(texto);
 
-                if (quantidade > 10) 
+                if (quantidade > 100) 
                 {
-                    Assert.That(quantidade, Is.GreaterThan(10), "❌ A quantidade esperada deve ser maior que 10.");
+                    Assert.That(quantidade, Is.GreaterThan(10), "❌ A quantidade esperada deve ser maior que 100.");
                 }
                 Console.WriteLine($"✅ Texto capturado, Quantidade de ativos: {texto}");
                 return texto;

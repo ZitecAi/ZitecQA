@@ -41,7 +41,7 @@ namespace PortalIDSFTestes.pages.boletagem
             string nomeFundo = "Zitec Tecnologia LTDA";
             string cnpjFundo = "54.638.076/0001-76";
             string valorAporte = "10000";
-
+            
             await metodo.Clicar(el.BtnNovo, "Clicar em Novo, para inserir novo aporte");
             await Task.Delay(200);
             await metodo.Escrever(el.Calendario, today, "Clicar no calendario para inserir dia do aporte");
@@ -57,8 +57,9 @@ namespace PortalIDSFTestes.pages.boletagem
 
             while (isVisible == false)
             {
+                await metodo.ClicarNoSeletor(el.SelectFundo, "36614123000160", "Selecionar fundo zitec tecnologia");
                 await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar fundo zitec tecnologia");
-                if (await page.GetByText("CARTEIRA TESTE").IsEnabledAsync())
+                if (await page.Locator("//option[text()='CARTEIRA TESTE']").IsEnabledAsync())
                 {
                     isVisible = true;
                     break;

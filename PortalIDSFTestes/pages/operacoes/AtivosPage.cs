@@ -21,6 +21,7 @@ namespace PortalIDSFTestes.pages.operacoes
             metodo = new Metodos(page);
         }
 
+        
         public static string GetPath()
         {
             ConfigurationManager config = new ConfigurationManager();
@@ -44,34 +45,102 @@ namespace PortalIDSFTestes.pages.operacoes
 
         }
 
-        public async Task CadastrarAtivo()
+        public async Task CadastrarEConsultarAtivo()
         {
-            await metodo.Clicar(el.BtnNovoAtivo,"Clicar no Botão Para Cadastrar Um Novo Ativo");
-            await Task.Delay(500);
-            await metodo.ClicarNoSeletor(el.SelectFundo, "53300608000106", "Selecionar Fundo");
-            await metodo.Escrever(el.CampoNomeCedente, "Cedente Teste NUnit","Escrever Nome Cedente");
-            await metodo.Escrever(el.CampoCpfPjCedente, "533.006.080-00106", "Escrever CPF/CNPJ Cedente");
-            await metodo.ClicarNoSeletor(el.SelectTipoContrato, "AtivosImobiliarios", "Selecionar Tipo de Contrato");
-            await metodo.Escrever(el.CampoAgencia, "0001", "Digitar Agencia");
-            await metodo.Escrever(el.CampoConta, "460915", "Digitar Conta");
-            await metodo.Escrever(el.CampoRazSocialDestinatario, "Teste NUnit", "Digitar Razão Social");
-            await metodo.Escrever(el.CampoCpfPj, "49624866830", "Digitar CPF/CNPJ Ativo");
-            await metodo.Escrever(el.CampoValor, "10", "Digitar Valor");
-            await metodo.Escrever(el.CampoResumoOperacao, "Teste NUnit", "Digitar Resumo da operação");
-            await metodo.Clicar(el.BtnAnexos, "Clicar no Botão Anexos");
-            await metodo.EnviarArquivo(el.InputAnexos, GetPath() + "21321321321.pdf", "Enviar Anexo no Input de anexos");
-            await metodo.Clicar(el.BtnVoltar, "Clicar no botão voltar após enviar anexo");
-            await metodo.Clicar(el.CheckBoxTermo, "Aceitar Termos");
-            await metodo.Clicar(el.BtnSalvar, "Clicar em Salvar");
-            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem de sucesso visivel na tela ");            
+            Random random = new Random();
+
+            int uniqueNumber = random.Next(0, 9999);
+
+            try
+            {
+                await metodo.Clicar(el.BtnNovoAtivo, "Clicar no Botão Para Cadastrar Um Novo Ativo");
+                await Task.Delay(500);
+                await metodo.ClicarNoSeletor(el.SelectFundo, "53300608000106", "Selecionar Fundo");
+                await metodo.Escrever(el.CampoNomeCedente, "Cedente Teste NUnit", "Escrever Nome Cedente");
+                await metodo.Escrever(el.CampoCpfPjCedente, "533.006.080-00106", "Escrever CPF/CNPJ Cedente");
+                await metodo.ClicarNoSeletor(el.SelectTipoContrato, "AtivosImobiliarios", "Selecionar Tipo de Contrato");
+                await metodo.Escrever(el.CampoAgencia, "0001", "Digitar Agencia");
+                await metodo.Escrever(el.CampoConta, "460915", "Digitar Conta");
+                await metodo.Escrever(el.CampoRazSocialDestinatario, $"Teste NUnit {uniqueNumber}", "Digitar Razão Social");
+                await metodo.Escrever(el.CampoCpfPj, "49624866830", "Digitar CPF/CNPJ Ativo");
+                await metodo.Escrever(el.CampoValor, "10", "Digitar Valor");
+                await metodo.Escrever(el.CampoResumoOperacao, "Teste NUnit", "Digitar Resumo da operação");
+                await metodo.Clicar(el.BtnAnexos, "Clicar no Botão Anexos");
+                await metodo.EnviarArquivo(el.InputAnexos, GetPath() + "21321321321.pdf", "Enviar Anexo no Input de anexos");
+                await metodo.Clicar(el.BtnVoltar, "Clicar no botão voltar após enviar anexo");
+                await metodo.Clicar(el.CheckBoxTermo, "Aceitar Termos");
+                await metodo.Clicar(el.BtnSalvar, "Clicar em Salvar");
+                await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem de sucesso visivel na tela ");
+                await Task.Delay(1000);
+                await page.ReloadAsync();
+            }catch(Exception ex)
+            {
+                throw new Exception("Não foi possivel cadastrar Ativo" + ex.Message);
+            }
+            try
+            {
+                //consultar ativo cadastrado
+                await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
+                await metodo.Escrever(el.BarraPesquisa, $"Teste NUnit {uniqueNumber}", "Clicar na Barra de Pesquisa");
+                await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaAtivos, $"Teste NUnit {uniqueNumber}", "Validar se ativo com destinatário Teste NUnit está presente na tabela");
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Não foi possivel consultar Ativo" + ex.Message);
+            }
+
+            try
+            {
+                await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
+                await metodo.Clicar(el.BtnEmAnalise("1"), "Clicar no botão para abrir modal de situação do gestor");
+                await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo gestor");
+                await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
+                await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo gestor");
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Não foi possivel Aprovar gestora do Ativo" + ex.Message);
+            }
+            try
+            {
+                await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
+                await metodo.Clicar(el.BtnEmAnalise("3"), "Clicar no botão para abrir modal de situação do risco");
+                await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo risco");
+                await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
+                await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo risco");
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Não foi possivel Aprovar risco do Ativo" + ex.Message);
+            }
+            try
+            {
+                await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
+                await metodo.Clicar(el.BtnEmAnalise("4"), "Clicar no botão para abrir modal de situação do jurídico");
+                await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo jurídico");
+                await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
+                await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo jurídico");
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Não foi possivel Aprovar jurídico do Ativo" + ex.Message);
+            }
+            try
+            {
+                await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
+                await metodo.Clicar(el.BtnEmAnalise("5"), "Clicar no botão para abrir modal de situação do cadastro");
+                await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo cadastro");
+                await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
+                await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo cadastro");
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Não foi possivel Aprovar cadastro do Ativo" + ex.Message);
+            }
+
         }
 
-        public async Task ConsultarAtivo()
-        {
-            await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
-            await metodo.Escrever(el.BarraPesquisa,"Teste NUnit", "Clicar na Barra de Pesquisa");
-            await metodo.VerificarElementoPresenteNaTabela(page,el.TabelaAtivos, "Teste NUnit","Validar se ativo com destinatário Teste NUnit está presente na tabela");
-        }
 
 
         public async Task DownloadArquivo()
@@ -83,16 +152,6 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.ValidateDownloadAndLength(page, el.BtnBaixarArquivo, "Baixar Arquivo");
         }
 
-        public async Task AprovarGestor()
-        {
-            await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
-            await metodo.Escrever(el.BarraPesquisa, "Teste NUnit", "Clicar na Barra de Pesquisa");
-            await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
-            await metodo.Clicar(el.BtnSituacaoGestor, "Clicar no botão para abrir modal de situação do gestor");
-            await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo gestor");
-            await metodo.Escrever(el.CampoObservacaoParecer,"Teste Aprovação", "Digitar Observação");
-            await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo gestor");
-        }
 
         public async Task ContagemDeAtivosTotais()
         {
