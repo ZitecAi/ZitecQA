@@ -116,7 +116,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo gestor");
             //await metodo.ValidarTextoPresente("Documentos enviados ao email administrativo@yaaleh.com.br para assinatura, gentileza validar.",
                 //"Validar se mensagem de sucesso ao aprovar por gestor esta visivel ao usuário");
-            await Task.Delay(3000);
+            await Task.Delay(10000);
             await page.ReloadAsync();
             await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
             await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
