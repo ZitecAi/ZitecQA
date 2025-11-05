@@ -1,4 +1,3 @@
-# azure-pipelines.yml
 trigger: none
 
 pool:
@@ -104,17 +103,20 @@ jobs:
       $ErrorActionPreference = 'Stop'
       $sourceDir = '$(Build.SourcesDirectory)'
       $testDir = '$(TEST_DIR)'
-      $pipeStart = [DateTime]::Parse($(PIPE_START_UTC))
+      $pipeStartStr = $env:PIPE_START_UTC
+      if ([string]::IsNullOrWhiteSpace($pipeStartStr)) {
+        $pipeStart = [DateTime]::UtcNow.AddHours(-12)
+      } else {
+        $pipeStart = [DateTime]::ParseExact($pipeStartStr, "o", [Globalization.CultureInfo]::InvariantCulture, [Globalization.DateTimeStyles]::AssumeUniversal)
+      }
       $src = Join-Path $testDir 'bin\Release\net8.0\allure-results'
       $destRoot = Join-Path $sourceDir '_allure\results'
       if (Test-Path $destRoot) { Remove-Item -Recurse -Force $destRoot }
       New-Item -ItemType Directory -Path $destRoot -Force | Out-Null
       if (-not (Test-Path $src)) { throw "Diretorio de resultados nao encontrado: $src" }
-      $currentRunFiles = Get-ChildItem -Path $src -File -Recurse | Where-Object { $_.LastWriteTimeUtc -ge $pipeStart }
-      if (($currentRunFiles | Measure-Object).Count -eq 0) {
-        $currentRunFiles = Get-ChildItem -Path $src -File -Recurse
-      }
-      Copy-Item -Path $currentRunFiles.FullName -Destination $destRoot -Force
+      $files = Get-ChildItem -Path $src -File -Recurse | Where-Object { $_.LastWriteTimeUtc -ge $pipeStart }
+      if (($files | Measure-Object).Count -eq 0) { $files = Get-ChildItem -Path $src -File -Recurse }
+      $files | ForEach-Object { Copy-Item -Path $_.FullName -Destination $destRoot -Force }
       $jsonCount = (Get-ChildItem -Path $destRoot -Filter '*.json' -File | Measure-Object).Count
       if ($jsonCount -eq 0) { throw 'Nenhum JSON do Allure gerado para esta execucao.' }
     displayName: 'Consolidar apenas resultados da execucao atual'
