@@ -15,8 +15,8 @@ resources:
       trigger: true
 
 variables:
-  - group: NetlifySecrets          # NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID, SITE_URL (opcional)
-  - group: EmailSecrets            # SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_TO, MAIL_FROM
+  - group: NetlifySecrets
+  - group: EmailSecrets
   - name: TEST_CSPROJ
     value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'
   - name: TEST_DIR
@@ -27,12 +27,15 @@ variables:
     value: 'allure-report'
 
 jobs:
-# ========================= JOB 1 — TESTS =========================
-- job: Tests
-  displayName: "Run Playwright/NUnit tests"
-
+- job: AllurePipeline
+  displayName: "Tests + Allure + Netlify + Email (single job)"
   steps:
   - checkout: self
+
+  - powershell: |
+      $now = [DateTime]::UtcNow.ToString("o")
+      Write-Host "##vso[task.setvariable variable=PIPE_START_UTC]$now"
+    displayName: 'Mark pipeline start time (UTC)'
 
   - task: UseDotNet@2
     inputs: { packageType: 'sdk', version: '8.0.x' }
@@ -43,42 +46,22 @@ jobs:
   - powershell: |
       $ErrorActionPreference = 'Stop'
       $testCsproj = '$(TEST_CSPROJ)'
-      dotnet clean $testCsproj -c Release
       $testDir = '$(TEST_DIR)'
       $sourceDir = '$(Build.SourcesDirectory)'
-      $pathsToRemove = @(
-          Join-Path $testDir 'bin'
-          Join-Path $testDir 'obj'
-          Join-Path $sourceDir 'TestResults'
-          Join-Path $sourceDir '_allure'
-          Join-Path $sourceDir '$(ALLURE_REPORT_DIR)'
-      )
-
-      foreach ($path in $pathsToRemove) {
-          if (Test-Path $path) {
-              Remove-Item -Path $path -Recurse -Force -ErrorAction SilentlyContinue
-          }
-      }
-
-      Get-ChildItem -Path $sourceDir -Directory -Filter '$(ALLURE_RESULTS_DIR)' -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-          Remove-Item -Path $_.FullName -Recurse -Force -ErrorAction SilentlyContinue
-      }
-
-      # Criar diretório de resultados
+      dotnet clean $testCsproj -c Release
+      @(
+        Join-Path $testDir 'bin'
+        Join-Path $testDir 'obj'
+        Join-Path $sourceDir 'TestResults'
+        Join-Path $sourceDir '_allure'
+        Join-Path $sourceDir '$(ALLURE_REPORT_DIR)'
+      ) | ForEach-Object { if (Test-Path $_) { Remove-Item -Recurse -Force $_ } }
       $allureResults = Join-Path $testDir 'bin\Release\net8.0\allure-results'
       New-Item -Path $allureResults -ItemType Directory -Force | Out-Null
-      Write-Host "Diretorio Allure criado: $allureResults"
-
-      # Atualizar allureConfig.json no diretório do projeto de testes
       $configPath = Join-Path $testDir 'allureConfig.json'
-      $config = @{
-          allure = @{
-              directory = 'allure-results'
-          }
-      } | ConvertTo-Json -Depth 3
+      $config = @{ allure = @{ directory = 'allure-results' } } | ConvertTo-Json -Depth 3
       Set-Content -Path $configPath -Value $config -Encoding UTF8
-      Write-Host "Configuracao Allure atualizada: $configPath"
-    displayName: 'Clean + configurar Allure (fresh)'
+    displayName: 'Clean e configurar Allure (fresh)'
 
   - powershell: |
       $ErrorActionPreference = 'Stop'
@@ -91,80 +74,20 @@ jobs:
       $ErrorActionPreference = 'Stop'
       Push-Location '$(TEST_DIR)'
       try {
-          $scriptPath = Get-ChildItem -Path '.\bin' -Filter 'playwright.ps1' -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-          if (-not $scriptPath) {
-              Write-Host 'ERRO: playwright.ps1 nao encontrado.'
-              Get-ChildItem -Path '.\bin' -Recurse | Out-String | Write-Host
-              throw 'playwright.ps1 nao encontrado.'
-          }
-
-          try {
-              & $scriptPath.FullName install --with-deps
-          } catch {
-              Write-Warning 'Falha ao instalar com --with-deps, tentando sem dependencias adicionais.'
-              & $scriptPath.FullName install
-          }
-      } finally {
-          Pop-Location
-      }
+        $scriptPath = Get-ChildItem -Path '.\bin' -Filter 'playwright.ps1' -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+        if (-not $scriptPath) { throw 'playwright.ps1 nao encontrado.' }
+        try { & $scriptPath.FullName install --with-deps } catch { & $scriptPath.FullName install }
+      } finally { Pop-Location }
     displayName: 'Playwright browsers install'
 
   - powershell: |
       $ErrorActionPreference = 'Continue'
       $sourceDir = '$(Build.SourcesDirectory)'
-      $testDir = '$(TEST_DIR)'
-      Write-Host "Rodando testes em: $(TEST_CSPROJ)"
-
       $trxPath = Join-Path $sourceDir 'TestResults\results.trx'
-      dotnet test '$(TEST_CSPROJ)' -c Release `
-        -l "console;verbosity=detailed" `
-        --logger "trx;LogFileName=$trxPath"
+      dotnet test '$(TEST_CSPROJ)' -c Release -l "console;verbosity=detailed" --logger "trx;LogFileName=$trxPath"
       $testExit = $LASTEXITCODE
-
-      Write-Host "=== Procurando diretorios allure-results ==="
-      $resultsRoot = Join-Path $sourceDir '_allure\results'
-      if (-not (Test-Path $resultsRoot)) {
-          New-Item -Path $resultsRoot -ItemType Directory -Force | Out-Null
-      }
-
-      # Procurar por diretórios allure-results
-      $allureDirs = Get-ChildItem -Path $sourceDir -Directory -Filter '$(ALLURE_RESULTS_DIR)' -Recurse -ErrorAction SilentlyContinue |
-        Where-Object { $_.FullName -ne $resultsRoot }
-
-      Write-Host "Diretorios allure-results encontrados: $($allureDirs.Count)"
-      foreach ($dir in $allureDirs) {
-          Write-Host "  Diretorio: $($dir.FullName)"
-          $files = Get-ChildItem -Path $dir.FullName -File -ErrorAction SilentlyContinue
-          $fileCount = ($files | Measure-Object).Count
-          Write-Host "    Total de arquivos: $fileCount"
-
-          if ($fileCount -gt 0) {
-              Write-Host "    Arquivos encontrados:"
-              $files | Select-Object -First 5 | ForEach-Object {
-                  Write-Host "      - $($_.Name) ($($_.Length) bytes)"
-              }
-              Write-Host "    Copiando para: $resultsRoot"
-              Copy-Item -Path (Join-Path $dir.FullName '*') -Destination $resultsRoot -Recurse -Force -ErrorAction SilentlyContinue
-          }
-      }
-
-      Write-Host "=== Conteudo final de $resultsRoot ==="
-      if (Test-Path $resultsRoot) {
-          $finalFiles = Get-ChildItem -Path $resultsRoot -File -ErrorAction SilentlyContinue
-          Write-Host "Total de arquivos copiados: $(($finalFiles | Measure-Object).Count)"
-          $finalFiles | Select-Object -First 10 | ForEach-Object {
-              Write-Host "  - $($_.Name) ($($_.Length) bytes)"
-          }
-      } else {
-          Write-Host "AVISO: Diretorio $resultsRoot nao existe!"
-      }
-
-      $jsonCount = (Get-ChildItem -Path $resultsRoot -Filter '*.json' -File -ErrorAction SilentlyContinue | Measure-Object).Count
-      Write-Host ("Allure JSONs disponiveis em {0}: {1}" -f $resultsRoot, $jsonCount)
-
-      Write-Host "##vso[task.setvariable variable=TEST_EXIT;isOutput=true]$testExit"
+      Write-Host "##vso[task.setvariable variable=TEST_EXIT]$testExit"
       exit 0
-    name: runTests
     displayName: 'Run tests (non-blocking)'
 
   - task: PublishTestResults@2
@@ -177,87 +100,43 @@ jobs:
       mergeTestResults: true
     displayName: 'Publish TRX'
 
-  # Sanity obrigatório: falha se não houver JSONs do Allure
   - powershell: |
       $ErrorActionPreference = 'Stop'
-      $dir = Join-Path '$(Build.SourcesDirectory)' '_allure\results'
-      Write-Host "Sanity em $dir"
-      if (Test-Path $dir) {
-          Get-ChildItem -Path $dir | ForEach-Object { Write-Host $_.Name }
-          $count = (Get-ChildItem -Path $dir -Filter '*.json' -File | Measure-Object).Count
-      } else {
-          $count = 0
+      $sourceDir = '$(Build.SourcesDirectory)'
+      $testDir = '$(TEST_DIR)'
+      $pipeStart = [DateTime]::Parse($(PIPE_START_UTC))
+      $src = Join-Path $testDir 'bin\Release\net8.0\allure-results'
+      $destRoot = Join-Path $sourceDir '_allure\results'
+      if (Test-Path $destRoot) { Remove-Item -Recurse -Force $destRoot }
+      New-Item -ItemType Directory -Path $destRoot -Force | Out-Null
+      if (-not (Test-Path $src)) { throw "Diretorio de resultados nao encontrado: $src" }
+      $currentRunFiles = Get-ChildItem -Path $src -File -Recurse | Where-Object { $_.LastWriteTimeUtc -ge $pipeStart }
+      if (($currentRunFiles | Measure-Object).Count -eq 0) {
+        $currentRunFiles = Get-ChildItem -Path $src -File -Recurse
       }
-      Write-Host "Arquivos Allure: $count"
-      if ($count -eq 0) {
-          throw 'ERRO: Nenhum JSON do Allure gerado. Verifique pacotes Allure.NUnit/Allure.Commons e variaveis ALLURE_CONFIG/ALLURE_RESULTS_DIRECTORY.'
-      }
-    displayName: 'Sanity: validar _allure/results'
+      Copy-Item -Path $currentRunFiles.FullName -Destination $destRoot -Force
+      $jsonCount = (Get-ChildItem -Path $destRoot -Filter '*.json' -File | Measure-Object).Count
+      if ($jsonCount -eq 0) { throw 'Nenhum JSON do Allure gerado para esta execucao.' }
+    displayName: 'Consolidar apenas resultados da execucao atual'
 
-  - task: PublishPipelineArtifact@1
-    inputs:
-      artifact: 'allure-results'
-      targetPath: '$(Build.SourcesDirectory)/_allure/results'
-    displayName: 'Publish artifact: allure-results'
-
-# ========================= JOB 2 — REPORT =========================
-- job: Report
-  displayName: "Generate Allure + Deploy Netlify + E-mail"
-  dependsOn: Tests
-  condition: always()
-
-  variables:
-    TEST_EXIT_FROM_PREV: $[ dependencies.Tests.outputs['runTests.TEST_EXIT'] ]
-
-  steps:
-  - download: current
-    artifact: 'allure-results'
-    displayName: 'Download artifact: allure-results'
-
-  # --- INÍCIO DA SOLUÇÃO DEFINITIVA ---
-  # Passo 1: Instalar o Java JDK 11 manualmente via script
   - powershell: |
-      Write-Host "Iniciando instalação manual do Java JDK 11..."
-      
-      # URL para download do JDK 11 (Temurin by Adoptium) para Windows x64
+      Write-Host "Iniciando instalacao Java JDK 11"
       $jdkUrl = "https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.23%2B9/OpenJDK11U-jdk_x64_windows_hotspot_11.0.23_9.zip"
       $jdkZipPath = "$(Agent.TempDirectory)\jdk11.zip"
       $javaHome = "$(Agent.TempDirectory)\jdk11"
-      
-      # Baixar o JDK
-      Write-Host "Baixando JDK de: $jdkUrl"
       Invoke-WebRequest -Uri $jdkUrl -OutFile $jdkZipPath
-      
-      # Extrair o JDK
-      Write-Host "Extraindo JDK para: $javaHome"
-      if (Test-Path $javaHome) {
-          Remove-Item -Path $javaHome -Recurse -Force
-      }
+      if (Test-Path $javaHome) { Remove-Item -Recurse -Force $javaHome }
       Expand-Archive -Path $jdkZipPath -DestinationPath "$(Agent.TempDirectory)"
-      
-      # Renomear a pasta extraída para um nome fixo
       $extractedFolder = Get-ChildItem -Path "$(Agent.TempDirectory)" -Directory -Filter "jdk-11*" | Select-Object -First 1
-      if ($extractedFolder) {
-          Rename-Item -Path $extractedFolder.FullName -NewName "jdk11"
-      } else {
-          Write-Error "Não foi possível encontrar a pasta extraída do JDK."
-          exit 1
-      }
-      
-      # Configurar variáveis de ambiente para a pipeline
+      if (-not $extractedFolder) { throw "Falha na extracao do JDK" }
+      Rename-Item -Path $extractedFolder.FullName -NewName "jdk11"
       Write-Host "##vso[task.setvariable variable=JAVA_HOME]$javaHome"
       Write-Host "##vso[task.prependpath]$($javaHome)\bin"
-      
-      Write-Host "Instalação do Java concluída."
-    displayName: 'Manually Install Java JDK 11'
+    displayName: 'Install Java JDK 11'
 
-  # Passo 2: Verificar se o Java foi instalado e configurado corretamente
   - powershell: |
-      Write-Host "JAVA_HOME está configurado para: $env:JAVA_HOME"
-      Write-Host "Verificando instalação do Java:"
       java -version
-    displayName: 'Verify Java Installation'
-  # --- FIM DA SOLUÇÃO DEFINITIVA ---
+    displayName: 'Verify Java'
 
   - task: NodeTool@0
     inputs: { versionSpec: '18.x' }
@@ -265,71 +144,34 @@ jobs:
 
   - powershell: |
       $ErrorActionPreference = 'Stop'
-      $src = Join-Path '$(Pipeline.Workspace)' 'allure-results'
+      $src = Join-Path '$(Build.SourcesDirectory)' '_allure\results'
       $reportDir = '$(ALLURE_REPORT_DIR)'
-
-      if (Test-Path $reportDir) {
-          Remove-Item -Path $reportDir -Recurse -Force -ErrorAction SilentlyContinue
-      }
+      if (Test-Path $reportDir) { Remove-Item -Recurse -Force $reportDir }
       New-Item -Path $reportDir -ItemType Directory -Force | Out-Null
-
-      Write-Host "Listando SRC=$src"
-      if (Test-Path $src) {
-          Get-ChildItem -Path $src -Filter '*.json' -File | Select-Object -First 10 | ForEach-Object { Write-Host $_.Name }
-      } else {
-          Write-Host 'Nenhum arquivo encontrado; diretorio de origem nao existe.'
-      }
-
       $npxOutput = npx -y allure-commandline@2.29.0 generate --clean -o $reportDir $src 2>&1
       $exitCode = $LASTEXITCODE
       $npxOutput | Write-Host
-      if ($exitCode -ne 0) {
-          throw "Falha ao gerar relatorio Allure. Codigo: $exitCode"
-      }
-
+      if ($exitCode -ne 0) { throw "Falha ao gerar relatorio Allure. Codigo: $exitCode" }
       $historyPath = Join-Path $reportDir 'history'
-      if (Test-Path $historyPath) {
-          Remove-Item -Path $historyPath -Recurse -Force -ErrorAction SilentlyContinue
-      }
+      if (Test-Path $historyPath) { Remove-Item -Recurse -Force $historyPath }
       New-Item -Path (Join-Path $reportDir '.nojekyll') -ItemType File -Force | Out-Null
-      if (-not (Test-Path (Join-Path $reportDir 'index.html'))) {
-          throw 'Arquivo index.html nao encontrado no diretorio do relatorio.'
-      }
-    displayName: 'Generate Allure report (fresh)'
+      if (-not (Test-Path (Join-Path $reportDir 'index.html'))) { throw 'index.html nao encontrado' }
+    displayName: 'Generate Allure report'
 
   - powershell: |
       $ErrorActionPreference = 'Stop'
       npm install -g netlify-cli
-      netlify --version
-
       $reportDir = '$(ALLURE_REPORT_DIR)'
-      $deployOutput = & netlify deploy `
-        --prod `
-        --dir="$reportDir" `
-        --site="$(NETLIFY_SITE_ID)" `
-        --auth="$(NETLIFY_AUTH_TOKEN)" `
-        --message="Allure $(Build.BuildNumber)" `
-        --json 2>&1
+      $deployOutput = & netlify deploy --prod --dir="$reportDir" --site="$(NETLIFY_SITE_ID)" --auth="$(NETLIFY_AUTH_TOKEN)" --message="Allure $(Build.BuildNumber)" --json 2>&1
       $exitCode = $LASTEXITCODE
       $deployOutput | Write-Host
-      if ($exitCode -ne 0) {
-          throw "Falha no deploy Netlify. Codigo: $exitCode"
-      }
-
-      $deployJsonPath = 'deploy.json'
+      if ($exitCode -ne 0) { throw "Falha no deploy Netlify. Codigo: $exitCode" }
       $deployText = $deployOutput -join [Environment]::NewLine
-      Set-Content -Path $deployJsonPath -Value $deployText -Encoding UTF8
-
       $json = $deployText | ConvertFrom-Json
       $url = $json.url
-      if (-not $url) {
-          $url = $json.deploy_url
-      }
-      if ($url) {
-        Write-Host "##vso[task.setvariable variable=NETLIFY_URL]$url"
-      } else {
-        throw 'Nao foi possivel obter URL do deploy Netlify.'
-      }
+      if (-not $url) { $url = $json.deploy_url }
+      if (-not $url) { throw 'Nao foi possivel obter URL do deploy Netlify.' }
+      Write-Host "##vso[task.setvariable variable=NETLIFY_URL]$url"
     displayName: 'Deploy to Netlify (prod)'
 
   - task: PowerShell@2
@@ -342,7 +184,7 @@ jobs:
       SMTP_PASS: $(SMTP_PASS)
       MAIL_FROM: $(MAIL_FROM)
       MAIL_TO: $(MAIL_TO)
-      TEST_EXIT: $(TEST_EXIT_FROM_PREV)
+      TEST_EXIT: $(TEST_EXIT)
       BUILD_DEFINITIONNAME: $(Build.DefinitionName)
       BUILD_BUILDID: $(Build.BuildId)
       BUILD_BUILDNUMBER: $(Build.BuildNumber)
@@ -355,8 +197,8 @@ jobs:
         $buildNum = $env:BUILD_BUILDNUMBER
         $testExit = $env:TEST_EXIT
         if ($testExit -ne "0") { $status = "COM FALHAS" } else { $status = "SUCESSO" }
-        $subject = "Relatório Allure (Staging) - $status"
-        $body = "Pipeline: $pipeline`nExecução: $buildNum (ID $buildId)`nStatus dos testes: $status (exit $testExit)`nRelatório: $siteUrl"
+        $subject = "Relatorio Allure (Staging) - $status"
+        $body = "Pipeline: $pipeline`nExecucao: $buildNum (ID $buildId)`nStatus dos testes: $status (exit $testExit)`nRelatorio: $siteUrl"
         if ($env:SMTP_USER -and $env:SMTP_PASS) {
           $sec  = ConvertTo-SecureString $env:SMTP_PASS -AsPlainText -Force
           $cred = New-Object System.Management.Automation.PSCredential($env:SMTP_USER, $sec)
