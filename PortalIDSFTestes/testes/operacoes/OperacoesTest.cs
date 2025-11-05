@@ -49,7 +49,6 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(2)]
-        [Retry(3)]
         public async Task Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir()
         {
             var operacoes = new OperacoesPage(page);

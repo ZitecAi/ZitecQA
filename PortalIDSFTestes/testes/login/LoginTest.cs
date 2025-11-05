@@ -28,7 +28,6 @@ namespace PortalIDSFTestes.testes.login
         }
 
         [Test, Order(1)]
-        [Retry(3)]
         public async Task Deve_Realizar_Login_Com_Sucesso_Nivel_Interno()
         {
             var login = new LoginPage(page);
