@@ -27,12 +27,6 @@ O projeto é dividido em 5 camadas principais:
 
 ---
 
-### 3. Quais casos de uso foram validados na PoC?
-- Login com sucesso  
-- Validação de mensagens de erro  
-
----
-
 ### 4. Como rodar o projeto localmente?
 
 Clone o repositório:
