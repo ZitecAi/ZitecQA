@@ -1,15 +1,12 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using OfficeOpenXml;
-using System;
-using System.Collections.Generic;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Microsoft.Playwright.Assertions;
 
 namespace PortalIDSFTestes.metodos
 {
+
     public class Metodos
     {
         private readonly IPage page;
@@ -18,7 +15,7 @@ namespace PortalIDSFTestes.metodos
         {
             this.page = page;
         }
-
+        [AllureStep("Escrever - no passo: {passo}")]
         public async Task Escrever(string locator, string texto, string passo)
         {
             try
@@ -34,7 +31,7 @@ namespace PortalIDSFTestes.metodos
 
 
         }
-
+        [AllureStep("Clicar - no passo: {passo}")]
         public async Task Clicar(string locator, string passo)
         {
             try
@@ -50,6 +47,7 @@ namespace PortalIDSFTestes.metodos
 
 
         }
+        [AllureStep("Clicar no seletor - no passo: {passo}")]
         public async Task ClicarNoSeletor(string locator, string option, string passo)
         {
             try
@@ -61,7 +59,7 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException("Não foi possivel Encontrar o Elemento: " + locator + " Para Clicar no passo: " + passo);
             }
         }
-
+        [AllureStep("Validar URL - no passo: {passo}")]
         public async Task ValidarUrl(string urlEsperada, string passo)
         {
             try
@@ -86,7 +84,7 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-
+        [AllureStep("Validar mensagem retornada - no passo: {passo}")]
         public async Task ValidarMsgRetornada(string locator, string passo)
         {
             try
@@ -102,6 +100,7 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{locator}' no passo: '{passo}'. Detalhes: {ex.Message}");
             }
         }
+        [AllureStep("Validar mensagem por texto - no passo: {passo}")]
         public async Task ValidarMensagemPorTextoAsync(string locator, string textoEsperado, string passo)
         {
             try
@@ -138,6 +137,7 @@ namespace PortalIDSFTestes.metodos
                 }
             }
         }
+        [AllureStep("Esperar texto presente - no passo: {passo}")]
         public async Task EsperarTextoPresente(string textoEsperado, string passo)
         {
             try
@@ -153,7 +153,7 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: {ex.Message}");
             }
         }
-
+        [AllureStep("Validar texto presente - no passo: {passo}")]
         public async Task ValidarTextoPresente(string textoEsperado, string passo)
         {
             try
@@ -165,7 +165,7 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: " + ex.Message);
             }
         }
-
+        [AllureStep("Validar texto do elemento - no passo: {passo}")]
         public async Task ValidarTextoDoElemento(string locator, string textoEsperado, string passo)
         {
             try
@@ -181,6 +181,7 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: {ex.Message}");
             }
         }
+        [AllureStep("Capturar texto do elemento - no passo: {passo}")]
         public async Task<string> CapturarTextoDoElemento(string locator, string passo)
         {
             try
@@ -193,7 +194,7 @@ namespace PortalIDSFTestes.metodos
 
                 int quantidade = Convert.ToInt16(texto);
 
-                if (quantidade > 100) 
+                if (quantidade > 100)
                 {
                     Assert.That(quantidade, Is.GreaterThan(10), "❌ A quantidade esperada deve ser maior que 100.");
                 }
@@ -206,7 +207,7 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-
+        [AllureStep("Verificar elemento presente na tabela - no passo: {passo}")]
         public async Task VerificarElementoPresenteNaTabela(IPage page, string seletorTabela, string textoEsperado, string passo)
         {
             try
@@ -244,7 +245,7 @@ namespace PortalIDSFTestes.metodos
                 throw new Exception($"❌ Erro ao verificar o texto '{textoEsperado}' na tabela no passo: {passo}.\nDetalhes: {ex.Message}");
             }
         }
-
+        [AllureStep("Verificar texto ausente na tabela - no passo: {passo}")]
         public async Task VerificarTextoAusenteNaTabela(IPage page, string seletorTabela, string textoDesejado, string passo)
         {
             try
@@ -288,7 +289,7 @@ namespace PortalIDSFTestes.metodos
 
 
 
-
+        [AllureStep("Validar acentuação - no passo: {passo}")]
         public async Task ValidarAcentosAsync(IPage page, string passo)
         {
             try
@@ -318,7 +319,7 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-
+        [AllureStep("Baixar Excel por ID - no passo: {passo}")]
         public async Task BaixarExcelPorIdAsync(IPage page, string passo)
         {
             string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
@@ -362,7 +363,7 @@ namespace PortalIDSFTestes.metodos
                 throw new Exception("Não foi possivel baixar Excel no passo: " + passo + ex.Message);
             }
         }
-
+        [AllureStep("Atualizar data no arquivo - no passo: {passo}")]
         public async Task<string> AtualizarDataArquivo(string caminhoTemplate, string passo)
         {
             try
@@ -409,7 +410,7 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-
+        [AllureStep("Enviar arquivo - no passo: {passo}")]
         public async Task EnviarArquivo(string locator, string caminhoArquivo, string passo)
         {
             try
@@ -426,7 +427,7 @@ namespace PortalIDSFTestes.metodos
         }
 
 
-
+        [AllureStep("Enviar arquivo cedente novo - no passo: {passo}")]
         public async Task EnviarArquivoCedenteNovo(string locator, string caminhoArquivo, string caminhoExcel, string cnpjMassa, string passo)
         {
             try
@@ -481,7 +482,7 @@ namespace PortalIDSFTestes.metodos
                 throw new Exception($"❌ Erro ao enviar o arquivo no passo '{passo}'");
             }
         }
-
+        [AllureStep("Enviar arquivo com nome atualizado - no passo: {passo}")]
         public async Task<string> EnviarArquivoNomeAtualizado(string locator, string caminhoArquivo, string passo)
         {
             try
@@ -533,7 +534,7 @@ namespace PortalIDSFTestes.metodos
 
 
 
-
+        [AllureStep("Validar download do arquivo - no passo: {passo}")]
         public async Task ValidarDownloadAsync(IDownload download, string nomeEsperado, string passo)
         {
             string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
@@ -564,7 +565,7 @@ namespace PortalIDSFTestes.metodos
                 Assert.Fail($"❌ Erro ao validar o download do arquivo '{nomeEsperado}': {ex.Message}");
             }
         }
-
+        [AllureStep("Atualizar data e enviar arquivo - no passo: {passo}")]
         public async Task<string> AtualizarDataEEnviarArquivo(IPage page, string caminhoArquivo, string passo)
         {
             try
@@ -624,7 +625,7 @@ namespace PortalIDSFTestes.metodos
 
 
         private static readonly Random random = new();
-
+        [AllureStep("Modificar CSV - no passo: {passo}")]
         public string ModificarCsv(string caminhoEntrada, string pastaSaida)
         {
             try
@@ -689,7 +690,7 @@ namespace PortalIDSFTestes.metodos
             return $"{parte1}-{parte2}.{parte3}.{parte4}.{parte5}";
         }
 
-
+        [AllureStep("Validar download e tamanho do arquivo - no passo: {step}")]
         public async Task ValidateDownloadAndLength(IPage page, string locatorClickDownload, string step, string downloadsDir = null)
         {
             try

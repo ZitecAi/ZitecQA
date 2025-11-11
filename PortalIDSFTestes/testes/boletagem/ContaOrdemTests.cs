@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.boletagem
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.boletagem
     [Category("Suíte: Conta Ordem")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("ContaOrdemTests UI")]
+    [AllureOwner("Levi")]
     public class ContaOrdemTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.boletagem
         ContaOrdemElements el = new ContaOrdemElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,17 +42,17 @@ namespace PortalIDSFTestes.testes.boletagem
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Conta Ordem")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var contaOrdem = new ContaOrdemPage(page);
-            await contaOrdem.ValidarAcentosContaOrdem();
+             var contaOrdem = new ContaOrdemPage(page);
+            await contaOrdem.ValidarAcentosContaOrdem();}
         }
-
-    }
 }

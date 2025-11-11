@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.rendaFixa
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.rendaFixa
     [Category("Suíte: Posicoes Renda Fixa")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("PosicoesRendaFixaTests UI")]
+    [AllureOwner("Levi")]
     public class PosicoesRendaFixaTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.rendaFixa
         PosicoesRendaFixaElements el = new PosicoesRendaFixaElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,17 +42,17 @@ namespace PortalIDSFTestes.testes.rendaFixa
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Posicoes Renda Fixa")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var posicoesRendaFixa = new PosicoesRendaFixaPage(page);
-            await posicoesRendaFixa.ValidarAcentosPosicoesRendaFixaPage();
+             var posicoesRendaFixa = new PosicoesRendaFixaPage(page);
+            await posicoesRendaFixa.ValidarAcentosPosicoesRendaFixaPage();}
         }
-
-    }
 }

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.operacoes
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.operacoes
     [Category("Suíte: Conciliacao e Extrato")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("ConciliacaoExtratoTests UI")]
+    [AllureOwner("Levi")]
     public class ConciliacaoExtratoTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.operacoes
         ConciliacaoExtratoElements el = new ConciliacaoExtratoElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,18 +42,17 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Conciliacao Extrato")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var conciliacaoExtrato = new ConciliacaoExtratoPage(page);
-            await conciliacaoExtrato.ValidarAcentosConciliacaoExtratoPage();
+             var conciliacaoExtrato = new ConciliacaoExtratoPage(page);
+            await conciliacaoExtrato.ValidarAcentosConciliacaoExtratoPage();}
         }
-
-
-    }
 }

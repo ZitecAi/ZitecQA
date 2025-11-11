@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.bancoId
 {
@@ -18,6 +20,9 @@ namespace PortalIDSFTestes.testes.bancoId
     [Category("Suíte: Correntistas")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("CorrentistasTests UI")]
+    [AllureOwner("Levi")]
     public class CorrentistasTests : Executa
     {
 
@@ -26,6 +31,7 @@ namespace PortalIDSFTestes.testes.bancoId
         CorrentistasElements el = new CorrentistasElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -38,17 +44,17 @@ namespace PortalIDSFTestes.testes.bancoId
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Correntistas")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var correntistas = new CorrentistasPage(page);
-            await correntistas.ValidarAcentosCorrentistas();
+             var correntistas = new CorrentistasPage(page);
+            await correntistas.ValidarAcentosCorrentistas();}
         }
-
-    }
 }

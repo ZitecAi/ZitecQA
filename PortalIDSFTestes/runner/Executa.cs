@@ -1,20 +1,13 @@
-﻿using Microsoft.Playwright;
 using Microsoft.Extensions.Configuration;
-using System.Threading.Tasks;
-using Allure.NUnit;
-using Allure.NUnit.Attributes;
-using NUnit.Framework; // Adicione este using para acessar o TestContext
-using System.IO;      // Adicione este para manipular caminhos de arquivo
+using Microsoft.Playwright;
 
 namespace PortalIDSFTestes.runner
 {
-    [AllureNUnit]
     public abstract class Executa
     {
         private IPlaywright? playwright;
         private IBrowser? browser;
         private IBrowserContext? context;
-
         protected async Task<IPage> AbrirBrowserAsync()
         {
             playwright = await Playwright.CreateAsync();
@@ -54,7 +47,6 @@ namespace PortalIDSFTestes.runner
             await page.GotoAsync(linkPortal);
             return page;
         }
-
         protected async Task FecharBrowserAsync()
         {
             if (context != null)

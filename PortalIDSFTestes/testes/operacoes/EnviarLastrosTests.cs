@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.operacoes
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.operacoes
     [Category("Suíte: Enviar Lastros")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("EnviarLastrosTests UI")]
+    [AllureOwner("Levi")]
     public class EnviarLastrosTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.operacoes
         EnviarLastrosElements el = new EnviarLastrosElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,18 +42,17 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Enviar Lastros")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var enviarLastros = new EnviarLastrosPage(page);
-            await enviarLastros.ValidarAcentosEnviarLastrosPage();
+             var enviarLastros = new EnviarLastrosPage(page);
+            await enviarLastros.ValidarAcentosEnviarLastrosPage();}
         }
-
-
-    }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.Playwright;
+using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.relatorios;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.relatorios
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.relatorios
     [Category("Suíte: Relatorio Cedentes")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("RelatorioCedentesTest UI")]
+    [AllureOwner("Levi")]
     public class RelatorioCedentesTest : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.relatorios
         RelatorioCedentesElements el = new RelatorioCedentesElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,18 +42,17 @@ namespace PortalIDSFTestes.testes.relatorios
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Relatorio Cedentes")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var relatorioCedentes = new RelatorioCedentesPage(page);
-            await relatorioCedentes.ValidarAcentosRelatorioCedentesPage();
+             var relatorioCedentes = new RelatorioCedentesPage(page);
+            await relatorioCedentes.ValidarAcentosRelatorioCedentesPage();}
         }
-
-
-    }
 }

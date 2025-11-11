@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.controleInterno
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.controleInterno
     [Category("Suíte: Comunicado")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("ComunicadoTests UI")]
+    [AllureOwner("Levi")]
     public class ComunicadoTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.controleInterno
         ComunicadoElements el = new ComunicadoElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,18 +42,17 @@ namespace PortalIDSFTestes.testes.controleInterno
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Comunicado")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var comunicado = new ComunicadoPage(page);
-            await comunicado.ValidarAcentosComunicadoPage();
+             var comunicado = new ComunicadoPage(page);
+            await comunicado.ValidarAcentosComunicadoPage();}
         }
-
-
-    }
 }

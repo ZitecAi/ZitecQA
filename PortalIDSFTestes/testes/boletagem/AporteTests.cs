@@ -1,4 +1,4 @@
-﻿using Microsoft.Playwright;
+using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.Boletagem;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.boletagem;
@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.boletagem
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.boletagem
     [Category("Suíte: Aporte")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("AporteTests UI")]
+    [AllureOwner("Levi")]
     public class AporteTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.boletagem
         AporteElements el = new AporteElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,12 +42,14 @@ namespace PortalIDSFTestes.testes.boletagem
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Aporte")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var aporte = new AportePage(page);
@@ -49,11 +57,11 @@ namespace PortalIDSFTestes.testes.boletagem
         }
         [Test, Order(2)]
         [Ignore ("Teste ignorado temporariamente para manutenção.")]
+        [AllureName("Deve Realizar Aporte Com Sucesso")]
         public async Task Deve_Realizar_Aporte_Com_Sucesso()
         {
             var aporte = new AportePage(page);
             await aporte.RealizarAporte();
         }
-
-    }
+        }
 }

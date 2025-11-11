@@ -1,14 +1,11 @@
-﻿using Microsoft.Playwright;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.administrativo;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.administrativo;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.testes.administrativo
 {
@@ -17,6 +14,9 @@ namespace PortalIDSFTestes.testes.administrativo
     [Category("Suíte: Usuarios")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("UsuariosTests UI")]
+    [AllureOwner("Levi")]
     public class UsuariosTests : Executa
     {
         private IPage page;
@@ -24,6 +24,7 @@ namespace PortalIDSFTestes.testes.administrativo
         UsuariosElements el = new UsuariosElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,6 +37,7 @@ namespace PortalIDSFTestes.testes.administrativo
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
@@ -43,11 +45,11 @@ namespace PortalIDSFTestes.testes.administrativo
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Usuarios")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var usuarios = new UsuariosPage(page);
             await usuarios.ValidarAcentosUsuarios();
         }
-
     }
 }

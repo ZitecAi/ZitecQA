@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.boletagem
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.boletagem
     [Category("Suíte: Amortizacao")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("AmortizacaoTests UI")]
+    [AllureOwner("Levi")]
     public class AmortizacaoTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.boletagem
         AmortizacaoElements el = new AmortizacaoElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,17 +42,17 @@ namespace PortalIDSFTestes.testes.boletagem
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Amortizacao")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var amortizacao = new AmortizacaoPage(page);
-            await amortizacao.ValidarAcentosAmortizacao();
+             var amortizacao = new AmortizacaoPage(page);
+            await amortizacao.ValidarAcentosAmortizacao();}
         }
-
-    }
 }

@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PortalIDSFTestes.elementos.cedentes;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.cedentes
 {
@@ -18,6 +20,9 @@ namespace PortalIDSFTestes.testes.cedentes
     [Category("Suíte: Kit Cedentes")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("KitCedenteTest UI")]
+    [AllureOwner("Levi")]
     public class KitCedenteTest : Executa
     {
         private IPage page;
@@ -25,6 +30,7 @@ namespace PortalIDSFTestes.testes.cedentes
         KitCedenteElements el = new KitCedenteElements();  
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -37,6 +43,7 @@ namespace PortalIDSFTestes.testes.cedentes
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
@@ -44,13 +51,10 @@ namespace PortalIDSFTestes.testes.cedentes
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Kit Cedente")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var kitCedente = new KitCedentePage(page);
-            await kitCedente.ValidarAcentosKitCedentePage();
+             var kitCedente = new KitCedentePage(page);
+            await kitCedente.ValidarAcentosKitCedentePage();}
         }
-
-        
-
-    }
 }

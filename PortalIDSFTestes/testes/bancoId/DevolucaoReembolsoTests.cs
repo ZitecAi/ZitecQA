@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.bancoId
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.bancoId
     [Category("Suíte: Devolução/Reembolso")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("DevolucaoReembolsoTests UI")]
+    [AllureOwner("Levi")]
     public class DevolucaoReembolsoTests : Executa
     {
 
@@ -25,6 +30,7 @@ namespace PortalIDSFTestes.testes.bancoId
         DevolucaoReembolsoElements el = new DevolucaoReembolsoElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -37,17 +43,17 @@ namespace PortalIDSFTestes.testes.bancoId
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Devolucao Reembolso")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var devolucaoReembolso = new DevolucaoReembolsoPage(page);
-            await devolucaoReembolso.ValidarAcentosDevolucaoReembolso();
+             var devolucaoReembolso = new DevolucaoReembolsoPage(page);
+            await devolucaoReembolso.ValidarAcentosDevolucaoReembolso();}
         }
-
-    }
 }

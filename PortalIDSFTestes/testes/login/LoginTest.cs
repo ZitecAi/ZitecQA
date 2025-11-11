@@ -1,20 +1,25 @@
-using NUnit.Framework;
-using PortalIDSFTestes.pages.login;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
+using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
 
 namespace PortalIDSFTestes.testes.login
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Category("Suíte: Login")]
-    [Category("Critícidade: Crítica")]
+    [Category("Suï¿½te: Login")]
+    [Category("Critï¿½cidade: Crï¿½tica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("LoginTest UI")]
+    [AllureOwner("Levi")]
     public class LoginTest : Executa
     {
         private IPage page;
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -22,12 +27,14 @@ namespace PortalIDSFTestes.testes.login
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Deve Realizar Login Com Sucesso Nivel Interno")]
         public async Task Deve_Realizar_Login_Com_Sucesso_Nivel_Interno()
         {
             var login = new LoginPage(page);
@@ -84,14 +91,12 @@ namespace PortalIDSFTestes.testes.login
         //}
 
         [Test, Order(9)]
-        [Ignore("Este teste está em manutenção")]
-
+        [Ignore("Este teste estï¿½ em manutenï¿½ï¿½o")]
+        [AllureName("Nao Deve Conter Acentos Quebrados Login")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var login = new LoginPage(page);
             await login.validarAcentosLoginPage();
         }
-
-       
     }
 }
