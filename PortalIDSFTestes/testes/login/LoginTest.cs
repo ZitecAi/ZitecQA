@@ -91,7 +91,7 @@ namespace PortalIDSFTestes.testes.login
         //}
 
         [Test, Order(9)]
-        [Ignore("Este teste est� em manuten��o")]
+        [Ignore("Este teste esta em manutenção")]
         [AllureName("Nao Deve Conter Acentos Quebrados Login")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {

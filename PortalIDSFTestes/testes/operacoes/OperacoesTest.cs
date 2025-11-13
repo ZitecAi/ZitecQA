@@ -1,16 +1,11 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.operacoes;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.operacoes
 {
@@ -52,18 +47,20 @@ namespace PortalIDSFTestes.testes.operacoes
         [AllureName("Nao Deve Conter Acentos Quebrados Operacoes")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var operacoes = new OperacoesPage(page);
-            await operacoes.ValidarAcentosOperacoesPage();}
+            var operacoes = new OperacoesPage(page);
+            await operacoes.ValidarAcentosOperacoesPage();
+        }
 
         [Test, Order(2)]
         [AllureName("Deve Enviar Uma Operacao CNAB Consultar E Excluir")]
         public async Task Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir()
         {
-             var operacoes = new OperacoesPage(page);
-           await operacoes.EnviarOperacaoCNAB_Consultar_Excluir();}
+            var operacoes = new OperacoesPage(page);
+            await operacoes.EnviarOperacaoCNAB_Consultar_Excluir();
+        }
 
         [Test, Order(3)]
-        [Ignore ("Este teste está em Manutenção")]
+        //[Ignore("Este teste está em Manutenção")]
         public async Task Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes()
         {
             var operacoes = new OperacoesPage(page);
@@ -74,15 +71,17 @@ namespace PortalIDSFTestes.testes.operacoes
         [AllureName("Deve Fazer Download Relatorio Movimento Layout")]
         public async Task Deve_Fazer_Download_Relatorio_Movimento_Layout()
         {
-             var operacoes = new OperacoesPage(page);
-            await operacoes.DownloadValidacaoMovimento_Layout();}
-        
+            var operacoes = new OperacoesPage(page);
+            await operacoes.DownloadValidacaoMovimento_Layout();
+        }
+
         [Test, Order(5)]
         [AllureName("Deve Fazer Download Excel")]
         public async Task Deve_Fazer_Download_Excel()
         {
-             var operacoes = new OperacoesPage(page);
-            await operacoes.DownloadExcel();}
+            var operacoes = new OperacoesPage(page);
+            await operacoes.DownloadExcel();
+        }
 
         [Test, Order(6)]
         [Retry(3)]
@@ -90,7 +89,7 @@ namespace PortalIDSFTestes.testes.operacoes
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.EnviarOperacaoCSV();
-        } 
+        }
 
         //[Test, Order(7)]
         ////[Ignore("Este teste esta em manutenção")]
@@ -163,5 +162,5 @@ namespace PortalIDSFTestes.testes.operacoes
         //                                                "TesteNegativoSeuNumeroInexistente.csv",
         //                                                "TesteNegativoSeuNumeroInvalido.csv");
         //}
-        }
+    }
 }
