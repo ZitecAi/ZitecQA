@@ -68,5 +68,39 @@ namespace PortalIDSFTestes.metodos
                 .Replace("/", "_")
                 .Replace("\\", "_");
         }
+        public static async Task CaptureAssertionScreenshotAsync(IPage page, string assertionName, string stepDescription)
+        {
+            try
+            {
+                var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                var fileName = $"ASSERTION_{assertionName}_{timestamp}.png";
+                var filePath = Path.Combine(ScreenshotsDir, fileName);
+
+                await page.ScreenshotAsync(new PageScreenshotOptions
+                {
+                    Path = filePath,
+                    FullPage = true
+                });
+
+                AllureApi.AddAttachment($"Assertion: {assertionName} - {stepDescription}", "image/png", filePath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao capturar screenshot de asserção: {ex.Message}");
+            }
+        }
+        public static async Task AssertWithScreenshotAsync(IPage page, Func<Task> assertionAction, string assertionName, string stepDescription)
+        {
+            try
+            {
+                await assertionAction();
+                await CaptureAssertionScreenshotAsync(page, assertionName, stepDescription);
+            }
+            catch (Exception ex)
+            {
+                await CaptureAssertionScreenshotAsync(page, $"{assertionName}_FAILED", stepDescription);
+                throw;
+            }
+        }
     }
 }
