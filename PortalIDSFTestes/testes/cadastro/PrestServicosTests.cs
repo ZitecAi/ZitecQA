@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.cadastro
 {
@@ -19,6 +21,9 @@ namespace PortalIDSFTestes.testes.cadastro
     [Category("Suíte: Prestadores de Serviços")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("PrestServicosTests UI")]
+    [AllureOwner("Levi")]
     public class PrestServicosTests : Executa
     {
         private IPage page;
@@ -26,6 +31,7 @@ namespace PortalIDSFTestes.testes.cadastro
         PrestServicosElements el = new PrestServicosElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -38,18 +44,17 @@ namespace PortalIDSFTestes.testes.cadastro
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Prest Servicos")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var prestServicos = new PrestServicosPage(page);
-            await prestServicos.ValidarAcentosPrestServicos();
+             var prestServicos = new PrestServicosPage(page);
+            await prestServicos.ValidarAcentosPrestServicos();}
         }
-
-
-    }
 }

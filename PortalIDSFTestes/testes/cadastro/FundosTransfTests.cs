@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.cadastro
 {
@@ -19,6 +21,9 @@ namespace PortalIDSFTestes.testes.cadastro
     [Category("Suíte: Fundos de transferência")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("FundosTransfTests UI")]
+    [AllureOwner("Levi")]
     public class FundosTransfTests : Executa
     {
         private IPage page;
@@ -26,6 +31,7 @@ namespace PortalIDSFTestes.testes.cadastro
         FundosTransfElements el = new FundosTransfElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -38,17 +44,17 @@ namespace PortalIDSFTestes.testes.cadastro
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Fundos Transf")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var fundosTransf = new FundosTransfPage(page);
-            await fundosTransf.ValidarAcentosFundosTransf();
+             var fundosTransf = new FundosTransfPage(page);
+            await fundosTransf.ValidarAcentosFundosTransf();}
         }
-
-    }
 }

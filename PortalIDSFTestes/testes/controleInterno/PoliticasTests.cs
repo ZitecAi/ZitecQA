@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.controleInterno
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.controleInterno
     [Category("Suíte: Politicas")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("PoliticasTests UI")]
+    [AllureOwner("Levi")]
     public class PoliticasTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.controleInterno
         PoliticasElements el = new PoliticasElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,18 +42,17 @@ namespace PortalIDSFTestes.testes.controleInterno
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Politicas")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var politicas = new PoliticasPage(page);
-            await politicas.ValidarAcentosPoliticasPage();
+             var politicas = new PoliticasPage(page);
+            await politicas.ValidarAcentosPoliticasPage();}
         }
-
-
-    }
 }

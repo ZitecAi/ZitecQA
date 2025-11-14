@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.bancoId
 {
@@ -18,6 +20,9 @@ namespace PortalIDSFTestes.testes.bancoId
     [Category("Suíte: Extratos")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("ExtratosTests UI")]
+    [AllureOwner("Levi")]
     public class ExtratosTests : Executa
     {
 
@@ -26,6 +31,7 @@ namespace PortalIDSFTestes.testes.bancoId
         ExtratosElements el = new ExtratosElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -38,23 +44,23 @@ namespace PortalIDSFTestes.testes.bancoId
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Extratos")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var extratos = new ExtratosPage(page);
-            await extratos.ValidarAcentosExtratos();
-        }
-        [Test, Order(2)]    
+             var extratos = new ExtratosPage(page);
+            await extratos.ValidarAcentosExtratos();}
+        [Test, Order(2)]
+        [AllureName("Deve Gerar Extrato Pdf Com Sucesso")]
         public async Task Deve_Gerar_Extrato_Pdf_Com_Sucesso()
         {
-            var extratos = new ExtratosPage(page);
-            await extratos.GerarExtratoPdf();
+             var extratos = new ExtratosPage(page);
+            await extratos.GerarExtratoPdf();}
         }
-
-    }
 }

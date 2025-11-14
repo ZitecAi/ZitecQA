@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.administrativo
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.administrativo
     [Category("Suíte: Tokens")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("TokensTests UI")]
+    [AllureOwner("Levi")]
     public class TokensTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.administrativo
         TokensElements el = new TokensElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,6 +42,7 @@ namespace PortalIDSFTestes.testes.administrativo
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
@@ -43,11 +50,10 @@ namespace PortalIDSFTestes.testes.administrativo
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Tokens")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var tokens = new TokensPage(page);
-            await tokens.ValidarAcentosTokens();
+             var tokens = new TokensPage(page);
+            await tokens.ValidarAcentosTokens();}
         }
-
-    }
 }

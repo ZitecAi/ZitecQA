@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.dashboards
 {
@@ -19,6 +21,9 @@ namespace PortalIDSFTestes.testes.dashboards
     [Category("Suíte:  Dashboards Operações")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("DashOperacoesTests UI")]
+    [AllureOwner("Levi")]
     public class DashOperacoesTests : Executa
     {
         private IPage page;
@@ -26,6 +31,7 @@ namespace PortalIDSFTestes.testes.dashboards
         DashOperacoesElements el = new DashOperacoesElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -38,6 +44,7 @@ namespace PortalIDSFTestes.testes.dashboards
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
@@ -45,10 +52,10 @@ namespace PortalIDSFTestes.testes.dashboards
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Dash Operacoes")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var dashOperacoes = new DashOperacoesPage(page);
-            await dashOperacoes.ValidarAcentosDashOperacoesPage();
+             var dashOperacoes = new DashOperacoesPage(page);
+            await dashOperacoes.ValidarAcentosDashOperacoesPage();}
         }
-    }
 }

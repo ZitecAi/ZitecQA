@@ -1,14 +1,11 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.operacoes;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.testes.operacoes
 {
@@ -17,6 +14,9 @@ namespace PortalIDSFTestes.testes.operacoes
     [Category("Suíte: Baixas em Lote")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("BaixasLoteTest UI")]
+    [AllureOwner("Levi")]
     public class BaixasLoteTest : Executa
     {
         private IPage page;
@@ -24,6 +24,7 @@ namespace PortalIDSFTestes.testes.operacoes
         OperacoesElements el = new OperacoesElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,18 +37,18 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Baixas em Lote")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var operacoes = new OperacoesPage(page);
             await operacoes.ValidarAcentosOperacoesPage();
         }
-
-
     }
 }

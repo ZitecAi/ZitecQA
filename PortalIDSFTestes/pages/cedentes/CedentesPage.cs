@@ -1,13 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using PortalIDSFTestes.elementos.cedentes;
 using PortalIDSFTestes.metodos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.pages.cedentes
 {
@@ -22,7 +16,7 @@ namespace PortalIDSFTestes.pages.cedentes
         public string cnpjTest { get; }
 
 
-        public CedentesPage(IPage page) 
+        public CedentesPage(IPage page)
         {
             this.page = page;
             metodo = new Metodos(page);
@@ -56,7 +50,7 @@ namespace PortalIDSFTestes.pages.cedentes
             string cnpjTest = DataGenerator.Generate(DocumentType.Cnpj);
             string cnpjCedente = "21.465.218/0001-91";
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
-            await metodo.EnviarArquivoCedenteNovo(el.InputNovoCedente, GetPath() + "36614123000160_21465218000191_N.zip", GetPath() + "36614123000160_21465218000191_N.zip" + "\\Kit Cedente", cnpjTest,  "Enviar arquivo no input para cadastrar novo cedente");
+            await metodo.EnviarArquivoCedenteNovo(el.InputNovoCedente, GetPath() + "36614123000160_21465218000191_N.zip", GetPath() + "36614123000160_21465218000191_N.zip" + "\\Kit Cedente", cnpjTest, "Enviar arquivo no input para cadastrar novo cedente");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
             await page.ReloadAsync();
             //consultar
@@ -64,28 +58,28 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.Escrever(el.BarraPesquisaCedentes, cnpjCedente, "Pesquisar nome do arquivo para validar cadastro");
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentesCadastrado, cnpjCedente, "Validar Se o nome do arquivo esta presente na tabela");
             //aprovações
+            await Task.Delay(1000);
             await metodo.Clicar(el.BtnAprovarGestora(Cedente), "Clicar no botão para aprovar gestora do cedente");
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para selecionar aprovado");
             await metodo.Escrever(el.Obs, "Aprovado", "Escrever observação para aprovação do cadastro");
             await metodo.Clicar(el.BtnEnviarParecerDepartamento, "Clicar no botão para enviar parecer do departamento");
             await metodo.ValidarTextoPresente("Ação Status atualizado!", "Validar mensagem Ação realizada com sucesso presente na tela na aprovação cadastro");
-            await Task.Delay(500);
+            await Task.Delay(1000);
+            await metodo.Clicar(el.BtnAprovarCompliance(Cedente), "Clicar no botão para aprovar compliance do cedente");
+            await metodo.Clicar(el.BtnAprovado, "Clicar no botão para selecionar aprovado");
+            await metodo.Escrever(el.Obs, "Aprovado", "Escrever observação para aprovação do compliance");
+            await metodo.Clicar(el.BtnEnviarParecerDepartamento, "Clicar no botão para enviar parecer do departamento");
+            await Task.Delay(1000);
+            await metodo.ValidarTextoPresente("Ação Status atualizado!", "Validar mensagem Ação realizada com sucesso presente na tela na aprovação compliance");
             await metodo.Clicar(el.BtnAprovarCadastro(Cedente), "Clicar no botão para aprovar cadastro do cedente");
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para selecionar aprovado");
             await metodo.Escrever(el.Obs, "Aprovado", "Escrever observação para aprovação da gestora");
             await metodo.Clicar(el.BtnEnviarParecerDepartamento, "Clicar no botão para enviar parecer do departamento");
             await metodo.ValidarTextoPresente("Ação Status atualizado!", "Validar mensagem Ação realizada com sucesso presente na tela na aprovação gestora");
-            await Task.Delay(500);
-            await metodo.Clicar(el.BtnAprovarCompliance(Cedente), "Clicar no botão para aprovar compliance do cedente");
-            await metodo.Clicar(el.BtnAprovado, "Clicar no botão para selecionar aprovado");
-            await metodo.Escrever(el.Obs, "Aprovado", "Escrever observação para aprovação do compliance");
-            await metodo.Clicar(el.BtnEnviarParecerDepartamento, "Clicar no botão para enviar parecer do departamento");
-            await Task.Delay(500);
-            await metodo.ValidarTextoPresente("Ação Status atualizado!", "Validar mensagem Ação realizada com sucesso presente na tela na aprovação compliance");
-            await Task.Delay(500);
-            await metodo.ValidarTextoDoElemento(el.TdAprovados("6"),"Aprovado", "Validar se o status do cedente está como aprovado para cadastro");
-            await metodo.ValidarTextoDoElemento(el.TdAprovados("7"),"Aprovado", "Validar se o status do cedente está como aprovado para gestora");
-            await metodo.ValidarTextoDoElemento(el.TdAprovados("8"),"Aprovado", "Validar se o status do cedente está como aprovado para compliance");
+            await Task.Delay(1000);
+            await metodo.ValidarTextoDoElemento(el.TdAprovados("6"), "Aprovado", "Validar se o status do cedente está como aprovado para cadastro");
+            await metodo.ValidarTextoDoElemento(el.TdAprovados("7"), "Aprovado", "Validar se o status do cedente está como aprovado para gestora");
+            await metodo.ValidarTextoDoElemento(el.TdAprovados("8"), "Aprovado", "Validar se o status do cedente está como aprovado para compliance");
             //ativar cedente
             await metodo.Clicar(el.BtnContratoMae(cnpjCedente), "Clicar no botão para enviar contrato mãe .pdf");
             await metodo.EnviarArquivo(el.InputContratoMae, caminhoArquivo + "Arquivo teste.zip", "Enviar contrato mae no input");
@@ -124,15 +118,15 @@ namespace PortalIDSFTestes.pages.cedentes
         public async Task CadastrarCedenteNegativo(string nomeArquivoNegativo)
         {
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
-            await metodo.EnviarArquivo(el.InputNovoCedente, GetPath()+ "CedentesNegativos/" + nomeArquivoNegativo, "Enviar arquivo no input para cadastrar novo cedente");
+            await metodo.EnviarArquivo(el.InputNovoCedente, GetPath() + "CedentesNegativos/" + nomeArquivoNegativo, "Enviar arquivo no input para cadastrar novo cedente");
             await metodo.ValidarMsgRetornada(el.MsgErroRetornada, "Validar mensagem Erro ao cadastrar Cedente presente na tela");
         }
 
         public async Task ExcluirCedente()
         {
-            await metodo.Clicar(el.BarraPesquisaCedentes,"Clicar na Barra de pesquisa para inserir CPF cedente a ser excluído");
+            await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar na Barra de pesquisa para inserir CPF cedente a ser excluído");
             await metodo.Escrever(el.BarraPesquisaCedentes, "496.248.668-30", "Escrever CPF do cedente a ser excluido");
-            
+
         }
 
         public async Task ConsultarCedente()

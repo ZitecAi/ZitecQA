@@ -1,15 +1,11 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.operacoes;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace PortalIDSFTestes.testes.operacoes
 {
@@ -18,6 +14,9 @@ namespace PortalIDSFTestes.testes.operacoes
     [Category("Suíte: Arquivos Baixa")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("ArquivosBaixaTest UI")]
+    [AllureOwner("Levi")]
     public class ArquivosBaixaTest : Executa
     {
         private IPage page;
@@ -25,6 +24,7 @@ namespace PortalIDSFTestes.testes.operacoes
         ArquivosBaixaElements el = new ArquivosBaixaElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task SetUp()
         {
             page = await AbrirBrowserAsync();
@@ -36,12 +36,14 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Arquivos Baixa")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var baixa = new ArquivosBaixaPage(page);
@@ -49,6 +51,7 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(2)]
+        [AllureName("Deve Enviar Arquivo Baixa")]
         public async Task Deve_Enviar_Arquivo_Baixa()
         {
             var baixa = new ArquivosBaixaPage(page);
@@ -152,8 +155,5 @@ namespace PortalIDSFTestes.testes.operacoes
         //    var baixa = new ArquivosBaixaPage(page);
         //    await baixa.EnviarArquivoBaixaNegativo("cnab_neg_12.txt", "Arquivo Baixa com DV da agência/conta ausente");
         //}
-
-
-
     }
 }

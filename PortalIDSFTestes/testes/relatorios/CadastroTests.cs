@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.relatorios
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.relatorios
     [Category("Suíte: Cadastro")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("CadastroTests UI")]
+    [AllureOwner("Levi")]
     public class CadastroTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.relatorios
         CadastroElements el = new CadastroElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,18 +42,17 @@ namespace PortalIDSFTestes.testes.relatorios
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Cadastro")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var cadastro = new CadastroPage(page);
-            await cadastro.ValidarAcentosCadastroPage();
+             var cadastro = new CadastroPage(page);
+            await cadastro.ValidarAcentosCadastroPage();}
         }
-
-
-    }
 }

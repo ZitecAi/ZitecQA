@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.boletagem
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.boletagem
     [Category("Suíte: Controle Capital")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("ControleCapitalTests UI")]
+    [AllureOwner("Levi")]
     public class ControleCapitalTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.boletagem
         ControleCapitalElements el = new ControleCapitalElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,17 +42,17 @@ namespace PortalIDSFTestes.testes.boletagem
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Controle Capital")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var controleCapital = new ControleCapitalPage(page);
-            await controleCapital.ValidarAcentosControleCapital();
+             var controleCapital = new ControleCapitalPage(page);
+            await controleCapital.ValidarAcentosControleCapital();}
         }
-
-    }
 }

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.administrativo
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.administrativo
     [Category("Suíte: Grupos")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("GuposTests UI")]
+    [AllureOwner("Levi")]
     public class GuposTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.administrativo
         GruposElements el = new GruposElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,6 +42,7 @@ namespace PortalIDSFTestes.testes.administrativo
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
@@ -43,11 +50,10 @@ namespace PortalIDSFTestes.testes.administrativo
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Gupos")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var enviarMensagem = new GruposPage(page);
-            await enviarMensagem.ValidarAcentosEnviarMensagemPage();
+             var enviarMensagem = new GruposPage(page);
+            await enviarMensagem.ValidarAcentosEnviarMensagemPage();}
         }
-
-    }
 }

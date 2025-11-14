@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.custodia
 {
@@ -19,6 +21,9 @@ namespace PortalIDSFTestes.testes.custodia
     [Category("Suíte:  Painel de Cotas")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("PainelCotasTests UI")]
+    [AllureOwner("Levi")]
     public class PainelCotasTests : Executa
     {
         private IPage page;
@@ -26,6 +31,7 @@ namespace PortalIDSFTestes.testes.custodia
         PainelCotasElement el = new PainelCotasElement();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -38,6 +44,7 @@ namespace PortalIDSFTestes.testes.custodia
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
@@ -45,10 +52,10 @@ namespace PortalIDSFTestes.testes.custodia
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Painel Cotas")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var painelCotas = new PainelCotasPage(page);
-            await painelCotas.ValidarAcentosPainelCotasPage();
+             var painelCotas = new PainelCotasPage(page);
+            await painelCotas.ValidarAcentosPainelCotasPage();}
         }
-    }
 }

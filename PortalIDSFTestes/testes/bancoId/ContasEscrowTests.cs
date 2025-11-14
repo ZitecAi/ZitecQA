@@ -1,15 +1,11 @@
-﻿using Microsoft.Playwright;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.bancoId;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.administrativo;
 using PortalIDSFTestes.pages.bancoId;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.testes.bancoId
 {
@@ -18,6 +14,9 @@ namespace PortalIDSFTestes.testes.bancoId
     [Category("Suíte: Contas Escrow")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("ContasEscrowTests UI")]
+    [AllureOwner("Levi")]
     public class ContasEscrowTests : Executa
     {
 
@@ -26,6 +25,7 @@ namespace PortalIDSFTestes.testes.bancoId
         ContasEscrowElements el = new ContasEscrowElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -38,17 +38,19 @@ namespace PortalIDSFTestes.testes.bancoId
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Contas Escrow")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var contasEscrow = new ContasEscrowPage(page);
             await contasEscrow.ValidarAcentosContasEscrow();
         }
-
     }
+
 }

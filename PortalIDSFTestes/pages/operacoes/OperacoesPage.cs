@@ -2,11 +2,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.pages.operacoes
 {
@@ -40,12 +35,12 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await metodo.Clicar(el.BtnNovaOperacaoCNAB, "Clicar no botão para enviar uma Nova Operação CNAB");
             await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            NomeNovoArquivo = await metodo.AtualizarDataEEnviarArquivo(page, GetPath() + "CNABz - Copia.txt", "Enviar Arquivo CNAB para teste positivo");            
+            NomeNovoArquivo = await metodo.AtualizarDataEEnviarArquivo(page, GetPath() + "CNABz - Copia.txt", "Enviar Arquivo CNAB para teste positivo");
             //await metodo.ValidarMensagemPorTextoAsync(el.MsgSucessoRetornada, "Arquivo processado com sucesso", "Validar Mensagem de Sucesso retornada");
             //await metodo.ValidarMsgRetornada(el.MsgSucesso, "Validar Mensagem sucesso retornada");
             //await metodo.EsperarTextoPresente("Arquivo processado com sucesso!","Esperar Arquivo Ser Processado para seguir o fluxo");
             //Consultar
-            await Task.Delay(30000);
+            await Task.Delay(60000);
             await page.ReloadAsync();
             await metodo.Clicar(el.CampoPesquisaTabela, "Clicar no campo pesquisar para inserir nome do arquivo CNAB a ser consultado");
             await metodo.Escrever(el.CampoPesquisaTabela, NomeNovoArquivo, "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");

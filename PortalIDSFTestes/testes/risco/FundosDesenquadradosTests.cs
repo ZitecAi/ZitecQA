@@ -1,16 +1,11 @@
-﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.controleInterno;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.risco;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.controleInterno;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.risco;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.testes.risco
 {
@@ -19,6 +14,9 @@ namespace PortalIDSFTestes.testes.risco
     [Category("Suíte: Fundos Desenquadrados")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("FundosDesenquadradosTests UI")]
+    [AllureOwner("Levi")]
     public class FundosDesenquadradosTests : Executa
     {
         private IPage page;
@@ -26,6 +24,7 @@ namespace PortalIDSFTestes.testes.risco
         FundosDesenquadradosElements el = new FundosDesenquadradosElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -38,12 +37,14 @@ namespace PortalIDSFTestes.testes.risco
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Fundos Desenquadrados")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var fundosDesenquadrados = new FundosDesenquadradosPage(page);

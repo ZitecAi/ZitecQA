@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.boletagem
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.boletagem
     [Category("Suíte: Resgate")]
     [Category("Criticidade: Alta")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("ResgateTests UI")]
+    [AllureOwner("Levi")]
     public class ResgateTests : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.boletagem
         ResgateElements el = new ResgateElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task Setup()
         {
             page = await AbrirBrowserAsync();
@@ -36,17 +42,17 @@ namespace PortalIDSFTestes.testes.boletagem
         }
 
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Resgate")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var resgate = new ResgatePage(page);
-            await resgate.ValidarAcentosResgate();
+             var resgate = new ResgatePage(page);
+            await resgate.ValidarAcentosResgate();}
         }
-
-    }
 }

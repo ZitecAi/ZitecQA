@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.notaComercial
 {
@@ -17,6 +19,9 @@ namespace PortalIDSFTestes.testes.notaComercial
     [Category("Suíte: Nota Comercial")]
     [Category("Criticidade: Crítica")]
     [Category("Regressivos")]
+    [AllureNUnit]
+    [AllureSuite("NotaComercialTest UI")]
+    [AllureOwner("Levi")]
     public class NotaComercialTest : Executa
     {
         private IPage page;
@@ -24,6 +29,7 @@ namespace PortalIDSFTestes.testes.notaComercial
         NotaComercialElements el = new NotaComercialElements();
 
         [SetUp]
+        [AllureBefore]
         public async Task SetUp()
         {
             page = await AbrirBrowserAsync();
@@ -35,83 +41,84 @@ namespace PortalIDSFTestes.testes.notaComercial
             await Task.Delay(500);
         }
         [TearDown]
+        [AllureAfter]
         public async Task TearDown()
         {
             await FecharBrowserAsync();
         }
 
         [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Nota Comercial")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.ValidarAcentosNotaComercialPage();
-        }
+             var notaComercial = new NotaComercialPage(page);
+            await notaComercial.ValidarAcentosNotaComercialPage();}
 
         [Test, Order(2)]
+        [AllureName("Deve Fazer Download Excel")]
         public async Task Deve_Fazer_Download_Excel()
         {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.DownloadExcel();
-        }
+             var notaComercial = new NotaComercialPage(page);
+            await notaComercial.DownloadExcel();}
 
         [Test, Order(3)]
+        [AllureName("Deve Cadastrar Nova Nota Comercial")]
         public async Task Deve_Cadastrar_Nova_Nota_Comercial()
         {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.CadastrarNotaComercial();
-        }
+             var notaComercial = new NotaComercialPage(page);
+            await notaComercial.CadastrarNotaComercial();}
 
         [Test, Order(4)]
+        [AllureName("Deve Consultar Nota Comercial Pela Tabela")]
         public async Task Deve_Consultar_Nota_Comercial_Pela_Tabela()
         {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.ConsultarNotaComercialNaTabela();
-        }
+             var notaComercial = new NotaComercialPage(page);
+            await notaComercial.ConsultarNotaComercialNaTabela();}
         [Test, Order(5)]
+        [AllureName("Deve Fazer Download Minuta")]
         public async Task Deve_Fazer_Download_Minuta()
         {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.DownloadMinuta();
-        }
+             var notaComercial = new NotaComercialPage(page);
+            await notaComercial.DownloadMinuta();}
 
         [Test, Order(6)]
+        [AllureName("Deve Cancelar Nota Comercial")]
         public async Task Deve_Cancelar_Nota_Comercial()
         {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.CancelarNotaComercialNaTabela();
-        }
+             var notaComercial = new NotaComercialPage(page);
+            await notaComercial.CancelarNotaComercialNaTabela();}
 
         
         [Test, Order(7)]
+        [AllureName("Nao Deve Cadastrar Nota Comercial Com Campos Em Branco")]
         public async Task Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco()
         {
-            var notaComercial = new NotaComercialPage(page);
+             var notaComercial = new NotaComercialPage(page);
              
-            await notaComercial.CadastrarNotaComercialNegativa("CamposEmBranco");
-        }
+            await notaComercial.CadastrarNotaComercialNegativa("CamposEmBranco");}
         [Test, Order(8)]
+        [AllureName("Nao Deve Cadastrar Nota Comercial Com Campos Em Branco Sessao Envolvidos")]
         public async Task Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Envolvidos()
         {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.CadastrarNotaComercialNegativa("CamposEmBrancoEnvolvidos");
-        }
+             var notaComercial = new NotaComercialPage(page);
+            await notaComercial.CadastrarNotaComercialNegativa("CamposEmBrancoEnvolvidos");}
         [Test, Order(9)]
+        [AllureName("Nao Deve Cadastrar Nota Comercial Com Campos Em Branco Sessao Operacoes")]
         public async Task Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Operacoes()
         {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.CadastrarNotaComercialNegativa("CamposEmBrancoOperacao");
-        }
+             var notaComercial = new NotaComercialPage(page);
+            await notaComercial.CadastrarNotaComercialNegativa("CamposEmBrancoOperacao");}
         [Test, Order(10)]
+        [AllureName("Nao Deve Cadastrar Nota Comercial Com Amortizacao Maior Que Duracao")]
         public async Task Nao_Deve_Cadastrar_Nota_Comercial_Com_Amortizacao_Maior_Que_Duracao()
         {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.CadastrarNotaComercialNegativa("AmortizacaoMaiorQueDuracao");
-        }
+             var notaComercial = new NotaComercialPage(page);
+            await notaComercial.CadastrarNotaComercialNegativa("AmortizacaoMaiorQueDuracao");}
         [Test, Order(11)]
+        [AllureName("Nao Deve Cadastrar Nota Comercial Com Carencia Juros Maior Que Juros Principal")]
         public async Task Nao_Deve_Cadastrar_Nota_Comercial_Com_Carencia_Juros_Maior_Que_Juros_Principal()
         {
-            var notaComercial = new NotaComercialPage(page);
-            await notaComercial.CadastrarNotaComercialNegativa("CarenciaJurosMaiorQueJurosPrincipal");
+             var notaComercial = new NotaComercialPage(page);
+            await notaComercial.CadastrarNotaComercialNegativa("CarenciaJurosMaiorQueJurosPrincipal");}
         }
-    }
 }
