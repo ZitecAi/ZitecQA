@@ -62,7 +62,7 @@ namespace PortalIDSFTestes.metodos
         [AllureStep("Validar URL - no passo: {passo}")]
         public async Task ValidarUrl(string urlEsperada, string passo)
         {
-            try
+            await ScreenshotHelper.AssertWithScreenshotAsync(page, async () =>
             {
                 await page.WaitForURLAsync(urlEsperada);
                 if (urlEsperada == "https://portal.idsf.com.br/home.aspx#")
@@ -77,11 +77,9 @@ namespace PortalIDSFTestes.metodos
                 {
                     await Expect(page).ToHaveURLAsync(urlEsperada);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new PlaywrightException($"❌ Não foi possível validar a URL esperada '{urlEsperada}' no passo: '{passo}'. Detalhes: {ex.Message}");
-            }
+            }, "Validar Url",
+            passo
+            );
         }
 
         [AllureStep("Validar mensagem retornada - no passo: {passo}")]
