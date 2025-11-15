@@ -2,11 +2,6 @@
 using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.pages.operacoes
 {
@@ -39,12 +34,7 @@ namespace PortalIDSFTestes.pages.operacoes
 
         public async Task DownloadExcel()
         {
-            var download = await page.RunAndWaitForDownloadAsync(async () =>
-            {
-                await metodo.Clicar(el.BtnExcel, "Clicar no botão para baixar Excel");
-            });
-            await metodo.ValidarDownloadAsync(download, "Download Validação Layout", "Validar Download de Excel");
-
+            await metodo.ValidateDownloadAndLength(page, el.BtnExcel, "Validar Download do Excel na página de Ativos");
         }
 
         public static string GenerateNameUnique()
@@ -115,7 +105,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo gestor");
             //await metodo.ValidarTextoPresente("Documentos enviados ao email administrativo@yaaleh.com.br para assinatura, gentileza validar.",
-                //"Validar se mensagem de sucesso ao aprovar por gestor esta visivel ao usuário");
+            //"Validar se mensagem de sucesso ao aprovar por gestor esta visivel ao usuário");
             await Task.Delay(10000);
             await page.ReloadAsync();
             await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
@@ -123,7 +113,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await Task.Delay(150);
             await metodo.ValidarTextoDoElemento(el.StatusTabela, "AGUARDANDO ASSINATURAS", "Validar se status na tabela foi alterado para Aguardando Ass.");
         }
-        
+
         public async Task AprovarJuridico()
         {
             await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
@@ -155,7 +145,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo risco");
             await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo risco");
-            await metodo.ValidarTextoPresente("Contrato aprovado com sucesso!","Validar mensagem de sucesso presenta ao aprovar por jurídico");
+            await metodo.ValidarTextoPresente("Contrato aprovado com sucesso!", "Validar mensagem de sucesso presenta ao aprovar por jurídico");
 
         }
         public async Task AprovarCadastro()

@@ -36,12 +36,7 @@ namespace PortalIDSFTestes.pages.cedentes
 
         public async Task DownloadExcel()
         {
-            var download = await page.RunAndWaitForDownloadAsync(async () =>
-            {
-                await metodo.Clicar(el.BtnDownloadExcel, "Clicar no botão para baixar Excel");
-            });
-            await metodo.ValidarDownloadAsync(download, "Download Arquivo Excel", "Validar Download de Excel na Página de cedentes");
-
+            await metodo.ValidateDownloadAndLength(page, el.BtnDownloadExcel, "Validar Download do Excel na página de cedentes");
         }
 
 
