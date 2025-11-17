@@ -26,7 +26,7 @@ namespace PortalIDSFTestes.runner
 
             var launchOptions = new BrowserTypeLaunchOptions
             {
-                Headless = true,
+                Headless = false,
                 Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
             };
 

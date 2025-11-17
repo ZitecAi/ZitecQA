@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Allure.NUnit.Attributes;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
@@ -92,11 +93,11 @@ namespace PortalIDSFTestes.pages.operacoes
 
 
         }
-
+        [AllureStep("Aprovação Gestor")]
         public async Task AprovarGestor()
         {
-            await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
-            await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
+            //await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
+            //await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
             await Task.Delay(150);
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaAtivos, NomeAtivo, "Validar se ativo com destinatário Teste NUnit está presente na tabela");
             //await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
@@ -106,36 +107,47 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo gestor");
             //await metodo.ValidarTextoPresente("Documentos enviados ao email administrativo@yaaleh.com.br para assinatura, gentileza validar.",
             //"Validar se mensagem de sucesso ao aprovar por gestor esta visivel ao usuário");
-            await Task.Delay(10000);
+            //await Task.Delay(10000);
+            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar texto de sucesso presente na tabela para o usuário");
             await page.ReloadAsync();
             await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
             await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
             await Task.Delay(150);
             await metodo.ValidarTextoDoElemento(el.StatusTabela, "AGUARDANDO ASSINATURAS", "Validar se status na tabela foi alterado para Aguardando Ass.");
         }
-
+        [AllureStep("Aprovação Jurídico")]
         public async Task AprovarJuridico()
         {
-            await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
-            await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
+            //await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
+            //await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
             await Task.Delay(150);
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaAtivos, NomeAtivo, "Validar se ativo com destinatário Teste NUnit está presente na tabela");
-            await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
-            await metodo.Clicar(el.BtnEmAnaliseJuridico("Análise"), "Clicar no botão para abrir modal de situação do jurídico");
+            ILocator btnJuridico = page.Locator("(//th[text()='Jurídico']/ancestor::table//tbody//td)[12]//button[text()='Análise']");
+            if (await btnJuridico.IsVisibleAsync())
+            {
+                await metodo.Clicar(el.BtnJuridico("Análise"), "Clicar no botão para abrir modal de situação do jurídico");
+                return;
+            }
+            else
+            {
+                await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
+                await metodo.Clicar(el.BtnEmTDJuridico("Análise"), "Clicar no botão para abrir modal de situação do jurídico");
+            }
+
+
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo jurídico");
             await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo jurídico");
             await metodo.ValidarTextoPresente("Contrato aprovado com sucesso!", "Validar mensagem de sucesso presenta ao aprovar por jurídico");
-            await page.ReloadAsync();
-            await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
-            await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
-            await metodo.Clicar(el.PrimeiroTd, "Clicar no primeiro TD para expandir dados");
+            //await page.ReloadAsync();            
             await Task.Delay(150);
-            await metodo.ValidarMsgRetornada(el.BtnEmAnaliseJuridico("Aprovado"), "Validar status de sucesso visivel na tela ");
+            //await metodo.ValidarMsgRetornada(el.BtnEmAnaliseJuridico("Aprovado"), "Validar status de sucesso visivel na tela ");
 
         }
+        [AllureStep("Aprovação Risco")]
         public async Task AprovarRisco()
         {
+            await page.ReloadAsync();
             await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
             await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
             await Task.Delay(150);
@@ -148,14 +160,25 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.ValidarTextoPresente("Contrato aprovado com sucesso!", "Validar mensagem de sucesso presenta ao aprovar por jurídico");
 
         }
+        [AllureStep("Aprovação Cadastro")]
         public async Task AprovarCadastro()
         {
+            await page.ReloadAsync();
             await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
             await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
             await Task.Delay(150);
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaAtivos, NomeAtivo, "Validar se ativo com destinatário Teste NUnit está presente na tabela");
-            await metodo.Clicar(el.PrimeiroTd, "Clicar no primeiro TD para expandir dados");
-            await metodo.Clicar(el.BtnEmAnaliseCadastro("Análise"), "Clicar no botão para abrir modal de situação do cadastro");
+            ILocator btnCadastro = page.Locator("(//th[text()='Jurídico']/ancestor::table//tbody//td)[12]//button[text()='Análise']");
+            if (await btnCadastro.IsVisibleAsync())
+            {
+                await metodo.Clicar(el.BtnEmAnaliseCadastro("Análise"), "Clicar no botão para abrir modal de situação do jurídico");
+                return;
+            }
+            else
+            {
+                await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
+                await metodo.Clicar(el.BtnEmTDCadastro("Análise"), "Clicar no botão para abrir modal de situação do jurídico");
+            }
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo cadastro");
             await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo cadastro");
@@ -164,7 +187,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
             await metodo.Clicar(el.PrimeiroTd, "Clicar no primeiro TD para expandir dados");
             await Task.Delay(150);
-            await metodo.ValidarMsgRetornada(el.BtnEmAnaliseCadastro("Aprovado"), "Validar status de sucesso visivel na tela ");
+            await metodo.ValidarMsgRetornada(el.BtnEmTDCadastro("Aprovado"), "Validar status de sucesso visivel na tela ");
         }
 
 
