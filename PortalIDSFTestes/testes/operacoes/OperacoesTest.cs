@@ -60,7 +60,7 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(3)]
-        //[Ignore("Este teste está em Manutenção")]
+        [Ignore("Este teste está em Manutenção")]
         public async Task Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes()
         {
             var operacoes = new OperacoesPage(page);
