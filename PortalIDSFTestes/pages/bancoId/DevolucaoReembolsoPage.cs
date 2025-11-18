@@ -15,14 +15,14 @@ namespace PortalIDSFTestes.pages.bancoId
     public class DevolucaoReembolsoPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         DevolucaoReembolsoElements el = new DevolucaoReembolsoElements();
 
 
         public DevolucaoReembolsoPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

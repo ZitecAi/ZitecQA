@@ -24,10 +24,10 @@ namespace PortalIDSFTestes.testes.cadastro
     [AllureNUnit]
     [AllureSuite("LaminasTests UI")]
     [AllureOwner("Levi")]
-    public class LaminasTests : Executa
+    public class LaminasTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         LaminasElements el = new LaminasElements();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.cadastro
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
             await metodo.Clicar(el.PaginaLaminas, "Clicar na página Laminas");

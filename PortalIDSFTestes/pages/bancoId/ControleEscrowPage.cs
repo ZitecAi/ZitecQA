@@ -15,13 +15,13 @@ namespace PortalIDSFTestes.pages.bancoId
     public class ControleEscrowPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         ControleEscrowElements el = new ControleEscrowElements();
 
         public ControleEscrowPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

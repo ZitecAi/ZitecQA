@@ -17,10 +17,10 @@ namespace PortalIDSFTestes.testes.cedentes
     [AllureNUnit]
     [AllureSuite("CedentesTest UI")]
     [AllureOwner("Levi")]
-    public class CedentesTest : Executa
+    public class CedentesTest : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         CedentesElements el = new CedentesElements();
 
         [SetUp]
@@ -29,7 +29,7 @@ namespace PortalIDSFTestes.testes.cedentes
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCedentes, "Clicar na sessão cedentes no menú hamburguer");
             await metodo.Clicar(el.PaginaCedentes, "Clicar na página cedentes");

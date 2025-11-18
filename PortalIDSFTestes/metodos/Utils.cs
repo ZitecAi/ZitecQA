@@ -7,11 +7,11 @@ using static Microsoft.Playwright.Assertions;
 namespace PortalIDSFTestes.metodos
 {
 
-    public class Metodos
+    public class Utils
     {
         private readonly IPage page;
 
-        public Metodos(IPage page)
+        public Utils(IPage page)
         {
             this.page = page;
         }

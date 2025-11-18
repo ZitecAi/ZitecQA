@@ -13,13 +13,13 @@ namespace PortalIDSFTestes.pages.notas
     public class NotasInternasPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         NotasInternasElements el = new NotasInternasElements();
 
         public NotasInternasPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosPagamentosNotasInternasPage()

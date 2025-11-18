@@ -9,7 +9,7 @@ namespace PortalIDSFTestes.pages.cedentes
     public class CedentesPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         CedentesElements el = new CedentesElements();
         string caminhoArquivo = @"C:\TempQA\Arquivos\";
         string caminhoCedenteNegativo = @"C:\TempQA\Arquivos\CedentesNegativos\";
@@ -20,7 +20,7 @@ namespace PortalIDSFTestes.pages.cedentes
         public CedentesPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
         public static string GetPath()
         {

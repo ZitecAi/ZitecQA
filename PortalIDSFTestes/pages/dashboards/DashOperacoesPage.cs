@@ -13,13 +13,13 @@ namespace PortalIDSFTestes.pages.dashboards
     public class DashOperacoesPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         DashOperacoesElements el = new DashOperacoesElements();
 
         public DashOperacoesPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosDashOperacoesPage()

@@ -13,13 +13,13 @@ namespace PortalIDSFTestes.pages.boletagem
     public class ContaOrdemPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         ContaOrdemElements el = new ContaOrdemElements();
 
         public ContaOrdemPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

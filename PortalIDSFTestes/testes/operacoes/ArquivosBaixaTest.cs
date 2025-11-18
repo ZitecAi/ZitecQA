@@ -17,10 +17,10 @@ namespace PortalIDSFTestes.testes.operacoes
     [AllureNUnit]
     [AllureSuite("ArquivosBaixaTest UI")]
     [AllureOwner("Levi")]
-    public class ArquivosBaixaTest : Executa
+    public class ArquivosBaixaTest : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         ArquivosBaixaElements el = new ArquivosBaixaElements();
 
         [SetUp]
@@ -29,7 +29,7 @@ namespace PortalIDSFTestes.testes.operacoes
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
             await metodo.Clicar(el.PaginaBaixas, "Clicar arquivos baixas 2.0 para acessar a pagina");

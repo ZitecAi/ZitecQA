@@ -15,14 +15,14 @@ namespace PortalIDSFTestes.pages.bancoId
     public class EscrowExternoPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         EscrowExternoElements el = new EscrowExternoElements();
 
 
         public EscrowExternoPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

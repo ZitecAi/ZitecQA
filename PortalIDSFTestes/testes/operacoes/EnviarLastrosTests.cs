@@ -1,16 +1,11 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.operacoes;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.operacoes
 {
@@ -22,10 +17,10 @@ namespace PortalIDSFTestes.testes.operacoes
     [AllureNUnit]
     [AllureSuite("EnviarLastrosTests UI")]
     [AllureOwner("Levi")]
-    public class EnviarLastrosTests : Executa
+    public class EnviarLastrosTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         EnviarLastrosElements el = new EnviarLastrosElements();
 
         [SetUp]
@@ -34,7 +29,7 @@ namespace PortalIDSFTestes.testes.operacoes
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
             await metodo.Clicar(el.PaginaEnviarLastros, "Clicar em Enviar Lastros para acessar a página");
@@ -52,7 +47,8 @@ namespace PortalIDSFTestes.testes.operacoes
         [AllureName("Nao Deve Conter Acentos Quebrados Enviar Lastros")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var enviarLastros = new EnviarLastrosPage(page);
-            await enviarLastros.ValidarAcentosEnviarLastrosPage();}
+            var enviarLastros = new EnviarLastrosPage(page);
+            await enviarLastros.ValidarAcentosEnviarLastrosPage();
         }
+    }
 }

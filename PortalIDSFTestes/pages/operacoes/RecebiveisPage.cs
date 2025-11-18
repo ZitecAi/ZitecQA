@@ -14,13 +14,13 @@ namespace PortalIDSFTestes.pages.operacoes
     public class RecebiveisPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         RecebiveisElements el = new RecebiveisElements();
 
         public RecebiveisPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosRecebiveisPage()

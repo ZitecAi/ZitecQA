@@ -4,7 +4,7 @@ using PortalIDSFTestes.metodos;
 
 namespace PortalIDSFTestes.runner
 {
-    public abstract class Executa
+    public abstract class TestBase
     {
         protected IPage page;
         private IPlaywright? playwright;
@@ -26,7 +26,7 @@ namespace PortalIDSFTestes.runner
 
             var launchOptions = new BrowserTypeLaunchOptions
             {
-                Headless = false,
+                Headless = true,
                 Args = new[] { "--no-sandbox", "--disable-dev-shm-usage" }
             };
 

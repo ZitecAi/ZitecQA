@@ -23,10 +23,10 @@ namespace PortalIDSFTestes.testes.cedentes
     [AllureNUnit]
     [AllureSuite("KitCedenteTest UI")]
     [AllureOwner("Levi")]
-    public class KitCedenteTest : Executa
+    public class KitCedenteTest : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         KitCedenteElements el = new KitCedenteElements();  
 
         [SetUp]
@@ -35,7 +35,7 @@ namespace PortalIDSFTestes.testes.cedentes
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCedentes, "Clicar na sessão cedentes no menú hamburguer");
             await metodo.Clicar(el.PaginaKitCedente, "Clicar na página Kit cedente");

@@ -13,13 +13,13 @@ namespace PortalIDSFTestes.pages.cadastro
     {
 
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         FundosTransfElements el = new FundosTransfElements();
 
         public FundosTransfPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

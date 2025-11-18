@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.administrativo
     [AllureNUnit]
     [AllureSuite("TokensTests UI")]
     [AllureOwner("Levi")]
-    public class TokensTests : Executa
+    public class TokensTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         TokensElements el = new TokensElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.administrativo
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuAdministrativo, "Clicar na sessão Admninistrativo no menú hamburguer");
             await metodo.Clicar(el.PaginaTokens, "Clicar na página Enviar Mensagem");

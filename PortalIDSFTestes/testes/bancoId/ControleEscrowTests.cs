@@ -23,11 +23,11 @@ namespace PortalIDSFTestes.testes.bancoId
     [AllureNUnit]
     [AllureSuite("ControleEscrowTests UI")]
     [AllureOwner("Levi")]
-    public class ControleEscrowTests : Executa
+    public class ControleEscrowTests : TestBase
     {
 
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         ControleEscrowElements el = new ControleEscrowElements();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.bancoId
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuBancoId, "Clicar na sessão Banco Id no menú hamburguer");
             await metodo.Clicar(el.PaginaControleEscrow, "Clicar na página  Controle Escrow");

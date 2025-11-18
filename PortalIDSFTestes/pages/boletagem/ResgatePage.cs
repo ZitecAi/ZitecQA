@@ -13,13 +13,13 @@ namespace PortalIDSFTestes.pages.boletagem
     public class ResgatePage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         ResgateElements el = new ResgateElements();
 
         public ResgatePage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

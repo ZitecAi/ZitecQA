@@ -12,12 +12,12 @@ namespace PortalIDSFTestes.pages.login
     public class LoginPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         LoginElements el = new LoginElements();
         public LoginPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task validarAcentosLoginPage()

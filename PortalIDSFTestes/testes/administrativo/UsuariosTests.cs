@@ -17,10 +17,10 @@ namespace PortalIDSFTestes.testes.administrativo
     [AllureNUnit]
     [AllureSuite("UsuariosTests UI")]
     [AllureOwner("Levi")]
-    public class UsuariosTests : Executa
+    public class UsuariosTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         UsuariosElements el = new UsuariosElements();
 
         [SetUp]
@@ -29,7 +29,7 @@ namespace PortalIDSFTestes.testes.administrativo
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuAdministrativo, "Clicar na sessão Admninistrativo no menú hamburguer");
             await metodo.Clicar(el.PaginaUsuarios, "Clicar na página Usuarios");

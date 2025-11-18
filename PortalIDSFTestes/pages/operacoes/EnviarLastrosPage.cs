@@ -13,13 +13,13 @@ namespace PortalIDSFTestes.pages.operacoes
     public class EnviarLastrosPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         EnviarLastrosElements el = new EnviarLastrosElements();
 
         public EnviarLastrosPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosEnviarLastrosPage()

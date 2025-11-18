@@ -15,13 +15,13 @@ namespace PortalIDSFTestes.pages.bancoId
     public class CorrentistasPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         CorrentistasElements el = new CorrentistasElements();
 
         public CorrentistasPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

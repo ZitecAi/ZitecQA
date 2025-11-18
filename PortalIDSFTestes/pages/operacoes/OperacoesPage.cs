@@ -8,14 +8,14 @@ namespace PortalIDSFTestes.pages.operacoes
     public class OperacoesPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         OperacoesElements el = new OperacoesElements();
 
         string NomeNovoArquivo { get; set; }
         public OperacoesPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosOperacoesPage()

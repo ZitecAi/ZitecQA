@@ -9,14 +9,14 @@ namespace PortalIDSFTestes.pages.bancoId
     public class ExtratosPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         ExtratosElements el = new ExtratosElements();
 
 
         public ExtratosPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

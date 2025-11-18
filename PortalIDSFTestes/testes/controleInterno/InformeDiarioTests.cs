@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.controleInterno
     [AllureNUnit]
     [AllureSuite("InformeDiarioTests UI")]
     [AllureOwner("Levi")]
-    public class InformeDiarioTests : Executa
+    public class InformeDiarioTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         InformeDiarioElements el = new InformeDiarioElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.controleInterno
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuControleInterno, "Clicar em Controle interno menu hamburguer");
             await metodo.Clicar(el.PaginaInformeDiario, "Clicar em Informe Diario para acessar a página");

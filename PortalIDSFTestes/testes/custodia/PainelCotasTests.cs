@@ -24,10 +24,10 @@ namespace PortalIDSFTestes.testes.custodia
     [AllureNUnit]
     [AllureSuite("PainelCotasTests UI")]
     [AllureOwner("Levi")]
-    public class PainelCotasTests : Executa
+    public class PainelCotasTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         PainelCotasElement el = new PainelCotasElement();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.custodia
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCedentes, "Clicar na sessão custodia no menú hamburguer");
             await metodo.Clicar(el.PaginaPainelCotas, "Clicar na página Painel de Cotas");

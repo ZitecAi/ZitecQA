@@ -24,10 +24,10 @@ namespace PortalIDSFTestes.testes.notas
     [AllureNUnit]
     [AllureSuite("NotasInternasTests UI")]
     [AllureOwner("Levi")]
-    public class NotasInternasTests : Executa
+    public class NotasInternasTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         NotasInternasElements el = new NotasInternasElements();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.notas
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuNotas, "Clicar na sessão Notas no menú hamburguer");
             await metodo.Clicar(el.PaginaNotasInternas, "Clicar na página Pagamentos notas");

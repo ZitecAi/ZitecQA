@@ -8,13 +8,13 @@ namespace PortalIDSFTestes.pages.operacoes
     public class ArquivosBaixaPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         ArquivosBaixaElements el = new ArquivosBaixaElements();
 
         public ArquivosBaixaPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public static string GetPath()

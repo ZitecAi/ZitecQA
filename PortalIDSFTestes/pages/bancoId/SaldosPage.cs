@@ -15,14 +15,14 @@ namespace PortalIDSFTestes.pages.bancoId
     public class SaldosPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         SaldosElements el = new SaldosElements();
 
 
         public SaldosPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

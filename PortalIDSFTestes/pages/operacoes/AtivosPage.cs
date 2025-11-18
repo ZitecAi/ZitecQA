@@ -13,12 +13,12 @@ namespace PortalIDSFTestes.pages.operacoes
         string NomeAtivo = NomeAleatorio;
 
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         AtivosElements el = new AtivosElements();
         public AtivosPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
         public static string GetPath()
         {

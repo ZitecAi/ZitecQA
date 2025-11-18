@@ -24,10 +24,10 @@ namespace PortalIDSFTestes.testes.cadastro
     [AllureNUnit]
     [AllureSuite("GestorasInternasTests UI")]
     [AllureOwner("Levi")]
-    public class GestorasInternasTests : Executa
+    public class GestorasInternasTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         GestorasInternasElements el = new GestorasInternasElements();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.cadastro
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
             await metodo.Clicar(el.PaginaGestorasInternas, "Clicar na página Gestoras Internas");

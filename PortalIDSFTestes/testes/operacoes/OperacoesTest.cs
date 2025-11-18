@@ -17,10 +17,10 @@ namespace PortalIDSFTestes.testes.operacoes
     [AllureNUnit]
     [AllureSuite("OperacoesTest UI")]
     [AllureOwner("Levi")]
-    public class OperacoesTest : Executa
+    public class OperacoesTest : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         OperacoesElements el = new OperacoesElements();
 
         [SetUp]
@@ -29,7 +29,7 @@ namespace PortalIDSFTestes.testes.operacoes
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
             await metodo.Clicar(el.PaginaOperacoes, "Clicar em Operações para acessar a página");

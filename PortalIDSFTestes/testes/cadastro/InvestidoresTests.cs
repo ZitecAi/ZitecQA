@@ -24,10 +24,10 @@ namespace PortalIDSFTestes.testes.cadastro
     [AllureNUnit]
     [AllureSuite("InvestidoresTests UI")]
     [AllureOwner("Levi")]
-    public class InvestidoresTests : Executa
+    public class InvestidoresTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         InvestidoresElements el = new InvestidoresElements();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.cadastro
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
             await metodo.Clicar(el.PaginaInvestidores, "Clicar na página Investidores");

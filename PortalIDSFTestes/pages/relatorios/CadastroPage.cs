@@ -12,12 +12,12 @@ namespace PortalIDSFTestes.pages.relatorios
     {
 
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
 
         public CadastroPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosCadastroPage()

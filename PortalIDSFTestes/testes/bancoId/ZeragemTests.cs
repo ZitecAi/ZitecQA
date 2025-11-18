@@ -23,11 +23,11 @@ namespace PortalIDSFTestes.testes.bancoId
     [AllureNUnit]
     [AllureSuite("ZeragemTests UI")]
     [AllureOwner("Levi")]
-    public class ZeragemTests : Executa
+    public class ZeragemTests : TestBase
     {
 
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         ZeragemElements el = new ZeragemElements();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.bancoId
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuBancoId, "Clicar na sessão Banco ID no menú hamburguer");
             await metodo.Clicar(el.PaginaZeragem, "Clicar na página Saldos");

@@ -8,12 +8,12 @@ namespace PortalIDSFTestes.pages.notaComercial
     public class NotaComercialPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         NotaComercialElements el = new NotaComercialElements();
         public NotaComercialPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
         public static string GetPath()
         {

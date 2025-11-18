@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.relatorios
     [AllureNUnit]
     [AllureSuite("RelatorioMeusRelatoriosTests UI")]
     [AllureOwner("Levi")]
-    public class RelatorioMeusRelatoriosTests : Executa
+    public class RelatorioMeusRelatoriosTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         RelatorioMeusRelatoriosElements el = new RelatorioMeusRelatoriosElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.relatorios
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuRelatorios, "Clicar em Relatorios menu hamburguer");
             await metodo.Clicar(el.PaginaRelatorioMeusRelatorios, "Clicar em Cedentes para acessar a página Meus Relatorios na sessão relatorios");

@@ -14,7 +14,7 @@ namespace PortalIDSFTestes.testes.login
     [AllureNUnit]
     [AllureSuite("LoginTest UI")]
     [AllureOwner("Levi")]
-    public class LoginTest : Executa
+    public class LoginTest : TestBase
     {
         private IPage page;
 
