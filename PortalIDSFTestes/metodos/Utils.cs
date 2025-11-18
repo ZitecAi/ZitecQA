@@ -1,4 +1,4 @@
-﻿using Allure.NUnit.Attributes;
+using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using OfficeOpenXml;
 using System.IO.Compression;
@@ -7,11 +7,11 @@ using static Microsoft.Playwright.Assertions;
 namespace PortalIDSFTestes.metodos
 {
 
-    public class Metodos
+    public class Utils
     {
         private readonly IPage page;
 
-        public Metodos(IPage page)
+        public Utils(IPage page)
         {
             this.page = page;
         }
@@ -62,7 +62,7 @@ namespace PortalIDSFTestes.metodos
         [AllureStep("Validar URL - no passo: {passo}")]
         public async Task ValidarUrl(string urlEsperada, string passo)
         {
-            await ScreenshotHelper.AssertWithScreenshotAsync(page, async () =>
+            try
             {
                 await page.WaitForURLAsync(urlEsperada);
                 if (urlEsperada == "https://portal.idsf.com.br/home.aspx#")
@@ -77,9 +77,11 @@ namespace PortalIDSFTestes.metodos
                 {
                     await Expect(page).ToHaveURLAsync(urlEsperada);
                 }
-            }, "Validar Url",
-            passo
-            );
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"❌ Não foi possível validar a URL esperada '{urlEsperada}' no passo: '{passo}'. Detalhes: {ex.Message}");
+            }
         }
 
         [AllureStep("Validar mensagem retornada - no passo: {passo}")]

@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.controleInterno
     [AllureNUnit]
     [AllureSuite("PoliticasTests UI")]
     [AllureOwner("Levi")]
-    public class PoliticasTests : Executa
+    public class PoliticasTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         PoliticasElements el = new PoliticasElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.controleInterno
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuControleInterno, "Clicar em Controle interno menu hamburguer");
             await metodo.Clicar(el.PaginaPoliticas, "Clicar em Politicas para acessar a página");

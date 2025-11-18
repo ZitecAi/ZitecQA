@@ -12,13 +12,13 @@ namespace PortalIDSFTestes.pages.administrativo
     public class UsuariosPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         UsuariosElements el = new UsuariosElements();
 
         public UsuariosPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

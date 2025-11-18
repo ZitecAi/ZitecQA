@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.notaComercial
     [AllureNUnit]
     [AllureSuite("NotaComercialTest UI")]
     [AllureOwner("Levi")]
-    public class NotaComercialTest : Executa
+    public class NotaComercialTest : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         NotaComercialElements el = new NotaComercialElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.notaComercial
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuNotaComercial, "Clicar em Nota Comercial no Menu hambúrguer");
             await metodo.Clicar(el.PaginaNotaComercial, "Clicar em Nota Comercial para acessar a página");

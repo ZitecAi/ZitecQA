@@ -8,14 +8,14 @@ namespace PortalIDSFTestes.pages.operacoes
     public class OperacoesPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         OperacoesElements el = new OperacoesElements();
 
         string NomeNovoArquivo { get; set; }
         public OperacoesPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosOperacoesPage()
@@ -181,12 +181,8 @@ namespace PortalIDSFTestes.pages.operacoes
 
         public async Task DownloadExcel()
         {
-            var download = await page.RunAndWaitForDownloadAsync(async () =>
-            {
-                await metodo.Clicar(el.BtnDownloadExcel, "Clicar no botão para baixar Excel");
-            });
-            await metodo.ValidarDownloadAsync(download, "Download Validação Layout", "Validar Download de Excel");
 
+            await metodo.ValidateDownloadAndLength(page, el.BtnDownloadExcel, "Validar Download do Excel na página de Operações");
         }
 
 

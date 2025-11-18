@@ -22,11 +22,11 @@ namespace PortalIDSFTestes.testes.bancoId
     [AllureNUnit]
     [AllureSuite("DevolucaoReembolsoTests UI")]
     [AllureOwner("Levi")]
-    public class DevolucaoReembolsoTests : Executa
+    public class DevolucaoReembolsoTests : TestBase
     {
 
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         DevolucaoReembolsoElements el = new DevolucaoReembolsoElements();
 
         [SetUp]
@@ -35,7 +35,7 @@ namespace PortalIDSFTestes.testes.bancoId
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuBancoId, "Clicar na sessão Banco ID no menú hamburguer");
             await metodo.Clicar(el.PaginaDevolucaoReembolsos, "Clicar na página Usuarios");

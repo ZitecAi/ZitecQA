@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.boletagem
     [AllureNUnit]
     [AllureSuite("AmortizacaoTests UI")]
     [AllureOwner("Levi")]
-    public class AmortizacaoTests : Executa
+    public class AmortizacaoTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         AmortizacaoElements el = new AmortizacaoElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.boletagem
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuBoletagem, "Clicar na sessão Boletagem no menú hamburguer");
             await metodo.Clicar(el.PaginaAmortizacao, "Clicar na página Amortizacao");

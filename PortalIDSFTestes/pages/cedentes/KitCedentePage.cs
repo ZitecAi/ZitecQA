@@ -14,13 +14,13 @@ namespace PortalIDSFTestes.pages.cedentes
     public class KitCedentePage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         KitCedenteElements el = new KitCedenteElements();
 
         public KitCedentePage(IPage page) 
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosKitCedentePage()

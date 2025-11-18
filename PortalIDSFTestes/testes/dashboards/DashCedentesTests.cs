@@ -24,10 +24,10 @@ namespace PortalIDSFTestes.testes.dashboards
     [AllureNUnit]
     [AllureSuite("DashCedentesTests UI")]
     [AllureOwner("Levi")]
-    public class DashCedentesTests : Executa
+    public class DashCedentesTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         DashCedentesElements el = new DashCedentesElements();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.dashboards
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuDashboards, "Clicar na sessão Dashboards no menú hamburguer");
             await metodo.Clicar(el.PaginaDashCedentes, "Clicar na página Dashboards cedentes");

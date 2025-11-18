@@ -15,14 +15,14 @@ namespace PortalIDSFTestes.pages.bancoId
     public class ZeragemPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         ZeragemElements el = new ZeragemElements();
 
 
         public ZeragemPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

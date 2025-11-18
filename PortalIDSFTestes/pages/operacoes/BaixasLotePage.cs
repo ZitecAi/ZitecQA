@@ -13,13 +13,13 @@ namespace PortalIDSFTestes.pages.operacoes
     public class BaixasLotePage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         BaixasLoteElements el = new BaixasLoteElements();
 
         public BaixasLotePage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosBaixasLotePage()

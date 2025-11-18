@@ -13,13 +13,13 @@ namespace PortalIDSFTestes.pages.boletagem
     public class AportePage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         AporteElements el = new AporteElements();
 
         public AportePage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

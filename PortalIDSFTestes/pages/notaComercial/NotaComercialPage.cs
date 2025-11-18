@@ -2,23 +2,18 @@
 using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.notaComercial;
 using PortalIDSFTestes.metodos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.pages.notaComercial
 {
     public class NotaComercialPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         NotaComercialElements el = new NotaComercialElements();
-        public NotaComercialPage(IPage page) 
+        public NotaComercialPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
         public static string GetPath()
         {
@@ -30,15 +25,11 @@ namespace PortalIDSFTestes.pages.notaComercial
 
         public async Task ValidarAcentosNotaComercialPage()
         {
-            await metodo.ValidarAcentosAsync(page,"Validar Acentos na Página de Nota Comercial");
+            await metodo.ValidarAcentosAsync(page, "Validar Acentos na Página de Nota Comercial");
         }
         public async Task DownloadExcel()
         {
-            var download = await page.RunAndWaitForDownloadAsync(async () =>
-            {
-                await metodo.Clicar(el.BtnExcel, "Clicar no botão para baixar Excel");
-            });
-            await metodo.ValidarDownloadAsync(download, "Download Arquivo Excel", "Validar Download de Excel na Página de Nota Comercial");
+            await metodo.ValidateDownloadAndLength(page, el.BtnExcel, "Validar Download do Excel na página de Nota Comercial");
         }
 
         public async Task CadastrarNotaComercial()
@@ -82,7 +73,7 @@ namespace PortalIDSFTestes.pages.notaComercial
             await metodo.ClicarNoSeletor(el.SelectTipoCalculo, "bruto", "Selecionar Tipo de calculo na sessão operações");
             await metodo.Escrever(el.CampoDiaVencimento, "05", "Preencher Dia de Vencimento na sessão operações");
             await metodo.Clicar(el.CampoDataInicio, "Clicar no seletor Data de inicio");
-            await metodo.Escrever(el.CampoDataInicio,dataAtual, "Inserir Data Atual no seletor Data de inicio");
+            await metodo.Escrever(el.CampoDataInicio, dataAtual, "Inserir Data Atual no seletor Data de inicio");
             await metodo.ClicarNoSeletor(el.SelectIndexPosFix, "CDI", "Selecionar Indexador Pós-Fixado na sessão Operações");
             //sessão Documentos
             await metodo.Clicar(el.SessaoDocumentos, "Clicar na Sessão Documentos no modal");
@@ -91,18 +82,18 @@ namespace PortalIDSFTestes.pages.notaComercial
             await metodo.ClicarNoSeletor(el.SelectTipoDocumento, "cpf", "Selecionar tipo Documento na sessão Documentos");
             await metodo.Clicar(el.BtnAtualizarDocumento, "Clicar no botão para atualizar documento");
             await metodo.Clicar(el.BtnSalvarMudancas, "Clicar em Salvar Mudanças depois de todo o fluxo");
-            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar Msg Sucesso presente na tela");    
+            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar Msg Sucesso presente na tela");
 
-            
+
         }
 
         public async Task CadastrarNotaComercialNegativa(string cenarioTeste)
         {
-            if(cenarioTeste == "CamposEmBranco")
+            if (cenarioTeste == "CamposEmBranco")
             {
                 await metodo.Clicar(el.BtnNovoNotaComercial, "Clicar no Botão para inserir nova nota comercial");
                 await metodo.Clicar(el.BtnSalvarMudancas, "Clicar em Salvar Mudanças depois de todo o fluxo");
-                await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha corretamente a Aba de Informações.","Validar mensagem retornada sobre campos em branco");
+                await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha corretamente a Aba de Informações.", "Validar mensagem retornada sobre campos em branco");
                 await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha todos os campos para simular", "Validar mensagem retornada sobre campos em branco");
             }
             else if (cenarioTeste == "CamposEmBrancoEnvolvidos")
@@ -121,7 +112,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await metodo.Clicar(el.BtnConfirmarAddEnvolvido, "CLicar no botão submit envolvido");
                 await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha todos os campos obrigatórios", "Validar mensagem retornada sobre campos em branco");
             }
-            else if(cenarioTeste == "CamposEmBrancoOperacao")
+            else if (cenarioTeste == "CamposEmBrancoOperacao")
             {
                 await metodo.Clicar(el.BtnNovoNotaComercial, "Clicar no Botão para inserir nova nota comercial");
                 await metodo.ClicarNoSeletor(el.SelectFundoCessionario, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
@@ -155,7 +146,7 @@ namespace PortalIDSFTestes.pages.notaComercial
                 await metodo.Clicar(el.BtnSalvarMudancas, "Clicar em Salvar Mudanças depois de todo o fluxo");
                 await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha todos os campos para simular", "Validar mensagem retornada sobre campos em branco");
                 await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha corretamente a Aba de Informações.", "Validar mensagem retornada sobre campos em branco");
-            }            
+            }
             else if (cenarioTeste == "AmortizacaoMaiorQueDuracao")
             {
                 var dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
@@ -257,7 +248,7 @@ namespace PortalIDSFTestes.pages.notaComercial
         public async Task ConsultarNotaComercialNaTabela()
         {
             await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na tabela para inserir nota a ser consultada");
-            await metodo.Escrever(el.BarraPesquisaTabela,"Zitec", "Escrever Fundo nome do fundo na barra de pesquisa da tabela ");
+            await metodo.Escrever(el.BarraPesquisaTabela, "Zitec", "Escrever Fundo nome do fundo na barra de pesquisa da tabela ");
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaNotasComerciais, "Zitec Tecnologia LTDA", "Validar nome do fundo presenta na tablea");
         }
 
@@ -270,7 +261,7 @@ namespace PortalIDSFTestes.pages.notaComercial
             await metodo.Clicar(el.RadioBtnCancelarOp, "Marcar Radio Button para Cancelar Operação");
             await metodo.Clicar(el.MinutaPdf, "Marcar Opção minuta PDF");
             await metodo.Clicar(el.ObsFecharOp, "Clicar no campo Observação");
-            await metodo.Escrever(el.ObsFecharOp,"Teste Cancelamento", "Inserir Observação");
+            await metodo.Escrever(el.ObsFecharOp, "Teste Cancelamento", "Inserir Observação");
             await metodo.Clicar(el.BtnSubmitFecharOp, "Clicar no ultimo botão Submit");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar Msg Sucesso presente na tela");
 
@@ -280,7 +271,7 @@ namespace PortalIDSFTestes.pages.notaComercial
         {
             await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na tabela para inserir nota a ser consultada");
             await metodo.Escrever(el.BarraPesquisaTabela, "Zitec", "Escrever Fundo nome do fundo na barra de pesquisa da tabela ");
-            await metodo.Clicar(el.PrimeiroTD, "Clicar no primeiro TD para Expandir menu na tabela");            
+            await metodo.Clicar(el.PrimeiroTD, "Clicar no primeiro TD para Expandir menu na tabela");
             await metodo.ValidateDownloadAndLength(page, el.BtnDownloadMinuta, "Validar Download da Minuta");
             //var download1 = await page.RunAndWaitForDownloadAsync(async () =>
             //{

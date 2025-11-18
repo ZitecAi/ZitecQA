@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.relatorios
     [AllureNUnit]
     [AllureSuite("CadastroTests UI")]
     [AllureOwner("Levi")]
-    public class CadastroTests : Executa
+    public class CadastroTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         CadastroElements el = new CadastroElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.relatorios
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuRelatorios, "Clicar em Relatorios menu hamburguer");
             await metodo.Clicar(el.PaginaCadastro, "Clicar em Cadastro para acessar a página");

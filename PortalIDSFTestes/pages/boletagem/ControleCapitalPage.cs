@@ -13,13 +13,13 @@ namespace PortalIDSFTestes.pages.boletagem
     public class ControleCapitalPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         ControleCapitalElements el = new ControleCapitalElements();
 
         public ControleCapitalPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

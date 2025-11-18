@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.rendaFixa
     [AllureNUnit]
     [AllureSuite("PosicoesRendaFixaTests UI")]
     [AllureOwner("Levi")]
-    public class PosicoesRendaFixaTests : Executa
+    public class PosicoesRendaFixaTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         PosicoesRendaFixaElements el = new PosicoesRendaFixaElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.rendaFixa
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
             await metodo.Clicar(el.PaginaPosicoesRendaFixa, "Clicar em Posições Renda Fixa para acessar a página");

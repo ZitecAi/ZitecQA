@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PortalIDSFTestes.elementos.bancoId
+﻿namespace PortalIDSFTestes.elementos.bancoId
 {
     public class ExtratosElements
     {
@@ -13,6 +7,7 @@ namespace PortalIDSFTestes.elementos.bancoId
         public string BtnGerarExtrato { get; } = "//button[@onclick]//i";
         public string SelectFundo { get; } = "#FundoFiltroExtrato";
         public string BtnGerar { get; } = "#Gerar";
+        public string MensagemSucesso { get; } = "//div[@class='toast-message']";
 
 
     }

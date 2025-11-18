@@ -12,13 +12,13 @@ namespace PortalIDSFTestes.pages.administrativo
     public class EnviarMensagemPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         EnviarMensagemElements el = new EnviarMensagemElements();
 
         public EnviarMensagemPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

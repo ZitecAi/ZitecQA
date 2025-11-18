@@ -17,10 +17,10 @@ namespace PortalIDSFTestes.testes.administrativo
     [AllureNUnit]
     [AllureSuite("EnviarMensagemTests UI")]
     [AllureOwner("Levi")]
-    public class EnviarMensagemTests : Executa
+    public class EnviarMensagemTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         EnviarMensagemElements el = new EnviarMensagemElements();
 
         [SetUp]
@@ -29,7 +29,7 @@ namespace PortalIDSFTestes.testes.administrativo
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuAdministrativo, "Clicar na sessão Admninistrativo no menú hamburguer");
             await metodo.Clicar(el.PaginaEnviarMensagem, "Clicar na página Enviar Mensagem");

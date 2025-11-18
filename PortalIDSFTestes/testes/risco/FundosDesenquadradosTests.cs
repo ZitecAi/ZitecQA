@@ -17,10 +17,10 @@ namespace PortalIDSFTestes.testes.risco
     [AllureNUnit]
     [AllureSuite("FundosDesenquadradosTests UI")]
     [AllureOwner("Levi")]
-    public class FundosDesenquadradosTests : Executa
+    public class FundosDesenquadradosTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         FundosDesenquadradosElements el = new FundosDesenquadradosElements();
 
         [SetUp]
@@ -29,7 +29,7 @@ namespace PortalIDSFTestes.testes.risco
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuRisco, "Clicar em Controle interno menu hamburguer");
             await metodo.Clicar(el.PaginaFundosDesenquadrados, "Clicar em Fundos Desenquadrados para acessar a página");

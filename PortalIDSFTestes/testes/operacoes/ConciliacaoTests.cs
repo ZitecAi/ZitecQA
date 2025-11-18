@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.operacoes
     [AllureNUnit]
     [AllureSuite("ConciliacaoTests UI")]
     [AllureOwner("Levi")]
-    public class ConciliacaoTests : Executa
+    public class ConciliacaoTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         ConciliacaoElements el = new ConciliacaoElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.operacoes
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
             await metodo.Clicar(el.PaginaConciliacao, "Clicar em Conciliacao para acessar a página");

@@ -23,11 +23,11 @@ namespace PortalIDSFTestes.testes.bancoId
     [AllureNUnit]
     [AllureSuite("EscrowExternoTests UI")]
     [AllureOwner("Levi")]
-    public class EscrowExternoTests : Executa
+    public class EscrowExternoTests : TestBase
     {
 
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         EscrowExternoElements el = new EscrowExternoElements();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.bancoId
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuBancoId, "Clicar na sessão Banco ID no menú hamburguer");
             await metodo.Clicar(el.PaginaEscrowExterno, "Clicar na página Usuarios");

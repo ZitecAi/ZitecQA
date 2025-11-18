@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.administrativo
     [AllureNUnit]
     [AllureSuite("GuposTests UI")]
     [AllureOwner("Levi")]
-    public class GuposTests : Executa
+    public class GuposTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         GruposElements el = new GruposElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.administrativo
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuAdministrativo, "Clicar na sessão Admninistrativo no menú hamburguer");
             await metodo.Clicar(el.PaginaGrupos, "Clicar na página Enviar Mensagem");

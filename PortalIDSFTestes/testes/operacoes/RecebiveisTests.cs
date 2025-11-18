@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.operacoes
     [AllureNUnit]
     [AllureSuite("RecebiveisTests UI")]
     [AllureOwner("Levi")]
-    public class RecebiveisTests : Executa
+    public class RecebiveisTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         RecebiveisElements el = new RecebiveisElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.operacoes
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuOperacoes, "Clicar em operações menu hamburguer");
             await metodo.Clicar(el.PaginaRecebiveis, "Clicar em Enviar Recebiveis para acessar a página");

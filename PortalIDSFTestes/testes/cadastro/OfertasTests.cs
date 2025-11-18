@@ -24,10 +24,10 @@ namespace PortalIDSFTestes.testes.cadastro
     [AllureNUnit]
     [AllureSuite("OfertasTests UI")]
     [AllureOwner("Levi")]
-    public class OfertasTests : Executa
+    public class OfertasTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         OfertasElements el = new OfertasElements();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.cadastro
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuCadastro, "Clicar na sessão Cadastro no menú hamburguer");
             await metodo.Clicar(el.PaginaOfertas, "Clicar na página Prestadores de Ofertas");

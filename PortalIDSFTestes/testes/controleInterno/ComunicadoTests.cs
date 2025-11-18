@@ -22,10 +22,10 @@ namespace PortalIDSFTestes.testes.controleInterno
     [AllureNUnit]
     [AllureSuite("ComunicadoTests UI")]
     [AllureOwner("Levi")]
-    public class ComunicadoTests : Executa
+    public class ComunicadoTests : TestBase
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         ComunicadoElements el = new ComunicadoElements();
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace PortalIDSFTestes.testes.controleInterno
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuControleInterno, "Clicar em Controle interno menu hamburguer");
             await metodo.Clicar(el.PaginaComunicado, "Clicar em Comunicado para acessar a página");

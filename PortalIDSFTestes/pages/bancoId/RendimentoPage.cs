@@ -15,14 +15,14 @@ namespace PortalIDSFTestes.pages.bancoId
     public class RendimentoPage
     {
         private readonly IPage page;
-        Metodos metodo;
+        Utils metodo;
         RendimentoElements el = new RendimentoElements();
 
 
         public RendimentoPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
 

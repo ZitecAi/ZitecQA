@@ -14,12 +14,12 @@ namespace PortalIDSFTestes.pages.operacoes
     public class ConciliacaoPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
 
         public ConciliacaoPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosConciliacaoPage()

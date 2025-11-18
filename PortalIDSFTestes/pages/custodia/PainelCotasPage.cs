@@ -12,13 +12,13 @@ namespace PortalIDSFTestes.pages.custodia
     public class PainelCotasPage
     {
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         PainelCotasElement el = new PainelCotasElement();
 
         public PainelCotasPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosPainelCotasPage()

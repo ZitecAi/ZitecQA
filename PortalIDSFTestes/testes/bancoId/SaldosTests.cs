@@ -23,11 +23,11 @@ namespace PortalIDSFTestes.testes.bancoId
     [AllureNUnit]
     [AllureSuite("SaldosTests UI")]
     [AllureOwner("Levi")]
-    public class SaldosTests : Executa
+    public class SaldosTests : TestBase
     {
 
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
         SaldosElements el = new SaldosElements();
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace PortalIDSFTestes.testes.bancoId
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
             await login.LogarInterno();
             await metodo.Clicar(el.MenuBancoId, "Clicar na sessão Banco ID no menú hamburguer");
             await metodo.Clicar(el.PaginaSaldos, "Clicar na página Usuarios");

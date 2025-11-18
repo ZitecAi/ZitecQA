@@ -12,12 +12,12 @@ namespace PortalIDSFTestes.pages.risco
     {
 
         private IPage page;
-        Metodos metodo;
+        Utils metodo;
 
         public FundosDesenquadradosPage(IPage page)
         {
             this.page = page;
-            metodo = new Metodos(page);
+            metodo = new Utils(page);
         }
 
         public async Task ValidarAcentosFundosDesenquadradosPage()
