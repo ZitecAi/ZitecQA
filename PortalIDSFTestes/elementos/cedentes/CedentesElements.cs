@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PortalIDSFTestes.elementos.cedentes
+﻿namespace PortalIDSFTestes.elementos.cedentes
 {
     public class CedentesElements
     {
@@ -23,18 +17,21 @@ namespace PortalIDSFTestes.elementos.cedentes
         public string MsgSucessoRetornada { get; } = "//div[@class='toast toast-success']";
         public string MsgErroRetornada { get; } = "//div[@class='toast toast-warning']";
         public string BtnFecharModal { get; } = "#btnFecharNovoCedente";
-        public string BtnAprovarCadastro (string cnpjCedente) => $"(//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//button[.//i[@class='fas fa-ban']])[1]";
-        public string BtnAprovarGestora (string cnpjCedente) => $"//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//button[text()='Em espera']";
+        public string BtnFecharMensagemSucesso { get; } = "//button[@class='toast-close-button']";
+        public string BtnAprovarCadastro(string cnpjCedente) => $"(//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//button[.//i[@class='fas fa-ban']])[1]";
+        public string BtnAprovarGestora(string cnpjCedente) => $"//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//button[text()='Em espera']";
         public string BtnAprovarCompliance(string cnpjCedente) => $"(//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//button[.//i[@class='fas fa-ban']])[2]";
         public string BtnAprovado { get; } = "//div[@class='radioButtons']//label[@for='option-1']";
         public string Obs { get; } = "#obsParecerDepartamento";
         public string BtnEnviarParecerDepartamento { get; } = "#btnEnviarStatusDepartamento";
-        public string TdAprovados (string posicaoTd) => $"(//tr//td)[{posicaoTd}]"; //começa no 6 e vai ate o 8
+        public string TdAprovadoGestora(string posicaoTd) => $"(//tr//td)[{posicaoTd}]//button"; //começa no 6 e vai ate o 8
+        public string TdAprovados(string posicaoTd) => $"(//tr//td)[{posicaoTd}]//p"; //começa no 6 e vai ate o 8
+        public string StatusCedente { get; } = "(//tr//td)[4]//small[1]";
         public string TdReprovado { get; } = "(//tr//td)[4]";
         public string BtnReprovarCedente(string cnpjCedente) => $"//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//i[@class='fas fa-times']";
         public string ObsReprovar { get; } = "#TextAreaReprovar";
         public string ButtonReprovar { get; } = "#submitButtonReprovacao";
-        public string BtnContratoMae (string cnpjCedente) => $"//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//i[@class='fas fa-check']";
+        public string BtnContratoMae(string cnpjCedente) => $"//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//i[@class='fas fa-check']";
         public string InputContratoMae { get; } = "#fileAtivaCedente";
         public string ObsAtivarContratoMae { get; } = "#TextAreaAtivar";
         public string ButtonAtivacao { get; } = "#submitButtonAtivacao";

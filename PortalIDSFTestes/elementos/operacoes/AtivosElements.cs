@@ -29,6 +29,8 @@
         public string BtnEmAnalise(string posicao) => $"(//button[text()='Análise'])[{posicao}]";
         public string BtnEmAnaliseRisco(string nomeAtivo) => $"(//td[text()='{nomeAtivo}']/ancestor::tr//button[text()='Análise'])[2]";
         public string BtnEmTDJuridico(string status) => $"//span[text()='Jurídico']/ancestor::li//button[text()='{status}']";
+        public string BtnEmTDGestor(string status) => $"//span[text()='Gestor']/ancestor::li//button[text()='{status}']";
+        public string BtnEmTDRisco(string status) => $"//span[text()='Risco/Administração']/ancestor::li//button[text()='{status}']";
         public string BtnJuridico(string status) => $"(//th[text()='Jurídico']/ancestor::table//tbody//td)[12]//button[text()='{status}']";
         public string BtnEmAnaliseCadastro(string status) => $"//span[text()='Cadastro']/ancestor::li//button[text()='{status}']";
         public string BtnEmTDCadastro(string status) => $"//span[text()='Cadastro']/ancestor::li//button[text()='{status}']";

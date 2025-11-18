@@ -101,7 +101,17 @@ namespace PortalIDSFTestes.pages.operacoes
             await Task.Delay(150);
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaAtivos, NomeAtivo, "Validar se ativo com destinatário Teste NUnit está presente na tabela");
             //await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
-            await metodo.Clicar(el.BtnEmAnalise("1"), "Clicar no botão para abrir modal de situação do gestor");
+            ILocator btnGestor = page.Locator("(//button[text()='Análise'])[1]");
+            if (await btnGestor.IsVisibleAsync())
+            {
+                await metodo.Clicar(el.BtnEmAnalise("1"), "Clicar no botão para abrir modal de situação do gestor");
+                return;
+            }
+            else
+            {
+                await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
+                await metodo.Clicar(el.BtnEmTDGestor("Análise"), "Clicar no botão para abrir modal de situação do Gestor");
+            }
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo gestor");
             await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo gestor");
@@ -152,8 +162,17 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
             await Task.Delay(150);
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaAtivos, NomeAtivo, "Validar se ativo com destinatário Teste NUnit está presente na tabela");
-            //await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
-            await metodo.Clicar(el.BtnEmAnaliseRisco(NomeAtivo), "Clicar no botão para abrir modal de situação do risco");
+            ILocator btnRisco = page.Locator($"(//td[text()='{NomeAtivo}']/ancestor::tr//button[text()='Análise'])[2]");
+            if (await btnRisco.IsVisibleAsync())
+            {
+                await metodo.Clicar(el.BtnEmAnaliseRisco(NomeAtivo), "Clicar no botão para abrir modal de situação do risco");
+                return;
+            }
+            else
+            {
+                await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
+                await metodo.Clicar(el.BtnEmTDRisco("Análise"), "Clicar no botão para abrir modal de situação do Risco");
+            }
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo risco");
             await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo risco");
