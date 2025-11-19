@@ -1,16 +1,10 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.bancoId;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.bancoId;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.bancoId
 {
@@ -25,7 +19,6 @@ namespace PortalIDSFTestes.testes.bancoId
     public class DevolucaoReembolsoTests : TestBase
     {
 
-        private IPage page;
         Utils metodo;
         DevolucaoReembolsoElements el = new DevolucaoReembolsoElements();
 
@@ -53,7 +46,8 @@ namespace PortalIDSFTestes.testes.bancoId
         [AllureName("Nao Deve Conter Acentos Quebrados Devolucao Reembolso")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var devolucaoReembolso = new DevolucaoReembolsoPage(page);
-            await devolucaoReembolso.ValidarAcentosDevolucaoReembolso();}
+            var devolucaoReembolso = new DevolucaoReembolsoPage(page);
+            await devolucaoReembolso.ValidarAcentosDevolucaoReembolso();
         }
+    }
 }

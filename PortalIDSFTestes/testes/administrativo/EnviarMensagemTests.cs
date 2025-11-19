@@ -1,6 +1,5 @@
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.administrativo;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.administrativo;
@@ -19,7 +18,6 @@ namespace PortalIDSFTestes.testes.administrativo
     [AllureOwner("Levi")]
     public class EnviarMensagemTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         EnviarMensagemElements el = new EnviarMensagemElements();
 

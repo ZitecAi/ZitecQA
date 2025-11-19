@@ -1,16 +1,10 @@
-using Microsoft.Playwright;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.operacoes;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.operacoes
 {
@@ -24,7 +18,7 @@ namespace PortalIDSFTestes.testes.operacoes
     [AllureOwner("Levi")]
     public class RecebiveisTests : TestBase
     {
-        private IPage page;
+
         Utils metodo;
         RecebiveisElements el = new RecebiveisElements();
 
@@ -52,7 +46,8 @@ namespace PortalIDSFTestes.testes.operacoes
         [AllureName("Nao Deve Conter Acentos Quebrados Recebiveis")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var recebiveis = new RecebiveisPage(page);
-            await recebiveis.ValidarAcentosRecebiveisPage();}
+            var recebiveis = new RecebiveisPage(page);
+            await recebiveis.ValidarAcentosRecebiveisPage();
         }
+    }
 }

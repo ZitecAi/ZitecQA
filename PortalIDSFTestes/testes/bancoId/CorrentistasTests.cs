@@ -1,17 +1,10 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.bancoId;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.administrativo;
 using PortalIDSFTestes.pages.bancoId;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.bancoId
 {
@@ -26,7 +19,6 @@ namespace PortalIDSFTestes.testes.bancoId
     public class CorrentistasTests : TestBase
     {
 
-        private IPage page;
         Utils metodo;
         CorrentistasElements el = new CorrentistasElements();
 
@@ -54,7 +46,8 @@ namespace PortalIDSFTestes.testes.bancoId
         [AllureName("Nao Deve Conter Acentos Quebrados Correntistas")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var correntistas = new CorrentistasPage(page);
-            await correntistas.ValidarAcentosCorrentistas();}
+            var correntistas = new CorrentistasPage(page);
+            await correntistas.ValidarAcentosCorrentistas();
         }
+    }
 }

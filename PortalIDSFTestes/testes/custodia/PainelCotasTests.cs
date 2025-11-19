@@ -1,18 +1,10 @@
-﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.cedentes;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.custodia;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.cedentes;
 using PortalIDSFTestes.pages.custodia;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.custodia
 {
@@ -26,7 +18,6 @@ namespace PortalIDSFTestes.testes.custodia
     [AllureOwner("Levi")]
     public class PainelCotasTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         PainelCotasElement el = new PainelCotasElement();
 
@@ -55,7 +46,8 @@ namespace PortalIDSFTestes.testes.custodia
         [AllureName("Nao Deve Conter Acentos Quebrados Painel Cotas")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var painelCotas = new PainelCotasPage(page);
-            await painelCotas.ValidarAcentosPainelCotasPage();}
+            var painelCotas = new PainelCotasPage(page);
+            await painelCotas.ValidarAcentosPainelCotasPage();
         }
+    }
 }

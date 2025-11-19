@@ -1,6 +1,5 @@
 ﻿using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.cedentes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.cedentes;
@@ -19,7 +18,6 @@ namespace PortalIDSFTestes.testes.cedentes
     [AllureOwner("Levi")]
     public class CedentesTest : TestBase
     {
-        private IPage page;
         Utils metodo;
         CedentesElements el = new CedentesElements();
 

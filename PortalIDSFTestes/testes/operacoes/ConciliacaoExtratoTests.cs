@@ -1,16 +1,10 @@
-using Microsoft.Playwright;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.operacoes;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.operacoes
 {
@@ -24,7 +18,6 @@ namespace PortalIDSFTestes.testes.operacoes
     [AllureOwner("Levi")]
     public class ConciliacaoExtratoTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         ConciliacaoExtratoElements el = new ConciliacaoExtratoElements();
 
@@ -52,7 +45,8 @@ namespace PortalIDSFTestes.testes.operacoes
         [AllureName("Nao Deve Conter Acentos Quebrados Conciliacao Extrato")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var conciliacaoExtrato = new ConciliacaoExtratoPage(page);
-            await conciliacaoExtrato.ValidarAcentosConciliacaoExtratoPage();}
+            var conciliacaoExtrato = new ConciliacaoExtratoPage(page);
+            await conciliacaoExtrato.ValidarAcentosConciliacaoExtratoPage();
         }
+    }
 }

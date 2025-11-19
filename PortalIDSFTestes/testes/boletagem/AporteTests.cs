@@ -1,16 +1,10 @@
-using Microsoft.Playwright;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.Boletagem;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.boletagem;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.boletagem
 {
@@ -24,7 +18,6 @@ namespace PortalIDSFTestes.testes.boletagem
     [AllureOwner("Levi")]
     public class AporteTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         AporteElements el = new AporteElements();
 
@@ -56,12 +49,12 @@ namespace PortalIDSFTestes.testes.boletagem
             await aporte.ValidarAcentosAporte();
         }
         [Test, Order(2)]
-        [Ignore ("Teste ignorado temporariamente para manutenção.")]
+        [Ignore("Teste ignorado temporariamente para manutenção.")]
         [AllureName("Deve Realizar Aporte Com Sucesso")]
         public async Task Deve_Realizar_Aporte_Com_Sucesso()
         {
             var aporte = new AportePage(page);
             await aporte.RealizarAporte();
         }
-        }
+    }
 }

@@ -1,16 +1,10 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.administrativo;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.administrativo;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.administrativo
 {
@@ -24,7 +18,6 @@ namespace PortalIDSFTestes.testes.administrativo
     [AllureOwner("Levi")]
     public class GuposTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         GruposElements el = new GruposElements();
 
@@ -53,7 +46,8 @@ namespace PortalIDSFTestes.testes.administrativo
         [AllureName("Nao Deve Conter Acentos Quebrados Gupos")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var enviarMensagem = new GruposPage(page);
-            await enviarMensagem.ValidarAcentosEnviarMensagemPage();}
+            var enviarMensagem = new GruposPage(page);
+            await enviarMensagem.ValidarAcentosEnviarMensagemPage();
         }
+    }
 }

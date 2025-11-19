@@ -1,6 +1,5 @@
 ﻿using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.risco;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
@@ -19,7 +18,7 @@ namespace PortalIDSFTestes.testes.risco
     [AllureOwner("Levi")]
     public class FundosDesenquadradosTests : TestBase
     {
-        private IPage page;
+
         Utils metodo;
         FundosDesenquadradosElements el = new FundosDesenquadradosElements();
 

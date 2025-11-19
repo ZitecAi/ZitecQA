@@ -1,16 +1,10 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.administrativo;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.administrativo;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.administrativo
 {
@@ -24,7 +18,6 @@ namespace PortalIDSFTestes.testes.administrativo
     [AllureOwner("Levi")]
     public class TokensTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         TokensElements el = new TokensElements();
 
@@ -53,7 +46,8 @@ namespace PortalIDSFTestes.testes.administrativo
         [AllureName("Nao Deve Conter Acentos Quebrados Tokens")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var tokens = new TokensPage(page);
-            await tokens.ValidarAcentosTokens();}
+            var tokens = new TokensPage(page);
+            await tokens.ValidarAcentosTokens();
         }
+    }
 }

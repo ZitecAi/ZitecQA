@@ -1,17 +1,10 @@
-﻿using Microsoft.Playwright;
-using PortalIDSFTestes.pages.cedentes;
-using PortalIDSFTestes.runner;
-using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.login;
-using PortalIDSFTestes.pages.operacoes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PortalIDSFTestes.elementos.cedentes;
+﻿using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Allure.NUnit;
+using PortalIDSFTestes.elementos.cedentes;
+using PortalIDSFTestes.metodos;
+using PortalIDSFTestes.pages.cedentes;
+using PortalIDSFTestes.pages.login;
+using PortalIDSFTestes.runner;
 
 namespace PortalIDSFTestes.testes.cedentes
 {
@@ -25,9 +18,9 @@ namespace PortalIDSFTestes.testes.cedentes
     [AllureOwner("Levi")]
     public class KitCedenteTest : TestBase
     {
-        private IPage page;
+
         Utils metodo;
-        KitCedenteElements el = new KitCedenteElements();  
+        KitCedenteElements el = new KitCedenteElements();
 
         [SetUp]
         [AllureBefore]
@@ -54,7 +47,8 @@ namespace PortalIDSFTestes.testes.cedentes
         [AllureName("Nao Deve Conter Acentos Quebrados Kit Cedente")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var kitCedente = new KitCedentePage(page);
-            await kitCedente.ValidarAcentosKitCedentePage();}
+            var kitCedente = new KitCedentePage(page);
+            await kitCedente.ValidarAcentosKitCedentePage();
         }
+    }
 }

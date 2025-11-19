@@ -1,18 +1,10 @@
-﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.bancoId;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.cadastro;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.bancoId;
 using PortalIDSFTestes.pages.cadastro;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.cadastro
 {
@@ -26,7 +18,6 @@ namespace PortalIDSFTestes.testes.cadastro
     [AllureOwner("Levi")]
     public class InvestidoresTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         InvestidoresElements el = new InvestidoresElements();
 
@@ -54,7 +45,8 @@ namespace PortalIDSFTestes.testes.cadastro
         [AllureName("Nao Deve Conter Acentos Quebrados Investidores")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var investidores = new InvestidoresPage(page);
-            await investidores.ValidarAcentosInvestidores();}
+            var investidores = new InvestidoresPage(page);
+            await investidores.ValidarAcentosInvestidores();
         }
+    }
 }

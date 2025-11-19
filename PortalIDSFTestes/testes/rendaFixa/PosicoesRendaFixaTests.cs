@@ -1,16 +1,10 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.rendaFixa;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.rendaFixa;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.rendaFixa
 {
@@ -24,7 +18,7 @@ namespace PortalIDSFTestes.testes.rendaFixa
     [AllureOwner("Levi")]
     public class PosicoesRendaFixaTests : TestBase
     {
-        private IPage page;
+
         Utils metodo;
         PosicoesRendaFixaElements el = new PosicoesRendaFixaElements();
 
@@ -52,7 +46,8 @@ namespace PortalIDSFTestes.testes.rendaFixa
         [AllureName("Nao Deve Conter Acentos Quebrados Posicoes Renda Fixa")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var posicoesRendaFixa = new PosicoesRendaFixaPage(page);
-            await posicoesRendaFixa.ValidarAcentosPosicoesRendaFixaPage();}
+            var posicoesRendaFixa = new PosicoesRendaFixaPage(page);
+            await posicoesRendaFixa.ValidarAcentosPosicoesRendaFixaPage();
         }
+    }
 }

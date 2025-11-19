@@ -1,6 +1,5 @@
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.cadastro;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.cadastro;
@@ -19,7 +18,6 @@ namespace PortalIDSFTestes.testes.cadastro
     [AllureOwner("Levi")]
     public class CarteirasTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         ConsultorasElements el = new ConsultorasElements();
 

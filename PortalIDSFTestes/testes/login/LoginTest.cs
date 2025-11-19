@@ -1,6 +1,5 @@
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
 
@@ -16,7 +15,6 @@ namespace PortalIDSFTestes.testes.login
     [AllureOwner("Levi")]
     public class LoginTest : TestBase
     {
-        private IPage page;
 
         [SetUp]
         [AllureBefore]

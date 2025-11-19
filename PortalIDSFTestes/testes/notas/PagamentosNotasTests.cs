@@ -1,18 +1,10 @@
-﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.dashboards;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.notas;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.dashboards;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.notas;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.notas
 {
@@ -26,7 +18,6 @@ namespace PortalIDSFTestes.testes.notas
     [AllureOwner("Levi")]
     public class PagamentosNotasTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         PagamentosNotasElements el = new PagamentosNotasElements();
 
@@ -55,7 +46,8 @@ namespace PortalIDSFTestes.testes.notas
         [AllureName("Nao Deve Conter Acentos Quebrados Pagamentos Notas")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var pagamentosNotas = new PagamentosNotasPage(page);
-            await pagamentosNotas.ValidarAcentosPagamentosNotasPage();}
+            var pagamentosNotas = new PagamentosNotasPage(page);
+            await pagamentosNotas.ValidarAcentosPagamentosNotasPage();
         }
+    }
 }

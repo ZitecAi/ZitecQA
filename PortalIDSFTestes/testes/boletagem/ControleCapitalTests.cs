@@ -1,16 +1,10 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.Boletagem;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.boletagem;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.boletagem
 {
@@ -24,7 +18,6 @@ namespace PortalIDSFTestes.testes.boletagem
     [AllureOwner("Levi")]
     public class ControleCapitalTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         ControleCapitalElements el = new ControleCapitalElements();
 
@@ -52,7 +45,8 @@ namespace PortalIDSFTestes.testes.boletagem
         [AllureName("Nao Deve Conter Acentos Quebrados Controle Capital")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var controleCapital = new ControleCapitalPage(page);
-            await controleCapital.ValidarAcentosControleCapital();}
+            var controleCapital = new ControleCapitalPage(page);
+            await controleCapital.ValidarAcentosControleCapital();
         }
+    }
 }

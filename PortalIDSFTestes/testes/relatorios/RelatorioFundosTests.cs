@@ -1,16 +1,10 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.relatorios;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.pages.relatorios;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.relatorios
 {
@@ -24,7 +18,7 @@ namespace PortalIDSFTestes.testes.relatorios
     [AllureOwner("Levi")]
     public class RelatorioFundosTests : TestBase
     {
-        private IPage page;
+
         Utils metodo;
         RelatorioFundosElements el = new RelatorioFundosElements();
 
@@ -52,7 +46,8 @@ namespace PortalIDSFTestes.testes.relatorios
         [AllureName("Nao Deve Conter Acentos Quebrados Relatorio Fundos")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var relatorioFundos = new RelatorioFundosPage(page);
-            await relatorioFundos.ValidarAcentosRelatorioFundosPage();}
+            var relatorioFundos = new RelatorioFundosPage(page);
+            await relatorioFundos.ValidarAcentosRelatorioFundosPage();
         }
+    }
 }

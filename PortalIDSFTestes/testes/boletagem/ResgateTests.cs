@@ -1,16 +1,10 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.Boletagem;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.boletagem;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.boletagem
 {
@@ -24,7 +18,6 @@ namespace PortalIDSFTestes.testes.boletagem
     [AllureOwner("Levi")]
     public class ResgateTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         ResgateElements el = new ResgateElements();
 
@@ -52,7 +45,8 @@ namespace PortalIDSFTestes.testes.boletagem
         [AllureName("Nao Deve Conter Acentos Quebrados Resgate")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var resgate = new ResgatePage(page);
-            await resgate.ValidarAcentosResgate();}
+            var resgate = new ResgatePage(page);
+            await resgate.ValidarAcentosResgate();
         }
+    }
 }

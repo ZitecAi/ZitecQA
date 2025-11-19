@@ -1,6 +1,5 @@
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.bancoId;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.bancoId;
@@ -20,7 +19,6 @@ namespace PortalIDSFTestes.testes.bancoId
     public class ContasEscrowTests : TestBase
     {
 
-        private IPage page;
         Utils metodo;
         ContasEscrowElements el = new ContasEscrowElements();
 

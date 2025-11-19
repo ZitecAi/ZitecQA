@@ -1,16 +1,10 @@
-﻿using Microsoft.Playwright;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.controleInterno;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.controleInterno;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.controleInterno
 {
@@ -24,7 +18,6 @@ namespace PortalIDSFTestes.testes.controleInterno
     [AllureOwner("Levi")]
     public class InformeDiarioTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         InformeDiarioElements el = new InformeDiarioElements();
 
@@ -52,7 +45,8 @@ namespace PortalIDSFTestes.testes.controleInterno
         [AllureName("Nao Deve Conter Acentos Quebrados Informe Diario")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var informeDiario = new InformeDiarioPage(page);
-            await informeDiario.ValidarAcentosInformeDiarioPage();}
+            var informeDiario = new InformeDiarioPage(page);
+            await informeDiario.ValidarAcentosInformeDiarioPage();
         }
+    }
 }

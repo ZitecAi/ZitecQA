@@ -1,18 +1,10 @@
-﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.custodia;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PortalIDSFTestes.elementos.dashboards;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.pages.custodia;
 using PortalIDSFTestes.pages.dashboards;
 using PortalIDSFTestes.pages.login;
 using PortalIDSFTestes.runner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Allure.NUnit.Attributes;
-using Allure.NUnit;
 
 namespace PortalIDSFTestes.testes.dashboards
 {
@@ -26,7 +18,6 @@ namespace PortalIDSFTestes.testes.dashboards
     [AllureOwner("Levi")]
     public class DashOperacoesTests : TestBase
     {
-        private IPage page;
         Utils metodo;
         DashOperacoesElements el = new DashOperacoesElements();
 
@@ -55,7 +46,8 @@ namespace PortalIDSFTestes.testes.dashboards
         [AllureName("Nao Deve Conter Acentos Quebrados Dash Operacoes")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
-             var dashOperacoes = new DashOperacoesPage(page);
-            await dashOperacoes.ValidarAcentosDashOperacoesPage();}
+            var dashOperacoes = new DashOperacoesPage(page);
+            await dashOperacoes.ValidarAcentosDashOperacoesPage();
         }
+    }
 }

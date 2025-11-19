@@ -1,6 +1,5 @@
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
@@ -19,7 +18,6 @@ namespace PortalIDSFTestes.testes.operacoes
     [AllureOwner("Levi")]
     public class ArquivosBaixaTest : TestBase
     {
-        private IPage page;
         Utils metodo;
         ArquivosBaixaElements el = new ArquivosBaixaElements();
 
