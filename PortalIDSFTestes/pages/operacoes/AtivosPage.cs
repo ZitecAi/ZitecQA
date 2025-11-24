@@ -63,7 +63,7 @@ namespace PortalIDSFTestes.pages.operacoes
 
             await metodo.Clicar(el.BtnNovoAtivo, "Clicar no Botão Para Cadastrar Um Novo Ativo");
             await Task.Delay(500);
-            await metodo.ClicarNoSeletor(el.SelectFundo, "53300608000106", "Selecionar Fundo");
+            await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo");
             await metodo.Escrever(el.CampoNomeCedente, "Cedente Teste NUnit", "Escrever Nome Cedente");
             await metodo.Escrever(el.CampoCpfPjCedente, "533.006.080-00106", "Escrever CPF/CNPJ Cedente");
             await metodo.ClicarNoSeletor(el.SelectTipoContrato, "AtivosImobiliarios", "Selecionar Tipo de Contrato");
@@ -105,7 +105,6 @@ namespace PortalIDSFTestes.pages.operacoes
             if (await btnGestor.IsVisibleAsync())
             {
                 await metodo.Clicar(el.BtnEmAnalise("1"), "Clicar no botão para abrir modal de situação do gestor");
-                return;
             }
             else
             {
@@ -136,7 +135,6 @@ namespace PortalIDSFTestes.pages.operacoes
             if (await btnJuridico.IsVisibleAsync())
             {
                 await metodo.Clicar(el.BtnJuridico("Análise"), "Clicar no botão para abrir modal de situação do jurídico");
-                return;
             }
             else
             {
@@ -166,7 +164,6 @@ namespace PortalIDSFTestes.pages.operacoes
             if (await btnRisco.IsVisibleAsync())
             {
                 await metodo.Clicar(el.BtnEmAnaliseRisco(NomeAtivo), "Clicar no botão para abrir modal de situação do risco");
-                return;
             }
             else
             {
@@ -191,7 +188,6 @@ namespace PortalIDSFTestes.pages.operacoes
             if (await btnCadastro.IsVisibleAsync())
             {
                 await metodo.Clicar(el.BtnEmAnaliseCadastro("Análise"), "Clicar no botão para abrir modal de situação do jurídico");
-                return;
             }
             else
             {
