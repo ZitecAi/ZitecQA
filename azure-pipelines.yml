@@ -210,10 +210,81 @@ jobs:
       finally {
         Pop-Location
       }
+      - powershell: |
+      $ErrorActionPreference = 'Stop'
+
+      $repoUrl = '$(GITHUB_PAGES_REPO)'
+      $token   = '$(GITHUB_PAGES_TOKEN)'
+
+      if ([string]::IsNullOrWhiteSpace($repoUrl)) { throw "GITHUB_PAGES_REPO nao configurado." }
+      if ([string]::IsNullOrWhiteSpace($token))   { throw "GITHUB_PAGES_TOKEN nao configurado." }
+
+      if ($repoUrl.StartsWith('https://')) {
+        $authUrl = $repoUrl.Replace('https://', "https://$token@")
+      } else {
+        $authUrl = "https://$token@$repoUrl"
+      }
+
+      $workDir = Join-Path "$(Agent.TempDirectory)" "gh-pages-work"
+      if (Test-Path $workDir) { Remove-Item -Recurse -Force $workDir }
+
+      git clone $authUrl $workDir
+
+      Push-Location $workDir
+      try {
+        # Configura identidade do autor para o commit
+        git config user.name  "zitec-qa-bot"
+        git config user.email "qa-bot@zitec.ai"
+
+        $hasGhPages = git branch -r | Select-String 'origin/gh-pages' -ErrorAction SilentlyContinue
+        if ($hasGhPages) {
+          git checkout gh-pages
+        } else {
+          git checkout --orphan gh-pages
+        }
+
+        # Se existir .gitignore, guarda temporariamente
+        $gitignoreBackup = Join-Path $workDir "..\gitignore.bak"
+        if (Test-Path ".gitignore") {
+          Copy-Item ".gitignore" $gitignoreBackup -Force
+        }
+
+        # Remove tudo, exceto .git
+        Get-ChildItem -Force | Where-Object { $_.Name -ne '.git' } | Remove-Item -Recurse -Force
+
+        # Copia o relatório novo
+        $reportDir = Join-Path '$(Build.SourcesDirectory)' '$(ALLURE_REPORT_DIR)'
+        Copy-Item "$reportDir\*" $workDir -Recurse -Force
+
+        # Restaura o .gitignore (se existia)
+        if (Test-Path $gitignoreBackup) {
+          Copy-Item $gitignoreBackup (Join-Path $workDir ".gitignore") -Force
+        }
+
+        git add .
+
+        # Se não houver mudanças, commit retorna erro – tratamos para não quebrar a pipeline
+        $hadCommit = $true
+        git commit -m "Allure report $(Build.BuildNumber)" 2>$null
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "Nenhuma alteracao para commitar em gh-pages."
+          $hadCommit = $false
+        }
+
+        if ($hadCommit) {
+          git push origin gh-pages --force
+        } else {
+          Write-Host "Pulando git push pois nao ha alteracoes."
+        }
+      }
+      finally {
+        Pop-Location
+      }
     displayName: 'Deploy Allure to GitHub Pages (gh-pages)'
     env:
       GITHUB_PAGES_TOKEN: $(GITHUB_PAGES_TOKEN)
       GITHUB_PAGES_REPO: $(GITHUB_PAGES_REPO)
+
 
   - task: PowerShell@2
     condition: always()
