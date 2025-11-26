@@ -613,7 +613,7 @@ namespace PortalIDSFTestes.metodos
                 await page.Locator("#fileEnviarOperacoes").SetInputFilesAsync(new[] { novoCaminhoArquivo });
 
                 Console.WriteLine($"Arquivo {novoNomeArquivo} enviado com sucesso.");
-
+                File.Delete(novoCaminhoArquivo); // Limpeza do arquivo temporário
                 return novoNomeArquivo;
             }
             catch (Exception e)
