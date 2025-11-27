@@ -623,7 +623,6 @@ namespace PortalIDSFTestes.metodos
         }
 
 
-
         private static readonly Random random = new();
         [AllureStep("Modificar CSV - no passo: {passo}")]
         public string ModificarCsv(string caminhoEntrada, string pastaSaida)

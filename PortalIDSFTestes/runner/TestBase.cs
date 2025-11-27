@@ -17,6 +17,7 @@ namespace PortalIDSFTestes.runner
             VideoHelper.ClearOldVideos();
         }
 
+
         protected async Task<IPage> AbrirBrowserAsync()
         {
             playwright = await Playwright.CreateAsync();
