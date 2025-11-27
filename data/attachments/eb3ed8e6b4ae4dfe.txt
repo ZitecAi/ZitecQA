@@ -1,0 +1,2 @@
+✅ Arquivo enviado com sucesso
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Cedente_Invalido_Na_Conta_Template_Passed_20251127_083008.webm (574134 bytes)
