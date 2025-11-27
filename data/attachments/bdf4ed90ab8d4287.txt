@@ -1,0 +1,2 @@
+https://portal-staging.idsf.com.br/
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_ComCnpj_Cedente_Inexistente_Failed_20251127_180311.webm (32579 bytes)

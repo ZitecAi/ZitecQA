@@ -1,0 +1,2 @@
+https://portal-staging.idsf.com.br/
+Caminho de vídeo inválido: D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\bin\Release\net8.0\videos\61af0e7a5b9287bd03c26a1bfaff5a3f.webm
