@@ -69,7 +69,6 @@ namespace PortalIDSFTestes.testes.cedentes
             await cedentes.AprovarCompliance(cnpjCedente);
             await cedentes.AprovarCadastro(cnpjCedente);
             await cedentes.EnviarContratoMae(cnpjCedente);
-            await cedentes.AprovarContratoMae(cnpjCedente);
         }
 
         [Test, Order(6)]

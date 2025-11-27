@@ -8,7 +8,7 @@
         public string SelectFundo { get; } = "#FundoFiltroExtrato";
         public string BtnGerar { get; } = "#Gerar";
         public string MensagemSucesso { get; } = "//div[@class='toast-message']";
-        public string MensagemSucesso { get; } = "Relatório gerado com sucesso";
+        public string TextoRelatorioGerado { get; } = "Relatório gerado com sucesso";
 
 
     }
