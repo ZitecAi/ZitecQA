@@ -1,0 +1,2 @@
+✅ Download ok: 'Portal IDSF.xlsx' | 274836 bytes.
+Caminho de vídeo inválido: D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\bin\Release\net8.0\videos\c973b4097f0c8434c8f35f7f6123f9e8.webm
