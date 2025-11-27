@@ -1,2 +1,0 @@
-https://portal-staging.idsf.com.br/
-Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Em_Branco_Failed_20251127_181808.webm (34817 bytes)
