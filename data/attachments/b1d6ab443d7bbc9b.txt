@@ -1,2 +1,0 @@
-https://portal-staging.idsf.com.br/
-Vídeo anexado: PortalIDSFTestes_testes_notaComercial_NotaComercialTest_Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Failed_20251127_180309.webm (33483 bytes)

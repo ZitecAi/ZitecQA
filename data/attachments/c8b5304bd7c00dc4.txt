@@ -1,2 +1,0 @@
-https://portal-staging.idsf.com.br/
-Vídeo anexado: PortalIDSFTestes_testes_relatorios_RelatorioCotistasTests_Nao_Deve_Conter_Acentos_Quebrados_Failed_20251127_180257.webm (40181 bytes)

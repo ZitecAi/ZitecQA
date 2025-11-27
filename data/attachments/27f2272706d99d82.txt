@@ -1,2 +1,0 @@
-https://portal-staging.idsf.com.br/
-Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Invalidos_Template_Failed_20251127_180319.webm (32289 bytes)
