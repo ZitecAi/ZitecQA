@@ -1,2 +1,0 @@
-Arquivo FundoQA_20251127_61aa5cf6.txt enviado com sucesso.
-Vídeo anexado: PortalIDSFTestes_testes_operacoes_OperacoesTest_Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir_Failed_20251127_182506.webm (1938311 bytes)

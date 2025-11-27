@@ -1,0 +1,2 @@
+✅ Arquivo enviado com sucesso
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido_Passed_20251127_190952.webm (551984 bytes)
