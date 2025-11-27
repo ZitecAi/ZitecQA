@@ -25,7 +25,7 @@ namespace PortalIDSFTestes.pages.login
             await metodo.Escrever(el.campoEmail, "qazitec01@gmail.com", "Inserir Email para Login");
             await metodo.Escrever(el.campoSenha, "Testeqa01?!", "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-            await metodo.ValidarUrl("https://portal.idsf.com.br/Home.aspx", "Validar Url Logada na Página Home");
+            await metodo.ValidarUrl("https://portal-staging.idsf.com.br/Home.aspx", "Validar Url Logada na Página Home");
         }
         public async Task LogarInterno()
         {

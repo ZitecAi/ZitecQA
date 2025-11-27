@@ -33,6 +33,8 @@
         public string ButtonReprovar { get; } = "#submitButtonReprovacao";
         public string BtnContratoMae(string cnpjCedente) => $"//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//i[@class='fas fa-check']";
         public string InputContratoMae { get; } = "#fileAtivaCedente";
+        public string CheckBoxAssinante { get; } = "#assinante_0";
+        public string BotaoEnviarAssinante { get; } = "#Enviar";
         public string ObsAtivarContratoMae { get; } = "#TextAreaAtivar";
         public string ButtonAtivacao { get; } = "#submitButtonAtivacao";
         public string ButtonAprovado { get; } = "(//span[text()='Aprovado'])[1]";

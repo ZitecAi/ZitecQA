@@ -99,22 +99,22 @@ namespace PortalIDSFTestes.pages.cedentes
         {
             //ativar cedente
             await metodo.Clicar(el.BtnContratoMae(Cedente), "Clicar no botão para enviar contrato mãe .pdf");
-            await metodo.EnviarArquivo(el.InputContratoMae, caminhoArquivo + "Arquivo teste.zip", "Enviar contrato mae no input");
-            await metodo.Escrever(el.ObsAtivarContratoMae, "Teste ativação cedente", "Escrever observação no campo de ativação do modal de contrato mae");
-            await metodo.Clicar(el.ButtonAtivacao, "Clicar no botão para ativar cedente");
-            await metodo.ValidarTextoPresente("Contrato recebido com sucesso, em breve ele será ativado", "Validar mensagem Contrato recebido com sucesso presente na tela");
+            await metodo.Clicar(el.CheckBoxAssinante, "Clicar no Checkbox para selecionar assinante");
+            await metodo.Clicar(el.BotaoEnviarAssinante, "Clicar no botão para enviar assinantes");
+            await metodo.ValidarTextoPresente("Documento enviado para a assinatura digital.", "Validar mensagem Documento enviado para a assinatura digital. presente na tela");
+
         }
-        [AllureStep("Aprovar Contrato Mãe do Cedente")]
-        public async Task AprovarContratoMae(string Cedente)
-        {
-            await Task.Delay(500);
-            await metodo.Clicar(el.ButtonAtivarContratoMae(Cedente), "Clicar no botão para visualizar contrato mãe .pdf");
-            await metodo.Clicar(el.ButtonAprovado, "Clicar na opção aprovado");
-            await metodo.Escrever(el.ObsContratoMae, "Aprovado", "Escrever observação para aprovação do contrato mãe");
-            await metodo.Clicar(el.BtnAtivarCedente, "Clicar no botão para ativar cedente");
-            await Task.Delay(1500);
-            await metodo.ValidarTextoDoElemento(el.StatusCedente, "Ativo", "Validar se o status do cedente está como ativo");
-        }
+        //[AllureStep("Aprovar Contrato Mãe do Cedente")]
+        //public async Task AprovarContratoMae(string Cedente)
+        //{
+        //    await Task.Delay(500);
+        //    await metodo.Clicar(el.ButtonAtivarContratoMae(Cedente), "Clicar no botão para visualizar contrato mãe .pdf");
+        //    await metodo.Clicar(el.ButtonAprovado, "Clicar na opção aprovado");
+        //    await metodo.Escrever(el.ObsContratoMae, "Aprovado", "Escrever observação para aprovação do contrato mãe");
+        //    await metodo.Clicar(el.BtnAtivarCedente, "Clicar no botão para ativar cedente");
+        //    await Task.Delay(1500);
+        //    await metodo.ValidarTextoDoElemento(el.StatusCedente, "Ativo", "Validar se o status do cedente está como ativo");
+        //}
 
         public async Task CadastrarCedenteNegativo(string nomeArquivoNegativo)
         {
