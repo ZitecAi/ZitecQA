@@ -1,0 +1,5 @@
+✅ Texto encontrado: Operação	Fundo	Tomador	Valor Principal	Valor Liquido	Custo da Emissão	Data de Início	Data de Vencimento	Status	Taxa	Ações
+4537	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	27/11/2025	05/10/2026	Aberta	1,000000%	
+4536	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	27/11/2025	05/10/2026	Cancelada!	1,000000%	
+4535	Zitec Tecnologia LTDA - 54.638.076/0001-76	CEDENTE TESTE - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	27/11/2025	05/10/2026	Cancelada!	1,000000%	
+Vídeo anexado: PortalIDSFTestes_testes_notaComercial_NotaComercialTest_Deve_Consultar_Nota_Comercial_Pela_Tabela_Passed_20251127_093838.webm (1262748 bytes)
