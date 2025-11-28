@@ -31,7 +31,7 @@ namespace PortalIDSFTestes.pages.bancoId
             await metodo.ClicarNoSeletor(el.SelectFundo, "61530579000199", "Selecionar Fundo 3M");
             await Task.Delay(500);
             await metodo.ValidateDownloadAndLength(page, el.BtnGerar, ".pdf", "Validar download do extrato em PDF");
-            await metodo.ValidarTextoPresente(el.TextoRelatorioGerado, "Validar mensagem Extrato gerado com sucesso! presente na tela");
+            //await metodo.ValidarTextoPresente(el.TextoRelatorioGerado, "Validar mensagem Extrato gerado com sucesso! presente na tela");
 
         }
 

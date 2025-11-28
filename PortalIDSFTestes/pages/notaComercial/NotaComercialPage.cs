@@ -82,7 +82,8 @@ namespace PortalIDSFTestes.pages.notaComercial
             await metodo.ClicarNoSeletor(el.SelectTipoDocumento, "cpf", "Selecionar tipo Documento na sessão Documentos");
             await metodo.Clicar(el.BtnAtualizarDocumento, "Clicar no botão para atualizar documento");
             await metodo.Clicar(el.BtnSalvarMudancas, "Clicar em Salvar Mudanças depois de todo o fluxo");
-            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar Msg Sucesso presente na tela");
+            await metodo.ValidarTextoPresente("Ótimo! Agora você pode visualizar a simulação.", "Validar mensagem de sucesso que pode visualizar simulação");
+            await metodo.ValidarTextoPresente("Nota Comercial cadastrada com sucesso", "Validar mensagem de sucesso, nota comercial cadastrada");
 
 
         }
