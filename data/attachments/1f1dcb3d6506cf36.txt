@@ -1,3 +1,0 @@
-✅ Download ok: 'MovimentosValidos20251128_110540_58868473.pdf' | 46484 bytes.
-✅ Download ok: 'LayoutValidos20251128_110540_58868473.pdf' | 39607 bytes.
-Vídeo anexado: PortalIDSFTestes_testes_operacoes_OperacoesTest_Deve_Fazer_Download_Relatorio_Movimento_Layout_Passed_20251128_110541.webm (2160159 bytes)
