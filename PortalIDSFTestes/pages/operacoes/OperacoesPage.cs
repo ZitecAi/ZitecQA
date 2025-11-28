@@ -51,6 +51,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Escrever(el.CampoMotivoExcluirArquivo, "Teste Exclusão", "Escrever motivo da exclusão do arquivo");
             await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão para confirmar excluisão do arquivo");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar se mensagem de arquivo excluido com sucesso está visivel!");
+
         }
         public async Task EnviarOperacaoCNABNegativo(string nomeCnabNegativo)
         {

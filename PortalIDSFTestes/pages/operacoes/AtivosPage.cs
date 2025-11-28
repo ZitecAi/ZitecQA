@@ -102,9 +102,15 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaAtivos, NomeAtivo, "Validar se ativo com destinatário Teste NUnit está presente na tabela");
             //await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
             ILocator btnGestor = page.Locator("(//button[text()='Análise'])[1]");
+            ILocator btnGestor2 = page.Locator("(//button//strong[text()='Análise'])[1]");
+
             if (await btnGestor.IsVisibleAsync())
             {
                 await metodo.Clicar(el.BtnEmAnalise("1"), "Clicar no botão para abrir modal de situação do gestor");
+            }
+            else if (await btnGestor2.IsVisibleAsync())
+            {
+                await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do gestor");
             }
             else
             {
@@ -122,7 +128,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
             await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
             await Task.Delay(150);
-            await metodo.ValidarTextoDoElemento(el.StatusTabela, "AGUARDANDO ASSINATURAS", "Validar se status na tabela foi alterado para Aguardando Ass.");
+            await metodo.ValidarMsgRetornada(el.StatusTabela("Aguar. Ass.", "1"), "Validar se status na tabela foi alterado para Aguardando Ass.");
         }
         [AllureStep("Aprovação Jurídico")]
         public async Task AprovarJuridico()
@@ -132,9 +138,15 @@ namespace PortalIDSFTestes.pages.operacoes
             await Task.Delay(150);
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaAtivos, NomeAtivo, "Validar se ativo com destinatário Teste NUnit está presente na tabela");
             ILocator btnJuridico = page.Locator("(//th[text()='Jurídico']/ancestor::table//tbody//td)[12]//button[text()='Análise']");
+            ILocator btnJuridico2 = page.Locator("(//button//strong[text()='Análise'])[2]");
+
             if (await btnJuridico.IsVisibleAsync())
             {
                 await metodo.Clicar(el.BtnJuridico("Análise"), "Clicar no botão para abrir modal de situação do jurídico");
+            }
+            else if (await btnJuridico2.IsVisibleAsync())
+            {
+                await metodo.Clicar(el.BtnEmAnalise2("2"), "Clicar no botão para abrir modal de situação do jurídico");
             }
             else
             {
@@ -147,9 +159,11 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo jurídico");
             await metodo.ValidarTextoPresente("Contrato aprovado com sucesso!", "Validar mensagem de sucesso presenta ao aprovar por jurídico");
-            //await page.ReloadAsync();            
+            await page.ReloadAsync();
+            await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
+            await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
             await Task.Delay(150);
-            //await metodo.ValidarMsgRetornada(el.BtnEmAnaliseJuridico("Aprovado"), "Validar status de sucesso visivel na tela ");
+            await metodo.ValidarMsgRetornada(el.StatusTabela("Aprovado", "1"), "Validar se status na tabela foi alterado para Aprovado.");
 
         }
         [AllureStep("Aprovação Risco")]
@@ -161,9 +175,15 @@ namespace PortalIDSFTestes.pages.operacoes
             await Task.Delay(150);
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaAtivos, NomeAtivo, "Validar se ativo com destinatário Teste NUnit está presente na tabela");
             ILocator btnRisco = page.Locator($"(//td[text()='{NomeAtivo}']/ancestor::tr//button[text()='Análise'])[2]");
+            ILocator btnRisco2 = page.Locator($"(//button//strong[text()='Análise'])[1]");
             if (await btnRisco.IsVisibleAsync())
             {
                 await metodo.Clicar(el.BtnEmAnaliseRisco(NomeAtivo), "Clicar no botão para abrir modal de situação do risco");
+            }
+            else if (await btnRisco2.IsVisibleAsync())
+            {
+                //corrigir esse fluxo
+                await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do jurídico");
             }
             else
             {
@@ -174,7 +194,11 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Escrever(el.CampoObservacaoParecer, "Teste Aprovação", "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo risco");
             await metodo.ValidarTextoPresente("Contrato aprovado com sucesso!", "Validar mensagem de sucesso presenta ao aprovar por jurídico");
-
+            await page.ReloadAsync();
+            await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
+            await metodo.Escrever(el.BarraPesquisa, NomeAtivo, "Clicar na Barra de Pesquisa");
+            await Task.Delay(150);
+            await metodo.ValidarMsgRetornada(el.StatusTabela("Aprovado", "1"), "Validar se status na tabela foi alterado para Aprovado.");
         }
         [AllureStep("Aprovação Cadastro")]
         public async Task AprovarCadastro()

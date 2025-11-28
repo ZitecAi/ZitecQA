@@ -604,7 +604,7 @@ namespace PortalIDSFTestes.metodos
 
                 // Usar GUID para garantir que o nome do arquivo seja único
                 string uniqueIdentifier = Guid.NewGuid().ToString().Split('-')[0]; // Pega apenas a primeira parte do GUID
-                string novoNomeArquivo = $"FundoQA_{dataFormatada}_{uniqueIdentifier}.txt";
+                string novoNomeArquivo = $"CnabZitec_{dataFormatada}_{uniqueIdentifier}.txt";
                 string novoCaminhoArquivo = Path.Combine(Path.GetDirectoryName(caminhoArquivo), novoNomeArquivo);
 
 
@@ -613,7 +613,7 @@ namespace PortalIDSFTestes.metodos
                 await page.Locator("#fileEnviarOperacoes").SetInputFilesAsync(new[] { novoCaminhoArquivo });
 
                 Console.WriteLine($"Arquivo {novoNomeArquivo} enviado com sucesso.");
-                File.Delete(novoCaminhoArquivo); // Limpeza do arquivo temporário
+
                 return novoNomeArquivo;
             }
             catch (Exception e)
@@ -706,7 +706,7 @@ namespace PortalIDSFTestes.metodos
                         await element.WaitForAsync();
                         await element.ClickAsync();
                     },
-                    new PageRunAndWaitForDownloadOptions { Timeout = 120000 } // 90 s
+                    new PageRunAndWaitForDownloadOptions { Timeout = 120000 }
                 );
 
                 var fileName = download.SuggestedFilename;

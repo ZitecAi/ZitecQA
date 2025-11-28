@@ -51,7 +51,7 @@ namespace PortalIDSFTestes.runner
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             var linkPortal = config["Links:Portal"];
             await page.GotoAsync(linkPortal!);
-
+            await page.EvaluateAsync("document.body.style.zoom='75%';");
             return page;
         }
 
