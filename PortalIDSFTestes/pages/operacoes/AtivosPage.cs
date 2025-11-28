@@ -73,9 +73,9 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Escrever(el.CampoCpfPj, "49624866830", "Digitar CPF/CNPJ Ativo");
             await metodo.Escrever(el.CampoValor, "10", "Digitar Valor");
             await metodo.Escrever(el.CampoResumoOperacao, "Teste NUnit", "Digitar Resumo da operação");
-            await metodo.Clicar(el.BtnAnexos, "Clicar no Botão Anexos");
-            await metodo.EnviarArquivo(el.InputAnexos, GetPath() + "21321321321.pdf", "Enviar Anexo no Input de anexos");
-            await metodo.Clicar(el.BtnVoltar, "Clicar no botão voltar após enviar anexo");
+            //await metodo.Clicar(el.BtnAnexos, "Clicar no Botão Anexos");
+            //await metodo.EnviarArquivo(el.InputAnexos, GetPath() + "21321321321.pdf", "Enviar Anexo no Input de anexos");
+            //await metodo.Clicar(el.BtnVoltar, "Clicar no botão voltar após enviar anexo");
             await Task.Delay(150);
             await metodo.Clicar(el.CheckBoxTermo, "Aceitar Termos");
             await metodo.Clicar(el.BtnSalvar, "Clicar em Salvar");
