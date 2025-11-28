@@ -1,0 +1,111 @@
+✅ Arquivo enviado com sucesso
+✅ Texto encontrado: FUNDO QA FIDC	Teste de cadastro - CNPJ: 21.465.218/0001-91	28/11/2025 09:50:13	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+MAVERICK FIDC	BANCO VOTORANTIM S.A. - CNPJ: 59.588.111/0001-03	28/11/2025 09:42:02	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+PRECATO IV FIDC	ROBERTO CORREA DE SOUZA - CPF: 108.383.618-89	28/11/2025 09:30:52	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+FUNDO QA FIDC	Teste de cadastro - CPF: 496.248.668-30	27/11/2025 20:08:54	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+FUNDO QA FIDC	Jessica - CNPJ: 53.300.608/0001-06	27/11/2025 20:08:50	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+AG ANTECIPA FIDC	MAVIMAR TRANSPORTES, DESPACHOS E SERVICOS LTDA - CNPJ: 06.863.128/0001-65	28/11/2025 09:21:08	Análise	1	Em espera	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+PRECATO IV FIDC	JOSE ARAUJO COSTA - CPF: 122.654.338-37	27/11/2025 16:37:41	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+PRECATO IV FIDC	CARLOS ROBERTO ADRIANO DA COSTA - CPF: 546.908.898-72	27/11/2025 16:24:28	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+Volus FIDC	NF LOCACOES E SERVICOS LTDA - CNPJ: 60.339.329/0001-03	27/11/2025 16:15:18	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+YUMA CRED FIDC	Fan Cenografia - CNPJ: 24.835.525/0001-05	27/11/2025 16:39:02	Análise	1	Em espera	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+Caminho de vídeo inválido: D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\bin\Release\net8.0\videos\46a2f9710028e254e116f032a99717e3.webm
