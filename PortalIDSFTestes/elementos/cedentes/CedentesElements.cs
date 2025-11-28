@@ -38,6 +38,7 @@
         public string ObsAtivarContratoMae { get; } = "#TextAreaAtivar";
         public string ButtonAtivacao { get; } = "#submitButtonAtivacao";
         public string ButtonAprovado { get; } = "(//span[text()='Aprovado'])[1]";
+        public string BtnEnviarParaAssinatura { get; } = "//div[@class='custom-control custom-switch mb-0']";
         public string ObsContratoMae { get; } = "#mensagemContratoMae";
         public string BtnAtivarCedente { get; } = "#submitBtnContratoMae";
         public string ButtonAtivarContratoMae(string cnpjCedente) => $"//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//i[@class='fa fa-file-pdf']";

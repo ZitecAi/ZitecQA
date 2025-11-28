@@ -62,13 +62,16 @@ namespace PortalIDSFTestes.testes.cedentes
         [AllureName("Deve Cadastrar Cedente E Ativar Cedente")]
         public async Task Deve_Cadastrar_Cedente_E_Ativar_Cedente()
         {
-            string cnpjCedente = "21.465.218/0001-91";
+            //string cnpjTest = DataGenerator.Generate(DocumentType.Cnpj);
+
+            string cnpjCedente = "52.721.175/0001-91";
             var cedentes = new CedentesPage(page);
             await cedentes.CadastrarCedente(cnpjCedente);
             await cedentes.AprovarGestora(cnpjCedente);
             await cedentes.AprovarCompliance(cnpjCedente);
             await cedentes.AprovarCadastro(cnpjCedente);
             await cedentes.EnviarContratoMae(cnpjCedente);
+            await cedentes.AprovarContratoMae(cnpjCedente);
         }
 
         [Test, Order(6)]
