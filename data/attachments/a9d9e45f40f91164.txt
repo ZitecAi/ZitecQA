@@ -1,0 +1,111 @@
+✅ Arquivo enviado com sucesso
+✅ Texto encontrado: FUNDO QA FIDC	Teste de cadastro - CNPJ: 21.465.218/0001-91	28/11/2025 12:07:58	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+KINERET FIDC	SAFRA COTTON LTDA - CNPJ: 61.280.363/0002-01	28/11/2025 12:04:43	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+ADAMANTUS FIDC	STYLE COMERCIAL LTDA - CNPJ: 34.953.921/0001-90	28/11/2025 12:03:33	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+PRECATO IV FIDC	CIRENE FRANCISCA BARBOSA - CPF: 021.422.097-42	28/11/2025 11:53:04	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+TELCOBANK I FIDC	COMPLETA TELECOMUNICAÇÕES LTDA - CNPJ: 26.227.978/0001-84	28/11/2025 11:51:48	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Aprovado
+
+	
+ 
+
+KIN FIDC RL	BMP SOCIEDADE DE CRÉDITO DIRETO S.A - CNPJ: 34.337.707/0001-00	28/11/2025 11:54:05	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+PRECATO IV FIDC	LAURO NUNES DA SILVA - CPF: 353.439.070-91	28/11/2025 11:43:13	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+PRECATO IV FIDC	MARCIO GIERZKISVICZ - CPF: 128.803.017-77	28/11/2025 10:50:23	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+PRECATO IV FIDC	KERTON DE ABREU - CPF: 071.732.279-33	28/11/2025 10:42:32	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+PRECATO IV FIDC	JOSE SEVERINO DOS SANTOS - CPF: 457.422.944-68	28/11/2025 10:22:17	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Cadastrar_Cedente_E_Ativar_Cedente_Failed_20251128_120829.webm (3205293 bytes)
