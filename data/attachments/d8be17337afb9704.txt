@@ -1,0 +1,110 @@
+✅ Texto encontrado: Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	01/12/2025 18:25:28	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+KINERET FIDC	AULIK COMERCIO ATACADISTA E VAREJISTA LTDA - CNPJ: 05.256.426/0001-24	01/12/2025 17:26:27	Pendência	1	Aprovado	
+
+Rejeitado
+
+	
+
+Aprovado
+
+	
+ 
+
+PROSPER INVEST FIDC	NATHALIA GUIMARAES PAIVA LESSA - CPF: 011.959.311-40	01/12/2025 16:50:36	Pendência	1	Em espera	
+
+Rejeitado
+
+	
+
+Aprovado
+
+	
+ 
+
+AGROVITA FIDC	ELIANE MARIA JOSE DE RESENDE - CPF: 031.710.926-03	01/12/2025 16:26:22	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+KINERET FIDC	ARBOM COMERCIO DE REFRIGERAÇÃO LTDA - CNPJ: 18.227.043/0001-70	01/12/2025 16:44:55	Pendência	1	Aprovado	
+
+Rejeitado
+
+	
+
+Aprovado
+
+	
+ 
+
+AMALFI FIDC	TEMPO CERTO MALHARIA E CONFECCAO LTDA - CNPJ: 10.799.342/0001-77	01/12/2025 16:40:16	Análise	1	Em espera	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+AMALFI FIDC	POLL CONFECCOES LTDA - CNPJ: 35.606.064/0001-15	01/12/2025 16:38:01	Pendência	1	Em espera	
+
+Rejeitado
+
+	
+
+Aprovado
+
+	
+ 
+
+AURI FIDC	NATHALIA GUIMARAES PAIVA LESSA - CPF: 011.959.311-40	01/12/2025 16:50:41	Pendência	1	Em espera	
+
+Rejeitado
+
+	
+
+Aprovado
+
+	
+ 
+
+7INVEST FIDC	D.W. MANUTENCAO INDUSTRIAL LTDA - CNPJ: 55.479.008/0001-74	01/12/2025 14:03:53	Análise	1	Em espera	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+PRECATO IV FIDC	RAGNAR JOSÉ PRADO - CPF: 214.830.781-91	01/12/2025 13:07:01	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Cadastrar_Cedente_E_Ativar_Cedente_Failed_20251201_182606.webm (3011757 bytes)
