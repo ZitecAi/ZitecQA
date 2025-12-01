@@ -1,3 +1,0 @@
-✅ Arquivo atualizado salvo como: D:\TempQA\Arquivos\FundoQA_20251201_2d31c864.txt
-✅ Arquivo enviado com sucesso
-Caminho de vídeo inválido: D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\bin\Release\net8.0\videos\7332ca4185e9eaeb345f61693cb13126.webm
