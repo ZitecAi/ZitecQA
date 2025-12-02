@@ -1,35 +1,25 @@
-﻿# ZiTec · Automação de Testes E2E com Playwright + C# + NUnit  
+# ZiTec · Automação de Testes E2E com Playwright + C# + NUnit  
 
-Status: Ativo  
+Acesse os relatórios de execução dos testes em: https://zitecai.github.io/ZitecQA/#
+
 Tecnologias: C#, Playwright, NUnit  
 
 ---
 
-## FAQ – Perguntas Frequentes
+## Arquitetura do Projeto
 
-### 1. Qual o objetivo deste projeto?
-Fornecer uma arquitetura de automação de testes E2E (end-to-end) para aplicação Web PortalIDSF utilizando Playwright + NUnit + Page Object Model (POM), priorizando:  
-- Redução de retrabalho  
-- Reutilização de código  
-- Relatórios claros e acessíveis  
-- Escalabilidade para novas features  
+Este projeto implementa uma arquitetura de automação de testes E2E (end-to-end) para a aplicação Web PortalIDSF utilizando Playwright + NUnit + Page Object Model (POM). A estrutura foi desenhada para garantir escalabilidade, reutilização de código e manutenibilidade.
 
----
+### Estrutura de Diretórios
 
-### 2. Como a arquitetura do projeto está organizada?
-O projeto é dividido em 5 camadas principais:
+O projeto é organizado em 5 camadas principais:
 
-1. Runner → Gerencia o ambiente de testes (abrir/fechar navegador).  
-2. Elementos → Mapeamento dos elementos Web (LoginPage → LoginElements).  
-3. Metodos → Métodos genéricos reutilizáveis (cliques, preenchimentos, uploads, validações).  
-4. Pages → Implementa a lógica de interação com as páginas (equivalente ao Service em MVC).  
-5. Testes → Onde os cenários são executados (equivalente ao Controller em MVC).  
+1. **Runner** → Gerencia o ambiente de testes (abrir/fechar navegador)
+2. **Elementos** → Mapeamento dos elementos Web (LoginPage → LoginElements)
+3. **Metodos** → Métodos genéricos reutilizáveis (cliques, preenchimentos, uploads, validações)
+4. **Pages** → Implementa a lógica de interação com as páginas (centralização de validações)
+5. **Testes** → Onde os cenários são executados (Faz as chamadas das pages)
 
----
 
-### 4. Como rodar o projeto localmente?
+### Relatórios
 
-Clone o repositório:
-```bash
-git clone https://github.com/seu-usuario/seu-repo.git
-cd seu-repo
