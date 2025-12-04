@@ -1,0 +1,46 @@
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico
+5383	04/12/2025 15:43	2	Zitec Tecnologia LTDA	Teste NUnit 8682	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico
+5383	04/12/2025 15:43	2	Zitec Tecnologia LTDA	Teste NUnit 8682	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico
+5383	04/12/2025 15:43	2	Zitec Tecnologia LTDA	Teste NUnit 8682	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Análise
+	
+Análise
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico
+5383	04/12/2025 15:43	2	Zitec Tecnologia LTDA	Teste NUnit 8682	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Análise
+	
+Aprovado
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico
+5383	04/12/2025 15:43	2	Zitec Tecnologia LTDA	Teste NUnit 8682	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_AtivosTest_Deve_Cadastrar_e_consultar_Um_Ativo_Passed_20251204_154531.webm (7212794 bytes)
