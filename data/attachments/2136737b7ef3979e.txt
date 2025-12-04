@@ -1,2 +1,0 @@
-✅ Arquivo enviado com sucesso
-Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Em_Branco_Passed_20251202_160559.webm (652110 bytes)
