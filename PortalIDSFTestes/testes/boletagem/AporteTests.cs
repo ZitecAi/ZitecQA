@@ -49,7 +49,7 @@ namespace PortalIDSFTestes.testes.boletagem
             await aporte.ValidarAcentosAporte();
         }
         [Test, Order(2)]
-        [Ignore("Teste ignorado temporariamente para manutenção.")]
+        //[Ignore("Teste ignorado temporariamente para manutenção.")]
         [AllureName("Deve Realizar Aporte Com Sucesso")]
         public async Task Deve_Realizar_Aporte_Com_Sucesso()
         {

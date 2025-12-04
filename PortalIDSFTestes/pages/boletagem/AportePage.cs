@@ -1,12 +1,6 @@
 ﻿using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.Boletagem;
-using PortalIDSFTestes.elementos.cadastro;
 using PortalIDSFTestes.metodos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.pages.boletagem
 {
@@ -41,7 +35,7 @@ namespace PortalIDSFTestes.pages.boletagem
             string nomeFundo = "Zitec Tecnologia LTDA";
             string cnpjFundo = "54.638.076/0001-76";
             string valorAporte = "10000";
-            
+
             await metodo.Clicar(el.BtnNovo, "Clicar em Novo, para inserir novo aporte");
             await Task.Delay(200);
             await metodo.Escrever(el.Calendario, today, "Clicar no calendario para inserir dia do aporte");
@@ -66,33 +60,33 @@ namespace PortalIDSFTestes.pages.boletagem
                 }
             }
             //await metodo.Clicar(el.SelectFundo, "Expandir seletor do fundo");           
-                      
+
             //await page.Keyboard.PressAsync("Escape");
             await Task.Delay(1000);
             await metodo.Clicar(el.BtnEnviar, "Clicar em enviar");
-            await metodo.ValidarTextoPresente("Aporte realizado com sucesso", "Validar mensagem de sucesso retornada");
+            await metodo.ValidarTextoPresente("Boleta recebida com sucesso!", "Validar mensagem de sucesso retornada");
             await metodo.Escrever(el.Filtro, nomeCotista, "Pesquisar Nome do Cotista no filtro");
             await Task.Delay(3000);
             await metodo.Clicar(el.AprovacaoCustodia(nomeCotista), "Aprovar aporte na custódia");
-            await metodo.Clicar(el.BtnAprovado, "Selecionar status aprovado");  
+            await metodo.Clicar(el.BtnAprovado, "Selecionar status aprovado");
             await metodo.Escrever(el.Descricao, "Aprovado", "Inserir descrição da aprovação");
             await metodo.Clicar(el.BtnConfirmar, "Confirmar aprovação");
-            await metodo.ValidarTextoPresente("Status atualizado com sucesso", "Validar mensagem de sucesso na aprovação da custódia");
+            await metodo.ValidarTextoPresente("Aprovado pela Custódia com sucesso!", "Validar mensagem de sucesso na aprovação da custódia");
             await Task.Delay(700);
             await metodo.Clicar(el.AprovacaoEscrituracao(nomeCotista), "Aprovar aporte na escrituracao");
             await metodo.Clicar(el.BtnAprovado, "Selecionar status aprovado");
             await metodo.Escrever(el.Descricao, "Aprovado", "Inserir descrição da aprovação");
             await metodo.Clicar(el.BtnConfirmar, "Confirmar aprovação");
-            await metodo.ValidarTextoPresente("Status atualizado com sucesso", "Validar mensagem de sucesso na aprovação da escrituracao");
+            await metodo.ValidarTextoPresente("Nota aprovada pela Escrituração com sucesso!", "Validar mensagem de sucesso na aprovação da escrituracao");
             await Task.Delay(700);
             await metodo.Clicar(el.AprovacaoControladoria(nomeCotista), "Aprovar aporte na controladoria");
             await metodo.Clicar(el.BtnAprovado, "Selecionar status aprovado");
             await metodo.Escrever(el.Descricao, "Aprovado", "Inserir descrição da aprovação");
             await metodo.Clicar(el.BtnConfirmar, "Confirmar aprovação");
-            await metodo.ValidarTextoPresente("Status atualizado com sucesso", "Validar mensagem de sucesso na aprovação da controladoria");
+            await metodo.ValidarTextoPresente("Aprovado pela Controladoria com sucesso!", "Validar mensagem de sucesso na aprovação da controladoria");
             await metodo.ValidarTextoDoElemento(el.StatusBoletado, "Boletado!", "Validar que o status do aporte está como BOLETADO");
 
-            await metodo.ValidarTextoDoElemento(el.PosicaoFundoNaTabela, nomeFundo + " - " + "CNPJ: "+ cnpjFundo, "Validar que o fundo está correto na tabela");
+            await metodo.ValidarTextoDoElemento(el.PosicaoFundoNaTabela, nomeFundo + " - " + "CNPJ: " + cnpjFundo, "Validar que o fundo está correto na tabela");
             await metodo.ValidarTextoDoElemento(el.PosicaoCotistaNaTabela, nomeCotista + " - " + cpfCotista, "Validar que o cotista está correto na tabela");
 
 
