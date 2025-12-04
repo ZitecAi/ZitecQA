@@ -182,7 +182,6 @@ namespace PortalIDSFTestes.pages.operacoes
 
         public async Task DownloadExcel()
         {
-            await Task.Delay(10000);
             await metodo.ValidateDownloadAndLength(page, el.BtnDownloadExcel, "Validar Download do Excel na página de Operações");
         }
 
