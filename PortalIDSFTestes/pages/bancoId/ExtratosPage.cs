@@ -28,7 +28,7 @@ namespace PortalIDSFTestes.pages.bancoId
         public async Task GerarExtratoPdf()
         {
             await metodo.Clicar(el.BtnGerarExtrato, "Clicar em Gerar extrato para abrir modal");
-            await metodo.ClicarNoSeletor(el.SelectFundo, "63629011000155", "Selecionar Fundo catanzaro");
+            await metodo.ClicarNoSeletor(el.SelectFundo, "61995402000168", "Selecionar Fundo lumy");
             await Task.Delay(500);
             await metodo.ValidateDownloadAndLength(page, el.BtnGerar, ".pdf", "Validar download do extrato em PDF");
             //await metodo.ValidarTextoPresente(el.TextoRelatorioGerado, "Validar mensagem Extrato gerado com sucesso! presente na tela");
