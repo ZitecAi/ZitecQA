@@ -1,0 +1,3 @@
+✅ 'Preencha corretamente a Aba de Informações.' encontrado em '//div[@class='toast toast-warning']' (único match).
+✅ 'Preencha todos os campos para simular' encontrado em '//div[@class='toast toast-warning']' (único match).
+Vídeo anexado: PortalIDSFTestes_testes_notaComercial_NotaComercialTest_Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Passed_20251209_094814.webm (1021426 bytes)
