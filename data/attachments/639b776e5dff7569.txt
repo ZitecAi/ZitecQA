@@ -1,0 +1,2 @@
+✅ Arquivo enviado com sucesso
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_ComCnpj_Cedente_Inexistente_Passed_20251209_120346.webm (662312 bytes)
