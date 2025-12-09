@@ -1,0 +1,9 @@
+Arquivo CnabZitec_20251209_9b2c7620.txt enviado com sucesso.
+✅ Texto encontrado: Selecionar
+Todos	ID	Tipo	Fundo	Cedente	Certificadora	Arquivos	Total Nominal	Total Aquisição	Total Recompra	Reembolso e Despesas	Pago ao Cedente
+	50736859	Duplicata	Zitec FIDC	CEDENTE TESTE	Outros	CnabZitec_20251209_9b2c7620.txt / CnabZitec_20251209_9b2c7620.txt	R$ 18.197,86	R$ 8.197,80	R$ 0,00	R$ 0,00	R$ 8.197,80
+
+Recebíveis 7
+Situação Aguardando aprovação da Consultoria
+Ações
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_OperacoesTest_Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir_Passed_20251209_141215.webm (5133958 bytes)
