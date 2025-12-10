@@ -1,0 +1,111 @@
+✅ Texto encontrado: Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	10/12/2025 16:32:16	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+ADAMANTUS FIDC	IRMAOS FISCHER SA IND E COM - CNPJ: 82.984.287/0001-04	10/12/2025 16:23:11	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+PRECATO IV FIDC	Marcos Rogerio De Barros - CPF: 155.726.248-96	10/12/2025 15:56:12	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+YUMA CRED FIDC	MULT BEEF COMERCIAL LTDA - CNPJ: 02.886.959/0001-00	10/12/2025 15:45:49	Análise	1	Em espera	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+PRECATO IV FIDC	ALEXANDRE HORTA FILHO - CPF: 225.444.452-20	10/12/2025 15:16:10	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+Volus FIDC	SANTANA & SANTANA DISTRIBUIDORA LTDA - CNPJ: 48.399.087/0001-48	10/12/2025 14:10:06	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+Volus FIDC	62.408.103 MARIA JUCILENE PEDRO - CNPJ: 62.408.103/0001-42	10/12/2025 14:10:11	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+AMALFI FIDC	MOBI GROUP - DISTRIBUICAO, IMPORTACAO, EXPORTACAO E AGRONEGOCIOS LTDA - CNPJ: 19.580.097/0001-87	10/12/2025 15:42:14	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+ADAMANTUS FIDC	CACIQUE COMBUSTIVEIS LTDA - CNPJ: 08.986.525/0001-50	10/12/2025 14:41:10	Análise	1	Em espera	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+ADAMANTUS FIDC	CACIQUE PARTICIPACAO LTDA - CNPJ: 44.408.249/0001-06	10/12/2025 14:52:19	Análise	1	Em espera	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+✅ Arquivo enviado com sucesso
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Cadastrar_Cedente_E_Ativar_Cedente_Passed_20251210_163243.webm (3102574 bytes)
