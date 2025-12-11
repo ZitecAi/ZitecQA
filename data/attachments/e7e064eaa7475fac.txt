@@ -1,1 +1,0 @@
-Caminho de vídeo inválido: D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\bin\Release\net8.0\videos\859f406f042f7e129c43cee835b4ca0a.webm
