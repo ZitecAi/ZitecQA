@@ -16,6 +16,7 @@ resources:
 variables:
   - group: NetlifySecrets          # GITHUB_PAGES_REPO, GITHUB_PAGES_TOKEN, SITE_URL
   - group: EmailSecrets
+  - group: PortalSecrets
   - name: TEST_CSPROJ
     value: 'PortalIDSFTestes/PortalIDSFTestes.csproj'
   - name: TEST_DIR
