@@ -31,6 +31,21 @@ namespace PortalIDSFTestes.metodos
 
 
         }
+        public async Task EscreverCredenciais(string locator, string texto, string passo)
+        {
+            try
+            {
+                var elemento = page.Locator(locator);
+                await elemento.WaitForAsync();
+                await elemento.FillAsync(texto);
+            }
+            catch
+            {
+                throw new PlaywrightException("Não foi possivel Encontrar o Elemento: " + locator + " Para escrever no passo: " + passo);
+            }
+
+
+        }
         [AllureStep("Clicar - no passo: {passo}")]
         public async Task Clicar(string locator, string passo)
         {

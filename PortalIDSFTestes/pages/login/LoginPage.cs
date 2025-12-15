@@ -24,8 +24,8 @@ namespace PortalIDSFTestes.pages.login
 
         public async Task LoginSucessoInterno()
         {
-            await metodo.Escrever(el.campoEmail, data.Email, "Inserir Email para Login");
-            await metodo.Escrever(el.campoSenha, data.Password, "Inserir Senha para Login");
+            await metodo.EscreverCredenciais(el.campoEmail, data.Email, "Inserir Email para Login");
+            await metodo.EscreverCredenciais(el.campoSenha, data.Password, "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
             if (page.Url.Contains("dev"))
             {
@@ -42,8 +42,8 @@ namespace PortalIDSFTestes.pages.login
         }
         public async Task LogarInterno()
         {
-            await metodo.Escrever(el.campoEmail, data.Email, "Inserir Email para Login");
-            await metodo.Escrever(el.campoSenha, data.Password, "Inserir Senha para Login");
+            await metodo.EscreverCredenciais(el.campoEmail, data.Email, "Inserir Email para Login");
+            await metodo.EscreverCredenciais(el.campoSenha, data.Password, "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
         }
 
