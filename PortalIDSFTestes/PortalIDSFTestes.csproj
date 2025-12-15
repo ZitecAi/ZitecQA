@@ -15,12 +15,17 @@
 
 	<ItemGroup>
 	  <None Remove="allureConfig.json" />
+	  <None Remove="appsettings.Development.json" />
 	</ItemGroup>
 	
 	<ItemGroup>
 	  <Content Include="allureConfig.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	  <Content Include="appsettings.Development.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+		
 	  <Content Include="appsettings.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
