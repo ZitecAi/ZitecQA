@@ -50,8 +50,15 @@ namespace PortalIDSFTestes.runner
             var config = new ConfigurationManager();
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             var linkPortal = config["Links:Portal"];
+            page.DOMContentLoaded += async (sender, e) =>
+            {
+                // Injeta o estilo CSS para aplicar o zoom de 75%
+                await page.AddStyleTagAsync(new PageAddStyleTagOptions
+                {
+                    Content = "body { zoom: 0.75; }"
+                });
+            };
             await page.GotoAsync(linkPortal!);
-            await page.EvaluateAsync("document.body.style.zoom='75%';");
             return page;
         }
 

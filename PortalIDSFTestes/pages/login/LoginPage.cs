@@ -1,4 +1,5 @@
 ﻿using Microsoft.Playwright;
+using PortalIDSFTestes.data.login;
 using PortalIDSFTestes.elementos.login;
 using PortalIDSFTestes.metodos;
 
@@ -8,6 +9,7 @@ namespace PortalIDSFTestes.pages.login
     {
         private readonly IPage page;
         Utils metodo;
+        private LoginData data = new LoginData();
         LoginElements el = new LoginElements();
         public LoginPage(IPage page)
         {
@@ -22,8 +24,8 @@ namespace PortalIDSFTestes.pages.login
 
         public async Task LoginSucessoInterno()
         {
-            await metodo.Escrever(el.campoEmail, "qazitec01@gmail.com", "Inserir Email para Login");
-            await metodo.Escrever(el.campoSenha, "Testeqa01?!", "Inserir Senha para Login");
+            await metodo.Escrever(el.campoEmail, data.Email, "Inserir Email para Login");
+            await metodo.Escrever(el.campoSenha, data.Password, "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
             if (page.Url.Contains("dev"))
             {
@@ -40,8 +42,8 @@ namespace PortalIDSFTestes.pages.login
         }
         public async Task LogarInterno()
         {
-            await metodo.Escrever(el.campoEmail, "qazitec01@gmail.com", "Inserir Email para Login");
-            await metodo.Escrever(el.campoSenha, "Testeqa01?!", "Inserir Senha para Login");
+            await metodo.Escrever(el.campoEmail, data.Email, "Inserir Email para Login");
+            await metodo.Escrever(el.campoSenha, data.Password, "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
         }
 

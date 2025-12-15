@@ -304,7 +304,7 @@ namespace PortalIDSFTestes.metodos
 
                     if (count > 0)
                     {
-                        errosEncontrados.Add($"❌ Texto inválido encontrado");
+                        errosEncontrados.Add($"❌ Texto inválido encontrado: {texto}");
                     }
                 }
 
