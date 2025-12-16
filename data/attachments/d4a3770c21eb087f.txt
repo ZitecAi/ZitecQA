@@ -1,0 +1,5 @@
+Linha original: Zitec Tecnologia LTDA;24.789.362/0001-71;CEDENTE TESTE;90.400.888/0001-42;REGINA HELENA SANS FRANCHI ME;03.294.416/0001-58;106;190504,17;170504,17;30/06/2026;09/01/2025;09/01/2025;5062414-31.2022.4.8113;"5750077-69.2020.9.9337"""
+Colunas encontradas: 14
+✅ Arquivo enviado com sucesso
+✅ Arquivo enviado com sucesso
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_OperacoesTest_Deve_Enviar_Uma_Operacao_CSV_Failed_20251216_082024.webm (1609642 bytes)
