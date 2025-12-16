@@ -20,9 +20,12 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
-                var elemento = page.Locator(locator);
-                await elemento.WaitForAsync();
-                await elemento.FillAsync(texto);
+                var element = page.Locator(locator);
+                await Expect(element).ToBeVisibleAsync();
+                await Expect(element).ToBeEnabledAsync();
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+                await element.FocusAsync();
+                await element.FillAsync(texto);
             }
             catch
             {
@@ -35,9 +38,12 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
-                var elemento = page.Locator(locator);
-                await elemento.WaitForAsync();
-                await elemento.FillAsync(texto);
+                var element = page.Locator(locator);
+                await Expect(element).ToBeVisibleAsync();
+                await Expect(element).ToBeEnabledAsync();
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+                await element.FocusAsync();
+                await element.FillAsync(texto);
             }
             catch
             {
@@ -51,9 +57,16 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
-                var elemento = page.Locator(locator);
-                await elemento.WaitForAsync(new LocatorWaitForOptions { Timeout = 90000 });
-                await elemento.ClickAsync();
+                var element = page.Locator(locator);
+
+                await Expect(element).ToBeVisibleAsync();
+                await Expect(element).ToBeEnabledAsync();
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+
+                await element.ClickAsync(new LocatorClickOptions
+                {
+                    Timeout = 60000
+                });
             }
             catch
             {
