@@ -11,9 +11,10 @@
         public string BarraPesquisaCedentes { get; } = "//label[text()='Pesquisar']";
         public string TabelaCedentes { get; } = "#tabelaCedentes";
         public string TabelaCedentesCadastrado { get; } = "//table//tbody";
-        public string BtnLixeiraCedentes { get; } = "//button[@class='buttonExcluirCedente btn btn-danger']";
+        public string BtnLixeiraCedentes(string nomeCedente) => $"//td[contains(normalize-space(.),'{nomeCedente}')]/ancestor::tr//button[@title='Excluir Cedente']\r\n";
         public string CampoObservacaoExcluir { get; } = "#TextAreaExclusao";
-        public string BtnConfirmarExcluir { get; } = "#submitButtonExcluirCedente";
+        //public string BtnConfirmarExcluir { get; } = "//button[text()='Excluir']";
+        public string BtnConfirmarExcluir { get; } = "#submitButtonExcluirCedenteAtivo";
         public string MsgSucessoRetornada { get; } = "//div[@class='toast toast-success']";
         public string MsgErroRetornada { get; } = "//div[@class='toast toast-warning']";
         public string BtnFecharModal { get; } = "#btnFecharNovoCedente";

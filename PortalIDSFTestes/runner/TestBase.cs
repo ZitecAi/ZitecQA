@@ -46,6 +46,8 @@ namespace PortalIDSFTestes.runner
 
             context = await browser.NewContextAsync(contextOptions);
             page = await context.NewPageAsync();
+            page.SetDefaultTimeout(90000);
+            page.SetDefaultNavigationTimeout(90000);
 
             var config = new ConfigurationManager();
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);

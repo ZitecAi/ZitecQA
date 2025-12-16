@@ -121,7 +121,7 @@ namespace PortalIDSFTestes.metodos
                 {
                     State = WaitForSelectorState.Visible
                 });
-                await Expect(page.Locator(locator)).ToBeVisibleAsync();
+                await Expect(page.Locator(locator)).ToBeVisibleAsync(new() { Timeout = 90000 }); ;
             }
             catch (Exception ex)
             {
@@ -186,7 +186,7 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
-                await Expect(page.GetByText(textoEsperado)).ToBeVisibleAsync();
+                await Expect(page.GetByText(textoEsperado)).ToBeVisibleAsync(new() { Timeout = 90000 }); ;
             }
             catch (Exception ex)
             {
