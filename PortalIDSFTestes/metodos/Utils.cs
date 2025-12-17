@@ -20,6 +20,7 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
+
                 var element = page.Locator(locator);
                 await Expect(element).ToBeVisibleAsync(new LocatorAssertionsToBeVisibleOptions { Timeout = 90000 });
                 await Expect(element).ToBeEnabledAsync(new LocatorAssertionsToBeEnabledOptions { Timeout = 90000 });
@@ -27,9 +28,9 @@ namespace PortalIDSFTestes.metodos
                 await element.FocusAsync();
                 await element.FillAsync(texto, new LocatorFillOptions { Timeout = 90000 });
             }
-            catch
+            catch (PlaywrightException ex)
             {
-                throw new PlaywrightException("Não foi possivel Encontrar o Elemento: " + locator + " Para escrever no passo: " + passo);
+                throw new PlaywrightException("Não foi possivel Escrever no Elemento: " + locator + " no passo: " + passo + $"Detalhes {ex.Message}");
             }
 
 
@@ -68,9 +69,32 @@ namespace PortalIDSFTestes.metodos
                     Timeout = 60000
                 });
             }
-            catch
+            catch (PlaywrightException ex)
             {
-                throw new PlaywrightException("Não foi possivel Encontrar o Elemento: " + locator + " Para Clicar no passo: " + passo);
+                throw new PlaywrightException("Não foi possivel Clicar no Elemento: " + locator + " no passo: " + passo + $"Detalhes {ex.Message}");
+            }
+
+
+        }
+        [AllureStep("Limpar - no passo: {passo}")]
+        public async Task Limpar(string locator, string passo)
+        {
+            try
+            {
+                var element = page.Locator(locator);
+
+                await Expect(element).ToBeVisibleAsync(new LocatorAssertionsToBeVisibleOptions { Timeout = 90000 });
+                await Expect(element).ToBeEnabledAsync(new LocatorAssertionsToBeEnabledOptions { Timeout = 90000 });
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+
+                await element.ClearAsync(new LocatorClearOptions
+                {
+                    Timeout = 60000
+                });
+            }
+            catch (PlaywrightException ex)
+            {
+                throw new PlaywrightException("Não foi possivel Limpar o Elemento: " + locator + " no passo: " + passo + $"Detalhes {ex.Message}");
             }
 
 

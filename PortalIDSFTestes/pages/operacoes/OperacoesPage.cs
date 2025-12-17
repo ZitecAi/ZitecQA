@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
+using PortalIDSFTestes.data.operacoes;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.data.operacoes;
 
 namespace PortalIDSFTestes.pages.operacoes
 {
@@ -13,7 +13,7 @@ namespace PortalIDSFTestes.pages.operacoes
         OperacoesElements el = new OperacoesElements();
         OperacoesData data = new OperacoesData();
 
-        string NomeNovoArquivo { get; set; }
+        static string NomeNovoArquivo { get; set; }
         public OperacoesPage(IPage page)
         {
             this.page = page;
@@ -33,28 +33,31 @@ namespace PortalIDSFTestes.pages.operacoes
             return path;
         }
 
-        public async Task EnviarOperacaoCNAB_Consultar_Excluir()
+        public async Task EnviarOperacaoCNAB()
         {
+            var amanha = DateTime.Now.AddDays(1).ToString("dd-MM-yyyy");
+
             await metodo.Clicar(el.BtnNovaOperacaoCNAB, "Clicar no botão para enviar uma Nova Operação CNAB");
             await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
             NomeNovoArquivo = await metodo.AtualizarDataEEnviarArquivo(page, GetPath() + "CNABz - Copia.txt", "Enviar Arquivo CNAB para teste positivo");
-            //await metodo.ValidarMensagemPorTextoAsync(el.MsgSucessoRetornada, "Arquivo processado com sucesso", "Validar Mensagem de Sucesso retornada");
-            //await metodo.ValidarMsgRetornada(el.MsgSucesso, "Validar Mensagem sucesso retornada");
-            //await metodo.EsperarTextoPresente("Arquivo processado com sucesso!","Esperar Arquivo Ser Processado para seguir o fluxo");
-            //Consultar
-            await Task.Delay(60000);
-            await page.ReloadAsync();
+            await metodo.ValidarTextoPresente("Arquivo processado com sucesso!", "Esperar Arquivo Ser Processado para seguir o fluxo");
+        }
+
+        public async Task ConsultarOperacaoNaTabela()
+        {
             await metodo.Clicar(el.CampoPesquisaTabela, "Clicar no campo pesquisar para inserir nome do arquivo CNAB a ser consultado");
             await metodo.Escrever(el.CampoPesquisaTabela, NomeNovoArquivo, "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
-            await metodo.Clicar(el.PrimeiroTdTabela, "Clicar no primeiro TD da tabela");
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaOperacoes, NomeNovoArquivo, "Verificar se CNAB está presente na Tabela ");
-            //Excluir
-            await metodo.Clicar(el.BtnLixeira, "Clicar na Lixeira da tabela");
+        }
+        public async Task ExcluirOperacao()
+        {
+            await ConsultarOperacaoNaTabela();
+            await metodo.Clicar(el.BtnLixeira(NomeNovoArquivo), "Clicar na Lixeira da tabela");
             await metodo.Escrever(el.CampoMotivoExcluirArquivo, data.MotivoExclusaoArquivo, "Escrever motivo da exclusão do arquivo");
             await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão para confirmar excluisão do arquivo");
-            await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar se mensagem de arquivo excluido com sucesso está visivel!");
-
+            await metodo.ValidarTextoPresente("Arquivo excluído com sucesso!", "Validar se mensagem de arquivo excluido com sucesso está visivel!");
         }
+
         public async Task EnviarOperacaoCNABNegativo(string nomeCnabNegativo)
         {
             await metodo.Clicar(el.BtnNovaOperacaoCNAB, "Clicar no botão para enviar uma Nova Operação CNAB");
@@ -116,7 +119,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, GetPath() + nomeCsvNegativo, "Enviar Arquivo CSV no Input");
             var caminhoLastro = GetPath() + "Arquivo teste.zip";
             await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
-                await metodo.Escrever(el.CampoObservacao, data.ObservacaoCSVNegativo, "Escrever no campo observação ao enviar arquivo CSV");
+            await metodo.Escrever(el.CampoObservacao, data.ObservacaoCSVNegativo, "Escrever no campo observação ao enviar arquivo CSV");
             await metodo.Clicar(el.BtnEnviarOperacaoCSV, "Clicar no botão para Confirmar Envio uma Nova Operação CSV");
             await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na barra de pesquisa");
             await metodo.Escrever(el.BarraPesquisaTabela, nomeCsvNegativo, "Digitar o nome do arquivo na pesquisa");
@@ -135,7 +138,7 @@ namespace PortalIDSFTestes.pages.operacoes
                 var caminhoLastro = GetPath() + "Arquivo teste.zip";
                 await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
 
-            await metodo.Escrever(el.CampoObservacao, data.ObservacaoCSVNegativo, "Escrever no campo observação ao enviar arquivo CSV");
+                await metodo.Escrever(el.CampoObservacao, data.ObservacaoCSVNegativo, "Escrever no campo observação ao enviar arquivo CSV");
                 await metodo.Clicar(el.BtnEnviarOperacaoCSV, "Clicar no botão para Confirmar Envio uma Nova Operação CSV");
                 await metodo.Clicar(el.BtnFecharModalOperacaoCsv, "Fechar modal csv");
 

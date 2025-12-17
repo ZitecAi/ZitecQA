@@ -53,14 +53,30 @@ namespace PortalIDSFTestes.testes.operacoes
 
         [Test, Order(2)]
         [AllureTag("Regressivos")]
-        [AllureName("Deve Enviar Uma Operacao CNAB Consultar E Excluir")]
-        public async Task Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir()
+        [AllureName("Deve Enviar Uma Operacao CNAB")]
+        public async Task Deve_Enviar_Uma_Operacao_CNAB()
         {
             var operacoes = new OperacoesPage(page);
-            await operacoes.EnviarOperacaoCNAB_Consultar_Excluir();
+            await operacoes.EnviarOperacaoCNAB();
+        }
+        [Test, Order(3)]
+        [AllureTag("Regressivos")]
+        [AllureName("Deve Consultar Operacao CNAB")]
+        public async Task Deve_Consultar_Operacao_CNAB_Na_Tabela()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.ConsultarOperacaoNaTabela();
+        }
+        [Test, Order(4)]
+        [AllureTag("Regressivos")]
+        [AllureName("Deve Excluir Operacao CNAB")]
+        public async Task Deve_Excluir_Uma_Operacao_CNAB()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.ExcluirOperacao();
         }
 
-        [Test, Order(3)]
+        [Test, Order(5)]
         [Ignore("Este teste está em Manutenção")]
         public async Task Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes()
         {
@@ -68,7 +84,7 @@ namespace PortalIDSFTestes.testes.operacoes
             await operacoes.ConsultarCNABPeloHistoricoImportacoes();
         }
 
-        [Test, Order(4)]
+        [Test, Order(6)]
         [AllureName("Deve Fazer Download Relatorio Movimento Layout")]
         public async Task Deve_Fazer_Download_Relatorio_Movimento_Layout()
         {
@@ -76,7 +92,7 @@ namespace PortalIDSFTestes.testes.operacoes
             await operacoes.DownloadValidacaoMovimento_Layout();
         }
 
-        [Test, Order(5)]
+        [Test, Order(7)]
         [AllureName("Deve Fazer Download Excel")]
         public async Task Deve_Fazer_Download_Excel()
         {
@@ -84,7 +100,7 @@ namespace PortalIDSFTestes.testes.operacoes
             await operacoes.DownloadExcel();
         }
 
-        [Test, Order(6)]
+        [Test, Order(8)]
         [AllureTag("Regressivos")]
         [AllureName("Deve Enviar Uma Operacao CSV")]
         public async Task Deve_Enviar_Uma_Operacao_CSV()
