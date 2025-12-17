@@ -43,6 +43,7 @@ namespace PortalIDSFTestes.testes.notas
         }
 
         [Test, Order(1)]
+        [AllureTag("Regressivos")]
         [AllureName("Nao Deve Conter Acentos Quebrados Pagamentos Notas")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {

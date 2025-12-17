@@ -43,6 +43,7 @@ namespace PortalIDSFTestes.testes.boletagem
 
         [Test, Order(1)]
         [AllureName("Nao Deve Conter Acentos Quebrados Aporte")]
+        [AllureTag("Regressivos")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var aporte = new AportePage(page);
@@ -50,6 +51,7 @@ namespace PortalIDSFTestes.testes.boletagem
         }
         [Test, Order(2)]
         //[Ignore("Teste ignorado temporariamente para manutenção.")]
+        [AllureTag("Regressivos")]
         [AllureName("Deve Realizar Aporte Com Sucesso")]
         public async Task Deve_Realizar_Aporte_Com_Sucesso()
         {

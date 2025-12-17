@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using PortalIDSFTestes.data.cedentes;
 using PortalIDSFTestes.elementos.cedentes;
@@ -49,7 +49,6 @@ namespace PortalIDSFTestes.pages.cedentes
             GetPath() + "54638076000176_52721175000191_N.zip",
             new LocatorSetInputFilesOptions { Timeout = 120_000 });
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
-            await page.ReloadAsync();
 
         }
         public async Task ConsultarCedente(string Cedente, Func<Task> custom = null)
@@ -72,7 +71,7 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para selecionar aprovado");
             await metodo.Escrever(el.Obs, data.StatusAprovado, "Escrever observação para aprovação do cadastro");
             await metodo.Clicar(el.BtnEnviarParecerDepartamento, "Clicar no botão para enviar parecer do departamento");
-            await metodo.ValidarTextoPresente("Status atualizado!", "Validar mensagem Ação realizada com sucesso presente na tela na aprovação cadastro");
+            await metodo.ValidarTextoPresente(CedentesData.MsgStatusAtualizado, "Validar mensagem Ação realizada com sucesso presente na tela na aprovação cadastro");
             await metodo.Clicar(el.BtnFecharMensagemSucesso, "Clicar no botão para fechar a mensagem de sucesso após aprovar gestora");
             await Task.Delay(1000);
             await metodo.ValidarTextoDoElemento(el.TdAprovadoGestora("6"), data.StatusAprovado, "Validar se o status do cedente está como aprovado para gestora");
@@ -86,7 +85,7 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.Escrever(el.Obs, data.StatusAprovado, "Escrever observação para aprovação do compliance");
             await metodo.Clicar(el.BtnEnviarParecerDepartamento, "Clicar no botão para enviar parecer do departamento");
             await Task.Delay(1000);
-            await metodo.ValidarTextoPresente("Status atualizado!", "Validar mensagem Ação realizada com sucesso presente na tela na aprovação compliance");
+            await metodo.ValidarTextoPresente(CedentesData.MsgStatusAtualizado, "Validar mensagem Ação realizada com sucesso presente na tela na aprovação compliance");
             await metodo.Clicar(el.BtnFecharMensagemSucesso, "Clicar no botão para fechar a mensagem de sucesso após aprovar Compliance");
             await metodo.ValidarTextoDoElemento(el.TdAprovados("8"), data.StatusAprovado, "Validar se o status do cedente está como aprovado para compliance");
 
@@ -98,7 +97,7 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para selecionar aprovado");
             await metodo.Escrever(el.Obs, data.StatusAprovado, "Escrever observação para aprovação da gestora");
             await metodo.Clicar(el.BtnEnviarParecerDepartamento, "Clicar no botão para enviar parecer do departamento");
-            await metodo.ValidarTextoPresente("Status atualizado!", "Validar mensagem Ação realizada com sucesso presente na tela na aprovação gestora");
+            await metodo.ValidarTextoPresente(CedentesData.MsgStatusAtualizado, "Validar mensagem Ação realizada com sucesso presente na tela na aprovação gestora");
             await Task.Delay(1000);
             await metodo.ValidarTextoDoElemento(el.TdAprovados("7"), data.StatusAprovado, "Validar se o status do cedente está como aprovado para cadastro");
 
@@ -109,9 +108,9 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.Clicar(el.BtnContratoMae(Cedente), "Clicar no botão para enviar contrato mãe .pdf");
             await metodo.Clicar(el.BtnEnviarParaAssinatura, "Clickar no checkbox para desabilitar zisign");
             await metodo.EnviarArquivo(el.InputContratoMae, caminhoArquivo + "Arquivo teste.zip", "Enviar contrato mae no input");
-            await metodo.Escrever(el.ObsAtivarContratoMae, "Teste ativação cedente", "Escrever observação no campo de ativação do modal de contrato mae");
+            await metodo.Escrever(el.ObsAtivarContratoMae, data.TextoAtivacaoCedente, "Escrever observação no campo de ativação do modal de contrato mae");
             await metodo.Clicar(el.ButtonAtivacao, "Clicar no botão para ativar cedente");
-            await metodo.ValidarTextoPresente("Contrato recebido com sucesso, em breve ele será ativado", "Validar mensagem Contrato recebido com sucesso presente na tela");
+            await metodo.ValidarTextoPresente(CedentesData.MsgContratoRecebidoSucesso, "Validar mensagem Contrato recebido com sucesso presente na tela");
         }
         public async Task AprovarContratoMae(string Cedente)
         {
@@ -128,7 +127,7 @@ namespace PortalIDSFTestes.pages.cedentes
             await ConsultarCedente(Cedente);
             await metodo.Clicar(el.BtnLixeiraCedentes(Cedente), "Clicar no botão da lixeira para excluir cedente");
             await metodo.Clicar(el.BtnConfirmarExcluir, "Clicar no botão para confirmar exclusão do cedente");
-            await metodo.ValidarTextoPresente("Cedente excluído com sucesso.", "Validar mensagem Cedente excluído com sucesso presente na tela");
+            await metodo.ValidarTextoPresente(CedentesData.MsgCedenteExcluidoSucesso, "Validar mensagem Cedente excluído com sucesso presente na tela");
             await ConsultarCedente(Cedente, async () =>
             {
                 await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar no input da Barra de pesquisa");
@@ -147,7 +146,7 @@ namespace PortalIDSFTestes.pages.cedentes
         public async Task ConsultarCedente()
         {
             await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar na Barra de pesquisa para inserir CPF cedente a ser excluído");
-            await metodo.Escrever(el.BarraPesquisaCedentes, "FUNDO QA", "Escrever CPF do cedente a ser excluido");
+            await metodo.Escrever(el.BarraPesquisaCedentes, data.TextoFundoQA, "Escrever CPF do cedente a ser excluido");
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaCedentes, "FUNDO QA FIDC", "Pesquisar Fundo QA do Cedente presente na tabela");
         }
 

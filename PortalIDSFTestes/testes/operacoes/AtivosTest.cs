@@ -42,6 +42,7 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(1)]
+        [AllureTag("Regressivos")]
         [AllureName("Nao Deve Conter Acentos Quebrados Ativos")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
@@ -49,6 +50,7 @@ namespace PortalIDSFTestes.testes.operacoes
             await ativos.ValidarAcentosAtivosPage();
         }
         [Test, Order(2)]
+        [AllureTag("Regressivos")]
         [AllureName("Deve Conter Quantidade Total Correta De Ativos")]
         public async Task Deve_Conter_Quantidade_Total_Correta_De_Ativos()
         {
@@ -64,18 +66,51 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(4)]
-        [AllureName("Deve Cadastrar e consultar Um Ativo")]
-        public async Task Deve_Cadastrar_e_consultar_Um_Ativo()
+        [AllureTag("Regressivos")]
+        [AllureName("Deve Cadastrar Um Ativo")]
+        public async Task Deve_Cadastrar_Ativo()
         {
             var ativos = new AtivosPage(page);
-            await ativos.CadastrarEConsultarAtivo();
-            await ativos.AprovarGestor();
-            await ativos.AprovarJuridico();
-            await ativos.AprovarRisco();
-            await ativos.AprovarCadastro();
+            await ativos.CadastrarAtivo();
         }
 
+        [Test, Order(5)]
+        [AllureName("Deve consultar Ativo na tabela")]
+        public async Task Deve_Consultar_Ativo()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.ConsultarAtivo();
+        }
+        [Test, Order(6)]
+        [AllureName("Deve Aprovar Ativo Por Gestor")]
+        public async Task Deve_Aprovar_Ativo_Por_Gestor()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.AprovarGestor();
+        }
+
+        [Test, Order(7)]
+        [AllureName("Deve Aprovar Ativo Por Risco")]
+        public async Task Deve_Aprovar_Ativo_Por_Risco()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.AprovarRisco();
+        }
+        [Test, Order(8)]
+        [AllureName("Deve Aprovar Ativo Por Juridico")]
+        public async Task Deve_Aprovar_Ativo_Por_Juridico()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.AprovarJuridico();
+        }
         [Test, Order(9)]
+        [AllureName("Deve Aprovar Ativo Por Cadastro")]
+        public async Task Deve_Aprovar_Ativo_Por_Cadastro()
+        {
+            var ativos = new AtivosPage(page);
+            await ativos.AprovarCadastro();
+        }
+        [Test, Order(10)]
         [AllureName("Deve Fazer Download Arquivo")]
         public async Task Deve_Fazer_Download_Arquivo()
         {

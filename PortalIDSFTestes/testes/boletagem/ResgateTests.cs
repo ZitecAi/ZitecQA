@@ -42,6 +42,7 @@ namespace PortalIDSFTestes.testes.boletagem
         }
 
         [Test, Order(1)]
+        [AllureTag("Regressivos")]
         [AllureName("Nao Deve Conter Acentos Quebrados Resgate")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {

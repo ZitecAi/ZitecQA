@@ -43,6 +43,7 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(1)]
+        [AllureTag("Regressivos")]
         [AllureName("Nao Deve Conter Acentos Quebrados Operacoes")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
@@ -51,6 +52,7 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(2)]
+        [AllureTag("Regressivos")]
         [AllureName("Deve Enviar Uma Operacao CNAB Consultar E Excluir")]
         public async Task Deve_Enviar_Uma_Operacao_CNAB_Consultar_E_Excluir()
         {
@@ -83,7 +85,8 @@ namespace PortalIDSFTestes.testes.operacoes
         }
 
         [Test, Order(6)]
-        [Retry(3)]
+        [AllureTag("Regressivos")]
+        [AllureName("Deve Enviar Uma Operacao CSV")]
         public async Task Deve_Enviar_Uma_Operacao_CSV()
         {
             var operacoes = new OperacoesPage(page);

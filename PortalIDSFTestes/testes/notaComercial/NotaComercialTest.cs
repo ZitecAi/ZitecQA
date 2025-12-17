@@ -42,6 +42,7 @@ namespace PortalIDSFTestes.testes.notaComercial
 
         [Test, Order(1)]
         [AllureName("Nao Deve Conter Acentos Quebrados Nota Comercial")]
+        [AllureTag("Regressivos")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var notaComercial = new NotaComercialPage(page);
@@ -58,6 +59,7 @@ namespace PortalIDSFTestes.testes.notaComercial
 
         [Test, Order(3)]
         [AllureName("Deve Cadastrar Nova Nota Comercial")]
+        [AllureTag("Regressivos")]
         public async Task Deve_Cadastrar_Nova_Nota_Comercial()
         {
             var notaComercial = new NotaComercialPage(page);

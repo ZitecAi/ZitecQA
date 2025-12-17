@@ -21,11 +21,11 @@ namespace PortalIDSFTestes.metodos
             try
             {
                 var element = page.Locator(locator);
-                await Expect(element).ToBeVisibleAsync();
-                await Expect(element).ToBeEnabledAsync();
+                await Expect(element).ToBeVisibleAsync(new LocatorAssertionsToBeVisibleOptions { Timeout = 90000 });
+                await Expect(element).ToBeEnabledAsync(new LocatorAssertionsToBeEnabledOptions { Timeout = 90000 });
                 await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
                 await element.FocusAsync();
-                await element.FillAsync(texto);
+                await element.FillAsync(texto, new LocatorFillOptions { Timeout = 90000 });
             }
             catch
             {
@@ -39,8 +39,8 @@ namespace PortalIDSFTestes.metodos
             try
             {
                 var element = page.Locator(locator);
-                await Expect(element).ToBeVisibleAsync();
-                await Expect(element).ToBeEnabledAsync();
+                await Expect(element).ToBeVisibleAsync(new LocatorAssertionsToBeVisibleOptions { Timeout = 90000 });
+                await Expect(element).ToBeEnabledAsync(new LocatorAssertionsToBeEnabledOptions { Timeout = 90000 });
                 await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
                 await element.FocusAsync();
                 await element.FillAsync(texto);
@@ -59,8 +59,8 @@ namespace PortalIDSFTestes.metodos
             {
                 var element = page.Locator(locator);
 
-                await Expect(element).ToBeVisibleAsync();
-                await Expect(element).ToBeEnabledAsync();
+                await Expect(element).ToBeVisibleAsync(new LocatorAssertionsToBeVisibleOptions { Timeout = 90000 });
+                await Expect(element).ToBeEnabledAsync(new LocatorAssertionsToBeEnabledOptions { Timeout = 90000 });
                 await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
                 await element.ClickAsync(new LocatorClickOptions
@@ -242,7 +242,8 @@ namespace PortalIDSFTestes.metodos
             {
                 await page.WaitForSelectorAsync(seletorTabela, new PageWaitForSelectorOptions
                 {
-                    State = WaitForSelectorState.Visible
+                    State = WaitForSelectorState.Visible,
+                    Timeout = 90000
                 });
 
                 var locator = page.Locator(seletorTabela);

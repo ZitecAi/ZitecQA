@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
+using PortalIDSFTestes.data.operacoes;
 
 namespace PortalIDSFTestes.pages.operacoes
 {
@@ -10,6 +11,7 @@ namespace PortalIDSFTestes.pages.operacoes
         private readonly IPage page;
         Utils metodo;
         ArquivosBaixaElements el = new ArquivosBaixaElements();
+        ArquivosBaixaData data = new ArquivosBaixaData();
 
         public ArquivosBaixaPage(IPage page)
         {
@@ -70,7 +72,7 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await Task.Delay(1000);
             await metodo.Clicar(el.BarraDePesquisa, "Clicar na barra de pesquisa");
-            await metodo.Escrever(el.BarraDePesquisa, "QA", "Escrever na barra de pesquisa");
+            await metodo.Escrever(el.BarraDePesquisa, data.TextoPesquisaQA, "Escrever na barra de pesquisa");
             await metodo.Clicar(el.PrimeiroTd, "Clicar no primeiro TD");
             await metodo.ValidateDownloadAndLength(page, el.BtnDownloadRelatorioMovimentos, "Validar Download do Relatório de Movimentos na página de Arquivos de Baixa");
         }
@@ -78,7 +80,7 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await Task.Delay(1000);
             await metodo.Clicar(el.BarraDePesquisa, "Clicar na barra de pesquisa");
-            await metodo.Escrever(el.BarraDePesquisa, ".rem", "Escrever na barra de pesquisa");
+            await metodo.Escrever(el.BarraDePesquisa, data.ExtensaoArquivoREM, "Escrever na barra de pesquisa");
             await metodo.Clicar(el.PrimeiroTd, "Clicar no primeiro TD");
             await metodo.ValidateDownloadAndLength(page, el.BtnDownloadArquivoCNAB, "Validar Download do Arquivo CNAB na página de Arquivos de Baixa");
 

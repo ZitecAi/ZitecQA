@@ -41,7 +41,6 @@ namespace PortalIDSFTestes.testes.cedentes
         public async Task TearDown()
         {
             await FecharBrowserAsync();
-
         }
 
         [Test, Order(1)]
@@ -62,9 +61,9 @@ namespace PortalIDSFTestes.testes.cedentes
         }
 
         [Test, Order(3)]
-        [AllureName("Deve Cadastrar Cedente E Ativar Cedente")]
+        [AllureName("Deve Cadastrar Cedente")]
         [AllureTag("Regressivos")]
-        public async Task Deve_Cadastrar_Cedente_E_Ativar_Cedente()
+        public async Task Deve_Cadastrar_Cedente()
         {
             var cedentes = new CedentesPage(page);
             await cedentes.CadastrarCedente(_data.CnpjCedente);

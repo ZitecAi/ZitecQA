@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
+using PortalIDSFTestes.data.operacoes;
 
 namespace PortalIDSFTestes.pages.operacoes
 {
@@ -10,6 +11,7 @@ namespace PortalIDSFTestes.pages.operacoes
         private IPage page;
         Utils metodo;
         OperacoesElements el = new OperacoesElements();
+        OperacoesData data = new OperacoesData();
 
         string NomeNovoArquivo { get; set; }
         public OperacoesPage(IPage page)
@@ -48,7 +50,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaOperacoes, NomeNovoArquivo, "Verificar se CNAB está presente na Tabela ");
             //Excluir
             await metodo.Clicar(el.BtnLixeira, "Clicar na Lixeira da tabela");
-            await metodo.Escrever(el.CampoMotivoExcluirArquivo, "Teste Exclusão", "Escrever motivo da exclusão do arquivo");
+            await metodo.Escrever(el.CampoMotivoExcluirArquivo, data.MotivoExclusaoArquivo, "Escrever motivo da exclusão do arquivo");
             await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão para confirmar excluisão do arquivo");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar se mensagem de arquivo excluido com sucesso está visivel!");
 
@@ -101,7 +103,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, arquivoComNomeModificado, "Enviar Arquivo CSV no Input");
             var caminhoLastro = GetPath() + "Arquivo teste.zip";
             await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
-            await metodo.Escrever(el.CampoObservacao, "Teste de Arquivo CSV", "Escrever no campo observação ao enviar arquivo CSV");
+            await metodo.Escrever(el.CampoObservacao, data.ObservacaoCSV, "Escrever no campo observação ao enviar arquivo CSV");
             await metodo.Clicar(el.BtnEnviarOperacaoCSV, "Clicar no botão para Confirmar Envio uma Nova Operação CSV");
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar Mensagem de Sucesso retornada");
 
@@ -114,7 +116,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, GetPath() + nomeCsvNegativo, "Enviar Arquivo CSV no Input");
             var caminhoLastro = GetPath() + "Arquivo teste.zip";
             await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
-            await metodo.Escrever(el.CampoObservacao, "Teste de Arquivo CSV Negativo", "Escrever no campo observação ao enviar arquivo CSV");
+                await metodo.Escrever(el.CampoObservacao, data.ObservacaoCSVNegativo, "Escrever no campo observação ao enviar arquivo CSV");
             await metodo.Clicar(el.BtnEnviarOperacaoCSV, "Clicar no botão para Confirmar Envio uma Nova Operação CSV");
             await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na barra de pesquisa");
             await metodo.Escrever(el.BarraPesquisaTabela, nomeCsvNegativo, "Digitar o nome do arquivo na pesquisa");
@@ -133,7 +135,7 @@ namespace PortalIDSFTestes.pages.operacoes
                 var caminhoLastro = GetPath() + "Arquivo teste.zip";
                 await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
 
-                await metodo.Escrever(el.CampoObservacao, "Teste de Arquivo CSV Negativo", "Escrever no campo observação ao enviar arquivo CSV");
+            await metodo.Escrever(el.CampoObservacao, data.ObservacaoCSVNegativo, "Escrever no campo observação ao enviar arquivo CSV");
                 await metodo.Clicar(el.BtnEnviarOperacaoCSV, "Clicar no botão para Confirmar Envio uma Nova Operação CSV");
                 await metodo.Clicar(el.BtnFecharModalOperacaoCsv, "Fechar modal csv");
 
@@ -172,7 +174,7 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await metodo.Clicar(el.BtnHistoricoImportacoes, "Clicar no botão para abrir modal de histórico de importações");
             await metodo.Clicar(el.BarraPesquisaHistorico, "Clicar no campo pesquisar para inserir nome do arquivo CNAB a ser consultado");
-            await metodo.Escrever(el.BarraPesquisaHistorico, ".rem", "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
+            await metodo.Escrever(el.BarraPesquisaHistorico, data.ExtensaoArquivoPesquisa, "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
             await Task.Delay(15000);
             await metodo.Clicar(el.PrimeiroTdHistorico, "Clicar no primeiro TD que estiver presente para baixar arquivo validação movimento");
             await metodo.ValidateDownloadAndLength(page, el.BtnDownloadValidacaoMovimento, "Download Validação Movimento");
