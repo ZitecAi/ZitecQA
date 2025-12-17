@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PortalIDSFTestes.elementos.operacoes
 {
     public class OperacoesElements
     {
         public string MenuOperacoes { get; } = "(//p[text()='Operações'])[2]";
         public string PaginaOperacoes { get; } = "//a[@href='/Operacoes/Operacoes2.0.aspx']";
-        
+
         //Feat 7982
         public string BtnNovaOperacaoCNAB { get; } = "//span[text()='Nova Operação - CNAB']";
         public string BtnNovaOperacaoCSV { get; } = "//button//span[text()='Nova Operação - CSV']";
@@ -33,7 +27,7 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string BtnDownloadExcel { get; } = "#BtnBaixarExcel";
         public string PrimeiroTdHistorico { get; } = "(//tbody[@id='listaHistorico']//td[@class='dtr-control'])[1]";
         public string PrimeiroTdTabela { get; } = "//td[@class='dtr-control']";
-        public string BtnLixeira { get; } = "//span[@class='dtr-data']//button[@title='Excluir Arquivo']";
+        public string BtnLixeira(string nomeArquivo) => $"//td[contains(normalize-space(.),'{nomeArquivo}')]/ancestor::tr//i[@class='fas fa-trash']";
         public string CampoMotivoExcluirArquivo { get; } = "#motivoExcluirArquivo";
         public string BtnConfirmarExclusao { get; } = "//div[@id='footerModalExcluirArquivo']//button[text()='Confirmar']";
         public string BtnFecharModalOperacaoCnab { get; } = "#btnFecharNovoOperacao";
