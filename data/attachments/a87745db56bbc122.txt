@@ -1,2 +1,0 @@
-✅ Texto capturado, Quantidade de ativos: 823
-Caminho de vídeo inválido: D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\bin\Release\net8.0\videos\1461451d4b073a3bf6d990481ca498a0.webm
