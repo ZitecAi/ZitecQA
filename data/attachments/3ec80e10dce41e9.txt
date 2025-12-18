@@ -1,1 +1,0 @@
-Vídeo anexado: PortalIDSFTestes_testes_notaComercial_NotaComercialTest_Nao_Deve_Cadastrar_Nota_Comercial_Com_Carencia_Juros_Maior_Que_Juros_Principal_Failed_20251218_133331.webm (5084981 bytes)
