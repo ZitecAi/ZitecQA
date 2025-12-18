@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PortalIDSFTestes.elementos.notaComercial
+﻿namespace PortalIDSFTestes.elementos.notaComercial
 {
     public class NotaComercialElements
     {
@@ -18,7 +12,7 @@ namespace PortalIDSFTestes.elementos.notaComercial
         public string SelectTipoLiquidacao { get; } = "#tipo";
         public string LiquidacaoPix { get; } = "//option[@value='pix']";
         public string CampoTomador { get; } = "#searchInput";
-        public string CedenteTest { get; } = "//li[text()='CEDENTE TESTE - 90400888000142']";
+        public string CedenteTest { get; } = "(//ul[@id='suggestionsList']//li)[1]";
         public string BtnLupaTomador { get; } = "(//i[@class='fas fa-search'])[4]";
         public string SelectConta { get; } = "#contaLiquidacao";
         public string CampoObservacaoInfo { get; } = "#mensagemObservacao";
@@ -41,9 +35,9 @@ namespace PortalIDSFTestes.elementos.notaComercial
         public string CarenciaJuros { get; } = "#carenciaJuros";
         public string SelectTipoCalculo { get; } = "#tipoCalculo";
         public string CampoDiaVencimento { get; } = "#diaVencimento";
-        public string CampoDataInicio{ get; } = "#dataInicio";
-        public string CampoCorban{ get; } = "#corban";
-        public string SelectIndexPosFix{ get; } = "#indexPosFix";
+        public string CampoDataInicio { get; } = "#dataInicio";
+        public string CampoCorban { get; } = "#corban";
+        public string SelectIndexPosFix { get; } = "#indexPosFix";
         //documentos
         public string SessaoDocumentos { get; } = "#Documentos-tab";
         public string BtnAddDocumento { get; } = "//button[@data-target='#modal-AdicionarDocumento']";
