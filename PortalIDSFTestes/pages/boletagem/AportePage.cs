@@ -37,7 +37,7 @@ namespace PortalIDSFTestes.pages.boletagem
         public async Task RealizarAporte()
         {
 
-            var today = DateTime.Today.ToString();
+            var today = DateTime.Today.ToString("dd/MM/yyyy");
             string valorAporte = "10000";
 
             await metodo.Clicar(el.BtnNovo, "Clicar em Novo, para inserir novo aporte");
