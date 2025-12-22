@@ -1,0 +1,110 @@
+✅ Texto encontrado: NOVA ERA FIDC	EAN QUIMICA LTDA - CNPJ: 45.492.644/0001-82	22/12/2025 15:50:43	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Em espera
+
+	
+ 
+
+Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	22/12/2025 15:52:04	Análise	1	Aprovado	
+
+Em espera
+
+	
+
+Aprovado
+
+	
+ 
+
+BINVEST FIDC	RAMBO NUTRIFIT DISTRIBUIDORA LTDA - CNPJ: 27.123.482/0001-23	22/12/2025 15:48:06	Análise	1	Em espera	
+
+Em espera
+
+	
+
+Aprovado
+
+	
+ 
+
+PRECATO IV FIDC	RICHTER & DOMINGUES SOCIEDADE DE ADVOGADOS - CPF: 393.596.648-20	22/12/2025 15:26:17	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+OC SAFIRA CAPITAL FIDC	WJF CONSTRUTORA LTDA - CNPJ: 13.590.951/0001-00	22/12/2025 15:24:33	Formalização	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+BOREAL I FIDC COMERCIAL	J L FREIRES LTDA - CNPJ: 30.897.951/0001-76	22/12/2025 15:03:26	Análise	1	Em espera	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+BOREAL I FIDC COMERCIAL	AGRO COMERCIO E BENEFICIAMENTO BUENO BRANDENSE LTDA - CNPJ: 12.936.848/0004-59	22/12/2025 14:04:13	Análise	2	Em espera	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+BOREAL I FIDC COMERCIAL	PIA TRANSPORTES LTDA - CNPJ: 44.336.015/0001-09	22/12/2025 14:01:52	Análise	2	Em espera	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+PRECATO IV FIDC	Arnaldino Ferreira Da Silva - CPF: 585.567.456-87	22/12/2025 12:20:27	Ativo	1	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+
+QLZ JUD 01 FIDC	41.143.030/0001-34 - CNPJ: 41.143.030/0001-34	22/12/2025 12:34:28	Formalização	3	Aprovado	
+
+Aprovado
+
+	
+
+Aprovado
+
+	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Aprovar_Cedente_nivel_Cadastro_Passed_20251222_155225.webm (790386 bytes)

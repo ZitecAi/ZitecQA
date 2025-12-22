@@ -1,4 +1,0 @@
-✅ Texto encontrado: Selecionar
-Todos	ID	Tipo	Fundo	Cedente	Certificadora	Arquivos	Total Nominal	Total Aquisição	Total Recompra	Reembolso e Despesas	Pago ao Cedente	Recebíveis	Situação	Ações
-	50739644	Duplicata	Zitec FIDC	Cedente Teste Zitec EDITADO	Outros	CnabZitec_20251222_12c515bd.txt / CnabZitec_20251222_12c515bd.txt	R$ 18.197,86	R$ 8.197,80	R$ 0,00	R$ 0,00	R$ 8.197,80	7	Aguardando aprovação da Consultoria	
-Vídeo anexado: PortalIDSFTestes_testes_operacoes_OperacoesTest_Deve_Consultar_Operacao_CNAB_Na_Tabela_Passed_20251222_132008.webm (927431 bytes)
