@@ -1,0 +1,2 @@
+Arquivo CnabZitec_20251222_aa9f5a09.txt enviado com sucesso.
+Caminho de vídeo inválido: D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\bin\Release\net8.0\videos\daf7c0ea9ef56073dd22b4f47641d827.webm
