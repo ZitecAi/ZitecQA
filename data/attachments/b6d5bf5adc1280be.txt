@@ -1,0 +1,2 @@
+✅ Download ok: '467755_20251222_20251222.PDF' | 9549 bytes.
+Caminho de vídeo inválido: D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\bin\Release\net8.0\videos\8adfe2ef0e75e89aca27f55fffdc0b85.webm
