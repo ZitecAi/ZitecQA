@@ -1,0 +1,25 @@
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico	Cadastro	Usuário	Observações	Ações
+6074	02/01/2026 10:26	2	Zitec Tecnologia LTDA	Teste NUnit 2252	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Análise
+	
+Análise
+	QA - teste	Teste NUnit	     
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico	Cadastro	Usuário	Observações	Ações
+6074	02/01/2026 10:26	2	Zitec Tecnologia LTDA	Teste NUnit 2252	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Análise
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_AtivosTest_Deve_Aprovar_Ativo_Por_Juridico_Passed_20260102_102933.webm (1567091 bytes)
