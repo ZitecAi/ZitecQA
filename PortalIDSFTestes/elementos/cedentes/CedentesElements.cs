@@ -26,7 +26,7 @@
         public string Obs { get; } = "#obsParecerDepartamento";
         public string BtnEnviarParecerDepartamento { get; } = "#btnEnviarStatusDepartamento";
         public string TdAprovadoGestora(string posicaoTd) => $"(//tr//td)[{posicaoTd}]//button"; //começa no 6 e vai ate o 8
-        public string TdAprovados(string posicaoTd) => $"(//tr//td)[{posicaoTd}]//p"; //começa no 6 e vai ate o 8
+        public string TdAprovados(string posicaoTd) => $"(//tr//td)[{posicaoTd}]//button"; //começa no 6 e vai ate o 8
         public string StatusCedente { get; } = "(//tr//td)[4]//small[1]";
         public string TdReprovado { get; } = "(//tr//td)[4]";
         public string BtnReprovarCedente(string cnpjCedente) => $"//td[contains(normalize-space(.), '{cnpjCedente}')]/ancestor::tr//i[@class='fas fa-times']";
