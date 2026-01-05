@@ -1,0 +1,30 @@
+✅ Texto encontrado: Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	05/01/2026 14:36:24	Análise	1	Em espera	Em espera 	Em espera 	
+ 
+
+ADAMANTUS FIDC	AUGUSTO CARLOS MIRANDA HENRIQUES NETO CO - CNPJ: 28.150.494/0001-00	05/01/2026 14:21:15	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	PIRES & CIA LTDA - CNPJ: 07.719.683/0006-95	05/01/2026 11:24:57	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	PIRES & CIA LTDA - CNPJ: 07.719.683/0004-23	05/01/2026 11:05:34	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	PIRES & CIA LTDA - CNPJ: 07.719.683/0003-42	05/01/2026 11:05:38	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	PIRES & CIA LTDA - CNPJ: 07.719.683/0001-80	05/01/2026 10:52:52	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+KINERET FIDC	GELDBACH DO BRASIL TUBOS, FLANGES E CONEXOES LTDA - CNPJ: 10.378.969/0001-54	05/01/2026 14:26:42	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+ADAMANTUS FIDC	CARLOS ANDRE BRANDEBURSKI KONFLANZ LTDA - CNPJ: 18.028.650/0001-00	05/01/2026 14:13:02	Pendência	1	Aprovado	Rejeitado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0019-00	05/01/2026 10:25:03	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0018-20	05/01/2026 10:25:07	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Aprovar_Cedente_nivel_Gestora_Passed_20260105_143650.webm (729323 bytes)
