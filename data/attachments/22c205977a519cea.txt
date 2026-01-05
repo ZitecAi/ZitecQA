@@ -1,0 +1,31 @@
+✅ Texto encontrado: Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0018-20	05/01/2026 10:14:03	Análise	1	Em espera	Em espera 	Em espera 	
+ 
+
+Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	05/01/2026 10:15:42	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0017-49	05/01/2026 10:14:23	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0016-68	05/01/2026 10:14:00	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0015-87	05/01/2026 10:13:38	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0014-04	05/01/2026 09:50:14	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0013-15	05/01/2026 09:47:42	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0012-34	05/01/2026 09:47:46	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0011-53	05/01/2026 09:47:51	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0010-72	05/01/2026 09:47:55	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+✅ O texto '52.721.175/0001-91' não está presente na tabela.
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Excluir_Cedente_Passed_20260105_101616.webm (1117714 bytes)
