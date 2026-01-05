@@ -1,2 +1,0 @@
-✅ Texto capturado, Quantidade de ativos: 842
-Vídeo anexado: PortalIDSFTestes_testes_operacoes_AtivosTest_Deve_Conter_Quantidade_Total_Correta_De_Ativos_Passed_20260105_152604.webm (453434 bytes)
