@@ -1,0 +1,3 @@
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico	Cadastro	Usuário	Observações	Ações
+{"draw":1,"recordsTotal":4586,"recordsFiltered":4586,"html":"\r\n \r\n\r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n"}6119	05/01/2026 17:25	2	Zitec Tecnologia LTDA	Teste NUnit 4061	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE	Não Possui	Análise	Análise	Análise	Análise	Análise	QA - teste	Teste NUnit	     
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_AtivosTest_Deve_Aprovar_Ativo_Por_Juridico_Failed_20260105_173050.webm (3547586 bytes)
