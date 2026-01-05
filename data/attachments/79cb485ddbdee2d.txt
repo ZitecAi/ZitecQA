@@ -1,0 +1,30 @@
+✅ Texto encontrado: Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	05/01/2026 09:56:31	Formalização 	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0014-04	05/01/2026 09:50:14	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0013-15	05/01/2026 09:47:42	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0012-34	05/01/2026 09:47:46	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0011-53	05/01/2026 09:47:51	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0010-72	05/01/2026 09:47:55	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0009-39	05/01/2026 09:47:58	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0007-77	05/01/2026 09:48:02	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0006-96	05/01/2026 09:48:06	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	BONANCA COMERCIO DE ALIMENTOS LTDA - CNPJ: 10.513.998/0004-24	05/01/2026 09:48:10	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Aprovar_Contrato_mae_Passed_20260105_095643.webm (563150 bytes)
