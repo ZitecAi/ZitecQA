@@ -1,0 +1,3 @@
+✅ Arquivo atualizado salvo como: D:\TempQA\Arquivos\FundoQA_20260106_8328cd61.txt
+✅ Arquivo enviado com sucesso
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_ArquivosBaixaTest_Deve_Enviar_Arquivo_Baixa_Passed_20260106_151640.webm (422706 bytes)

@@ -1,4 +1,0 @@
-✅ Texto encontrado: Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	06/01/2026 10:05:37	Ativo	1	Aprovado	Aprovado  	Aprovado  	
- 
-✅ O texto '52.721.175/0001-91' não está presente na tabela.
-Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Excluir_Cedente_Passed_20260106_100607.webm (880920 bytes)
