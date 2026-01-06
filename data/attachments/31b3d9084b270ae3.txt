@@ -1,0 +1,30 @@
+✅ Texto encontrado: Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	06/01/2026 18:45:11	Análise	1	Em espera	Em espera 	Em espera 	
+ 
+
+OC SAFIRA CAPITAL FIDC	SAFRA BAG INDUSTRIA E COMERCIO DE CABOS DE FIBRAS SINTETICAS LTDA - CNPJ: 17.517.750/0001-38	06/01/2026 18:08:11	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	RIVER NAUTICA LTDA - CNPJ: 53.667.738/0001-73	06/01/2026 16:28:19	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+ADAMANTUS FIDC	SMALVI CONFECCOES LTDA - CNPJ: 63.160.084/0001-40	06/01/2026 15:39:07	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+7INVEST FIDC	MG FRESH FRUITS LTDA - CNPJ: 59.998.197/0001-42	06/01/2026 17:14:23	Formalização	4	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	AGROPARTS PECAS AGRICOLAS LTDA - CNPJ: 43.082.492/0001-14	06/01/2026 14:59:32	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+ADAMANTUS FIDC	INCAPACK INDUSTRIA DE EMBALAGENS PLASTICAS LTDA - CNPJ: 82.370.743/0001-18	06/01/2026 14:57:41	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+BINVEST FIDC	DALLABRIDA ATACAREJO LTDA - CNPJ: 59.871.972/0001-02	06/01/2026 14:27:36	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+ADAMANTUS FIDC	SEU ATACAREJO DE ALIMENTOS LTDA - CNPJ: 23.151.812/0001-33	06/01/2026 14:18:18	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+ADAMANTUS FIDC	GUNTHER TRANSFORMADORES COMERCIO IMPORTACAO E EXPORTACA - CNPJ: 10.671.631/0001-96	06/01/2026 12:49:17	Análise	2	Em espera	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Consultar_Cedente_Passed_20260106_184533.webm (494129 bytes)
