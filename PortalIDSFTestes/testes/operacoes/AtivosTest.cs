@@ -1,5 +1,6 @@
 ﻿using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using PortalIDSFTestes.data.operacoes;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
@@ -20,7 +21,7 @@ namespace PortalIDSFTestes.testes.operacoes
     {
         Utils metodo;
         AtivosElements el = new AtivosElements();
-
+        private static string _ativoReprovado = "Ativo Reprovado " + AtivosData.GenerateNameUnique();
         [SetUp]
         [AllureBefore]
         public async Task Setup()
@@ -117,5 +118,58 @@ namespace PortalIDSFTestes.testes.operacoes
             var ativos = new AtivosPage(page);
             await ativos.DownloadArquivo();
         }
+
+        [Test, Order(11)]
+        [AllureTag("Regressivos")]
+        [AllureName("Deve Cadastrar Um Ativo")]
+        public async Task Deve_Cadastrar_Ativo_Para_Reprovar()
+        {
+            var dataTest = new AtivosData { NomeAtivo = _ativoReprovado };
+            var ativos = new AtivosPage(page, dataTest);
+            await ativos.CadastrarAtivo();
+        }
+
+        [Test, Order(12)]
+        [AllureName("Deve consultar Ativo na tabela")]
+        public async Task Deve_Consultar_Ativo_Para_Reprovar()
+        {
+            var dataTest = new AtivosData { NomeAtivo = _ativoReprovado };
+            var ativos = new AtivosPage(page, dataTest);
+            await ativos.ConsultarAtivo();
+        }
+        [Test, Order(13)]
+        [AllureName("Deve Aprovar Ativo Por Gestor")]
+        public async Task Deve_Reprovar_Por_Gestor()
+        {
+            var dataTest = new AtivosData { NomeAtivo = _ativoReprovado };
+            var ativos = new AtivosPage(page, dataTest);
+            await ativos.ReprovarAtivo("Gestor");
+        }
+
+        [Test, Order(14)]
+        [AllureName("Deve Aprovar Ativo Por Risco")]
+        public async Task Deve_Reprovar_Por_Risco()
+        {
+            var dataTest = new AtivosData { NomeAtivo = _ativoReprovado };
+            var ativos = new AtivosPage(page, dataTest);
+            await ativos.ReprovarAtivo("Risco");
+        }
+        [Test, Order(15)]
+        [AllureName("Deve Aprovar Ativo Por Juridico")]
+        public async Task Deve_Reprovar_Por_Juridico()
+        {
+            var dataTest = new AtivosData { NomeAtivo = _ativoReprovado };
+            var ativos = new AtivosPage(page, dataTest);
+            await ativos.ReprovarAtivo("Juridico");
+        }
+        [Test, Order(16)]
+        [AllureName("Deve Aprovar Ativo Por Cadastro")]
+        public async Task Deve_Reprovar_Por_Cadastro()
+        {
+            var dataTest = new AtivosData { NomeAtivo = _ativoReprovado };
+            var ativos = new AtivosPage(page, dataTest);
+            await ativos.ReprovarAtivo("Cadastro");
+        }
+
     }
 }

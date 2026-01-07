@@ -15,9 +15,10 @@ namespace PortalIDSFTestes.pages.operacoes
         Utils metodo;
         AtivosElements el = new AtivosElements();
         AtivosData data = new AtivosData();
-        public AtivosPage(IPage page)
+        public AtivosPage(IPage page, AtivosData data = null)
         {
             this.page = page;
+            this.data = data ?? new AtivosData();
             metodo = new Utils(page);
         }
         public static string GetPath()
@@ -78,7 +79,6 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await ConsultarAtivo();
             await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do gestor");
-
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo gestor");
             await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoAprovacao, "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo gestor");
@@ -108,7 +108,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo jurídico");
             await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoAprovacao, "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo jurídico");
-            await metodo.ValidarTextoPresente(AtivosData.MsgContratoAprovadoSucesso, "Validar mensagem de sucesso presenta ao aprovar por jurídico");
+            await metodo.ValidarTextoPresente(AtivosData.MsgContratoAprovadoSucesso, "Validar mensagem de sucesso presente ao aprovar por jurídico");
             await page.ReloadAsync();
             await ConsultarAtivo();
             await metodo.ValidarTextoDoElemento(el.StatusTabela("Aprovado", "2"), "Aprovado", "Validar se status de juridico na tabela foi alterado para Aprovado.");
@@ -144,5 +144,55 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.CapturarTextoDoElemento(el.TotalAtivos, "capturar e validar o total de ativos na página");
         }
 
+        public async Task ReprovarAtivo(string nivel)
+        {
+            switch (nivel)
+            {
+                case "Gestor":
+                    await ConsultarAtivo();
+                    await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do gestor");
+                    await metodo.Clicar(el.BtnReprovado, "Clicar no botão para Reprovar pelo gestor");
+                    await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoReprovacao, "Digitar Observação para reprovar ativo pelo gestor");
+                    await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para Reprovar pelo gestor");
+                    await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar texto de sucesso presente na tabela para o usuário");
+                    await page.ReloadAsync();
+                    await ConsultarAtivo();
+                    await metodo.ValidarMsgRetornada(el.StatusTabela("Reprovado ", "1"), "Validar se status na tabela foi alterado para Reprovado");
+                    break;
+                case "Risco":
+                    await ConsultarAtivo();
+                    await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do jurídico");
+                    await metodo.Clicar(el.BtnReprovado, "Clicar no botão para Reprovar pelo risco");
+                    await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoReprovacao, "Digitar Observação para reprovar ativo por Risco");
+                    await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo risco");
+                    await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar texto de sucesso presente na tabela para o usuário");
+                    await page.ReloadAsync();
+                    await ConsultarAtivo();
+                    await metodo.ValidarTextoDoElemento(el.StatusTabela("Reprovado ", "1"), "Reprovado", "Validar se status de risco na tabela foi alterado para Reprovado.");
+                    break;
+                case "Juridico":
+                    await ConsultarAtivo();
+                    await metodo.Clicar(el.BtnEmAnalise2("2"), "Clicar no botão para abrir modal de situação do jurídico");
+                    await metodo.Clicar(el.BtnReprovado, "Clicar no botão para Reprovar pelo jurídico");
+                    await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoAprovacao, "Digitar Observação");
+                    await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para reprovar pelo jurídico");
+                    await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar texto de sucesso presente na tabela para o usuário");
+                    await page.ReloadAsync();
+                    await ConsultarAtivo();
+                    await metodo.ValidarTextoDoElemento(el.StatusTabela("Reprovado ", "2"), "Reprovado", "Validar se status de juridico na tabela foi alterado para Reprovado.");
+                    break;
+                case "Cadastro":
+                    await ConsultarAtivo();
+                    await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do Cadastro");
+                    await metodo.Clicar(el.BtnReprovado, "Clicar no botão para reprovar pelo cadastro");
+                    await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoAprovacao, "Digitar Observação");
+                    await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para reprovar pelo cadastro");
+                    await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar texto de sucesso presente na tabela para o usuário");
+                    await page.ReloadAsync();
+                    await ConsultarAtivo();
+                    await metodo.ValidarTextoDoElemento(el.StatusTabela("Reprovado ", "3"), "Reprovado", "Validar se status de cadastro na tabela foi alterado para Reprovado.");
+                    break;
+            }
+        }
     }
 }

@@ -37,6 +37,7 @@
         public string BtnEmTDCadastro(string status) => $"//span[text()='Cadastro']/ancestor::li//strong[text()='{status}']";
 
         public string BtnAprovado { get; } = "//label[@for='option-1']";
+        public string BtnReprovado { get; } = "//label[@for='option-2']";
         public string CampoObservacaoParecer { get; } = "#msgParecerContrato";
         public string BtnAprovadoGestora { get; } = "#submitButtonGestora";
         public string TotalAtivos { get; } = "//p[text()='Total de Ativos']/ancestor::div[@class='totalInvest']//div//p";

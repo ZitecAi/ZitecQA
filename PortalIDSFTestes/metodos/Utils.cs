@@ -145,6 +145,8 @@ namespace PortalIDSFTestes.metodos
                 {
                     State = WaitForSelectorState.Visible
                 });
+                string textoRetornado = page.Locator(locator).InnerTextAsync().Result;
+                Console.WriteLine(textoRetornado);
                 await Expect(page.Locator(locator)).ToBeVisibleAsync(new() { Timeout = 90000 }); ;
             }
             catch (Exception ex)
