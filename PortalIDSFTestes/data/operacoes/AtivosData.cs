@@ -32,6 +32,7 @@ namespace PortalIDSFTestes.data.operacoes
         public string ValorAtivo { get; set; } = "10";
         public string ResumoOperacao { get; set; } = "Teste NUnit";
         public string ObservacaoAprovacao { get; set; } = "Teste Aprovação";
+        public string ObservacaoReprovacao { get; set; } = "Teste Reprovação";
         public string TextoPesquisaAtivo { get; set; } = "Teste NUnit";
 
         // Mensagens de validação
