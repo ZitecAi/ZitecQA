@@ -1,3 +1,0 @@
-✅ 'A carência de amortização não pode ser igual ou maior que a duração' encontrado em '//div[@class='toast toast-warning']' (único match).
-✅ 'Parcelas devem ser geradas corretamente' encontrado em '//div[@class='toast toast-warning']' (único match).
-Vídeo anexado: PortalIDSFTestes_testes_notaComercial_NotaComercialTest_Nao_Deve_Cadastrar_Nota_Comercial_Com_Amortizacao_Maior_Que_Duracao_Passed_20260107_150421.webm (1123134 bytes)

@@ -1,0 +1,30 @@
+✅ Texto encontrado: NORD FIDC RL	HOSPDROGAS COMERCIAL LTDA - CNPJ: 08.774.906/0001-75	07/01/2026 11:59:39	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+NORD FIDC RL	EQUIPLEX INDUSTRIA FARMACEUTICA LTDA - - CNPJ: 01.784.792/0001-03	07/01/2026 11:59:42	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+ADAMANTUS FIDC	INDUSTRIA E COMERCIO DE PESCADOS EMPANADOS VIEIRA LTDA - CNPJ: 29.267.022/0001-02	07/01/2026 11:42:40	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	TRES ELLE COMERCIO ATACADISTA LTDA - CNPJ: 32.943.845/0001-07	07/01/2026 11:39:34	Ativo 	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	MX COMERCIO ATACADISTA LTDA - CNPJ: 54.338.093/0004-30	07/01/2026 11:39:38	Ativo 	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	MX COMERCIO ATACADISTA LTDA - CNPJ: 54.338.093/0003-50	07/01/2026 11:39:42	Ativo 	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+MORIAH FIDC	Salfama Foods Brasil S/A - CNPJ: 01.440.906/0004-32	07/01/2026 11:19:19	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+MARINO FIDC	MITO-MINERACAO TOCANTINS LTDA - CNPJ: 18.358.051/0001-55	07/01/2026 14:29:01	Formalização	3	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	MX COMERCIO ATACADISTA LTDA - CNPJ: 54.338.093/0002-79	07/01/2026 09:41:41	Ativo 	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	06/01/2026 20:49:41	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Excluir_Cedente_Failed_20260107_153726.webm (3243502 bytes)
