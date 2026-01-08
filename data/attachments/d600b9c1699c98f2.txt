@@ -1,0 +1,30 @@
+✅ Texto encontrado: ADAMANTUS FIDC	2 J COMERCIO DE PNEUMATICOS LTDA - CNPJ: 53.180.059/0001-75	08/01/2026 15:10:44	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+ADAMANTUS FIDC	INDUSTRIA ALAGOANA DE COLCHOES E ESPUMA LTDA - CNPJ: 11.188.276/0001-61	08/01/2026 09:45:45	Pendência	1	Em espera	Rejeitado  	Aprovado  	
+ 
+
+FIZZ FIDC	CONTROLE SUL SISTEMAS LTDA - CNPJ: 28.974.362/0002-83	08/01/2026 14:10:53	Formalização	4	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	07/01/2026 19:20:09	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+MORIAH FIDC	COTA REAL INVESTIMENTOS LTDA - CNPJ: 51.677.211/0001-02	08/01/2026 14:05:14	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+SQUID FIDC	PANIFICIO PANINE LTDA - CNPJ: 31.390.261/0001-99	08/01/2026 11:31:25	Formalização	2	Aprovado	Aprovado  	Aprovado  	
+ 
+
+Volus FIDC	61.960.508 VANESSA SILVA CARVALHO - CNPJ: 61.960.508/0001-26	07/01/2026 16:05:19	Ativo 	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+NORD FIDC RL	HOSPDROGAS COMERCIAL LTDA - CNPJ: 08.774.906/0001-75	07/01/2026 11:59:39	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+NORD FIDC RL	EQUIPLEX INDUSTRIA FARMACEUTICA LTDA - - CNPJ: 01.784.792/0001-03	07/01/2026 11:59:42	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+ADAMANTUS FIDC	INDUSTRIA E COMERCIO DE PESCADOS EMPANADOS VIEIRA LTDA - CNPJ: 29.267.022/0001-02	07/01/2026 11:42:40	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Aprovar_Cedente_nivel_Compliance_Failed_20260108_153134.webm (2736779 bytes)

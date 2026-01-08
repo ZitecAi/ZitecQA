@@ -1,7 +1,0 @@
-✅ Arquivo enviado com sucesso
-×
-Problemas com o arquivo: 52115758000179_07277165810_N.zip
-Problemas identificados:
-Adicione uma conta como padrão
-Adicione Conta Corrente na Ficha Cedente ID - CTVM.xlsx
-Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Em_Branco_Template_Passed_20260108_122424.webm (517926 bytes)

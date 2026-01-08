@@ -1,0 +1,6 @@
+✅ Arquivo enviado com sucesso
+×
+Problemas com o arquivo: 36614123000160_52221175000191_N.zip
+Problemas identificados:
+CNPJ do Cedente inválido.
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_ComCnpj_Cedente_Inexistente_Passed_20260108_153906.webm (487788 bytes)
