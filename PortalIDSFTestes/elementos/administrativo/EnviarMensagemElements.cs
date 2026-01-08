@@ -4,7 +4,7 @@
     {
 
         public string MenuAdministrativo { get; } = "//p[text()='Administrativo']";
-        public string PaginaEnviarMensagem { get; } = "//p[text()='Enviar mensagem']";
+        public string PaginaEnviarMensagem { get; } = "//p[text()='Enviar Mensagem']";
 
 
     }
