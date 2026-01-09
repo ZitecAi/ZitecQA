@@ -1,0 +1,443 @@
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico	Cadastro	Usuário	Observações	Ações
+6228	09/01/2026 09:46	2	Zitec Tecnologia LTDA	Teste NUnit 5143	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Análise
+	
+Análise
+	QA - teste	Teste NUnit	     
+6227	09/01/2026 09:40	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 7276	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6226	09/01/2026 09:37	2	Zitec Tecnologia LTDA	Teste NUnit 1014	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6225	09/01/2026 09:24	2	42 CAPITAL FUNDO DE INVESTIMENTO MULTIMERCADO- CRE...	42-CAPITAL FUNDO DE INVESTIMENTO MULTIMERCADO - CRÉD PRIV INVESTIMENTO NO EXTERIOR RESP LIMITADA	OutrosAtivos - Outros Tipos de Contratos	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	gabriel santos simon	Compra de USD/BRL na corretora Genial com liquidaç...	     
+6224	08/01/2026 17:36	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	FLAVIO DA COSTA SANTOS	AcoesJudiciais - Precatório	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Juliana Nunes	Código 0237	     
+6223	08/01/2026 17:34	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Gabriel Peres Sociedade Individual de Advocacia	AcoesJudiciais - Precatório	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Thalyta	código 0252	     
+6222	08/01/2026 16:52	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	ALESSANDRO ADAUTO DE MEDEIROS SOCIEDADE INDIVIDUAL DE ADVOCACIA	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Juliana Nunes	Código 0221 - Automação de pagamentos de ativos po...	     
+6221	08/01/2026 16:50	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	ALESSANDRO ADAUTO DE MEDEIROS SOCIEDADE INDIVIDUAL DE ADVOCACIA	AcoesJudiciais - Precatório	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0220	     
+6220	08/01/2026 16:33	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Ana Vitoria Dantas Cordeiro	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0258 - Automação de pagamentos de ativos po...	     
+6219	08/01/2026 16:23	2	ASTRA INFRAESTRUTURA I FUNDO DE INVESTIMENTO EM PA...	CSN MINERAÇÃO S.A	OutrosAtivos - Contratos de Aluguel	AGUARDANDO LIQUIDACAO	Não Possui	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Francisco Raudiego Gonçalves Silva	INDENIZAÇÃO AO COMPRADOR - CONDUÇÃO DE DEFESA PELO...	     
+6218	08/01/2026 16:13	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	ALESSANDRO ADAUTO DE MEDEIROS SOCIEDADE INDIVIDUAL DE ADVOCACIA	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0243 - Automação de pagamentos de ativos po...	     
+6217	08/01/2026 15:52	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Alessandro Adauto de Medeiros	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0241 - Automação de pagamentos de ativos po...	     
+6216	08/01/2026 15:33	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Isadora Loise Mota Oliveira	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0238 - Automação de pagamentos de ativos po...	     
+6215	08/01/2026 15:29	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 1281	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6214	08/01/2026 15:26	2	Zitec Tecnologia LTDA	Teste NUnit 910	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6213	08/01/2026 15:26	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Edmar Gomes de Araujo	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0235 - Automação de pagamentos de ativos po...	     
+6212	08/01/2026 15:26	2	CONSULT PRECATÓRIOS E RECEBÍVEIS FUNDO D...	Marileth Guimel da Silva Sousa	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	DAVI CAVALCANTE	Esclarece-se que o objeto da negociação consiste e...	     
+6211	08/01/2026 15:23	2	GALGA FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRIO...	JACAREÍ 01 EMPREENDIMENTOS IMOBILIÁRIOS LTDA	AtivosCreditos - CCB	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Aprovado
+	
+Análise
+	Gabriela Gomes	https://gestoraid.slack.com/archives/C04A4A6NRT9/p...	     
+6210	08/01/2026 14:44	2	BLUE OCEAN ARB FI MULTIMERCADO CREDITO PRIVADO INV...	BLUE OCEAN ARB FIM	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aguar. Ass.
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	André Carneiro		     
+6209	08/01/2026 14:43	2	MULTIPLIER FUNDO DE INVESTIMENTO EM DIREITOS CREDI...	TAUAN MENESES DOS SANTOS	AcoesJudiciais - Trabalhistas	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Rodrigo Furukawa	compra precatorio TAUAN MENESES DOS SANTOS - Aut...	     
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico	Cadastro	Usuário	Observações	Ações
+6228	09/01/2026 09:46	2	Zitec Tecnologia LTDA	Teste NUnit 5143	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Análise
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6227	09/01/2026 09:40	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 7276	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6226	09/01/2026 09:37	2	Zitec Tecnologia LTDA	Teste NUnit 1014	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6225	09/01/2026 09:24	2	42 CAPITAL FUNDO DE INVESTIMENTO MULTIMERCADO- CRE...	42-CAPITAL FUNDO DE INVESTIMENTO MULTIMERCADO - CRÉD PRIV INVESTIMENTO NO EXTERIOR RESP LIMITADA	OutrosAtivos - Outros Tipos de Contratos	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	gabriel santos simon	Compra de USD/BRL na corretora Genial com liquidaç...	     
+6224	08/01/2026 17:36	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	FLAVIO DA COSTA SANTOS	AcoesJudiciais - Precatório	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Juliana Nunes	Código 0237	     
+6223	08/01/2026 17:34	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Gabriel Peres Sociedade Individual de Advocacia	AcoesJudiciais - Precatório	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Thalyta	código 0252	     
+6222	08/01/2026 16:52	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	ALESSANDRO ADAUTO DE MEDEIROS SOCIEDADE INDIVIDUAL DE ADVOCACIA	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Juliana Nunes	Código 0221 - Automação de pagamentos de ativos po...	     
+6221	08/01/2026 16:50	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	ALESSANDRO ADAUTO DE MEDEIROS SOCIEDADE INDIVIDUAL DE ADVOCACIA	AcoesJudiciais - Precatório	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0220	     
+6220	08/01/2026 16:33	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Ana Vitoria Dantas Cordeiro	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0258 - Automação de pagamentos de ativos po...	     
+6219	08/01/2026 16:23	2	ASTRA INFRAESTRUTURA I FUNDO DE INVESTIMENTO EM PA...	CSN MINERAÇÃO S.A	OutrosAtivos - Contratos de Aluguel	AGUARDANDO LIQUIDACAO	Não Possui	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Francisco Raudiego Gonçalves Silva	INDENIZAÇÃO AO COMPRADOR - CONDUÇÃO DE DEFESA PELO...	     
+6218	08/01/2026 16:13	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	ALESSANDRO ADAUTO DE MEDEIROS SOCIEDADE INDIVIDUAL DE ADVOCACIA	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0243 - Automação de pagamentos de ativos po...	     
+6217	08/01/2026 15:52	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Alessandro Adauto de Medeiros	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0241 - Automação de pagamentos de ativos po...	     
+6216	08/01/2026 15:33	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Isadora Loise Mota Oliveira	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0238 - Automação de pagamentos de ativos po...	     
+6215	08/01/2026 15:29	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 1281	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6214	08/01/2026 15:26	2	Zitec Tecnologia LTDA	Teste NUnit 910	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6213	08/01/2026 15:26	2	LCBANK II FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Edmar Gomes de Araujo	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Renan Ayub de Almeida Gomes Alves	Código 0235 - Automação de pagamentos de ativos po...	     
+6212	08/01/2026 15:26	2	CONSULT PRECATÓRIOS E RECEBÍVEIS FUNDO D...	Marileth Guimel da Silva Sousa	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	DAVI CAVALCANTE	Esclarece-se que o objeto da negociação consiste e...	     
+6211	08/01/2026 15:23	2	GALGA FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRIO...	JACAREÍ 01 EMPREENDIMENTOS IMOBILIÁRIOS LTDA	AtivosCreditos - CCB	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Aprovado
+	
+Análise
+	Gabriela Gomes	https://gestoraid.slack.com/archives/C04A4A6NRT9/p...	     
+6210	08/01/2026 14:44	2	BLUE OCEAN ARB FI MULTIMERCADO CREDITO PRIVADO INV...	BLUE OCEAN ARB FIM	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aguar. Ass.
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	André Carneiro		     
+6209	08/01/2026 14:43	2	MULTIPLIER FUNDO DE INVESTIMENTO EM DIREITOS CREDI...	TAUAN MENESES DOS SANTOS	AcoesJudiciais - Trabalhistas	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Rodrigo Furukawa	compra precatorio TAUAN MENESES DOS SANTOS - Aut...	     
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_AtivosTest_Deve_Aprovar_Ativo_Por_Juridico_Passed_20260109_094705.webm (691174 bytes)

@@ -1,0 +1,30 @@
+✅ Texto encontrado: Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	09/01/2026 09:38:29	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	NATALIE VALERIE GALANTE - CPF: 349.747.568-85	09/01/2026 09:20:09	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+OC SAFIRA CAPITAL FIDC	FISH FERTIL COMERCIO LTDA - CNPJ: 06.244.863/0001-90	09/01/2026 09:11:39	Pendência	1	Aprovado	Rejeitado  	Aprovado  	
+ 
+
+AG ANTECIPA FIDC	RAMALHO INDUSTRIA E COMERCIO DE MOVEIS E ACESSORIOS LTDA - CNPJ: 34.574.159/0001-31	08/01/2026 17:08:35	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	Ricardo de Oliveira Miranda - CPF: 385.403.278-13	08/01/2026 16:31:17	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+ADAMANTUS FIDC	2 J COMERCIO DE PNEUMATICOS LTDA - CNPJ: 53.180.059/0001-75	08/01/2026 15:10:44	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+ADAMANTUS FIDC	INDUSTRIA ALAGOANA DE COLCHOES E ESPUMA LTDA - CNPJ: 11.188.276/0001-61	08/01/2026 09:45:45	Pendência	1	Em espera	Rejeitado  	Aprovado  	
+ 
+
+FIZZ FIDC	CONTROLE SUL SISTEMAS LTDA - CNPJ: 28.974.362/0002-83	08/01/2026 14:10:53	Formalização	4	Aprovado	Aprovado  	Aprovado  	
+ 
+
+MORIAH FIDC	COTA REAL INVESTIMENTOS LTDA - CNPJ: 51.677.211/0001-02	08/01/2026 14:05:14	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+SQUID FIDC	PANIFICIO PANINE LTDA - CNPJ: 31.390.261/0001-99	08/01/2026 11:31:25	Formalização	2	Aprovado	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Aprovar_Cedente_nivel_Cadastro_Failed_20260109_095133.webm (2671084 bytes)
