@@ -1,0 +1,30 @@
+✅ Texto encontrado: PRECATO IV FIDC	FRANCISCO PINHEIRO DANTAS - CPF: 783.684.561-34	09/01/2026 16:59:55	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+ADAMANTUS FIDC	SP HEALTH INDUSTRIA E COMERCIO LTDA - CNPJ: 20.227.117/0001-10	09/01/2026 16:52:14	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	09/01/2026 16:22:13	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+AURI OPEN FIDC	LEIVA TRANSPORTES E LOGISTICA LTDA - CNPJ: 10.334.421/0001-02	09/01/2026 15:25:09	Pendência	1	Em espera	Rejeitado  	Aprovado  	
+ 
+
+NORD FIDC RL	LEIVA TRANSPORTES E LOGISTICA LTDA - CNPJ: 10.334.421/0001-02	09/01/2026 15:23:57	Pendência	1	Em espera	Rejeitado  	Aprovado  	
+ 
+
+FC MONEY FIDC	SAMPAIO CORREA FUTEBOL CLUBE - CNPJ: 06.048.870/0001-17	09/01/2026 15:00:57	Ativo 	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	Marcos Roberto Morato - CPF: 056.772.188-47	09/01/2026 11:34:18	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+ALMAM FIDC	CENTRAL REBOQUE LTDA - CNPJ: 36.826.432/0001-01	09/01/2026 11:33:55	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	NATALIE VALERIE GALANTE - CPF: 349.747.568-85	09/01/2026 09:20:09	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+OC SAFIRA CAPITAL FIDC	FISH FERTIL COMERCIO LTDA - CNPJ: 06.244.863/0001-90	09/01/2026 16:55:56	Ativo	2	Aprovado	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Aprovar_Cedente_nivel_Cadastro_Failed_20260109_171800.webm (2679507 bytes)

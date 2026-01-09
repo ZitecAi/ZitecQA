@@ -1,0 +1,13 @@
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico	Cadastro	Usuário	Observações	Ações
+6267	09/01/2026 17:13	2	Zitec Tecnologia LTDA	Teste NUnit 4274	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	QA - teste	Teste NUnit	     
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_AtivosTest_Deve_Consultar_Ativo_Passed_20260109_171341.webm (950968 bytes)
