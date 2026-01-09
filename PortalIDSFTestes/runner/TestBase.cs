@@ -51,7 +51,7 @@ namespace PortalIDSFTestes.runner
 
             var config = new ConfigurationManager();
             var envStg = Environment.GetEnvironmentVariable("PORTAL_LINK");
-            config.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
+            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
             var linkPortal = config["Links:Portal"] ?? envStg;
             page.DOMContentLoaded += async (sender, e) =>
             {
