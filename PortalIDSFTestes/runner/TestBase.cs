@@ -50,8 +50,9 @@ namespace PortalIDSFTestes.runner
             page.SetDefaultNavigationTimeout(90000);
 
             var config = new ConfigurationManager();
-            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            var linkPortal = config["Links:Portal"];
+            var envStg = Environment.GetEnvironmentVariable("PORTAL_LINK");
+            config.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
+            var linkPortal = config["Links:Portal"] ?? envStg;
             page.DOMContentLoaded += async (sender, e) =>
             {
                 // Injeta o estilo CSS para aplicar o zoom de 75%

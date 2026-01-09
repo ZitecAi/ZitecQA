@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
+using PortalIDSFTestes.data.operacoes;
 using PortalIDSFTestes.elementos.operacoes;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.data.operacoes;
 
 namespace PortalIDSFTestes.pages.operacoes
 {
@@ -21,9 +21,10 @@ namespace PortalIDSFTestes.pages.operacoes
 
         public static string GetPath()
         {
+            var envPath = Environment.GetEnvironmentVariable("PORTAL_PATH");
             ConfigurationManager config = new ConfigurationManager();
-            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            string path = config["Paths:Arquivo"].ToString();
+            config.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
+            string path = config["Paths:Arquivo"].ToString() ?? envPath;
             return path;
         }
 

@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
+using PortalIDSFTestes.data.notaComercial;
 using PortalIDSFTestes.elementos.notaComercial;
 using PortalIDSFTestes.metodos;
-using PortalIDSFTestes.data.notaComercial;
 
 namespace PortalIDSFTestes.pages.notaComercial
 {
@@ -19,9 +19,10 @@ namespace PortalIDSFTestes.pages.notaComercial
         }
         public static string GetPath()
         {
+            var envPath = Environment.GetEnvironmentVariable("PORTAL_PATH");
             ConfigurationManager config = new ConfigurationManager();
-            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            string path = config["Paths:Arquivo"].ToString();
+            config.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
+            string path = config["Paths:Arquivo"].ToString() ?? envPath;
             return path;
         }
 
@@ -94,7 +95,7 @@ namespace PortalIDSFTestes.pages.notaComercial
         {
             if (cenarioTeste == "CamposEmBranco")
             {
-            await metodo.Clicar(el.BtnNovoNotaComercial, "Clicar no Botão para inserir nova nota comercial");
+                await metodo.Clicar(el.BtnNovoNotaComercial, "Clicar no Botão para inserir nova nota comercial");
                 await metodo.Clicar(el.BtnSalvarMudancas, "Clicar no botão Salvar Mudanças");
                 await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, NotaComercialData.MsgPreenchaInfo, "Validar mensagem retornada sobre campos em branco");
                 await metodo.ValidarMensagemPorTextoAsync(el.MsgErro, "Preencha todos os campos para simular", "Validar mensagem retornada sobre campos em branco");

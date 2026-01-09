@@ -39,13 +39,55 @@ namespace PortalIDSFTestes.pages.login
             {
                 await metodo.ValidarUrl("https://portal.idsf.com.br/Home.aspx", "Validate URL at home Page in prod environment");
             }
+            ILocator BtnFecharPopUp = page.Locator(el.BotaoFecharModalAtualizacoes);
+            try
+            {
+                await BtnFecharPopUp.WaitForAsync(new LocatorWaitForOptions
+                {
+                    State = WaitForSelectorState.Visible,
+                    Timeout = 2500
+                });
+                await metodo.Clicar(el.BotaoFecharModalAtualizacoes, "Fechar Modal de Atualizações");
+            }
+            catch (TimeoutException)
+            {
+                return;
+            }
         }
         public async Task LogarInterno()
         {
             await metodo.EscreverCredenciais(el.campoEmail, data.Email, "Inserir Email para Login");
             await metodo.EscreverCredenciais(el.campoSenha, data.Password, "Inserir Senha para Login");
             await metodo.Clicar(el.loginBtn, "Clicar no Botão Para Realizar Login");
-        }
 
+            if (page.Url.Contains("dev"))
+            {
+                await metodo.ValidarUrl("https://portal-dev.idsf.com.br/Home.aspx", "Validate URL at home Page in dev environment");
+            }
+            else if (page.Url.Contains("staging"))
+            {
+                await metodo.ValidarUrl("https://portal-staging.idsf.com.br/Home.aspx", "Validate URL at home Page in stg environment");
+            }
+            else
+            {
+                await metodo.ValidarUrl("https://portal.idsf.com.br/Home.aspx", "Validate URL at home Page in prod environment");
+            }
+
+            ILocator BtnFecharPopUp = page.Locator(el.BotaoFecharModalAtualizacoes);
+            try
+            {
+                await BtnFecharPopUp.WaitForAsync(new LocatorWaitForOptions
+                {
+                    State = WaitForSelectorState.Visible,
+                    Timeout = 2500
+                });
+                await metodo.Clicar(el.BotaoFecharModalAtualizacoes, "Fechar Modal de Atualizações");
+            }
+            catch (TimeoutException)
+            {
+                return;
+            }
+
+        }
     }
 }

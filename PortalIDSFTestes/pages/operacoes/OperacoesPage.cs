@@ -27,9 +27,10 @@ namespace PortalIDSFTestes.pages.operacoes
 
         public static string GetPath()
         {
+            var envPath = Environment.GetEnvironmentVariable("PORTAL_PATH");
             ConfigurationManager config = new ConfigurationManager();
-            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            string path = config["Paths:Arquivo"].ToString();
+            config.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
+            string path = config["Paths:Arquivo"].ToString() ?? envPath;
             return path;
         }
 
