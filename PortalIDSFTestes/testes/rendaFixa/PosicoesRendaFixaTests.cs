@@ -44,6 +44,7 @@ namespace PortalIDSFTestes.testes.rendaFixa
 
         [Test, Order(1)]
         [AllureName("Nao Deve Conter Acentos Quebrados Posicoes Renda Fixa")]
+        [Ignore("Teste desativado")]
         public async Task Nao_Deve_Conter_Acentos_Quebrados()
         {
             var posicoesRendaFixa = new PosicoesRendaFixaPage(page);

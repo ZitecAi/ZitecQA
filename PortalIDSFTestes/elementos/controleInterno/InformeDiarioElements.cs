@@ -4,7 +4,7 @@
     {
 
         public string MenuControleInterno { get; } = "//p[text()='Controle Interno']";
-        public string PaginaInformeDiario { get; } = "//p[text()='Informe Diario']";
+        public string PaginaInformeDiario { get; } = "//p[text()='Informe Diário']";
 
 
 
