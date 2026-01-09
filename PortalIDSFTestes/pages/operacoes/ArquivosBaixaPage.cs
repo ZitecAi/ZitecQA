@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using PortalIDSFTestes.data.operacoes;
 using PortalIDSFTestes.elementos.operacoes;
@@ -19,14 +18,6 @@ namespace PortalIDSFTestes.pages.operacoes
             metodo = new Utils(page);
         }
 
-        public static string GetPath()
-        {
-            var envPath = Environment.GetEnvironmentVariable("PORTAL_PATH");
-            ConfigurationManager config = new ConfigurationManager();
-            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
-            string path = config["Paths:Arquivo"].ToString() ?? envPath;
-            return path;
-        }
 
 
         public async Task ValidarAcentosArquivosBaixaPage()
@@ -39,8 +30,8 @@ namespace PortalIDSFTestes.pages.operacoes
 
             await metodo.Clicar(el.ImportarBaixaBtn, "Clicar no Botão para importar Baixa");
             await metodo.ClicarNoSeletor(el.SelectFundoZitec, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            var arquivoAtualizado = await metodo.AtualizarDataArquivo(GetPath() + "template.txt", "Atualizar Data Arquivo");
-            await metodo.EnviarArquivo(el.EnviarBaixas, GetPath() + "template.txt", "Enviar Arquivo Baixa");
+            var arquivoAtualizado = await metodo.AtualizarDataArquivo(Utils.GetPath() + "template.txt", "Atualizar Data Arquivo");
+            await metodo.EnviarArquivo(el.EnviarBaixas, Utils.GetPath() + "template.txt", "Enviar Arquivo Baixa");
             await metodo.ValidarMsgRetornada(el.MsgArquivoRecebido, "Validação mensagem arquivo recebido mas aguardando validação");
         }
 
@@ -49,7 +40,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.ImportarBaixaBtn, "Clicar no Botão para importar Baixa");
             await metodo.ClicarNoSeletor(el.SelectFundoZitec, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
             //var arquivoAtualizado = await metodo.AtualizarDataArquivo(caminhoArquivoNegativo + nomeArquivoBaixaNegativo, "Atualizar Data Arquivo");
-            var nomeNovoArquivo = await metodo.EnviarArquivoNomeAtualizado(el.EnviarBaixas, GetPath() + nomeArquivoBaixaNegativo, "Enviar Arquivo Baixa Negativo");
+            var nomeNovoArquivo = await metodo.EnviarArquivoNomeAtualizado(el.EnviarBaixas, Utils.GetPath() + nomeArquivoBaixaNegativo, "Enviar Arquivo Baixa Negativo");
             await metodo.Clicar(el.BtnFecharModal, "Clicar no Botão para fechar modal");
             await metodo.EsperarTextoPresente("Arquivo processado com sucesso!", "Esperar mensagem aparecer para prosseguir o fluxo");
             await metodo.Clicar(el.BarraDePesquisa, "CLicar na barra de pesquisa");

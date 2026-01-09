@@ -1,4 +1,5 @@
 using Allure.NUnit.Attributes;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using OfficeOpenXml;
 using System.IO.Compression;
@@ -784,7 +785,14 @@ namespace PortalIDSFTestes.metodos
             }
         }
 
-
+        public static string GetPath()
+        {
+            var envPath = Environment.GetEnvironmentVariable("PORTAL_PATH");
+            ConfigurationManager config = new ConfigurationManager();
+            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+            string path = config["Paths:Arquivo"] ?? envPath;
+            return path;
+        }
 
 
 

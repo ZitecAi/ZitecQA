@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using PortalIDSFTestes.data.operacoes;
 using PortalIDSFTestes.elementos.operacoes;
@@ -25,22 +24,13 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.ValidarAcentosAsync(page, "Validar Acentos na Pagina de Operações");
         }
 
-        public static string GetPath()
-        {
-            var envPath = Environment.GetEnvironmentVariable("PORTAL_PATH");
-            ConfigurationManager config = new ConfigurationManager();
-            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
-            string path = config["Paths:Arquivo"].ToString() ?? envPath;
-            return path;
-        }
-
         public async Task EnviarOperacaoCNAB()
         {
             var amanha = DateTime.Now.AddDays(1).ToString("dd-MM-yyyy");
 
             await metodo.Clicar(el.BtnNovaOperacaoCNAB, "Clicar no botão para enviar uma Nova Operação CNAB");
             await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            NomeNovoArquivo = await metodo.AtualizarDataEEnviarArquivo(page, GetPath() + "CNABz - Copia.txt", "Enviar Arquivo CNAB para teste positivo");
+            NomeNovoArquivo = await metodo.AtualizarDataEEnviarArquivo(page, Utils.GetPath() + "CNABz - Copia.txt", "Enviar Arquivo CNAB para teste positivo");
             await metodo.ValidarTextoPresente("Arquivo processado com sucesso!", "Esperar Arquivo Ser Processado para seguir o fluxo");
         }
 
@@ -63,7 +53,7 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await metodo.Clicar(el.BtnNovaOperacaoCNAB, "Clicar no botão para enviar uma Nova Operação CNAB");
             await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            await metodo.EnviarArquivo(el.EnviarOperacaoInput, GetPath() + nomeCnabNegativo, "Enviar Arquivo CNAB negativo");
+            await metodo.EnviarArquivo(el.EnviarOperacaoInput, Utils.GetPath() + nomeCnabNegativo, "Enviar Arquivo CNAB negativo");
             //await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCnabNegativo + nomeCnabNegativo,"Enviar Arquivo CNAB para teste negativo");
             await metodo.Clicar(el.BtnFecharModalOperacaoCnab, "Clicar no 'X' para fechar modal de nova operacao cnab");
             await metodo.Clicar(el.BarraPesquisaTabela, "Clicar na barra de pesquisa");
@@ -77,7 +67,7 @@ namespace PortalIDSFTestes.pages.operacoes
             {
                 await metodo.Clicar(el.BtnNovaOperacaoCNAB, "Clicar no botão para enviar uma Nova Operação CNAB");
                 await metodo.ClicarNoSeletor(el.SelectFundo, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-                await metodo.EnviarArquivo(el.EnviarOperacaoInput, GetPath() + nomeCnabNegativo, "Enviar Arquivo CNAB negativo");
+                await metodo.EnviarArquivo(el.EnviarOperacaoInput, Utils.GetPath() + nomeCnabNegativo, "Enviar Arquivo CNAB negativo");
                 //await metodo.AtualizarDataEEnviarArquivo(page, caminhoArquivoCnabNegativo + nomeCnabNegativo,"Enviar Arquivo CNAB para teste negativo");
                 await metodo.Clicar(el.BtnFecharModalOperacaoCnab, "Clicar no 'X' para fechar modal de nova operacao cnab");
 
@@ -99,13 +89,13 @@ namespace PortalIDSFTestes.pages.operacoes
 
         public async Task EnviarOperacaoCSV()
         {
-            string caminhoArquivoCSVparaModificar = GetPath();
+            string caminhoArquivoCSVparaModificar = Utils.GetPath();
             //arquivoteste_operacoescsv_qa.csv
             await metodo.Clicar(el.BtnNovaOperacaoCSV, "Clicar no botão para enviar uma Nova Operação CSV");
             await metodo.ClicarNoSeletor(el.SelectFundoCSV, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            var arquivoComNomeModificado = metodo.ModificarCsv(GetPath() + "TesteOperacaoCSV.csv", caminhoArquivoCSVparaModificar);
+            var arquivoComNomeModificado = metodo.ModificarCsv(Utils.GetPath() + "TesteOperacaoCSV.csv", caminhoArquivoCSVparaModificar);
             await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, arquivoComNomeModificado, "Enviar Arquivo CSV no Input");
-            var caminhoLastro = GetPath() + "Arquivo teste.zip";
+            var caminhoLastro = Utils.GetPath() + "Arquivo teste.zip";
             await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
             await metodo.Escrever(el.CampoObservacao, data.ObservacaoCSV, "Escrever no campo observação ao enviar arquivo CSV");
             await metodo.Clicar(el.BtnEnviarOperacaoCSV, "Clicar no botão para Confirmar Envio uma Nova Operação CSV");
@@ -117,8 +107,8 @@ namespace PortalIDSFTestes.pages.operacoes
         {
             await metodo.Clicar(el.BtnNovaOperacaoCSV, "Clicar no botão para enviar uma Nova Operação CSV");
             await metodo.ClicarNoSeletor(el.SelectFundoCSV, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
-            await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, GetPath() + nomeCsvNegativo, "Enviar Arquivo CSV no Input");
-            var caminhoLastro = GetPath() + "Arquivo teste.zip";
+            await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, Utils.GetPath() + nomeCsvNegativo, "Enviar Arquivo CSV no Input");
+            var caminhoLastro = Utils.GetPath() + "Arquivo teste.zip";
             await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
             await metodo.Escrever(el.CampoObservacao, data.ObservacaoCSVNegativo, "Escrever no campo observação ao enviar arquivo CSV");
             await metodo.Clicar(el.BtnEnviarOperacaoCSV, "Clicar no botão para Confirmar Envio uma Nova Operação CSV");
@@ -134,9 +124,9 @@ namespace PortalIDSFTestes.pages.operacoes
                 await metodo.Clicar(el.BtnNovaOperacaoCSV, "Clicar no botão para enviar uma Nova Operação CSV");
                 await metodo.ClicarNoSeletor(el.SelectFundoCSV, "54638076000176", "Selecionar Fundo Zitec Tecnologia LTDA");
 
-                await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, GetPath() + nomeCsv, "Enviar Arquivo CSV no Input");
+                await metodo.EnviarArquivo(el.EnviarOperacaoInputCSV, Utils.GetPath() + nomeCsv, "Enviar Arquivo CSV no Input");
 
-                var caminhoLastro = GetPath() + "Arquivo teste.zip";
+                var caminhoLastro = Utils.GetPath() + "Arquivo teste.zip";
                 await metodo.EnviarArquivo(el.InputEnviarLastro, caminhoLastro, "Enviar Lastro no Input");
 
                 await metodo.Escrever(el.CampoObservacao, data.ObservacaoCSVNegativo, "Escrever no campo observação ao enviar arquivo CSV");

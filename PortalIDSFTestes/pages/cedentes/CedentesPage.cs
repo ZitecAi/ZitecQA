@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using PortalIDSFTestes.data.cedentes;
 using PortalIDSFTestes.elementos.cedentes;
@@ -23,14 +22,7 @@ namespace PortalIDSFTestes.pages.cedentes
             this.page = page;
             metodo = new Utils(page);
         }
-        public static string GetPath()
-        {
-            var envPath = Environment.GetEnvironmentVariable("PORTAL_PATH");
-            ConfigurationManager config = new ConfigurationManager();
-            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
-            string path = config["Paths:Arquivo"].ToString() ?? envPath;
-            return path;
-        }
+
 
         public async Task ValidarAcentosCedentesPage()
         {
@@ -47,7 +39,7 @@ namespace PortalIDSFTestes.pages.cedentes
             string cnpjTest = DataGenerator.Generate(DocumentType.Cnpj);
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
             await page.Locator(el.InputNovoCedente).SetInputFilesAsync(
-            GetPath() + "54638076000176_52721175000191_N.zip",
+            Utils.GetPath() + "54638076000176_52721175000191_N.zip",
             new LocatorSetInputFilesOptions { Timeout = 120_000 });
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar mensagem Ação realizada com sucesso presente na tela");
 
@@ -140,7 +132,7 @@ namespace PortalIDSFTestes.pages.cedentes
         public async Task CadastrarCedenteNegativo(string nomeArquivoNegativo)
         {
             await metodo.Clicar(el.BtnNovoCedente, "Clicar no botão para cadastrar novo Cedente.");
-            await metodo.EnviarArquivo(el.InputNovoCedente, GetPath() + "CedentesNegativos/" + nomeArquivoNegativo, "Enviar arquivo no input para cadastrar novo cedente");
+            await metodo.EnviarArquivo(el.InputNovoCedente, Utils.GetPath() + "CedentesNegativos/" + nomeArquivoNegativo, "Enviar arquivo no input para cadastrar novo cedente");
             await metodo.ValidarMsgRetornada(el.MsgErroRetornada, "Validar mensagem Erro ao cadastrar Cedente presente na tela");
         }
 

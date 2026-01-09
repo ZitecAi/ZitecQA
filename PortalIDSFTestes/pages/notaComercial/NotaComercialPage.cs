@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using PortalIDSFTestes.data.notaComercial;
 using PortalIDSFTestes.elementos.notaComercial;
@@ -16,14 +15,6 @@ namespace PortalIDSFTestes.pages.notaComercial
         {
             this.page = page;
             metodo = new Utils(page);
-        }
-        public static string GetPath()
-        {
-            var envPath = Environment.GetEnvironmentVariable("PORTAL_PATH");
-            ConfigurationManager config = new ConfigurationManager();
-            config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
-            string path = config["Paths:Arquivo"].ToString() ?? envPath;
-            return path;
         }
 
         public async Task ValidarAcentosNotaComercialPage()
@@ -81,7 +72,7 @@ namespace PortalIDSFTestes.pages.notaComercial
             //sessão Documentos
             await metodo.Clicar(el.SessaoDocumentos, "Clicar na sessão Documentos");
             await metodo.Clicar(el.BtnAddDocumento, "Clicar no botão Adicionar Documento");
-            await metodo.EnviarArquivo(el.InputFileNotaComercial, GetPath() + "Arquivo teste 2.pdf", "Enviar Arquivo no input");
+            await metodo.EnviarArquivo(el.InputFileNotaComercial, Utils.GetPath() + "Arquivo teste 2.pdf", "Enviar Arquivo no input");
             await metodo.ClicarNoSeletor(el.SelectTipoDocumento, "cpf", "Selecionar tipo Documento na sessão Documentos");
             await metodo.Clicar(el.BtnAtualizarDocumento, "Clicar no botão Atualizar Documento");
             await metodo.Clicar(el.BtnSalvarMudancas, "Clicar no botão Salvar Mudanças");
