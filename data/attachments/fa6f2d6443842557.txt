@@ -1,6 +1,0 @@
-✅ Arquivo enviado com sucesso
-×
-Problemas com o arquivo: _49624866830_N.zip
-Problemas identificados:
-CNPJ do Fundo inválido.
-Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Em_Branco_Passed_20260113_163520.webm (547375 bytes)
