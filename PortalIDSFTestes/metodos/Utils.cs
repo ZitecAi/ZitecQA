@@ -51,8 +51,6 @@ namespace PortalIDSFTestes.metodos
             {
                 throw new PlaywrightException("Não foi possivel Encontrar o Elemento: " + locator + " Para escrever no passo: " + passo);
             }
-
-
         }
         [AllureStep("Clicar - no passo: {passo}")]
         public async Task Clicar(string locator, string passo)
