@@ -1,0 +1,27 @@
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico	Cadastro	Usuário	Observações	Ações
+6394	13/01/2026 12:45	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 5840	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	QA - teste	Teste NUnit	     
+Contrato reprovado com sucesso!
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico	Cadastro	Usuário	Observações	Ações
+6394	13/01/2026 12:45	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 5840	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	QA - teste	Teste NUnit	     
+Reprovado
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_AtivosTest_Deve_Reprovar_Por_Gestor_Passed_20260113_124631.webm (1897819 bytes)

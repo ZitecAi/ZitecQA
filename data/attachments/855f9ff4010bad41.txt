@@ -1,0 +1,30 @@
+✅ Texto encontrado: ADAMANTUS FIDC	MIXRIO DISTRIBUIDORA DE ALIMENTOS LTDA - CNPJ: 39.526.632/0001-29	13/01/2026 11:59:12	Formalização 	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	FRANCISCO PINHEIRO DANTAS - CPF: 303.223.081-00	13/01/2026 09:41:25	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	Helder de Souza Cavalcante - CPF: 837.136.543-87	13/01/2026 09:35:53	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	Francisca Rodrigues Dos Passos - CPF: 967.712.081-68	13/01/2026 09:08:23	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	OSVALDO PINTO DE OLIVEIRA - CPF: 328.717.671-49	13/01/2026 08:58:49	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+ADAMANTUS FIDC	FENIX PARAFUSOS E FERRAMENTAS EM GERAL LTDA - CNPJ: 60.864.301/0001-95	13/01/2026 09:45:02	Pendência	1	Em espera	Rejeitado  	Aprovado  	
+ 
+
+Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	12/01/2026 20:17:14	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+BOREAL I FIDC COMERCIAL	LS SERVICOS VERTICAIS LTDA - CNPJ: 23.275.499/0001-45	13/01/2026 08:52:28	Formalização	2	Aprovado	Aprovado  	Aprovado  	
+ 
+
+AG ANTECIPA FIDC	MONARO CAMISETAS LTDA - CNPJ: 15.474.159/0001-15	12/01/2026 16:06:18	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+QLZ JUD 01 FIDC	FERNANDA DOS SANTOS NEVES - CPF: 389.411.328-60	12/01/2026 14:58:23	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Excluir_Cedente_Failed_20260113_125109.webm (2972475 bytes)
