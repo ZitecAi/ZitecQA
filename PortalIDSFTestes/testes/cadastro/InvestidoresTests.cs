@@ -1,5 +1,6 @@
-﻿using Allure.NUnit;
+using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using Microsoft.Playwright;
 using PortalIDSFTestes.elementos.cadastro;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.cadastro;
@@ -47,6 +48,36 @@ namespace PortalIDSFTestes.testes.cadastro
         {
             var investidores = new InvestidoresPage(page);
             await investidores.ValidarAcentosInvestidores();
+        }
+        [Test, Order(1)]
+        [AllureName("Nao Deve Conter Acentos Quebrados Investidores")]
+        [Ignore("Teste em desenvolvimento")]
+        public async Task Deve_Registrar_Cotista()
+        {
+            var investidores = new InvestidoresPage(page);
+
+            await investidores.PesquisarCotista();
+            await investidores.ClicarLinkFormulario();
+            await investidores.ValidarMensagemLinkCopiado();
+            IPage novaPagina = await investidores.AbrirFormularioNovaGuia();
+            var investidoreForm = new InvestidoresPage(novaPagina);
+            await investidoreForm.PreencherDadosDoInvestidor(novaPagina);
+            await investidoreForm.AvancarEtapaFormulario("Endereço");
+            await investidoreForm.PreencherEnderecoDoCotista();
+            await investidoreForm.AvancarEtapaFormulario("Situação Patrimonial");
+            await investidoreForm.PreencherSituacaoPatrimonial();
+            await investidoreForm.AvancarEtapaFormulario("Representantes");
+            await investidoreForm.AvancarEtapaFormulario("Conta Bancaria");
+            await investidoreForm.AvancarEtapaFormulario("Suitability");
+            await investidoreForm.PreencherSuitability();
+            await investidoreForm.AvancarEtapaFormulario("Suitability Finalizado");
+            await investidoreForm.AvancarEtapaFormulario("Termos e Condições");
+            await investidoreForm.AceitarTermos();
+            await investidoreForm.AvancarEtapaFormulario("Enviar Formulários");
+            await investidoreForm.EnviarFormulario();
+
+
+
         }
     }
 }

@@ -49,5 +49,8 @@ namespace PortalIDSFTestes.testes.notas
             var notasInternas = new NotasInternasPage(page);
             await notasInternas.ValidarAcentosPagamentosNotasInternasPage();
         }
+
+
+
     }
 }
