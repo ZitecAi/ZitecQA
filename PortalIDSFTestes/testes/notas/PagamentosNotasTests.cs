@@ -1,5 +1,6 @@
 ﻿using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using PortalIDSFTestes.data.notas;
 using PortalIDSFTestes.elementos.notas;
 using PortalIDSFTestes.metodos;
 using PortalIDSFTestes.pages.login;
@@ -20,6 +21,7 @@ namespace PortalIDSFTestes.testes.notas
     {
         Utils metodo;
         PagamentosNotasElements el = new PagamentosNotasElements();
+
 
         [SetUp]
         [AllureBefore]
@@ -55,11 +57,46 @@ namespace PortalIDSFTestes.testes.notas
         [AllureName("Deve Criar Nova Nota Com Sucesso")]
         public async Task Deve_Criar_Nova_Nota_Interna_Com_Sucesso()
         {
+            var data = new PagamentosNotasData();
             var pagamentoNotas = new PagamentosNotasPage(page);
             await pagamentoNotas.ClicarBtnNovoNotasInternasPage();
             await pagamentoNotas.PreencherFormularioNovaNota();
             await pagamentoNotas.ClicarBtnEnviarNota();
-            await pagamentoNotas.ValidarTextoPresente();
+            await pagamentoNotas.ValidarTextoPresente(data.MsgSucessoNotaEnviada);
+        }
+        [Test, Order(3)]
+        [AllureName("Deve Consultar nota com sucesso")]
+        public async Task Deve_Consultar_Nota_Criada_Com_Sucesso()
+        {
+            var data = new PagamentosNotasData();
+            var pagamentoNotas = new PagamentosNotasPage(page);
+            await pagamentoNotas.ConsultarNotaCriada();
+        }
+        [Test, Order(4)]
+        [AllureName("Deve Aprovar nota com sucesso")]
+        public async Task Deve_Aprovar_Nota_Com_Sucesso()
+        {
+            var data = new PagamentosNotasData();
+            var pagamentoNotas = new PagamentosNotasPage(page);
+            await pagamentoNotas.ConsultarNotaCriada();
+            await pagamentoNotas.AbrirModalAprovacao();
+            await pagamentoNotas.ClicarBtnAprovado();
+            await pagamentoNotas.SubmeterStatusNota();
+            await pagamentoNotas.ValidarTextoPresente(data.MsgSucessoNotaAtualizadaStatus);
+            await pagamentoNotas.ValidarStatusNaTabela(data.StatusAguardandoPagamento);
+        }
+        [Test, Order(5)]
+        [AllureName("Deve Reprovar Pagamento da Nota com sucesso")]
+        public async Task Deve_Reprovar_Pagamento_Nota_Com_Sucesso()
+        {
+            var data = new PagamentosNotasData();
+            var pagamentoNotas = new PagamentosNotasPage(page);
+            await pagamentoNotas.ConsultarNotaCriada();
+            await pagamentoNotas.AbrirModalPagamento();
+            await pagamentoNotas.InserirObservacaoPagamento();
+            await pagamentoNotas.ClicarBtnReprovarNota();
+            await pagamentoNotas.ValidarTextoPresente(data.MsgSucessoNotaAtualizadaStatus);
+            await pagamentoNotas.ValidarStatusNaTabela(data.StatusReprovadoPelaLiquidacao);
         }
     }
 }
