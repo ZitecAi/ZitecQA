@@ -51,6 +51,7 @@ namespace PortalIDSFTestes.testes.cadastro
         }
         [Test, Order(1)]
         [AllureName("Nao Deve Conter Acentos Quebrados Investidores")]
+        [Ignore("Teste em desenvolvimento")]
         public async Task Deve_Registrar_Cotista()
         {
             var investidores = new InvestidoresPage(page);

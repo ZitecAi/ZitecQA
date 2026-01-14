@@ -470,7 +470,6 @@ namespace PortalIDSFTestes.metodos
             try
             {
                 Assert.IsTrue(File.Exists(caminhoArquivo), $"❌ Arquivo para envio não encontrado: {caminhoArquivo}");
-
                 await page.Locator(locator).SetInputFilesAsync(caminhoArquivo, new LocatorSetInputFilesOptions { Timeout = 120_000 });
                 Console.WriteLine("✅ Arquivo enviado com sucesso");
             }
@@ -730,6 +729,22 @@ namespace PortalIDSFTestes.metodos
                 Console.WriteLine("Erro ao modificar o CSV: " + ex.Message);
                 return string.Empty;
             }
+        }
+
+        public async Task ValidarElementoHabilitado(string locator, string passo)
+        {
+            try
+            {
+                var element = page.Locator(locator);
+                await Expect(element).ToBeVisibleAsync(new LocatorAssertionsToBeVisibleOptions { Timeout = 90000 });
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+                await Expect(element).ToBeEnabledAsync(new LocatorAssertionsToBeEnabledOptions { Timeout = 90000 });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Não foi possivel validar elemento habilitado: {locator}, no passo: {passo}" + ex.Message);
+            }
+
         }
 
         private static string GerarNumeroAleatorio()

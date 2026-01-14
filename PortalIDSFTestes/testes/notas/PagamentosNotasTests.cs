@@ -50,5 +50,16 @@ namespace PortalIDSFTestes.testes.notas
             var pagamentosNotas = new PagamentosNotasPage(page);
             await pagamentosNotas.ValidarAcentosPagamentosNotasPage();
         }
+
+        [Test, Order(2)]
+        [AllureName("Deve Criar Nova Nota Com Sucesso")]
+        public async Task Deve_Criar_Nova_Nota_Interna_Com_Sucesso()
+        {
+            var pagamentoNotas = new PagamentosNotasPage(page);
+            await pagamentoNotas.ClicarBtnNovoNotasInternasPage();
+            await pagamentoNotas.PreencherFormularioNovaNota();
+            await pagamentoNotas.ClicarBtnEnviarNota();
+            await pagamentoNotas.ValidarTextoPresente();
+        }
     }
 }

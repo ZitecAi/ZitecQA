@@ -1,12 +1,6 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.dashboards;
 using PortalIDSFTestes.elementos.notas;
 using PortalIDSFTestes.metodos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.pages.notas
 {
@@ -26,5 +20,9 @@ namespace PortalIDSFTestes.pages.notas
         {
             await metodo.ValidarAcentosAsync(page, "Validar acentos na página de Notas Internas ");
         }
+
+
+
+
     }
 }
