@@ -1,0 +1,30 @@
+✅ Texto encontrado: PRECATO IV FIDC	CRISTIANE BARBOSA DE OLIVEIRA - CPF: 051.951.097-61	14/01/2026 10:41:23	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	VICENTE HENRIQUE DA SILVA - CPF: 014.184.638-09	14/01/2026 10:36:52	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	Cleuber Luiz Leocadio - CPF: 572.096.186-00	14/01/2026 10:32:10	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+Z5 FIDC NP	NADU CONFECCOES LTDA - CNPJ: 55.107.519/0001-65	14/01/2026 10:31:44	Análise	2	Em espera	Aprovado  	Aprovado  	
+ 
+
+Z5 II FIDC	NADU CONFECCOES LTDA - CNPJ: 55.107.519/0001-65	14/01/2026 10:38:49	Análise	2	Em espera	Aprovado  	Aprovado  	
+ 
+
+Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	13/01/2026 20:17:48	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+BARCELONA FIDC	VERANILCE DE CARVALHO RECICLAGEM - CNPJ: 03.470.447/0001-12	13/01/2026 16:37:28	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+FRV23 FIDC	VACCARO LUIZA EMPREENDIMENTOS IMOBILIARIOS LTDA - CNPJ: 43.400.911/0001-19	13/01/2026 17:18:16	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+SINAI DIRECT FIDC	Dawson Meyer Neuton de Lima - CPF: 348.798.238-21	13/01/2026 16:04:47	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+BARCELONA FIDC	MEDH DISTRIBUIDORA DE MEDICAMENTOS LTDA - CNPJ: 18.917.657/0001-83	13/01/2026 17:03:21	Análise	2	Em espera	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Enviar_Contrato_Mae_Failed_20260114_110525.webm (2760450 bytes)
