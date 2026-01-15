@@ -1,0 +1,30 @@
+✅ Texto encontrado: PRECATO IV FIDC	Jose Orlando Sousa Barros - CPF: 006.928.868-26	15/01/2026 13:45:11	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+4P FIDC	TRANSPORTES DALLA VECCHIA LTDA - CNPJ: 09.428.316/0001-53	15/01/2026 13:12:51	Análise	1	Em espera	Em espera 	Em espera 	
+ 
+
+WH INVEST FIDC	WAK COMERCIO EXTERIOR LTDA - CNPJ: 22.306.299/0001-40	15/01/2026 12:23:20	Pendência	1	Em espera	Rejeitado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	JANETE AUGUSTA DA SILVA AURELIO - CPF: 114.120.838-50	15/01/2026 11:01:55	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	RONALDO SANTORO E ERICK CARDOSO ADVOGADOS - CNPJ: 26.101.821/0001-08	15/01/2026 10:52:38	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	Maria Angelica Torres - CPF: 657.439.626-34	15/01/2026 10:49:19	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	JOSE FERNANDO DOS SANTOS - CPF: 083.592.468-82	15/01/2026 10:31:02	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	DALVA DE BARROS DAVILA - CPF: 085.426.002-15	15/01/2026 10:00:36	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	Fernando Jose De Lima - CPF: 030.247.584-29	15/01/2026 09:35:01	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	14/01/2026 20:43:00	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Excluir_Cedente_Failed_20260115_140900.webm (3093361 bytes)
