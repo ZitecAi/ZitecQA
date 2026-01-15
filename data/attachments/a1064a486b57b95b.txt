@@ -1,0 +1,445 @@
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico	Cadastro	Usuário	Observações	Ações
+6477	15/01/2026 15:23	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 1430	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	QA - teste	Teste NUnit	     
+6476	15/01/2026 15:19	2	Zitec Tecnologia LTDA	Teste NUnit 8832	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6475	15/01/2026 15:10	2	LCBANK FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRI...	Leidiane Santos Quinto	AcoesJudiciais - Precatório	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Milena Freitas	Código: 2757	     
+6474	15/01/2026 15:06	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 7626	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6473	15/01/2026 15:01	2	Zitec Tecnologia LTDA	Teste NUnit 3903	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6472	15/01/2026 14:57	2	BLUE OCEAN ARB FI MULTIMERCADO CREDITO PRIVADO INV...	BLUE OCEAN ARB FIM	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	André Carneiro	- Automação de pagamentos de ativos por PIX - Aut...	     
+6471	15/01/2026 14:49	2	LCBANK FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRI...	Jacilene Leopoldina da Silva	AcoesJudiciais - Precatório	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Milena Freitas	Código: 2758	     
+6470	15/01/2026 14:35	2	BLUE OCEAN ARB FI MULTIMERCADO CREDITO PRIVADO INV...	BLUE OCEAN ARB FIM	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	André Carneiro	- Automação de pagamentos de ativos por PIX - Aut...	     
+6469	15/01/2026 14:33	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 38	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6468	15/01/2026 14:29	2	Zitec Tecnologia LTDA	Teste NUnit 4500	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6467	15/01/2026 14:27	2	BLUE OCEAN ARB FI MULTIMERCADO CREDITO PRIVADO INV...	BLUE OCEAN ARB FIM	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	André Carneiro	- Automação de pagamentos de ativos por PIX - Aut...	     
+6466	15/01/2026 14:11	2	LCBANK FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRI...	Marcio Pedreira Ferreira	AcoesJudiciais - Precatório	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Milena Freitas	Código: 2748	     
+6465	15/01/2026 14:10	2	CONTEA CAPITAL TRENTO FUNDO DE INVESTIMENTO EM PAR...	TENNO CONSULTORIA E INVESTIMENTOS LTDA	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Yan Caique Pereira de Assis	- Automação de pagamentos de ativos por PIX - Aut...	     
+6464	15/01/2026 14:05	2	BLUE OCEAN ARB FI MULTIMERCADO CREDITO PRIVADO INV...	BLUE OCEAN ARB FIM	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	André Carneiro	- Automação de pagamentos de ativos por PIX - Aut...	     
+6463	15/01/2026 14:01	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 6399	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6462	15/01/2026 13:57	2	Zitec Tecnologia LTDA	Teste NUnit 8250	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6461	15/01/2026 13:47	2	LCBANK FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRI...	Reanny Matos Miranda	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Milena Freitas	Código: 2750 - Automação de pagamentos de ativos ...	     
+6460	15/01/2026 13:38	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 5780	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6459	15/01/2026 13:34	2	Zitec Tecnologia LTDA	Teste NUnit 5294	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6458	15/01/2026 13:25	2	LCBANK FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRI...	Luciano Pereira do Prado	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Milena Freitas	Código: 2752 - Automação de pagamentos de ativos p...	     
+Contrato reprovado com sucesso!
+✅ Texto encontrado: ID	Criação	Prazo para Análise	Fundo	Destinatário	Tipo de Contrato	Status	Garantia	Gestor	Liquidação	Risco/Administração	Jurídico	Cadastro	Usuário	Observações	Ações
+6477	15/01/2026 15:23	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 1430	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	QA - teste	Teste NUnit	     
+6476	15/01/2026 15:19	2	Zitec Tecnologia LTDA	Teste NUnit 8832	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6475	15/01/2026 15:10	2	LCBANK FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRI...	Leidiane Santos Quinto	AcoesJudiciais - Precatório	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Milena Freitas	Código: 2757	     
+6474	15/01/2026 15:06	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 7626	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6473	15/01/2026 15:01	2	Zitec Tecnologia LTDA	Teste NUnit 3903	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6472	15/01/2026 14:57	2	BLUE OCEAN ARB FI MULTIMERCADO CREDITO PRIVADO INV...	BLUE OCEAN ARB FIM	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	André Carneiro	- Automação de pagamentos de ativos por PIX - Aut...	     
+6471	15/01/2026 14:49	2	LCBANK FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRI...	Jacilene Leopoldina da Silva	AcoesJudiciais - Precatório	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Milena Freitas	Código: 2758	     
+6470	15/01/2026 14:35	2	BLUE OCEAN ARB FI MULTIMERCADO CREDITO PRIVADO INV...	BLUE OCEAN ARB FIM	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	André Carneiro	- Automação de pagamentos de ativos por PIX - Aut...	     
+6469	15/01/2026 14:33	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 38	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6468	15/01/2026 14:29	2	Zitec Tecnologia LTDA	Teste NUnit 4500	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6467	15/01/2026 14:27	2	BLUE OCEAN ARB FI MULTIMERCADO CREDITO PRIVADO INV...	BLUE OCEAN ARB FIM	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	André Carneiro	- Automação de pagamentos de ativos por PIX - Aut...	     
+6466	15/01/2026 14:11	2	LCBANK FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRI...	Marcio Pedreira Ferreira	AcoesJudiciais - Precatório	ANALISE	Não Possui	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	
+Análise
+	Milena Freitas	Código: 2748	     
+6465	15/01/2026 14:10	2	CONTEA CAPITAL TRENTO FUNDO DE INVESTIMENTO EM PAR...	TENNO CONSULTORIA E INVESTIMENTOS LTDA	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Yan Caique Pereira de Assis	- Automação de pagamentos de ativos por PIX - Aut...	     
+6464	15/01/2026 14:05	2	BLUE OCEAN ARB FI MULTIMERCADO CREDITO PRIVADO INV...	BLUE OCEAN ARB FIM	OutrosAtivos - Outros Tipos de Contratos	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	André Carneiro	- Automação de pagamentos de ativos por PIX - Aut...	     
+6463	15/01/2026 14:01	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 6399	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6462	15/01/2026 13:57	2	Zitec Tecnologia LTDA	Teste NUnit 8250	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6461	15/01/2026 13:47	2	LCBANK FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRI...	Reanny Matos Miranda	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Milena Freitas	Código: 2750 - Automação de pagamentos de ativos ...	     
+6460	15/01/2026 13:38	2	Zitec Tecnologia LTDA	Ativo Reprovado Teste NUnit 5780	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	PENDENCIA	Não Possui	
+Reprovado
+	
+Análise
+	
+Reprovado
+	
+Reprovado
+	
+Reprovado
+	QA - teste	Teste NUnit	     
+6459	15/01/2026 13:34	2	Zitec Tecnologia LTDA	Teste NUnit 5294	AtivosImobiliarios - Imovel(Terrenos/ Prédios/ Casas)	AGUARDANDO ASSINATURAS	Não Possui	
+Aguar. Ass.
+	
+Análise
+	
+Aprovado
+	
+Aprovado
+	
+Aprovado
+	QA - teste	Teste NUnit	     
+6458	15/01/2026 13:25	2	LCBANK FUNDO DE INVESTIMENTO EM DIREITOS CREDITÓRI...	Luciano Pereira do Prado	AcoesJudiciais - Precatório	PAGO	Não Possui	
+Aprovado
+	
+Aprovado
+	
+Análise
+	
+Análise
+	
+Análise
+	Milena Freitas	Código: 2752 - Automação de pagamentos de ativos p...	     
+Reprovado
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_AtivosTest_Deve_Reprovar_Por_Gestor_Passed_20260115_152332.webm (845594 bytes)
