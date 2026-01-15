@@ -1,0 +1,33 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	15/01/2026	N/A	20/01/2026 00:00:00	ABEL 33 FUNDO DE INVESTIMENTO IMOBILIÁRIO DE RE...	DESPESAS_SERVICOS_NF 921364357 NEOENERGIA - SIT...	DESPESAS_SERVICOS	financeiro@f2gbrasil.com.br	R$ 23.291,25	
+Aguardando Aprovação da Custódia
+	energia - sitio caju	
+	15/01/2026	N/A	15/01/2026 00:00:00	PROSPER INVEST FUNDO DE INVESTIMENTO EM DIREITO...	CVM_BOL_PROSPER INVEST FUNDO DE INVESTIMENTO EM...	CVM	luiz.moraes@idsf.com.br	R$ 1.102,27	
+Aguardando Aprovação da Custódia
+	Taxa de Registro Inicial	
+	15/01/2026	N/A	16/01/2026 00:00:00	PRECATO IV FUNDO DE INVESTIMENTO EM DIREITOS CR...	NotaDefault_NF - VICENTE HENRIQUE DA SILVA.pdf	NotaDefault	jose.santos@taginvest.com.br	R$ 1.299,66	
+Aguardando Aprovação da Custódia
+	PAGAMENTO BROKER - 3508/2027 Baixara da Provisão	
+	15/01/2026	15/01/2026	15/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Pagamento.
+	Teste Pagamento Nota QA 314	
+	15/01/2026	N/A	15/01/2026 00:00:00	PRISMA FUNDO DE INVESTIMENTO MULTIMERCADO CREDI...	CVM_BOL_PRISMA FUNDO DE INVESTIMENTO MULTIMERCA...	CVM	luiz.moraes@idsf.com.br	R$ 12.444,13	
+Aguardando Aprovação da Custódia
+	Taxa de Competencia 2025	
+	15/01/2026	N/A	15/01/2026 00:00:00	PRISMA FUNDO DE INVESTIMENTO MULTIMERCADO CREDI...	CVM_BOL_PRISMA FUNDO DE INVESTIMENTO MULTIMERCA...	CVM	luiz.moraes@idsf.com.br	R$ 1.066,98	
+Aguardando Aprovação da Custódia
+	Taxa de Registro Inicial	
+	15/01/2026	N/A	15/01/2026 00:00:00	PODIUM FUNDO DE INVESTIMENTO MULTIMERCADO RL - ...	CVM_BOL_PODIUM FUNDO DE INVESTIMENTO MULTIMERCA...	CVM	luiz.moraes@idsf.com.br	R$ 1.102,27	
+Aguardando Aprovação da Custódia
+	Taxa de Registro Inicial	
+	15/01/2026	N/A	15/01/2026 00:00:00	ORION FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	CVM_BOL_ORION FUNDO DE INVESTIMENTO EM DIREITOS...	CVM	luiz.moraes@idsf.com.br	R$ 9.333,08	
+Aguardando Aprovação da Custódia
+	Taxa de Competencia 2025	
+	15/01/2026	N/A	15/01/2026 00:00:00	ORION FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	CVM_BOL_ORION FUNDO DE INVESTIMENTO EM DIREITOS...	CVM	luiz.moraes@idsf.com.br	R$ 4.573,81	
+Aguardando Aprovação da Custódia
+	Taxa de Competencia 2024	
+	15/01/2026	N/A	15/01/2026 00:00:00	ORION FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	CVM_BOL_ORION FUNDO DE INVESTIMENTO EM DIREITOS...	CVM	luiz.moraes@idsf.com.br	R$ 1.231,10	
+Aguardando Aprovação da Custódia
+	Taxa de Registro Inicial	
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Reprovar_Pagamento_Nota_Com_Sucesso_Passed_20260115_133505.webm (1494058 bytes)
