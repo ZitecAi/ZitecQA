@@ -1,2 +1,0 @@
-Contrato recebido com sucesso!
-Vídeo anexado: PortalIDSFTestes_testes_operacoes_AtivosTest_Deve_Cadastrar_Ativo_Para_Reprovar_Passed_20260115_140126.webm (878671 bytes)

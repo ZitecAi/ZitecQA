@@ -1,0 +1,33 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	15/01/2026	15/01/2026	15/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Pagamento.
+	Teste Pagamento Nota QA 3195	
+	15/01/2026	15/01/2026	15/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 7734	
+	15/01/2026	15/01/2026	15/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 314	
+	15/01/2026	15/01/2026	15/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 2172	
+	15/01/2026	15/01/2026	15/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 9971	
+	15/01/2026	15/01/2026	15/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Pagamento.
+	Teste Pagamento Nota QA 7403	
+	14/01/2026	14/01/2026	14/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	NotaDefault_ValidacaoLayout_58881213.pdf	NotaDefault	ce@zitec.ai	R$ 1,00	
+Reprovado pela Liquidação
+	teste	
+	29/12/2025	29/12/2025	29/12/2025 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	ORGANIZACAO_FUNDO_SaldosAplicacoes_56938161_085...	ORGANIZACAO_FUNDO	fr@zitec.ai	R$ 1,00	
+Reprovado pela Liquidação
+	.	
+	29/12/2025	29/12/2025	29/12/2025 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	ORGANIZACAO_FUNDO_ValidacaoMovimento_58875725.pdf	ORGANIZACAO_FUNDO	fr@zitec.ai	R$ 1,00	
+Reprovado pela Liquidação
+	.	
+	30/10/2025	30/10/2025	30/10/2025 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	ASSEMBLEIA_MovimentosValidos20251027_010359_541...	ASSEMBLEIA	co@zitec.ai	R$ 1,00	
+Comprovante disponível
+	Teste	
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Reprovar_Pagamento_Nota_Com_Sucesso_Passed_20260115_143043.webm (2058901 bytes)
