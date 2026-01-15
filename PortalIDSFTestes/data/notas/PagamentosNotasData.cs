@@ -16,6 +16,9 @@
         public static string Observacao { get; } = "Teste Pagamento Nota QA " + new Random().Next(0, 9999);
         public string StatusAguardandoPagamento { get; } = "Aguardando Pagamento.";
         public string StatusReprovadoPelaLiquidacao { get; } = "Reprovado pela Liquidação";
+        public string EventoNotaRegistradaNoPortal { get; } = "Nota registrada no portal";
+        public string EventoNotaAprovadaPelaCustodia { get; } = "Nota foi aprovada pela Custódia";
+        public string EventoNotaReprovadaPelaCustodia { get; } = "Nota foi reprovada pela Custódia";
 
 
     }

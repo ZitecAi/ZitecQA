@@ -71,8 +71,19 @@ namespace PortalIDSFTestes.testes.notas
             var data = new PagamentosNotasData();
             var pagamentoNotas = new PagamentosNotasPage(page);
             await pagamentoNotas.ConsultarNotaCriada();
+            await pagamentoNotas.AbrirHistoricoDeEventos();
+            await pagamentoNotas.ValidarEventoNoHistoricoDeEventos(data.EventoNotaRegistradaNoPortal);
         }
         [Test, Order(4)]
+        [AllureName("Deve Baixar nota com sucesso")]
+        public async Task Deve_Baixar_Nota_Criada_Com_Sucesso()
+        {
+            var data = new PagamentosNotasData();
+            var pagamentoNotas = new PagamentosNotasPage(page);
+            await pagamentoNotas.ConsultarNotaCriada();
+            await pagamentoNotas.GerarNota();
+        }
+        [Test, Order(5)]
         [AllureName("Deve Aprovar nota com sucesso")]
         public async Task Deve_Aprovar_Nota_Com_Sucesso()
         {
@@ -84,8 +95,10 @@ namespace PortalIDSFTestes.testes.notas
             await pagamentoNotas.SubmeterStatusNota();
             await pagamentoNotas.ValidarTextoPresente(data.MsgSucessoNotaAtualizadaStatus);
             await pagamentoNotas.ValidarStatusNaTabela(data.StatusAguardandoPagamento);
+            await pagamentoNotas.AbrirHistoricoDeEventos();
+            await pagamentoNotas.ValidarEventoNoHistoricoDeEventos(data.EventoNotaAprovadaPelaCustodia);
         }
-        [Test, Order(5)]
+        [Test, Order(6)]
         [AllureName("Deve Reprovar Pagamento da Nota com sucesso")]
         public async Task Deve_Reprovar_Pagamento_Nota_Com_Sucesso()
         {
@@ -97,6 +110,8 @@ namespace PortalIDSFTestes.testes.notas
             await pagamentoNotas.ClicarBtnReprovarNota();
             await pagamentoNotas.ValidarTextoPresente(data.MsgSucessoNotaAtualizadaStatus);
             await pagamentoNotas.ValidarStatusNaTabela(data.StatusReprovadoPelaLiquidacao);
+            await pagamentoNotas.AbrirHistoricoDeEventos();
+            await pagamentoNotas.ValidarEventoNoHistoricoDeEventos(data.EventoNotaReprovadaPelaCustodia);
         }
     }
 }

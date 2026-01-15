@@ -113,5 +113,24 @@ namespace PortalIDSFTestes.pages.notas
             return this;
         }
 
+        public async Task<PagamentosNotasPage> AbrirHistoricoDeEventos()
+        {
+            await metodo.Clicar(el.BtnHistoricoDeEventos(PagamentosNotasData.Observacao), "Clicar no botão para abrir o histórico de eventos");
+            return this;
+        }
+        public async Task<PagamentosNotasPage> GerarNota()
+        {
+            await metodo.ValidateDownloadAndLength(page, el.BtnDownloadGerarNota(PagamentosNotasData.Observacao), "Clicar no botão Gerar Nota e validar download");
+            return this;
+        }
+
+        public async Task<PagamentosNotasPage> ValidarEventoNoHistoricoDeEventos(string evento)
+        {
+            await metodo.ValidarTextoDoElemento(el.TextoHistoricoDeEventos(evento), evento, $"Validar se o evento {evento} está presente no histórico de eventos");
+            return this;
+        }
+
+
+
     }
 }

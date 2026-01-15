@@ -24,6 +24,9 @@
         public string BtnSubmitStatus { get; } = "#statusButton";
         public string BarraDePesquisa { get; } = "//label//input[@type='search']";
         public string TabelaNotas { get; } = "#tabelaNotas";
+        public string BtnHistoricoDeEventos(string observacao) => $"//td[text()='{observacao}']/ancestor::tr//td[12]//button[1]";
+        public string BtnDownloadGerarNota(string observacao) => $"//td[text()='{observacao}']/ancestor::tr//td[12]//button[2]";
+        public string TextoHistoricoDeEventos(string textoEvento) => $"//li//h3[text()='{textoEvento}']";
 
     }
 }
