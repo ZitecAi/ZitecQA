@@ -1,0 +1,33 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	15/01/2026	N/A	15/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Aprovação da Custódia
+	Teste Pagamento Nota QA 3143	
+	15/01/2026	N/A	16/01/2026 00:00:00	SQUID FUNDO DE INVESTIMENTO EM DIRETOS CREDITÓR...	RATING_NFS-e 4936.pdf	RATING	fgouvea@blesscapital.com.br	R$ 28.769,31	
+Aguardando Aprovação da Custódia
+		
+	15/01/2026	N/A	16/01/2026 00:00:00	CONCRETO BEM REAL FUNDO DE INVESTIMENTO EM DIRE...	Taxa de Performace_NF 16 BEM REAL FUNDO - Taxa...	Taxa de Performace	contabilidade@concretaconsultoria.com	R$ 142.168,33	
+Aguardando Aprovação da Custódia
+	Pagamento a ser Realizado no dia 16/01/2025.	
+	15/01/2026	15/01/2026	15/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 3195	
+	15/01/2026	15/01/2026	15/01/2026 00:00:00	MONTREAL FUNDO DE INVESTIMENTO IMOBILIARIO RL -...	COBRANÇA_COBRANÇA_LOCAÇÃO DISTRATO.pdf	COBRANÇA	thaina@montrecon.com.br	R$ 500.000,00	
+Comprovante disponível
+	Instrumento particular de distrato parcial de l...	
+	15/01/2026	15/01/2026	15/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 7734	
+	15/01/2026	N/A	20/01/2026 00:00:00	ABEL 33 FUNDO DE INVESTIMENTO IMOBILIÁRIO DE RE...	DESPESAS_SERVICOS_NF 174437494 EQUATORIAL LAGO ...	DESPESAS_SERVICOS	financeiro@f2gbrasil.com.br	R$ 582,15	
+Aguardando Aprovação da Custódia
+	ENERGIA - FZ LAGO AZUL	
+	15/01/2026	N/A	15/01/2026 00:00:00	QC INVEST FUNDO DE INVESTIMENTO EM DIREITOS CRE...	CVM_BOL_QC INVEST FUNDO DE INVESTIMENTO EM DIRE...	CVM	luiz.moraes@idsf.com.br	R$ 9.333,08	
+Aguardando Aprovação da Custódia
+	Taxa de Competencia 2025	
+	15/01/2026	N/A	20/01/2026 00:00:00	ABEL 33 FUNDO DE INVESTIMENTO IMOBILIÁRIO DE RE...	DESPESAS_SERVICOS_NF 26075 SIGAON .pdf	DESPESAS_SERVICOS	financeiro@f2gbrasil.com.br	R$ 2.000,00	
+Aguardando Aprovação da Custódia
+	internet - sitio caju	
+	15/01/2026	N/A	15/01/2026 00:00:00	QC INVEST FUNDO DE INVESTIMENTO EM DIREITOS CRE...	CVM_BOL_QC INVEST FUNDO DE INVESTIMENTO EM DIRE...	CVM	luiz.moraes@idsf.com.br	R$ 1.047,82	
+Aguardando Aprovação da Custódia
+	Taxa de Registro Inicial	
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Aprovar_Nota_Com_Sucesso_Passed_20260115_150222.webm (1940582 bytes)
