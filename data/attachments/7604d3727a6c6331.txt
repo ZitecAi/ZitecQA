@@ -1,4 +1,0 @@
-×
-Sucesso!
-Ação executada com sucesso.
-Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Cadastrar_Cedente_Passed_20260116_112945.webm (992355 bytes)
