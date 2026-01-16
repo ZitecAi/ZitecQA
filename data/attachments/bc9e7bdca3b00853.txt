@@ -1,3 +1,0 @@
-Erro ao anexar vídeo: Could not find file 'D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\bin\Release\net8.0\videos\65cab3491b1908ef0e4b34614a5cccbd.webm'.
-   at System.IO.FileSystem.CopyFile(String sourceFullPath, String destFullPath, Boolean overwrite)
-   at PortalIDSFTestes.metodos.VideoHelper.AttachVideoAsync(IPage page, String testStatus) in D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\metodos\VideoHelper.cs:line 56
