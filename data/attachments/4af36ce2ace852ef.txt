@@ -1,0 +1,30 @@
+✅ Texto encontrado: Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	16/01/2026 11:30:45	Análise	1	Aprovado	Em espera 	Em espera 	
+ 
+
+KRAFT FIDC	TRIANGULO DO SOL AUTO ESTRADAS S.A - CNPJ: 02.509.186/0001-34	16/01/2026 10:53:41	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	SAMUEL ANDRE PEREIRA - CPF: 851.251.136-20	16/01/2026 10:52:47	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+QUANTHAS FIDC	TABOR PRODUCTS IND. E COM. LTDA - CNPJ: 20.182.490/0001-00	16/01/2026 11:06:05	Pendência	2	Em espera	Rejeitado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	FRANCISCO FRANCINALDO PEREIRA - CPF: 190.970.908-57	16/01/2026 10:17:01	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+MARINO FIDC	AZUL RAFIA INDUSTRIA E COMERCIO DE PRODUTOS PLASTICOS LTDA - CNPJ: 38.009.529/0001-49	16/01/2026 09:57:39	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	CARLOS MACHADO DE MELO - CPF: 164.448.748-90	16/01/2026 09:20:06	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	LEONARDO DOS SANTOS - CPF: 188.448.472-72	16/01/2026 09:00:53	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+BOREAL I FIDC COMERCIAL	LPO SERVICOS AERONAUTICOS LTDA - CNPJ: 63.526.585/0001-06	16/01/2026 09:29:40	Análise	2	Em espera	Aprovado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	Damiana Salete De Oliveira - CPF: 005.066.213-91	15/01/2026 16:32:38	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Aprovar_Cedente_nivel_Compliance_Passed_20260116_113132.webm (1121829 bytes)
