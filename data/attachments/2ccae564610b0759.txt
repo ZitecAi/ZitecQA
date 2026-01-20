@@ -1,0 +1,34 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	20/01/2026	N/A	20/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Aprovação da Custódia
+	Teste Pagamento Nota QA 9275	
+	20/01/2026	N/A	20/01/2026 00:00:00	TELCOBANK I FUNDO DE INVESTIMENTO EM DIREITOS C...	REGISTRO_DC_boleto crdc.pdf	REGISTRO_DC	tiago.farias@telcobank.com.br	R$ 250,00	
+Aguardando Aprovação da Custódia
+	Mensalidade de nov/25.	
+	20/01/2026	N/A	30/01/2026 00:00:00	QUANTHAS FUNDO DE INVESTIMENTO EM DIREITOS CRED...	COBRANÇA_917,81.pdf	COBRANÇA	tatiane.reis@quanthas.com.br	R$ 917,81	
+Aguardando Aprovação da Custódia
+		
+	20/01/2026	N/A	30/01/2026 00:00:00	QUANTHAS FUNDO DE INVESTIMENTO EM DIREITOS CRED...	COBRANÇA_284,45.pdf	COBRANÇA	tatiane.reis@quanthas.com.br	R$ 284,45	
+Aguardando Aprovação da Custódia
+		
+	20/01/2026	N/A	30/01/2026 00:00:00	QUANTHAS FUNDO DE INVESTIMENTO EM DIREITOS CRED...	COBRANÇA_59,00.pdf	COBRANÇA	tatiane.reis@quanthas.com.br	R$ 59,00	
+Aguardando Aprovação da Custódia
+		
+	20/01/2026	20/01/2026	22/01/2026 00:00:00	HEBROM FUNDO DE INVESTIMENTO IMOBILIÁRIO RESPON...	DESPESAS_SERVICOS_NF 3.pdf	DESPESAS_SERVICOS	ricardo@autovixparticipacoes.com.br	R$ 437.000,00	
+Comprovante disponível
+		
+	20/01/2026	20/01/2026	20/01/2026 00:00:00	FII KRONOS - CNPJ: 36.731.458/0001-68	IMPOSTOS_Boleto Acordo Q25B-L07 (3).pdf	IMPOSTOS	gabriel.malizia@vertty.com.br	R$ 1.959,42	
+Nota Paga!
+	Q25B-L07 - CAMPOS DO CONDE CAMP. GRANDE - TX DE...	
+	20/01/2026	20/01/2026	20/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 7289	
+	20/01/2026	20/01/2026	20/01/2026 00:00:00	FIAGRO SINAI MAXI FUNDO DE INVESTIMENTO EM DIRE...	CARTORIO_REGISTRO 2ºSRI_JI PARANA-RO.pdf	CARTORIO	fernanda.donato@sinaicapital.com.br	R$ 33.882,00	
+Comprovante disponível
+		
+	20/01/2026	N/A	20/01/2026 00:00:00	ROHT FUNDO DE INVESTIMENTO IMOBILIARIO - CNPJ: ...	ORGANIZACAO_FUNDO_Recibo Vigilancia.pdf	ORGANIZACAO_FUNDO	financeiro@misasi.com.br	R$ 1.200,00	
+Aguardando Aprovação da Custódia
+	Roht 0006 - pagamento de vigilante - RODOLFO DO...	
+✅ Download ok: 'COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf' | 15979 bytes.
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Baixar_Nota_Criada_Com_Sucesso_Passed_20260120_135339.webm (872202 bytes)

@@ -1,3 +1,0 @@
-Erro ao anexar vídeo: Could not find file 'D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\bin\Release\net8.0\videos\PortalIDSFTestes_testes_bancoId_RendimentoTests_Nao_Deve_Conter_Acentos_Quebrados_Passed_20260120_113001.webm'.
-   at System.IO.FileInfo.get_Length()
-   at PortalIDSFTestes.metodos.VideoHelper.AttachVideoAsync(IPage page, String testStatus) in D:\Azure\Agent\zportal-idsf-hmg\_work\19\s\PortalIDSFTestes\metodos\VideoHelper.cs:line 59
