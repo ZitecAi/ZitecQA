@@ -1,0 +1,33 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	20/01/2026	N/A	20/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Aprovação da Custódia
+	Teste Pagamento Nota QA 7289	
+	20/01/2026	N/A	20/01/2026 00:00:00	FIAGRO SINAI MAXI FUNDO DE INVESTIMENTO EM DIRE...	CARTORIO_REGISTRO 2ºSRI_JI PARANA-RO.pdf	CARTORIO	fernanda.donato@sinaicapital.com.br	R$ 33.882,00	
+Aguardando Aprovação da Custódia
+		
+	20/01/2026	N/A	20/01/2026 00:00:00	ROHT FUNDO DE INVESTIMENTO IMOBILIARIO - CNPJ: ...	ORGANIZACAO_FUNDO_Recibo Vigilancia.pdf	ORGANIZACAO_FUNDO	financeiro@misasi.com.br	R$ 1.200,00	
+Aguardando Aprovação da Custódia
+	Roht 0006 - pagamento de vigilante - RODOLFO DO...	
+	20/01/2026	20/01/2026	20/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 3716	
+	20/01/2026	20/01/2026	20/01/2026 00:00:00	ROHT FUNDO DE INVESTIMENTO IMOBILIARIO - CNPJ: ...	ORGANIZACAO_FUNDO_Roht 0057 - Custas iniciais e...	ORGANIZACAO_FUNDO	financeiro@misasi.com.br	R$ 31.568,70	
+Comprovante disponível
+	Roht 0057 - Custas iniciais e Citações Postais	
+	20/01/2026	20/01/2026	20/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 5206	
+	20/01/2026	20/01/2026	20/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 4547	
+	20/01/2026	N/A	20/01/2026 00:00:00	FII KRONOS - CNPJ: 36.731.458/0001-68	NotaDefault_Boleto Acordo Q25B-L07 (1).pdf	NotaDefault	gabriel.malizia@vertty.com.br	R$ 1.959,42	
+Reprovado pela Custódia
+	Q25B-L07 - CAMPOS DO CONDE CAMP. GRANDE - TX DE...	
+	20/01/2026	20/01/2026	20/01/2026 00:00:00	HUNTER FUNDO DE INVESTIMENTO EM DIREITOS CREDIT...	Advogado_Boleto-Hunter Fidc Np-Vencimento-20012...	Advogado	francisco@defencesec.com.br	R$ 9.975,75	
+Comprovante disponível
+	Honorários Advocatícios	
+	20/01/2026	N/A	21/01/2026 00:00:00	JEFER BANKING FUNDO DE INVESTIMENTO EM DIREITOS...	Consultoria_Usuário_ 53.131.915_0001-00 - NF-e ...	Consultoria	mayara.ramos@jefer.com.br	R$ 80.000,00	
+Aguardando Aprovação da Custódia
+		
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Consultar_Nota_Criada_Com_Sucesso_Passed_20260120_113231.webm (1116084 bytes)
