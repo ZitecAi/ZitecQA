@@ -1,0 +1,30 @@
+✅ Texto encontrado: Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	20/01/2026 15:14:16	Análise	1	Aprovado	Em espera 	Aprovado  	
+ 
+
+BINVEST FIDC	PSA INDUSTRIAL DE PAPEL S A - CNPJ: 96.735.907/0001-78	20/01/2026 15:08:33	Análise	1	Em espera	Em espera 	Em espera 	
+ 
+
+INVICTO FIDC	BMP SOCIEDADE DE CREDITO DIRETO S/A - CNPJ: 34.337.707/0001-00	20/01/2026 14:55:20	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	GUILHERME ANTONIO FALZONI - CPF: 086.778.268-40	20/01/2026 13:24:37	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	JOSE CONRADO DE OLIVEIRA - CPF: 515.426.681-15	20/01/2026 11:48:06	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	Mario Jose Castilhos Correa - CPF: 734.729.306-59	20/01/2026 10:52:21	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+PRECATO IV FIDC	GILVAN ALVES DE SOUZA - CPF: 752.732.507-06	20/01/2026 10:36:46	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+SQUID FIDC	MEGATELA FLORIPA SQUARE S.A. - CNPJ: 41.386.903/0001-30	20/01/2026 10:23:41	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+PRECATO IV FIDC	Joao Gonçalves Da Silva Neto - CPF: 160.989.858-39	20/01/2026 09:15:15	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+BARCELONA FIDC	TEMPERVILLE INDUSTRIA E COMERCIO LTDA - CNPJ: 26.716.703/0001-04	19/01/2026 18:20:48	Pendência	1	Rejeitado	Em espera 	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Aprovar_Cedente_nivel_Cadastro_Passed_20260120_151502.webm (1016571 bytes)

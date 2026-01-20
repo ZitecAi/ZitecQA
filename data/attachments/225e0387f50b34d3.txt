@@ -1,0 +1,6 @@
+✅ Arquivo enviado com sucesso
+×
+Problemas com o arquivo: 52115758000179_62692437772_N.zip
+Problemas identificados:
+Campo de Conta Corrente só pode ter numero
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_Com_Dados_Bancarios_Invalidos_Template_Passed_20260120_151822.webm (754107 bytes)
