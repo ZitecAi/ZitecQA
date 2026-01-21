@@ -234,6 +234,40 @@ namespace PortalIDSFTestes.metodos
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: {ex.Message}");
             }
         }
+        [AllureStep("Validar texto do elemento - no passo: {passo}")]
+        public async Task ValidarTextoCapturado(string locator, string textoEsperado, string passo)
+        {
+            try
+            {
+                await page.WaitForSelectorAsync(locator, new PageWaitForSelectorOptions
+                {
+                    State = WaitForSelectorState.Visible
+                });
+                var textoCapturado = await page.Locator(locator).InnerTextAsync();
+                Assert.That(textoEsperado, Is.EqualTo(textoCapturado));
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: {ex.Message}");
+            }
+        }
+        [AllureStep("Validar texto do elemento - no passo: {passo}")]
+        public async Task<string> CapturarTexto(string locator, string passo)
+        {
+            try
+            {
+                await page.WaitForSelectorAsync(locator, new PageWaitForSelectorOptions
+                {
+                    State = WaitForSelectorState.Visible
+                });
+                var textoCapturado = await page.Locator(locator).InnerTextAsync();
+                return textoCapturado;
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{locator}' no passo: '{passo}'. Detalhes: {ex.Message}");
+            }
+        }
         [AllureStep("Capturar texto do elemento - no passo: {passo}")]
         public async Task<string> CapturarTextoDoElemento(string locator, string passo)
         {

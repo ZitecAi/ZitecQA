@@ -28,12 +28,16 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string PrimeiroTdHistorico { get; } = "(//tbody[@id='listaHistorico']//td[@class='dtr-control'])[1]";
         public string PrimeiroTdTabela { get; } = "//td[@class='dtr-control']";
         public string BtnLixeira(string nomeArquivo) => $"//td[contains(normalize-space(.),'{nomeArquivo}')]/ancestor::tr//i[@class='fas fa-trash']";
+        public string BtModalAprovacao(string nomeArquivo) => $"//td[contains(normalize-space(.),'{nomeArquivo}')]/ancestor::tr//i[@class='fas fa-check']";
+        public string BtnAprovarConsultoria { get; } = "#aprovaOpConsultoriaBtn";
+        public string BtnAprovarGestora { get; } = "#aprovaOpGestoraBtn";
         public string CampoMotivoExcluirArquivo { get; } = "#motivoExcluirArquivo";
-        public string BtnConfirmarExclusao { get; } = "//div[@id='footerModalExcluirArquivo']//button[text()='Confirmar']";
+        public string BtnConfirmarExclusao { get; } = "#aprovaOpGestoraBtn";
         public string BtnFecharModalOperacaoCnab { get; } = "#btnFecharNovoOperacao";
         public string BtnFecharModalOperacaoCsv { get; } = "#btnFecharNovoOperacaoCsv";
         public string TabelaOperacoes { get; } = "#divTabelaCedentes";
         public string MsgSucesso { get; } = "//div[@class='toast toast-success']";
+        public string StatusTabela(string NomeArquivo) => $"//td[contains(text(),'{NomeArquivo}')]/ancestor::tr//td[14]";
 
         //Feat 7980
         //public string btnNovaOperacaoCNAB { get; } = "//span[text()='Nova Operação - CNAB']";

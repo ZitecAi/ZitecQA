@@ -25,7 +25,7 @@
         public string BarraPesquisa { get; } = "//label[text()='Pesquisar']";
         public string TabelaAtivos { get; } = "#tabelaContratos";
         public string PrimeiroTd { get; } = "(//td[@class='dtr-control sorting_1'])[1]";
-        public string BtnBaixarArquivo { get; } = "(//button[@title='Baixar arquivos'])[2]";
+        public string BtnBaixarArquivo { get; } = "(//button[@title='Baixar arquivos'])[1]";
         public string BtnEmAnalise(string posicao) => $"(//button[text()='Análise'])[{posicao}]";
         public string BtnEmAnalise2(string posicao) => $"(//button//strong[text()='Análise'])[{posicao}]";
         public string BtnEmAnaliseRisco(string nomeAtivo) => $"(//td[text()='{nomeAtivo}']/ancestor::tr//button[text()='Análise'])[2]";

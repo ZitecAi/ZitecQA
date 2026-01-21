@@ -126,7 +126,6 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Clicar(el.BarraPesquisa, "Clicar na Barra de Pesquisa");
             await metodo.Escrever(el.BarraPesquisa, data.TextoPesquisaAtivo, "Clicar na Barra de Pesquisa");
             await Task.Delay(1000);
-            await metodo.Clicar(el.PrimeiroTd, "Clicar ´no primeiro TD para expandir dados");
             await metodo.ValidateDownloadAndLength(page, el.BtnBaixarArquivo, "Baixar Arquivo");
         }
 

@@ -7,6 +7,14 @@ namespace PortalIDSFTestes.data.operacoes
         public string ObservacaoCSV { get; set; } = "Teste de Arquivo CSV";
         public string ObservacaoCSVNegativo { get; set; } = "Teste de Arquivo CSV Negativo";
         public string ExtensaoArquivoPesquisa { get; set; } = ".rem";
-        
+        public string MensagemSucessoOperacaoAprovada { get; } = "Operação aprovada com sucesso!";
+        public string StatusAguardandoAssinaturaDigital { get; } = "Aguardando Assinatura Digital";
+        public string StatusAguardandoEnvioCertificadoraNaFila { get; } = "Aguardando Envio Certificadora na Fila";
+        public string StatusAguardandoAprovacaoDoGestor { get; } = "Aguardando aprovação do Gestor";
+        public string MsgOperacaoExcluidaComSucesso { get; } = "Arquivo excluído com sucesso!";
+        public string MsgExclusaoSolicitadaComSucesso { get; } = "Solicitação recebida com sucesso!";
+
+
+
     }
 }

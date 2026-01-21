@@ -69,6 +69,22 @@ namespace PortalIDSFTestes.testes.operacoes
         }
         [Test, Order(4)]
         [AllureTag("Regressivos")]
+        [AllureName("Deve Aprovar Operacao por consultoria")]
+        public async Task Deve_Aprovar_Operacao_Pela_Consultoria()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.AprovarPorConsultoria();
+        }
+        [Test, Order(5)]
+        [AllureTag("Regressivos")]
+        [AllureName("Deve Aprovar Operacao por gestora")]
+        public async Task Deve_Aprovar_Operacao_Pela_Gestora()
+        {
+            var operacoes = new OperacoesPage(page);
+            await operacoes.AprovarPeloGestor();
+        }
+        [Test, Order(6)]
+        [AllureTag("Regressivos")]
         [AllureName("Deve Excluir Operacao CNAB")]
         public async Task Deve_Excluir_Uma_Operacao_CNAB()
         {
@@ -76,7 +92,7 @@ namespace PortalIDSFTestes.testes.operacoes
             await operacoes.ExcluirOperacao();
         }
 
-        [Test, Order(5)]
+        [Test, Order(7)]
         [Ignore("Este teste está em Manutenção")]
         public async Task Deve_Consultar_Uma_Operacao_CNAB_Pelo_Historico_Importacoes()
         {
@@ -84,7 +100,7 @@ namespace PortalIDSFTestes.testes.operacoes
             await operacoes.ConsultarCNABPeloHistoricoImportacoes();
         }
 
-        [Test, Order(6)]
+        [Test, Order(8)]
         [AllureName("Deve Fazer Download Relatorio Movimento Layout")]
         public async Task Deve_Fazer_Download_Relatorio_Movimento_Layout()
         {
@@ -92,7 +108,7 @@ namespace PortalIDSFTestes.testes.operacoes
             await operacoes.DownloadValidacaoMovimento_Layout();
         }
 
-        [Test, Order(7)]
+        [Test, Order(9)]
         [AllureName("Deve Fazer Download Excel")]
         public async Task Deve_Fazer_Download_Excel()
         {
@@ -100,7 +116,7 @@ namespace PortalIDSFTestes.testes.operacoes
             await operacoes.DownloadExcel();
         }
 
-        [Test, Order(8)]
+        [Test, Order(10)]
         [AllureTag("Regressivos")]
         [AllureName("Deve Enviar Uma Operacao CSV")]
         public async Task Deve_Enviar_Uma_Operacao_CSV()

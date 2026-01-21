@@ -40,13 +40,46 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.Escrever(el.CampoPesquisaTabela, NomeNovoArquivo, "Digitar no campo pesquisar nome do arquivo CNAB a ser consultado");
             await metodo.VerificarElementoPresenteNaTabela(page, el.TabelaOperacoes, NomeNovoArquivo, "Verificar se CNAB está presente na Tabela ");
         }
+
+        public async Task AprovarPorConsultoria()
+        {
+            await ConsultarOperacaoNaTabela();
+            await metodo.Clicar(el.BtModalAprovacao(NomeNovoArquivo), "Clicar no botão para abrir modal de aprovação por consultoria");
+            await metodo.Clicar(el.BtnAprovarConsultoria, "Clicar no botão para confirmar aprovação por consultoria");
+            await metodo.ValidarTextoPresente(data.MensagemSucessoOperacaoAprovada, "Validar mensagem de sucesso presente ao aprovar pela consultoria");
+            await page.ReloadAsync();
+            await ConsultarOperacaoNaTabela();
+            await metodo.ValidarTextoCapturado(el.StatusTabela(NomeNovoArquivo), data.StatusAguardandoAprovacaoDoGestor, "Validar se o status da operação foi alterado para 'Aguardando aprovação do Gestor' após aprovar pela consultoria");
+        }
+        public async Task AprovarPeloGestor()
+        {
+            await ConsultarOperacaoNaTabela();
+            await metodo.Clicar(el.BtModalAprovacao(NomeNovoArquivo), "Clicar no botão para abrir modal de aprovação por consultoria");
+            await metodo.Clicar(el.BtnAprovarGestora, "Clicar no botão para confirmar aprovação por gestora");
+            await metodo.ValidarTextoPresente(data.MensagemSucessoOperacaoAprovada, "Validar mensagem de sucesso presente ao aprovar pela gestora");
+            await page.ReloadAsync();
+            await ConsultarOperacaoNaTabela();
+            if (await metodo.CapturarTexto(el.StatusTabela(NomeNovoArquivo), "Capturar texto do Status") == data.StatusAguardandoEnvioCertificadoraNaFila)
+            {
+                await metodo.ValidarTextoCapturado(el.StatusTabela(NomeNovoArquivo), data.StatusAguardandoEnvioCertificadoraNaFila, "Validar se o status da operação foi alterado para 'Aguardando Envio Certificadora na Fila' após aprovar pelo gestor");
+                return;
+            }
+            await metodo.ValidarTextoCapturado(el.StatusTabela(NomeNovoArquivo), data.StatusAguardandoAssinaturaDigital, "Validar se o status da operação foi alterado para 'Aguardando Assinatura Digital' após aprovar pelo gestor");
+
+        }
+
         public async Task ExcluirOperacao()
         {
             await ConsultarOperacaoNaTabela();
-            await metodo.Clicar(el.BtnLixeira(NomeNovoArquivo), "Clicar na Lixeira da tabela");
-            await metodo.Escrever(el.CampoMotivoExcluirArquivo, data.MotivoExclusaoArquivo, "Escrever motivo da exclusão do arquivo");
-            await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão para confirmar excluisão do arquivo");
-            await metodo.ValidarTextoPresente("Arquivo excluído com sucesso!", "Validar se mensagem de arquivo excluido com sucesso está visivel!");
+            //await metodo.Clicar(el.BtnLixeira(NomeNovoArquivo), "Clicar na Lixeira da tabela");
+            await metodo.Clicar(el.BtnLixeira("CnabZitec_20260120_ffbbad42.txt"), "Clicar na Lixeira da tabela");
+            await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão para confirmar exclusão do arquivo");
+            if (await metodo.CapturarTexto(el.MsgSucesso, "Capturar texto retornado ao excluir operação") == data.MsgExclusaoSolicitadaComSucesso)
+            {
+                await metodo.ValidarTextoPresente(data.MsgExclusaoSolicitadaComSucesso, "Validar se mensagem de solicitação de exclusão está visivel!");
+                return;
+            }
+            await metodo.ValidarTextoPresente(data.MsgOperacaoExcluidaComSucesso, "Validar se mensagem de arquivo excluido com sucesso está visivel!");
         }
 
         public async Task EnviarOperacaoCNABNegativo(string nomeCnabNegativo)
