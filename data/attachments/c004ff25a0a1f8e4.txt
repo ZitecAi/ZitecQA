@@ -1,0 +1,4 @@
+✅ Texto encontrado: Selecionar
+Todos	ID	Tipo	Fundo	Cedente	Certificadora	Arquivos	Total Nominal	Total Aquisição	Total Recompra	Reembolso e Despesas	Pago ao Cedente	Recebíveis	Situação	Ações
+	50744348	Duplicata	Zitec FIDC	Cedente Teste Zitec EDITADO	ZiSign	CnabZitec_20260121_31918e34.txt / CnabZitec_20260121_31918e34.txt	R$ 12.581,24	R$ 2.581,20	R$ 0,00	R$ 0,00	R$ 2.581,20	7	Erro ao enviar para Assinatura Digital	
+Vídeo anexado: PortalIDSFTestes_testes_operacoes_OperacoesTest_Deve_Excluir_Uma_Operacao_CNAB_Failed_20260121_111626.webm (3601390 bytes)
