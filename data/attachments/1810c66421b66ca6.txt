@@ -1,0 +1,34 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	21/01/2026	N/A	21/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Aprovação da Custódia
+	Teste Pagamento Nota QA 4454	
+	21/01/2026	N/A	21/01/2026 00:00:00	ROAD CAPITAL & PRECATUR LEGAL CLAIMS OPPORTUNIT...	DESPESAS_SERVICOS_ROAD CAPITAL_46.pdf	DESPESAS_SERVICOS	fgouvea@blesscapital.com.br	R$ 3.103,71	
+Aguardando Aprovação da Custódia
+		
+	21/01/2026	N/A	21/01/2026 00:00:00	ROAD CAPITAL & PRECATUR LEGAL CLAIMS OPPORTUNIT...	DESPESAS_SERVICOS_35510092261617640000130000000...	DESPESAS_SERVICOS	fgouvea@blesscapital.com.br	R$ 5.003,46	
+Aguardando Aprovação da Custódia
+		
+	21/01/2026	N/A	21/01/2026 00:00:00	ROAD CAPITAL & PRECATUR LEGAL CLAIMS OPPORTUNIT...	DESPESAS_SERVICOS_35510092261617640000130000000...	DESPESAS_SERVICOS	fgouvea@blesscapital.com.br	R$ 4.909,31	
+Aguardando Aprovação da Custódia
+		
+	21/01/2026	21/01/2026	21/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 8944	
+	21/01/2026	N/A	22/01/2026 00:00:00	FII KRONOS - CNPJ: 36.731.458/0001-68	DESPESAS_SERVICOS_NF KRONOS - REF. LAUDO CARTEI...	DESPESAS_SERVICOS	patricia@ivixbr.com	R$ 5.000,00	
+Reprovado pela Custódia
+	Elaboração de análise de carteira de recebíveis...	
+	21/01/2026	N/A	22/01/2026 00:00:00	FII KRONOS - CNPJ: 36.731.458/0001-68	DESPESAS_SERVICOS_NF KRONOS - REF. LAUDO CARTEI...	DESPESAS_SERVICOS	patricia@ivixbr.com	R$ 5.000,00	
+Aguardando Aprovação da Custódia
+	Elaboração de análise de carteira de recebíveis...	
+	21/01/2026	N/A	22/01/2026 00:00:00	NANBAN II FIDC - CNPJ: 46.073.588/0001-04	Advogado_22-01-26 - N2 - GUIA OJ - NEUSA MARIA ...	Advogado	caio@brd.net.br	R$ 115,26	
+Aguardando Aprovação da Custódia
+	Boleto tribunal de justiça ref. Depositos Ofici...	
+	21/01/2026	21/01/2026	21/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 1356	
+	21/01/2026	N/A	22/01/2026 00:00:00	MONTREAL FUNDO DE INVESTIMENTO IMOBILIARIO RL -...	COBRANÇA_Danfe 6876.pdf	COBRANÇA	thaina@montrecon.com.br	R$ 8.627,75	
+Aguardando Aprovação da Custódia
+	Pagamento somente via PIX ou dados bancários. ...	
+✅ Download ok: 'COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf' | 15979 bytes.
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Baixar_Nota_Criada_Com_Sucesso_Passed_20260121_170503.webm (1081556 bytes)

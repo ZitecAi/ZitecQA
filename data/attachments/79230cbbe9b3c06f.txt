@@ -1,0 +1,6 @@
+✅ Arquivo enviado com sucesso
+×
+Problemas com o arquivo: 52115758000179_53572360463_N.zip
+Problemas identificados:
+CustomerAlreadyExists
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_Com_CNPJ_Fundo_Invalido_Na_Conta_Template_Passed_20260121_171313.webm (499756 bytes)

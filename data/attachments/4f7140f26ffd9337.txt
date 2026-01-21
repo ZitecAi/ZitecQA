@@ -1,0 +1,6 @@
+✅ Arquivo enviado com sucesso
+×
+Problemas com o arquivo: CnpjFundoInvalido_49624866830_N.zip
+Problemas identificados:
+CNPJ do Fundo inválido.
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_ComCnpjFundo_Invalido_Passed_20260121_171206.webm (483990 bytes)
