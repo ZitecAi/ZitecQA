@@ -1,0 +1,34 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	21/01/2026	N/A	21/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Aprovação da Custódia
+	Teste Pagamento Nota QA 8944	
+	21/01/2026	N/A	22/01/2026 00:00:00	FII KRONOS - CNPJ: 36.731.458/0001-68	DESPESAS_SERVICOS_NF KRONOS - REF. LAUDO CARTEI...	DESPESAS_SERVICOS	patricia@ivixbr.com	R$ 5.000,00	
+Aguardando Aprovação da Custódia
+	Elaboração de análise de carteira de recebíveis...	
+	21/01/2026	N/A	22/01/2026 00:00:00	FII KRONOS - CNPJ: 36.731.458/0001-68	DESPESAS_SERVICOS_NF KRONOS - REF. LAUDO CARTEI...	DESPESAS_SERVICOS	patricia@ivixbr.com	R$ 5.000,00	
+Aguardando Aprovação da Custódia
+	Elaboração de análise de carteira de recebíveis...	
+	21/01/2026	N/A	22/01/2026 00:00:00	NANBAN II FIDC - CNPJ: 46.073.588/0001-04	Advogado_22-01-26 - N2 - GUIA OJ - NEUSA MARIA ...	Advogado	caio@brd.net.br	R$ 115,26	
+Aguardando Aprovação da Custódia
+	Boleto tribunal de justiça ref. Depositos Ofici...	
+	21/01/2026	21/01/2026	21/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 1356	
+	21/01/2026	N/A	22/01/2026 00:00:00	MONTREAL FUNDO DE INVESTIMENTO IMOBILIARIO RL -...	COBRANÇA_Danfe 6876.pdf	COBRANÇA	thaina@montrecon.com.br	R$ 8.627,75	
+Aguardando Aprovação da Custódia
+	Pagamento somente via PIX ou dados bancários. ...	
+	21/01/2026	21/01/2026	21/01/2026 00:00:00	AVGA CAPITAL JUSTIX LEGAL CLAIMS FUNDO DE INVES...	COMISSAO POR ORIGINACAO_NF-241.pdf	COMISSAO POR ORIGINACAO	lucas@justixcapital.com	R$ 1.324,42	
+Comprovante disponível
+	Op: 6503 - ALEXANDRE LUIZ HENRIQUE DA SILVA	
+	21/01/2026	N/A	22/01/2026 00:00:00	LEGATUM FUNDO DE INVESTIMENTO IMOBILIÁRIO - CNP...	ORGANIZACAO_FUNDO_Recibo Cedraz Jan_2026.pdf	ORGANIZACAO_FUNDO	adir.mathiuce@gestoraid.com.br	R$ 1.800,00	
+Aguardando Aprovação da Custódia
+	Dados bancários: Antônio Carneiro Cedraz PIX CP...	
+	21/01/2026	21/01/2026	21/01/2026 00:00:00	PRECATO IV FUNDO DE INVESTIMENTO EM DIREITOS CR...	COMISSAO POR ORIGINACAO_2271-25_Guia_Deposito.pdf	COMISSAO POR ORIGINACAO	jose.santos@taginvest.com.br	R$ 1.200,00	
+Comprovante disponível
+	Honorários Baixar do VALID	
+	21/01/2026	N/A	23/01/2026 00:00:00	FUNCINE INVESTIMAGE 4 - FUNDO DE FINANCIAMENTO ...	Auditoria_NF 4424 - FUNDO INVESTIMAGE 4.pdf	Auditoria	tatiane.santos@idsf.com.br	R$ 7.000,00	
+Aguardando Aprovação da Custódia
+	HONORÁRIOS REFERENTE A AUDITORIA DAS DEMONSTRAÇ...	
+✅ Download ok: 'COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf' | 15979 bytes.
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Baixar_Nota_Criada_Com_Sucesso_Passed_20260121_165135.webm (973119 bytes)
