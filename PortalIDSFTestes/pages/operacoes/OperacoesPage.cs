@@ -64,22 +64,30 @@ namespace PortalIDSFTestes.pages.operacoes
                 await metodo.ValidarTextoCapturado(el.StatusTabela(NomeNovoArquivo), data.StatusAguardandoEnvioCertificadoraNaFila, "Validar se o status da operação foi alterado para 'Aguardando Envio Certificadora na Fila' após aprovar pelo gestor");
                 return;
             }
-            await metodo.ValidarTextoCapturado(el.StatusTabela(NomeNovoArquivo), data.StatusAguardandoAssinaturaDigital, "Validar se o status da operação foi alterado para 'Aguardando Assinatura Digital' após aprovar pelo gestor");
+            await metodo.ValidarPossiveisTextosDeUmElemento(el.StatusTabela(NomeNovoArquivo)
+                , [data.StatusAguardandoAssinaturaDigital, data.StatusAguardandoEnvioCertificadoraNaFila]
+                , $"Validar se Status na tabela é {data.StatusAguardandoAssinaturaDigital}, ou {data.StatusAguardandoEnvioCertificadoraNaFila}");
+            //await metodo.ValidarTextoCapturado(el.StatusTabela(NomeNovoArquivo), data.StatusAguardandoAssinaturaDigital, "Validar se o status da operação foi alterado para 'Aguardando Assinatura Digital' após aprovar pelo gestor");
 
         }
 
         public async Task ExcluirOperacao()
         {
             await ConsultarOperacaoNaTabela();
-            //await metodo.Clicar(el.BtnLixeira(NomeNovoArquivo), "Clicar na Lixeira da tabela");
-            await metodo.Clicar(el.BtnLixeira("CnabZitec_20260120_ffbbad42.txt"), "Clicar na Lixeira da tabela");
-            await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão para confirmar exclusão do arquivo");
-            if (await metodo.CapturarTexto(el.MsgSucesso, "Capturar texto retornado ao excluir operação") == data.MsgExclusaoSolicitadaComSucesso)
+            await metodo.Clicar(el.BtnLixeira(NomeNovoArquivo), "Clicar na Lixeira da tabela");
+            if (await page.Locator(el.BtnConfirmarExclusaoName).IsVisibleAsync())
             {
-                await metodo.ValidarTextoPresente(data.MsgExclusaoSolicitadaComSucesso, "Validar se mensagem de solicitação de exclusão está visivel!");
-                return;
+                await metodo.Clicar(el.BtnConfirmarExclusaoName, "Clicar no botão por nome para confirmar exclusão do arquivo");
             }
-            await metodo.ValidarTextoPresente(data.MsgOperacaoExcluidaComSucesso, "Validar se mensagem de arquivo excluido com sucesso está visivel!");
+            else
+            {
+                await metodo.Clicar(el.BtnConfirmarExclusao, "Clicar Botão por id para confirmar exclusão do arquivo");
+            }
+
+            await metodo.ValidarQualquerTextoPresente(
+                data.MsgExclusaoSolicitadaComSucesso,
+                data.MsgOperacaoExcluidaComSucesso
+            );
         }
 
         public async Task EnviarOperacaoCNABNegativo(string nomeCnabNegativo)

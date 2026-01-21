@@ -279,7 +279,7 @@ namespace PortalIDSFTestes.metodos
                     State = WaitForSelectorState.Visible
                 });
                 var textoCapturado = await page.Locator(locator).InnerTextAsync();
-                Assert.That(textoEsperado, Is.EqualTo(textoCapturado));
+                Assert.That(textoCapturado, Is.EqualTo(textoEsperado));
             }
             catch (Exception ex)
             {
@@ -866,6 +866,58 @@ namespace PortalIDSFTestes.metodos
                 Assert.Fail($"❌ Erro ao validar download no passo '{step}': {ex.Message}");
             }
         }
+
+        [AllureStep("Validar qualquer um dos textos presentes - no passo: {passo}")]
+        public async Task ValidarQualquerTextoPresente(params string[] textosPossiveis)
+        {
+            try
+            {
+                foreach (var texto in textosPossiveis)
+                {
+                    try
+                    {
+                        await Expect(page.GetByText(texto)).ToBeVisibleAsync(new() { Timeout = 5000 });
+                        Console.WriteLine($"✅ Texto encontrado: '{texto}'");
+                        return;
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+                throw new Exception($"❌ Nenhum dos textos esperados foi encontrado: {string.Join(", ", textosPossiveis)}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"❌ Erro ao validar textos no passo: {ex.Message}");
+            }
+        }
+
+        public async Task ValidarPossiveisTextosDeUmElemento(string locator, string[] textosPossiveis, string passo)
+        {
+            try
+            {
+                foreach (var texto in textosPossiveis)
+                {
+                    try
+                    {
+                        await Expect(page.Locator(locator)).ToContainTextAsync(textosPossiveis);
+                        Console.WriteLine($"✅ Texto encontrado: '{texto}'");
+                        return;
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+                throw new Exception($"❌ Nenhum dos textos esperados foi encontrado: {string.Join(", ", textosPossiveis)}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"❌ Erro ao validar textos no passo: {ex.Message}");
+            }
+        }
+
 
         public static string GetPath()
         {
