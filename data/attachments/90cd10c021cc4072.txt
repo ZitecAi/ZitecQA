@@ -1,7 +1,0 @@
-✅ Texto encontrado: Selecionar
-Todos	ID	Tipo	Fundo	Cedente	Certificadora	Arquivos	Total Nominal	Total Aquisição	Total Recompra	Reembolso e Despesas	Pago ao Cedente	Recebíveis	Situação	Ações
-	50744348	Duplicata	Zitec FIDC	Cedente Teste Zitec EDITADO	ZiSign	CnabZitec_20260121_31918e34.txt / CnabZitec_20260121_31918e34.txt	R$ 12.581,24	R$ 2.581,20	R$ 0,00	R$ 0,00	R$ 2.581,20	7	Aguardando aprovação do Gestor	
-✅ Texto encontrado: Selecionar
-Todos	ID	Tipo	Fundo	Cedente	Certificadora	Arquivos	Total Nominal	Total Aquisição	Total Recompra	Reembolso e Despesas	Pago ao Cedente	Recebíveis	Situação	Ações
-	50744348	Duplicata	Zitec FIDC	Cedente Teste Zitec EDITADO	ZiSign	CnabZitec_20260121_31918e34.txt / CnabZitec_20260121_31918e34.txt	R$ 12.581,24	R$ 2.581,20	R$ 0,00	R$ 0,00	R$ 2.581,20	7	Aguardando Envio Certificadora na Fila	
-Vídeo anexado: PortalIDSFTestes_testes_operacoes_OperacoesTest_Deve_Aprovar_Operacao_Pela_Gestora_Passed_20260121_111442.webm (1508767 bytes)
