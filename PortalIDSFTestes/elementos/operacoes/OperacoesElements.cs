@@ -31,8 +31,9 @@ namespace PortalIDSFTestes.elementos.operacoes
         public string BtModalAprovacao(string nomeArquivo) => $"//td[contains(normalize-space(.),'{nomeArquivo}')]/ancestor::tr//i[@class='fas fa-check']";
         public string BtnAprovarConsultoria { get; } = "#aprovaOpConsultoriaBtn";
         public string BtnAprovarGestora { get; } = "#aprovaOpGestoraBtn";
-        public string CampoMotivoExcluirArquivo { get; } = "#motivoExcluirArquivo";
         public string BtnConfirmarExclusao { get; } = "#aprovaOpGestoraBtn";
+        public string CampoMotivoExcluirArquivo { get; } = "#motivoExcluirArquivo";
+        public string BtnConfirmarExclusaoName { get; } = "//button[@name='btnAprovaOpGestora']";
         public string BtnFecharModalOperacaoCnab { get; } = "#btnFecharNovoOperacao";
         public string BtnFecharModalOperacaoCsv { get; } = "#btnFecharNovoOperacaoCsv";
         public string TabelaOperacoes { get; } = "#divTabelaCedentes";

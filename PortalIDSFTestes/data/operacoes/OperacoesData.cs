@@ -12,7 +12,7 @@ namespace PortalIDSFTestes.data.operacoes
         public string StatusAguardandoEnvioCertificadoraNaFila { get; } = "Aguardando Envio Certificadora na Fila";
         public string StatusAguardandoAprovacaoDoGestor { get; } = "Aguardando aprovação do Gestor";
         public string MsgOperacaoExcluidaComSucesso { get; } = "Arquivo excluído com sucesso!";
-        public string MsgExclusaoSolicitadaComSucesso { get; } = "Solicitação recebida com sucesso!";
+        public string MsgExclusaoSolicitadaComSucesso { get; } = "Solicitação recebida com sucesso, aguarde aprovação da Custódia!";
 
 
 

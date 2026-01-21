@@ -75,6 +75,29 @@ namespace PortalIDSFTestes.metodos
 
 
         }
+        [AllureStep("Clicar - no passo: {passo}")]
+        public async Task Clicar(ILocator locator, string passo)
+        {
+            try
+            {
+                var element = locator;
+
+                await Expect(element).ToBeVisibleAsync(new LocatorAssertionsToBeVisibleOptions { Timeout = 90000 });
+                await Expect(element).ToBeEnabledAsync(new LocatorAssertionsToBeEnabledOptions { Timeout = 90000 });
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+
+                await element.ClickAsync(new LocatorClickOptions
+                {
+                    Timeout = 60000
+                });
+            }
+            catch (PlaywrightException ex)
+            {
+                throw new PlaywrightException("Não foi possivel Clicar no Elemento: " + locator + " no passo: " + passo + $"Detalhes {ex.Message}");
+            }
+
+
+        }
         [AllureStep("Limpar - no passo: {passo}")]
         public async Task Limpar(string locator, string passo)
         {
@@ -216,6 +239,18 @@ namespace PortalIDSFTestes.metodos
             catch (Exception ex)
             {
                 throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{textoEsperado}' no passo: '{passo}'. Detalhes: " + ex.Message);
+            }
+        }
+        [AllureStep("Validar texto presente - no passo: {passo}")]
+        public async Task ValidarTextoPresente(ILocator locator, string passo)
+        {
+            try
+            {
+                await Expect(locator).ToBeVisibleAsync(new() { Timeout = 90000 }); ;
+            }
+            catch (Exception ex)
+            {
+                throw new PlaywrightException($"❌ Não foi possível encontrar/validar o elemento '{locator}' no passo: '{passo}'. Detalhes: " + ex.Message);
             }
         }
         [AllureStep("Validar texto do elemento - no passo: {passo}")]
