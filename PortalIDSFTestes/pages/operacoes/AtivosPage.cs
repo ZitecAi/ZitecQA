@@ -70,7 +70,7 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task AprovarGestor()
         {
             await ConsultarAtivo();
-            await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do gestor");
+            await metodo.Clicar(el.BtnEmAnalise2(data.NomeAtivo, "1"), "Clicar no botão para abrir modal de situação do gestor");
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo gestor");
             await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoAprovacao, "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo gestor");
@@ -83,7 +83,7 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task AprovarRisco()
         {
             await ConsultarAtivo();
-            await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do jurídico");
+            await metodo.Clicar(el.BtnEmAnalise2(data.NomeAtivo, "1"), "Clicar no botão para abrir modal de situação do jurídico");
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo risco");
             await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoAprovacao, "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo risco");
@@ -96,7 +96,7 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task AprovarJuridico()
         {
             await ConsultarAtivo();
-            await metodo.Clicar(el.BtnEmAnalise2("2"), "Clicar no botão para abrir modal de situação do jurídico");
+            await metodo.Clicar(el.BtnEmAnalise2(data.NomeAtivo, "2"), "Clicar no botão para abrir modal de situação do jurídico");
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo jurídico");
             await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoAprovacao, "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo jurídico");
@@ -111,7 +111,7 @@ namespace PortalIDSFTestes.pages.operacoes
         public async Task AprovarCadastro()
         {
             await ConsultarAtivo();
-            await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do Cadastro");
+            await metodo.Clicar(el.BtnEmAnalise2(data.NomeAtivo, "1"), "Clicar no botão para abrir modal de situação do Cadastro");
             await metodo.Clicar(el.BtnAprovado, "Clicar no botão para aprovar pelo cadastro");
             await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoAprovacao, "Digitar Observação");
             await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo cadastro");
@@ -141,7 +141,7 @@ namespace PortalIDSFTestes.pages.operacoes
             {
                 case "Gestor":
                     await ConsultarAtivo();
-                    await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do gestor");
+                    await metodo.Clicar(el.BtnEmAnalise2(data.NomeAtivo, "1"), "Clicar no botão para abrir modal de situação do gestor");
                     await metodo.Clicar(el.BtnReprovado, "Clicar no botão para Reprovar pelo gestor");
                     await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoReprovacao, "Digitar Observação para reprovar ativo pelo gestor");
                     await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para Reprovar pelo gestor");
@@ -152,7 +152,7 @@ namespace PortalIDSFTestes.pages.operacoes
                     break;
                 case "Risco":
                     await ConsultarAtivo();
-                    await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do jurídico");
+                    await metodo.Clicar(el.BtnEmAnalise2(data.NomeAtivo, "1"), "Clicar no botão para abrir modal de situação do jurídico");
                     await metodo.Clicar(el.BtnReprovado, "Clicar no botão para Reprovar pelo risco");
                     await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoReprovacao, "Digitar Observação para reprovar ativo por Risco");
                     await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para aprovar pelo risco");
@@ -163,7 +163,7 @@ namespace PortalIDSFTestes.pages.operacoes
                     break;
                 case "Juridico":
                     await ConsultarAtivo();
-                    await metodo.Clicar(el.BtnEmAnalise2("2"), "Clicar no botão para abrir modal de situação do jurídico");
+                    await metodo.Clicar(el.BtnEmAnalise2(data.NomeAtivo, "2"), "Clicar no botão para abrir modal de situação do jurídico");
                     await metodo.Clicar(el.BtnReprovado, "Clicar no botão para Reprovar pelo jurídico");
                     await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoAprovacao, "Digitar Observação");
                     await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para reprovar pelo jurídico");
@@ -174,7 +174,7 @@ namespace PortalIDSFTestes.pages.operacoes
                     break;
                 case "Cadastro":
                     await ConsultarAtivo();
-                    await metodo.Clicar(el.BtnEmAnalise2("1"), "Clicar no botão para abrir modal de situação do Cadastro");
+                    await metodo.Clicar(el.BtnEmAnalise2(data.NomeAtivo, "1"), "Clicar no botão para abrir modal de situação do Cadastro");
                     await metodo.Clicar(el.BtnReprovado, "Clicar no botão para reprovar pelo cadastro");
                     await metodo.Escrever(el.CampoObservacaoParecer, data.ObservacaoAprovacao, "Digitar Observação");
                     await metodo.Clicar(el.BtnAprovadoGestora, "Clicar no Submit para reprovar pelo cadastro");

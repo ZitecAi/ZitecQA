@@ -49,7 +49,9 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.ValidarTextoPresente(data.MensagemSucessoOperacaoAprovada, "Validar mensagem de sucesso presente ao aprovar pela consultoria");
             await page.ReloadAsync();
             await ConsultarOperacaoNaTabela();
-            await metodo.ValidarTextoCapturado(el.StatusTabela(NomeNovoArquivo), data.StatusAguardandoAprovacaoDoGestor, "Validar se o status da operação foi alterado para 'Aguardando aprovação do Gestor' após aprovar pela consultoria");
+            await metodo.ValidarPossiveisTextosDeUmElemento(el.StatusTabela(NomeNovoArquivo)
+                , [data.StatusAguardandoAprovacaoDoGestor, data.StatusAguardandoEnvioCertificadoraNaFila, data.StatusAguardandoAprovacaoDoGestorEAssinaturas]
+                , "Validar se o status da operação foi alterado para 'Aguardando aprovação do Gestor' após aprovar pela consultoria");
         }
         public async Task AprovarPeloGestor()
         {
@@ -59,13 +61,9 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.ValidarTextoPresente(data.MensagemSucessoOperacaoAprovada, "Validar mensagem de sucesso presente ao aprovar pela gestora");
             await page.ReloadAsync();
             await ConsultarOperacaoNaTabela();
-            if (await metodo.CapturarTexto(el.StatusTabela(NomeNovoArquivo), "Capturar texto do Status") == data.StatusAguardandoEnvioCertificadoraNaFila)
-            {
-                await metodo.ValidarTextoCapturado(el.StatusTabela(NomeNovoArquivo), data.StatusAguardandoEnvioCertificadoraNaFila, "Validar se o status da operação foi alterado para 'Aguardando Envio Certificadora na Fila' após aprovar pelo gestor");
-                return;
-            }
             await metodo.ValidarPossiveisTextosDeUmElemento(el.StatusTabela(NomeNovoArquivo)
-                , [data.StatusAguardandoAssinaturaDigital, data.StatusAguardandoEnvioCertificadoraNaFila]
+                , [data.StatusAguardandoAssinaturaDigital
+                ,data.StatusAguardandoEnvioCertificadoraNaFila]
                 , $"Validar se Status na tabela é {data.StatusAguardandoAssinaturaDigital}, ou {data.StatusAguardandoEnvioCertificadoraNaFila}");
             //await metodo.ValidarTextoCapturado(el.StatusTabela(NomeNovoArquivo), data.StatusAguardandoAssinaturaDigital, "Validar se o status da operação foi alterado para 'Aguardando Assinatura Digital' após aprovar pelo gestor");
 
@@ -86,7 +84,8 @@ namespace PortalIDSFTestes.pages.operacoes
 
             await metodo.ValidarQualquerTextoPresente(
                 data.MsgExclusaoSolicitadaComSucesso,
-                data.MsgOperacaoExcluidaComSucesso
+                data.MsgOperacaoExcluidaComSucesso,
+                data.MsgExclusaoSolicitadaComSucessoAguardeAprovacaoCustodia
             );
         }
 

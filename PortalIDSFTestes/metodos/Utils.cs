@@ -373,7 +373,6 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
-                // Aguarda a tabela estar visível
                 await page.WaitForSelectorAsync(seletorTabela, new PageWaitForSelectorOptions
                 {
                     State = WaitForSelectorState.Visible
@@ -901,7 +900,9 @@ namespace PortalIDSFTestes.metodos
                 {
                     try
                     {
-                        await Expect(page.Locator(locator)).ToContainTextAsync(textosPossiveis);
+                        var textoCapturado = await page.Locator(locator).InnerTextAsync();
+                        textoCapturado.Trim();
+                        Assert.That(textoCapturado, Is.EqualTo(texto));
                         Console.WriteLine($"✅ Texto encontrado: '{texto}'");
                         return;
                     }

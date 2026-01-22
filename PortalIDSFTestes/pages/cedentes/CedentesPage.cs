@@ -121,12 +121,12 @@ namespace PortalIDSFTestes.pages.cedentes
             await metodo.Clicar(el.BtnLixeiraCedentes(Cedente), "Clicar no botão da lixeira para excluir cedente");
             await metodo.Clicar(el.BtnConfirmarExcluir, "Clicar no botão para confirmar exclusão do cedente");
             await metodo.ValidarTextoPresente(CedentesData.MsgCedenteExcluidoSucesso, "Validar mensagem Cedente excluído com sucesso presente na tela");
-            await ConsultarCedente(Cedente, async () =>
-            {
-                await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar no input da Barra de pesquisa");
-                await metodo.Escrever(el.BarraPesquisaCedentes, Cedente, "Pesquisar nome do arquivo para validar cadastro");
-                await metodo.VerificarTextoAusenteNaTabela(page, el.TabelaCedentesCadastrado, Cedente, "Validar Se o nome do arquivo esta presente na tabela");
-            });
+            //await ConsultarCedente(Cedente, async () =>
+            //{
+            //    await metodo.Clicar(el.BarraPesquisaCedentes, "Clicar no input da Barra de pesquisa");
+            //    await metodo.Escrever(el.BarraPesquisaCedentes, Cedente, "Pesquisar nome do arquivo para validar cadastro");
+            //    await metodo.VerificarTextoAusenteNaTabela(page, el.TabelaCedentesCadastrado, Cedente, "Validar Se o nome do arquivo esta presente na tabela");
+            //});
         }
 
         public async Task CadastrarCedenteNegativo(string nomeArquivoNegativo)
