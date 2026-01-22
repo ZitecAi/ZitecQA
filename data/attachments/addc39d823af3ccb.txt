@@ -1,0 +1,3 @@
+✅ 'A carência de juros não pode ser maior que a carência do principal!' encontrado em '//div[@class='toast toast-warning']' (único match).
+✅ 'Parcelas devem ser geradas corretamente' encontrado em '//div[@class='toast toast-warning']' (único match).
+Vídeo anexado: PortalIDSFTestes_testes_notaComercial_NotaComercialTest_Nao_Deve_Cadastrar_Nota_Comercial_Com_Carencia_Juros_Maior_Que_Juros_Principal_Passed_20260122_192518.webm (1469951 bytes)

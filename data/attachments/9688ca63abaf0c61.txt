@@ -1,0 +1,16 @@
+✅ Texto encontrado: Operação	Fundo	Tomador	Valor Principal	Valor Liquido	Custo da Emissão	Data de Início	Data de Vencimento	Status	Taxa	Ações
+5210	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Aberta	1,000000%	
+5208	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5205	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5203	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5202	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5200	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5199	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5197	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5196	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5195	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5194	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5187	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	22/01/2026	05/12/2026	Cancelada!	1,000000%	
+5186	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 12,00	R$ 11,76	R$ 0,24	21/01/2026	05/03/2027	Cancelada!	1,000000%	
+5185	Zitec Tecnologia LTDA - 54.638.076/0001-76	Cedente Teste Zitec EDITADO - 90.400.888/0001-42	R$ 10.000,00	R$ 9.800,00	R$ 200,00	21/01/2026	05/12/2026	Cancelada!	1,000000%	
+Vídeo anexado: PortalIDSFTestes_testes_notaComercial_NotaComercialTest_Deve_Consultar_Nota_Comercial_Pela_Tabela_Passed_20260122_192259.webm (822860 bytes)
