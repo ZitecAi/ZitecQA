@@ -1,2 +1,0 @@
-✅ 'Preencha todos os campos obrigatórios' encontrado em '//div[@class='toast toast-warning']' (único match).
-Vídeo anexado: PortalIDSFTestes_testes_notaComercial_NotaComercialTest_Nao_Deve_Cadastrar_Nota_Comercial_Com_Campos_Em_Branco_Sessao_Envolvidos_Passed_20260122_122214.webm (1105677 bytes)
