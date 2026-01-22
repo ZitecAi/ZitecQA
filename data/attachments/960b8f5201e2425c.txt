@@ -1,0 +1,6 @@
+✅ Arquivo enviado com sucesso
+×
+Problemas com o arquivo: 50963249000170_33786902000154_N.zip
+Problemas identificados:
+Cnpj do Cedente na conta corrente não é igual na planilha do Cedente
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Nao_Deve_Cadastrar_Cedente_ComCnpjCedente_Invalido_Template_Passed_20260122_122308.webm (673486 bytes)
