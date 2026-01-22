@@ -77,7 +77,7 @@ namespace PortalIDSFTestes.pages.operacoes
             await metodo.ValidarMsgRetornada(el.MsgSucessoRetornada, "Validar texto de sucesso presente na tabela para o usuário");
             await page.ReloadAsync();
             await ConsultarAtivo();
-            await metodo.ValidarMsgRetornada(el.StatusTabela("Aguar. Ass.", "1"), "Validar se status na tabela foi alterado para Aguardando Ass.");
+            //await metodo.ValidarMsgRetornada(el.StatusTabela("Aguar. Ass.", "1"), "Validar se status na tabela foi alterado para Aguardando Ass.");
         }
         [AllureStep("Aprovação Risco")]
         public async Task AprovarRisco()

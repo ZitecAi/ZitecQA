@@ -896,26 +896,28 @@ namespace PortalIDSFTestes.metodos
         {
             try
             {
-                foreach (var texto in textosPossiveis)
+                var textoCapturado = (await page.Locator(locator).InnerTextAsync()).Trim();
+
+                foreach (var textoEsperado in textosPossiveis)
                 {
-                    try
+
+                    if (textoCapturado.Equals(textoEsperado))
                     {
-                        var textoCapturado = await page.Locator(locator).InnerTextAsync();
-                        textoCapturado.Trim();
-                        Assert.That(textoCapturado, Is.EqualTo(texto));
-                        Console.WriteLine($"✅ Texto encontrado: '{texto}'");
+                        Console.WriteLine($"✅ Texto validado com sucesso: {textoCapturado}");
                         return;
                     }
-                    catch
+
+                    else
                     {
                         continue;
                     }
                 }
-                throw new Exception($"❌ Nenhum dos textos esperados foi encontrado: {string.Join(", ", textosPossiveis)}");
+
+                Assert.Fail($"Nenhum dos textos esperados foi encontrado. Texto na tela: '{textoCapturado}'. Esperados: {string.Join(", ", textosPossiveis)}");
             }
             catch (Exception ex)
             {
-                throw new Exception($"❌ Erro ao validar textos no passo: {ex.Message}");
+                throw new Exception($"Erro crítico no passo '{passo}': {ex.Message}");
             }
         }
 

@@ -50,7 +50,9 @@ namespace PortalIDSFTestes.pages.operacoes
             await page.ReloadAsync();
             await ConsultarOperacaoNaTabela();
             await metodo.ValidarPossiveisTextosDeUmElemento(el.StatusTabela(NomeNovoArquivo)
-                , [data.StatusAguardandoAprovacaoDoGestor, data.StatusAguardandoEnvioCertificadoraNaFila, data.StatusAguardandoAprovacaoDoGestorEAssinaturas]
+                , [data.StatusAguardandoAprovacaoDoGestor
+                , data.StatusAguardandoEnvioCertificadoraNaFila
+                , data.StatusAguardandoAprovacaoDoGestorEAssinaturas]
                 , "Validar se o status da operação foi alterado para 'Aguardando aprovação do Gestor' após aprovar pela consultoria");
         }
         public async Task AprovarPeloGestor()
