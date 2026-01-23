@@ -898,21 +898,11 @@ namespace PortalIDSFTestes.metodos
             {
                 var textoCapturado = (await page.Locator(locator).InnerTextAsync()).Trim();
 
-                foreach (var textoEsperado in textosPossiveis)
+                if (textosPossiveis.Contains(textoCapturado))
                 {
-
-                    if (textoCapturado.Equals(textoEsperado))
-                    {
-                        Console.WriteLine($"✅ Texto validado com sucesso: {textoCapturado}");
-                        return;
-                    }
-
-                    else
-                    {
-                        continue;
-                    }
+                    Console.WriteLine($"✅ Texto validado com sucesso: {textoCapturado}");
+                    return;
                 }
-
                 Assert.Fail($"Nenhum dos textos esperados foi encontrado. Texto na tela: '{textoCapturado}'. Esperados: {string.Join(", ", textosPossiveis)}");
             }
             catch (Exception ex)
@@ -920,6 +910,8 @@ namespace PortalIDSFTestes.metodos
                 throw new Exception($"Erro crítico no passo '{passo}': {ex.Message}");
             }
         }
+
+
 
 
         public static string GetPath()
