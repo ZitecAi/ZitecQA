@@ -19,8 +19,8 @@ namespace PortalIDSFTestes.testes.bancoId
     public class SaldosTests : TestBase
     {
 
-        Utils metodo;
-        SaldosElements el = new SaldosElements();
+        Utils _util;
+        SaldosElements _el = new SaldosElements();
 
         [SetUp]
         [AllureBefore]
@@ -28,10 +28,10 @@ namespace PortalIDSFTestes.testes.bancoId
         {
             page = await AbrirBrowserAsync();
             var login = new LoginPage(page);
-            metodo = new Utils(page);
+            _util = new Utils(page);
             await login.LogarInterno();
-            await metodo.Clicar(el.MenuBancoId, "Clicar na sessão Banco ID no menú hamburguer");
-            await metodo.Clicar(el.PaginaSaldos, "Clicar na página Usuarios");
+            await _util.Clicar(_el.MenuBancoId, "Clicar na sessão Banco ID no menú hamburguer");
+            await _util.Clicar(_el.PaginaSaldos, "Clicar na página Usuarios");
             await Task.Delay(500);
         }
 
@@ -49,5 +49,19 @@ namespace PortalIDSFTestes.testes.bancoId
             var saldos = new SaldosPage(page);
             await saldos.ValidarAcentosSaldos();
         }
+
+        [Test, Order(2)]
+        [AllureName("Deve Filtrar Saldos Por Gestora E Consultoria")]
+        public async Task Deve_Trazer_Saldos_Por_Gestora_E_Consultoria()
+        {
+            var saldos = new SaldosPage(page);
+            await saldos.AbrirModalDeFiltro();
+            await saldos.LimparFiltros();
+            await saldos.SelcionarGestora();
+            await saldos.SelcionarConsultoria();
+            await saldos.ClicarEmCarregarParaTrazerSaldos();
+            await _util.ValidarSeElementoPossuiValorDeTexto(_el.SaldoNaTabela, "Validar se Saldo está presente na tabela");
+        }
+
     }
 }

@@ -891,7 +891,7 @@ namespace PortalIDSFTestes.metodos
                 throw new Exception($"❌ Erro ao validar textos no passo: {ex.Message}");
             }
         }
-
+        [AllureStep("Validar Possivels Textos de um Elemento no passo: {passo}")]
         public async Task ValidarPossiveisTextosDeUmElemento(string locator, string[] textosPossiveis, string passo)
         {
             try
@@ -909,6 +909,24 @@ namespace PortalIDSFTestes.metodos
             {
                 throw new Exception($"Erro crítico no passo '{passo}': {ex.Message}");
             }
+        }
+        [AllureStep("Validar Se Elemento Possui Valor De Texto no passo: {passo}")]
+        public async Task<string> ValidarSeElementoPossuiValorDeTexto(string locator, string passo)
+        {
+            try
+            {
+                var textoCapturado = await page.Locator(locator).InnerTextAsync();
+                if (string.IsNullOrWhiteSpace(textoCapturado))
+                {
+                    Assert.Fail($"O elemento '{locator}' não possui valor de texto no passo: {passo}");
+                }
+                return textoCapturado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao validar valor do elemento: {locator}, no passo: {passo}, {ex.Message}");
+            }
+
         }
 
 
