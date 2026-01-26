@@ -1,12 +1,6 @@
 ﻿using Microsoft.Playwright;
-using PortalIDSFTestes.elementos.administrativo;
 using PortalIDSFTestes.elementos.bancoId;
 using PortalIDSFTestes.metodos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PortalIDSFTestes.pages.bancoId
 {
@@ -16,7 +10,7 @@ namespace PortalIDSFTestes.pages.bancoId
     {
         private readonly IPage page;
         Utils metodo;
-        SaldosElements el = new SaldosElements();
+        SaldosElements _el = new SaldosElements();
 
 
         public SaldosPage(IPage page)
@@ -30,6 +24,30 @@ namespace PortalIDSFTestes.pages.bancoId
         {
             await metodo.ValidarAcentosAsync(page, "Validar Acentos na Página Saldos");
         }
+
+        public async Task AbrirModalDeFiltro()
+        {
+            await metodo.Clicar(_el.FiltroFundos, "Abrir modal de filtro");
+        }
+        public async Task LimparFiltros()
+        {
+            await metodo.Clicar(_el.LimparFiltros, "Limpar Filtros padrões");
+        }
+        public async Task SelcionarGestora()
+        {
+            await metodo.ClicarNoSeletor(_el.SelectGestora, "16007398000128", "Selecionar Gestora IDSF");
+        }
+        public async Task SelcionarConsultoria()
+        {
+            await metodo.ClicarNoSeletor(_el.SelectConsultorias, "21057026000146", "Selecionar Consultoria IDSF");
+        }
+        public async Task ClicarEmCarregarParaTrazerSaldos()
+        {
+            await metodo.Clicar(_el.BtnCarregar, "Clicar em carregar para trazer saldos");
+        }
+
+
+
 
     }
 
