@@ -1,0 +1,33 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	27/01/2026	27/01/2026	27/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Pagamento.
+	Teste Pagamento Nota QA 9603	
+	27/01/2026	27/01/2026	27/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 3434	
+	27/01/2026	27/01/2026	27/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 8030	
+	26/01/2026	26/01/2026	26/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 6899	
+	23/01/2026	23/01/2026	23/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 9986	
+	23/01/2026	23/01/2026	23/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 6631	
+	23/01/2026	23/01/2026	23/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 5372	
+	22/01/2026	22/01/2026	22/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 7812	
+	22/01/2026	22/01/2026	22/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 1061	
+	22/01/2026	22/01/2026	22/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 7903	
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Reprovar_Pagamento_Nota_Com_Sucesso_Passed_20260127_141914.webm (1363846 bytes)
