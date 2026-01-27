@@ -1,2 +1,0 @@
-✅ Arquivo enviado com sucesso
-Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Criar_Nova_Nota_Interna_Com_Sucesso_Passed_20260127_141742.webm (1041645 bytes)
