@@ -8,6 +8,8 @@
         public string LimparFiltros { get; } = "//button[text()='Limpar Filtros']";
         public string SelectGestora { get; } = "#gestoras";
         public string SelectConsultorias { get; } = "#consultoras";
+        public string InputTextoFundo { get; } = "//input[@placeholder='Escolha o fundo']";
+        public string SelectFundo { get; } = "//li[text()='Murillo FIDC']";
         public string BtnCarregar { get; } = "//button[text()='Carregar']";
         public string SaldoNaTabela { get; } = "//tr//td[3]";
 

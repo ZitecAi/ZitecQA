@@ -1,4 +1,5 @@
 ﻿using Microsoft.Playwright;
+using PortalIDSFTestes.data.bancoId;
 using PortalIDSFTestes.elementos.bancoId;
 using PortalIDSFTestes.metodos;
 
@@ -11,6 +12,7 @@ namespace PortalIDSFTestes.pages.bancoId
         private readonly IPage page;
         Utils metodo;
         SaldosElements _el = new SaldosElements();
+        SaldosData _data = new SaldosData();
 
 
         public SaldosPage(IPage page)
@@ -40,6 +42,14 @@ namespace PortalIDSFTestes.pages.bancoId
         public async Task SelcionarConsultoria()
         {
             await metodo.ClicarNoSeletor(_el.SelectConsultorias, "21057026000146", "Selecionar Consultoria IDSF");
+        }
+        public async Task InserirNomeFundo()
+        {
+            await metodo.Escrever(_el.InputTextoFundo, _data.NomeFundo, "Escrever nome do fundo");
+        }
+        public async Task ClicarNoFundo()
+        {
+            await metodo.Clicar(_el.SelectFundo, "Selecionar fundo");
         }
         public async Task ClicarEmCarregarParaTrazerSaldos()
         {

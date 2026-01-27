@@ -59,8 +59,11 @@ namespace PortalIDSFTestes.testes.bancoId
             await saldos.LimparFiltros();
             await saldos.SelcionarGestora();
             await saldos.SelcionarConsultoria();
+            await saldos.InserirNomeFundo();
+            await saldos.ClicarNoFundo();
             await saldos.ClicarEmCarregarParaTrazerSaldos();
-            await _util.ValidarSeElementoPossuiValorDeTexto(_el.SaldoNaTabela, "Validar se Saldo está presente na tabela");
+            string saldo = await _util.ValidarSeElementoPossuiValorDeTexto(_el.SaldoNaTabela, "Validar se Saldo está presente na tabela");
+            Console.WriteLine(saldo);
         }
 
     }
