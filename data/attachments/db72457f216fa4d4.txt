@@ -1,0 +1,34 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	28/01/2026	N/A	28/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Aprovação da Custódia
+	Teste Pagamento Nota QA 1905	
+	28/01/2026	N/A	28/01/2026 00:00:00	PARUSIA FUNDO DE INVESTIMENTO EM DIREITOS CREDI...	CARTORIO_MARCIO AURELIO DOS SANTOS X PARUSIA FU...	CARTORIO	vmattos@blesscapital.com.br	R$ 362,53	
+Aguardando Aprovação da Custódia
+	Cartório op 1143 Marcio Aurélio (condicionado a...	
+	28/01/2026	N/A	28/01/2026 00:00:00	PARUSIA FUNDO DE INVESTIMENTO EM DIREITOS CREDI...	CARTORIO_DARCI DA SILVA BARROS JUNIOR X PARUSIA...	CARTORIO	vmattos@blesscapital.com.br	R$ 541,60	
+Aguardando Aprovação da Custódia
+	Cartório op 1253 Darci	
+	28/01/2026	N/A	28/01/2026 00:00:00	CONSULT PRECATÓRIOS E RECEBÍVEIS FUNDO ...	COMISSAO POR ORIGINACAO_01_2026_NF_034-D10_Doug...	COMISSAO POR ORIGINACAO	kmartins@blesscapital.com.br	R$ 1.123,00	
+Aguardando Aprovação da Custódia
+		
+	28/01/2026	N/A	28/01/2026 00:00:00	CONSULT PRECATÓRIOS E RECEBÍVEIS FUNDO ...	CVM_PIX - 1ªEMISSÃO - 1ª SÉRIE SR.pdf	CVM	karine.batista@idsf.com.br	R$ 4.500,00	
+Aguardando Aprovação da Custódia
+	PIX - Referente a abertura de oferta -1ª emissã...	
+	28/01/2026	N/A	28/01/2026 00:00:00	ROAD CAPITAL & PRECATUR LEGAL CLAIMS OPPORTUNIT...	DESPESAS_SERVICOS_NFS_ROAD_47.pdf	DESPESAS_SERVICOS	fgouvea@blesscapital.com.br	R$ 3.570,08	
+Aguardando Aprovação da Custódia
+		
+	28/01/2026	N/A	28/01/2026 00:00:00	CATANZARO FUNDO DE INVESTIMENTO EM PARTICIPACOE...	MANUTENCAO_ATIVOS_NF Serra Alta (1).pdf	MANUTENCAO_ATIVOS	beatriz.morandini@gestoraid.com.br	R$ 9.000,00	
+Aguardando Aprovação da Custódia
+	Prestação de serviços de abertura de empresa e ...	
+	28/01/2026	N/A	29/01/2026 00:00:00	FIAGRO SINAI MAXI FUNDO DE INVESTIMENTO EM DIRE...	DESPESAS_SERVICOS_NotaFiscalEletronica_5628 FIA...	DESPESAS_SERVICOS	willians.souza@sinaicapital.com.br	R$ 30.498,58	
+Aguardando Aprovação da Custódia
+	Servico de Seguranca e Vigilancia	
+	28/01/2026	N/A	29/01/2026 00:00:00	FIAGRO SINAI MAXI FUNDO DE INVESTIMENTO EM DIRE...	DESPESAS_SERVICOS_NotaFiscalEletronica_5596 FIA...	DESPESAS_SERVICOS	willians.souza@sinaicapital.com.br	R$ 30.498,58	
+Aguardando Aprovação da Custódia
+	Servico de Seguranca e Vigilancia	
+	28/01/2026	28/01/2026	28/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 6296	
+✅ Download ok: 'COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf' | 15979 bytes.
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Baixar_Nota_Criada_Com_Sucesso_Passed_20260128_160535.webm (1322653 bytes)
