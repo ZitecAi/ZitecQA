@@ -1,0 +1,30 @@
+✅ Texto encontrado: PRECATO IV FIDC	ANGELA CRISTINA NEGRELI DAMADA - CPF: 120.087.448-09	28/01/2026 08:27:38	Ativo	1	Aprovado	Aprovado 	Aprovado 	
+ 
+
+Zitec FIDC	Cedente Zitec QA - CNPJ: 52.721.175/0001-91	28/01/2026 08:58:17	Análise	1	Aprovado	Aprovado  	Em espera 	
+ 
+
+Volus FIDC	ANTONIO CARLOS NUNES FRANCO LIMPEZA E PAISAGISMO - CNPJ: 59.283.352/0001-44	27/01/2026 16:55:35	Ativo 	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+ADAMANTUS FIDC	Z D FRACARO LTDA - CNPJ: 11.769.293/0001-92	27/01/2026 17:01:28	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+QLZ JUD 01 FIDC	CRISTIANO FERREIRA DOS SANTOS - CPF: 001.422.151-98	27/01/2026 16:57:29	Formalização	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+STRESS FIDC	Americana Mall SPE LTDA - CNPJ: 47.612.263/0001-15	27/01/2026 17:40:05	Ativo	1	Aprovado	Aprovado  	Aprovado  	
+ 
+
+NORD FIDC RL	FARINORTE RECICLAGEM LTDA - CNPJ: 09.457.955/0001-47	27/01/2026 16:07:44	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+NORD FIDC RL	REPAR RECICLAGEM INDUSTRIAL DE RESIDUOS DE ANIMAIS LTDA - CNPJ: 07.382.924/0001-49	27/01/2026 16:07:48	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+NORD FIDC RL	MAR - MARACANAU RECICLAGEM DE SUBPRODUTOS LTDA - CNPJ: 26.644.488/0001-83	27/01/2026 16:07:51	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+
+NORD FIDC RL	SANTA EDWIGES INDUSTRIA E COMERCIO DE RESIDUOS ORGANICOS DE JUINA LTDA - CNPJ: 10.532.123/0003-99	27/01/2026 16:07:55	Análise	1	Em espera	Aprovado  	Aprovado  	
+ 
+Vídeo anexado: PortalIDSFTestes_testes_cedentes_CedentesTest_Deve_Excluir_Cedente_Failed_20260128_090326.webm (2958709 bytes)
