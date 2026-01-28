@@ -1,0 +1,33 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	28/01/2026	28/01/2026	28/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Pagamento.
+	Teste Pagamento Nota QA 8551	
+	28/01/2026	N/A	28/01/2026 00:00:00	FII KRONOS - CNPJ: 36.731.458/0001-68	IMPOSTOS_QL-L04 -RESERVA PILAR - TAXA DE IPTU R...	IMPOSTOS	gabriel.malizia@vertty.com.br	R$ 7.693,08	
+Aguardando Aprovação da Custódia
+	QL-L04 -RESERVA PILAR - TAXA DE IPTU REF. 2020 ...	
+	28/01/2026	N/A	28/01/2026 00:00:00	TERRAS PAULISTAS FUNDO DE INVESTIMENTO IMOBILIÁ...	Gestão_2874 TERRAS PAULISTAS FII DE PERMUTAS.pdf	Gestão	ilf@patagoniacapital.com.br	R$ 1.314.688,66	
+Aguardando Aprovação da Custódia
+		
+	28/01/2026	N/A	28/01/2026 00:00:00	TERRAS PAULISTAS FUNDO DE INVESTIMENTO IMOBILIÁ...	Gestão_2872 TERRAS PAULISTAS FII DE PERMUTAS RL...	Gestão	ilf@patagoniacapital.com.br	R$ 239.034,30	
+Aguardando Aprovação da Custódia
+		
+	28/01/2026	28/01/2026	28/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 394	
+	27/01/2026	N/A	28/01/2026 00:00:00	JERUSALÉM FUNDO DE INVESTIMENTO IMOBILIÁRIO RES...	Anbima_BOL_ TAXA REGISTRO ANBIMA_ JERUSALEM FII...	Anbima	lidiane@idsf.com.br	R$ 3.396,00	
+Aguardando Aprovação da Custódia
+	TAXA DE REGISTRO ANBIMA, 2ª TENTATIVA DE QUITAÇÃO	
+	27/01/2026	27/01/2026	27/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Reprovado pela Liquidação
+	Teste Pagamento Nota QA 269	
+	27/01/2026	N/A	30/01/2026 00:00:00	HEBROM FUNDO DE INVESTIMENTO IMOBILIÁRIO RESPON...	DESPESAS_SERVICOS_30-Condominio Pro Rata.pdf	DESPESAS_SERVICOS	ricardo@autovixparticipacoes.com.br	R$ 21.868,40	
+Aguardando Aprovação da Custódia
+	Despesas condominio pro rata	
+	27/01/2026	N/A	02/02/2026 00:00:00	TERRA NOVA FUNDO DE INVESTIMENTO EM DIREITOS CR...	Consultoria_nf de Analise de Janeiro 2026.pdf	Consultoria	cecilia@terranovafomento.com.br	R$ 10.000,00	
+Aguardando Aprovação da Custódia
+	serviço de consultoria	
+	27/01/2026	N/A	02/02/2026 00:00:00	TERRA NOVA FUNDO DE INVESTIMENTO EM DIREITOS CR...	COBRANÇA_NF COBRANÇA JAN 2026.pdf	COBRANÇA	cecilia@terranovafomento.com.br	R$ 10.000,00	
+Aguardando Aprovação da Custódia
+	Serviço de Cobrança	
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Reprovar_Pagamento_Nota_Com_Sucesso_Passed_20260128_105229.webm (1290354 bytes)
