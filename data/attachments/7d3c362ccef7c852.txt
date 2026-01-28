@@ -1,0 +1,33 @@
+✅ Texto encontrado: Selecionar
+Todos	Criação	DT. Pagamento	Agendamento	Fundo	Nome do Arquivo	Tipo de Nota	Usuario	Valor	Status	Observações	Ações
+	28/01/2026	28/01/2026	28/01/2026 00:00:00	Zitec Tecnologia LTDA - CNPJ: 54.638.076/0001-76	COMISSAO POR ORIGINACAO_Arquivo teste 2.pdf	COMISSAO POR ORIGINACAO	qazitec01@gmail.com	R$ 10,00	
+Aguardando Pagamento.
+	Teste Pagamento Nota QA 1275	
+	28/01/2026	N/A	29/01/2026 00:00:00	CONCRETO FUNDO DE INVESTIMENTO EM DIREITOS CRED...	DEMANDAS_JUDICIAIS_Guia de custas 2 pedidos de ...	DEMANDAS_JUDICIAIS	cobranca@concretaconsultoria.com	R$ 27,80	
+Aguardando Aprovação da Custódia
+	Guia de custas para realização de pesquisa de v...	
+	28/01/2026	N/A	29/01/2026 00:00:00	CONCRETO FUNDO DE INVESTIMENTO EM DIREITOS CRED...	DEMANDAS_JUDICIAIS_Guia custas oficial de justi...	DEMANDAS_JUDICIAIS	cobranca@concretaconsultoria.com	R$ 88,06	
+Aguardando Aprovação da Custódia
+	Guia de custas para realização de diligência no...	
+	28/01/2026	N/A	29/01/2026 00:00:00	MONTREAL FUNDO DE INVESTIMENTO IMOBILIARIO RL -...	COBRANÇA_KLINT.pdf	COBRANÇA	thaina@montrecon.com.br	R$ 76.000,00	
+Aguardando Aprovação da Custódia
+	Adiantamento ao fornecedor no valor R$ 76.000,0...	
+	28/01/2026	N/A	29/01/2026 00:00:00	TERRA NOVA FUNDO DE INVESTIMENTO EM DIREITOS CR...	Advogado_NFs ADV 01.2026- TERRA NOVA FUNDO DE ...	Advogado	cecilia@terranovafomento.com.br	R$ 3.500,00	
+Aguardando Aprovação da Custódia
+		
+	28/01/2026	N/A	28/01/2026 00:00:00	EXODUS FUNDO DE INVESTIMENTO EM PARTICIPACOES M...	Anbima_Exodus.pdf	Anbima	jennyfer.anjos@idfip.com.br	R$ 130,00	
+Aguardando Aprovação da Custódia
+		
+	28/01/2026	N/A	28/01/2026 00:00:00	EVEREST BRASIL PARTNERS I A FIP MULT IE - CNPJ:...	Anbima_Everest.pdf	Anbima	jennyfer.anjos@idfip.com.br	R$ 4.704,00	
+Aguardando Aprovação da Custódia
+		
+	28/01/2026	N/A	28/01/2026 00:00:00	ETNA LBO V - FUNDO DE INVESTIMENTO EM PARTICIPA...	Anbima_Etna.pdf	Anbima	jennyfer.anjos@idfip.com.br	R$ 2.512,00	
+Aguardando Aprovação da Custódia
+		
+	28/01/2026	N/A	28/01/2026 00:00:00	ELGON BRASIL PARTNERS FIP MULTIESTRATÉGIA IE - ...	Anbima_Elgon.pdf	Anbima	jennyfer.anjos@idfip.com.br	R$ 2.512,00	
+Aguardando Aprovação da Custódia
+		
+	28/01/2026	N/A	28/01/2026 00:00:00	EIGER BRASIL PARTNERS I O - FUNDO DE INVESTIMEN...	Anbima_Eiger.pdf	Anbima	jennyfer.anjos@idfip.com.br	R$ 3.668,00	
+Aguardando Aprovação da Custódia
+		
+Vídeo anexado: PortalIDSFTestes_testes_notas_PagamentosNotasTests_Deve_Reprovar_Pagamento_Nota_Com_Sucesso_Passed_20260128_142426.webm (884586 bytes)
